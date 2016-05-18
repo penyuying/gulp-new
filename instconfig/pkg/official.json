@@ -1,0 +1,182 @@
+{
+	"name": "official",
+    "userName": "penyu",
+    "version": "1.0.0",
+
+    "ifmin": false,
+    "gzipIf": false,
+    "srcRev": false,
+    "suffix": "",
+	"injectIf":true,
+	"changIf":false,
+    "srcPath": "{#webappDir#}develop/official/html/",
+    "destPath": "{#webPath#}/collect/",
+    "revDestPath":"{#webappDstDir#}temp/rev/official/",
+    "destRoot":"mp/",
+
+    "jsDoc3Temp":"{#webappDstDir#}temp/jsDoc/official/",
+    "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
+    "ifJsDoc":true,
+
+    "host": "127.0.0.1",
+    "port": "8097",
+    "serverPath": "{#webPath#}collect/",
+    "browser": "chrome",
+
+    "copyFile": [{
+            "psrc": "js/jquery/jquery-1.11.3.min.js",
+            "dest":"js/jquery/"
+		},{
+            "psrc": "js/jquery/plugins/layer-v2.0/layer/**/*.*",
+            "dest":"js/layer/"
+		},{
+            "psrc": "sass/control/control.scss",
+            "dsrc":"sass/",
+            "newFileName":"_control.scss"
+		},{
+            "psrc": "js/jquery/plugins/select2/select2-3.5.2/{select2.min.js,select2.css,select2.png,select2-spinner.gif}",
+            "dest":"js/select2/"
+        },{
+            "psrc": "js/jquery/plugins/DatePickerBeta/My97DatePicker/**/*.*",
+            "dest":"js/My97DatePicker/"
+        },{
+            "psrc": "sass/ListBox/listBox.scss",
+            "dsrc":"sass/",
+            "newFileName":"_listBox.scss"
+        }],
+    "copyDstDir": "",
+
+    "jsonFile": [{
+        "src": "json/**/*",
+        "dest": "json/"
+	}],
+    "jsonDstDir": "json/",
+
+	"imgFile": [{
+        "src": "img/**/*",
+		"dest": "img/"
+	}, {
+        "src": "css/**/*",
+        "dest": "css/"
+	}, {
+        "src": "sass/**/*",
+        "dest": "css/"
+	},{
+        "psrc": "sass/ListBox/img/*",
+        "dsrc": "sass/img/"
+    }],
+    "imgDstDir": "img/",
+	"concatJs":[{
+        "jsAnonymous":true,
+        "psrc":"js/sub_js/initial/sub_initial_jq/{control,widget,align,size,slide}",
+        "jsHeader":"window.$ && $(function() {var cls = $(\".JsW\").get();for (var i = 0; i < cls.length; i++) { \n /**@file \n * \n * 初始化插件 \n * @author {#userName#} */ \n \n ",
+        "jsFooter":"}});",
+        "fileName":"initial.js",
+        "dest": "js/comm/"
+	},{
+        "jsAnonymous":true,
+        "psrc":"js/sub_js/controls/{Button,Checkbox,FileButton}",
+        "fileName":"controls.js",
+        "dest": "js/comm/"
+    },{
+        "jsAnonymous":true,
+        "psrc":"js/sub_js/DataTable/DataTable",
+        "fileName":"DataTable.js",
+        "dest": "js/"
+	},{
+        "jsAnonymous":true,
+        "psrc":["js/sub_js/switch/{Tab,Popup,align,Widescreen,mobileAndPc_slide}"],
+        "fileName":"switch.js",
+        "dest": "js/comm/"
+	}],
+	"concatDstJsFileName":"",
+
+	"jsFile": [{
+        "jsAnonymous":true,
+        "jsGlobalObj":"YW,$,layer",
+        "src": "js/**/*",
+        "dest": "js/",
+        "debar": "{_subDir/,_subDir/**/*.*}"
+	},{
+        "psrc": "js/viewport",
+        "dest": "js/comm/"
+	},{
+        "jsAnonymous":true,
+        "jsGlobalObj":"window",
+        "psrc": "js/public-obj",
+        "dest": "js/comm/"
+	},{
+        "psrc": "js/encrypt/sha1",
+        "dest": "js/comm/"
+	},{
+		"psrc": "js/zeptoJs1.1.6/plugins/json/zepto.json.min",
+		"dest":"js/zepto/"
+	},{
+        "psrc": "js/jquery/plugins/form/jquery.form",
+        "dest":"js/form/"
+    },{
+        "jsAnonymous":true,
+        "jsGlobalObj":"YW,$",
+        "psrc": "js/jquery/plugins/fileupload/fileload",
+        "dest":"js/fileupload/"
+    },{
+        "jsAnonymous":true,
+        "jsGlobalObj":"YW,$",
+        "psrc": "js/jquery/plugins/GetPlace/GetPlace",
+        "dest":"js/GetPlace/"
+    },{
+        "jsAnonymous":true,
+        "jsGlobalObj":"YW,$",
+        "psrc":"js/sub_js/treeSelectBox/AddListBox",
+        "fileName":"AddListBox.js",
+        "dest": "js/"
+    },{
+		"psrc": "!js/comm/comm",
+		"dest": "../js/",
+		"debar": "{js/_subDir/,js/_subDir/**/*.*}"
+	}],
+    "jsDstDir": "js/",
+
+	"sassFile": [{
+        "src":"sass/**/*",
+        "dest":"css/"
+    }],
+
+	"cssFile":"css/**/*",
+    "cssDstDir": "css/",
+
+
+	"ifminhtml": false,
+	"ifminhtmlObj":{
+        "removeComments": true,
+        "collapseWhitespace": true,
+        "conservativeCollapse": true,
+        "preserveLineBreaks": true,
+        "removeAttributeQuotes":false,
+        "removeEmptyAttributes": false,
+        "removeEmptyElements": false,
+        "removeScriptTypeAttributes": false,
+        "collapseBooleanAttributes": false,
+        "removeStyleLinkTypeAttributes": false,
+        "keepClosingSlash": true,
+        "minifyJS": true,
+        "minifyCSS":true
+    },
+	"htmlFile": [{
+		"changIf":true,
+        "src":"html/**/*",
+        "debar": "tpls/**/*.*",
+        "tpls":"html/tpls/"
+    },{
+        "root":"",
+		"changIf":true,
+        "src":"*",
+        "tpls":"html/tpls/",
+        "debar": "tpls/**/*.*"
+    }],
+
+    "tplsHtmlFile": "html/tpls/",
+    "htmlDstDir":"",
+
+	"injectPath":""
+}

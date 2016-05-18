@@ -1,0 +1,114 @@
+{
+    "name": "practice",
+    "userName": "",
+    "version": "1.0.0",
+
+    "ifmin": false,
+    "gzipIf": false,
+    "srcRev":true,
+    "suffix": "",
+	"injectIf":false,
+	"bannerIf":false,
+	"changIf":false,
+	"jsAnonymous":true,
+
+    "srcPath": "{#webappDir#}develop/practice/",
+    "destPath": "{#webPath#}/practice/",
+    "revDestPath":"{#webappDstDir#}temp/rev/practice/",
+    
+    "jsDoc3Temp":"{#webappDstDir#}temp/jsDoc/practice/",
+    "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
+    "ifJsDoc":true,
+
+    "testConfig":{
+        "srcPath":[
+            "src/**/*.js",
+            "test-lib/**/*.js",
+            "test/**/*.js"
+        ],
+        "testConfigFile":"{#srcPath#}karma.conf.js",
+        "singleRun":false
+    },
+    "destRoot":"pay/",
+
+    "host": "127.0.0.1",
+    "port": "8094",
+    "serverPath": "{#webPath#}/practice/",
+    "browser": "chrome",
+	"anonymous":true,
+
+    "copyFile": "",
+    "copyDstDir": "",
+	
+	
+    "jsonFile": "",
+    "jsonDstDir": "json/",
+
+    "imgFile": [{
+        "src": "{img/,img/**/*}"
+	}, {
+        "src": "css/**/*",
+        "dest": "css/"
+	}, {
+        "src": "sass/**/*",
+        "dest": "css/"
+	}],
+    "imgDstDir": "img/",
+
+    "dirConcatJs": [{
+        "jsAnonymous":true,
+        "src": "",
+        "psrc":"js/_subDir/",
+        "dest": "js/"
+	}],
+    
+    
+    "concatJs":"",
+    "concatDstJsFileName":"",
+
+    "jsFile": [{
+        "src": "js/**/*",
+        "dest": "js/",
+        "debar": "{_subDir/,_subDir/**/*.*}"
+	}],
+    "jsDstDir": "js/",
+    
+
+    "sassFile": [{
+        "src":"sass/**/*",
+        "dest":"css/"
+    }],
+    
+    "concatCss":"",
+    "concatDstCssFileName":"",
+    
+    "cssFile":"css/**/*",
+    "cssDstDir": "css/",
+
+	"ifminhtml": false,
+	"ifminhtmlObj":{
+        "removeComments": true,
+        "collapseWhitespace": false,
+        "conservativeCollapse": true,
+        "preserveLineBreaks": true,
+        "removeAttributeQuotes":false,
+        "removeEmptyAttributes": false,
+        "removeEmptyElements": false,
+        "removeScriptTypeAttributes": false,
+        "collapseBooleanAttributes": false,
+        "removeStyleLinkTypeAttributes": false,
+        "keepClosingSlash": true,
+        "minifyJS": false,
+        "minifyCSS":false
+    },
+    "htmlFile": [{
+		"changIf":true,
+        "root":"",
+        "src":"html/*",
+        "debar": "tpls/**/*.*",
+        "tpls":"html/tpls/"
+    }],
+    "tplsHtmlFile": "html/tpls/",
+    "htmlDstDir":"",
+    "injectPath":""
+}

@@ -1,0 +1,234 @@
+{
+    "name": "collect",
+    "userName": "",
+    "version": "1.0.0",
+
+    "ifmin": false,
+    "gzipIf": false,
+    "srcRev": false,
+    "suffix": "",
+	"injectIf":true,
+	"bannerIf":false,
+	"changIf":false,
+	"jsAnonymous":false,
+    "mapIf": false,
+
+    "srcPath": "{#webappDir#}develop/collect/html/",
+    "destPath": "{#webappDstDir#}web/collect/",
+	"testConfig":{
+        "srcPath":[
+            "http://www.fuwuqu.me/ifs/script/sysdict.js",
+			"../../js/jquery/**/*.js",
+			"../../js/select2/**/*.js",
+			"../../js/angular/angular.min.js",
+			"../../js/angular/pagination.js",
+			"../../js/angular/angular-ui-router.js",
+			"../../js/comm/public-obj.js",
+			"../../../js/**/*.*",
+			"../../js/comm/**/*.js",
+			"../../js/layer/layer.js",
+			"../../js/layer/extend/*.js",
+			"../../js/layer/skin/**/*.js",
+			"../../js/collect/**/*.js",
+			"../../js/app.js",
+			"../test/**/*.js",
+			"*.js"
+        ],
+        "testConfigFile":"{#destPath#}/sf/test/config/karma.conf.js",
+        "singleRun":false
+    },
+    "destRoot":"sf/",
+    "debarPath": "{废弃/**/*.*,/**/废弃.*,/**/废弃/*.*,/**/废弃/**/*.*}",
+
+    "host": "127.0.0.1",
+    "port": "8091",
+    "serverPath": "{#webappDstDir#}web/collect/",
+    "browser": "chrome",
+	"anonymous":true,
+
+    "copyFile": [{
+            "psrc": "js/angular/angular-1.2.29/angular.min.js",
+            "dest":"js/angular/"
+		},{
+            "src": "test/**/*.*",
+            "dest":"test/"
+		},{
+            "psrc": "js/angular/angular-1.2.29/angular-mocks.js",
+            "dest":"test/test_lib/"
+		},{
+            "psrc": "js/require/requirejs2.1.11/require.min.js",
+            "dest":"js/"
+		},{
+            "psrc": "!js/angular/plugins/ui-bootstrap-tpls/ui-bootstrap-tpls-0.11.0.js",
+            "dest":"!js/angular/"
+		},{
+            "src": "{js/bootstrap-3.0.0/**/*.*,js/bootstrap-3.0.0/}",
+            "dest":"js/bootstrap-3.0.0/"
+		},{
+            "psrc": "{!js/jquery/plugins/datetimepicker/**/*.*,!js/jquery/plugins/datetimepicker/}",
+            "dest":"!js/datetimepicker/"
+		},{
+            "psrc": "!js/jquery/plugins/datepicker/jquery-ui-1.11.4.custom/jquery-ui.min.js",
+            "dest":"!js/datepicker/"
+		},{
+            "psrc": "js/jquery/plugins/DatePickerBeta/My97DatePicker/**/*.*",
+            "dest":"js/My97DatePicker/"
+		},{
+            "psrc": "js/jquery/jquery-1.11.3.min.js",
+            "dest":"js/jquery/"
+		},{
+            "psrc": "js/jquery/plugins/select2/select2-3.5.2/{select2.min.js,select2.css,select2.png,select2-spinner.gif}",
+            "dest":"js/select2/"
+		},{
+            "psrc": "js/jquery/plugins/layer-v2.0/{layer/**/*.*,layer/}",
+            "dest":"js/layer/"
+		}],
+    "copyDstDir": "",
+	
+	
+    "jsonFile": [{
+            "src": "json/QueryChargeResponse",
+            "dest": "json/"
+	}],
+    "jsonDstDir": "json/",
+
+    "imgFile": [{
+        "src": "{img/,img/**/*}"
+	},{
+        "src": "sass/**/*",
+        "dest": "css/"
+	},{
+        "src": "css/**/*",
+        "dest": "css/"
+	},{
+		"root":"",
+        "psrc": "img/wxpic/**/*",
+        "dest": "wxpic/"
+	}],
+    "imgDstDir": "img/",
+
+    "dirConcatJs": [{
+        "jsAnonymous":true,
+		"jsGlobalObj":"window,angular",
+        "src": "js/collect/_subJs/",
+        "psrc":"",
+        "dest": "js/collect/"
+	}],
+    
+    
+    "concatJs":[{
+        "jsAnonymous":true,
+        "psrc":"!js/sub_js/initial/initial_ng",
+        "fileName":"initial.js",
+        "dest": "js/comm/"
+	},{
+        "jsAnonymous":true,
+        "jsGlobalObj":"window,YW,$",
+        "psrc":"!js/sub_js/{switch/Tab,switch/Accordion,switch/Align,switch/Popup,switch/Widescreen}",
+        "fileName":"switch.js",
+        "dest": "js/comm/"
+	},{
+        "jsAnonymous":true,
+		"jsGlobalObj":"window,YW,$",
+        "psrc":"!js/sub_js/{controls/Checkbox,controls/CheckboxAll,controls/Disabled,controls/Radio,controls/SelectSwap,controls/Button,controls/Adjustment}",
+        "fileName":"controls.js",
+        "dest": "js/comm/"
+	},{
+        "jsAnonymous":true,
+		"jsGlobalObj":"window,YW,$",
+        "psrc":"js/sub_js/{switch/Tab,switch/Accordion,switch/Align,switch/Popup,switch/Widescreen,controls/Checkbox,controls/CheckboxAll,controls/Disabled,controls/Radio,controls/SelectSwap,controls/Button,controls/Adjustment,initial/initial_ng}",
+        "fileName":"controlsAndSwitch.js",
+        "dest": "js/comm/"
+	},{
+        "jsAnonymous":true,
+        "jsGlobalObj":"window",
+        "psrc": "js/{public-obj,encrypt/jbase64,jquery/plugins/json/jquery.json.min}",
+        "fileName":"public-obj.js",
+        "dest": "js/comm/"
+    }],
+    "concatDstJsFileName":"",
+    
+    
+    "jsFile": [{
+        "psrc": "!js/jquery/plugins/form/jquery.form",
+        "dest":"js/jquery/"
+    },{
+        "psrc": "!js/jquery/plugins/cookie/jquery.cookie",
+        "dest":"js/jquery/"
+    },{
+        "src": "{js/*,js/comm/**/*}",
+        "dest": "js/",
+        "debar": "{js/_subDir/,js/_subDir/**/*.*}"
+	},{
+        "psrc": "js/angular/plugins/ui_router/angular-ui-router",
+        "dest":"js/angular/"
+    },{
+		"psrc": "!js/angular/plugins/ui-bootstrap-tpls/ui-bootstrap-tpls-0.11.0",
+        "dest":"js/angular/"
+	},{
+		"psrc": "js/angular/plugins/ui-bootstrap-tpls/sub_js/pagination",
+        "dest":"js/angular/"
+	}, {
+        "root":"",
+        "psrc": "js/comm/comm",
+        "dest": "js/",
+        "debar": "{js/_subDir/,js/_subDir/**/*.*}"
+	}, {
+        "src": "{!demo/,!demo/**/*}",
+        "dest": "demo/"
+	},{
+		"psrc": "!js/jquery/plugins/json/jquery.json.min",
+		"dest":"js/jquery/"
+	}],
+    "jsDstDir": "js/",
+    
+
+    "sassFile": [{
+        "src":"sass/**/*",
+        "dest":"css/"
+    },{
+        "psrc":"!sass/datepicker/datepicker",
+        "dest":"css/"
+    }],
+    
+    "concatCss":"css/{test2,test1}",
+    "concatDstCssFileName":"concatCss.css",
+    
+    "cssFile":"css/**/*",
+    "cssDstDir": "css/",
+
+	"ifminhtml": false,
+	"ifminhtmlObj":{
+        "removeComments": true,
+        "collapseWhitespace": true,
+        "conservativeCollapse": true,
+        "preserveLineBreaks": true,
+        "removeAttributeQuotes":false,
+        "removeEmptyAttributes": false,
+        "removeEmptyElements": false,
+        "removeScriptTypeAttributes": false,
+        "collapseBooleanAttributes": false,
+        "removeStyleLinkTypeAttributes": false,
+        "keepClosingSlash": true,
+        "minifyJS": true,
+        "minifyCSS":true
+    },
+    "htmlFile": [{
+		"changIf":true,
+        "src":"*",
+		"root":"",
+		"dest":"sf/"
+    },{
+        "injectIf":false,
+        "src":"!demo/**/*",
+        "dest":"demo/"
+    },{
+        "injectIf":false,
+        "src":"tpls/**/*",
+        "dest":"tpls/"
+    }],
+    
+    "tplsHtmlFile": "html/tpls/",
+    "htmlDstDir":"",
+    "injectPath":""
+}

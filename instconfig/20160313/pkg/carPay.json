@@ -1,0 +1,143 @@
+{
+    "name": "carPay",
+    "userName": "penyu",
+    "version": "1.0.0",
+
+    "ifmin": false,
+    "gzipIf": false,
+    "srcRev": true,
+    "suffix": "",
+	"injectIf":true,
+	"bannerIf":false,
+	"changIf":false,
+	"jsAnonymous":false,
+
+    "srcPath": "{#webappDir#}develop/carPay/html/",
+    "destPath": "{#webappDstDir#}web/collect/carPay/",
+    "destRoot":"",
+    "debarPath": "{废弃/**/*.*,/**/废弃.*,/**/废弃/*.*,/**/废弃/**/*.*}",
+
+    "host": "127.0.0.1",
+    "port": "8096",
+    "serverPath": "{#webappDstDir#}web/collect/carPay/",
+    "browser": "chrome",
+	"anonymous":true,
+
+    "copyFile": [{
+            "psrc": "js/jquery/jquery-1.11.3.min.js",
+            "dest":"js/jquery/"
+		},{
+            "psrc": "js/zeptoJs1.1.6/zepto.min.js",
+            "dest":"js/zepto/"
+		},{
+            "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*.*",
+            "dest":"js/layer/"
+		}],
+    "copyDstDir": "",
+	
+	
+    "jsonFile": "json/{city,proJson}",
+    "jsonDstDir": "json/",
+
+    "imgFile": [{
+        "src": "{img/,img/**/*}"
+	},{
+        "src": ["css/**/*","sass/**/*"],
+        "dest": "css/"
+	}],
+    "imgDstDir": "img/",
+
+    "dirConcatJs": [{
+        "src": "",
+        "psrc":"",
+        "dest": "js/"
+	}],
+    "concatJs":[{
+        "jsAnonymous":true,
+        "psrc":"js/sub_js/initial/initial_jq",
+        "fileName":"initial.js",
+        "dest": "js/comm/"
+	},{
+        "jsAnonymous":true,
+        "psrc":"js/sub_js/controls/Radio",
+        "fileName":"controls.js",
+        "dest": "js/comm/"
+	},{
+        "jsAnonymous":true,
+		"jsGlobalObj":"window,$",
+        "psrc":"js/qrcode/{qrcode,jquery.qrcode,utf16to8}",
+        "fileName":"qrcode.js",
+        "dest": "js/comm/"
+	},{
+        "jsAnonymous":true,
+		"jsGlobalObj":"window,$,YW",
+        "psrc":"js/sub_js/createListNode/createListNode",
+        "src":"js/Psub_file/community",
+        "fileName":"community.js",
+        "dest": "js/"
+	}],
+    "concatDstJsFileName":"",
+    "jsFile": [{
+        "psrc": "js/{viewport,pinyin}",
+        "dest": "js/comm/"
+	},{
+        "jsAnonymous":true,
+        "jsGlobalObj":"window",
+        "psrc": "js/public-obj",
+        "dest": "js/comm/"
+	},{
+        "psrc": "js/encrypt/sha1",
+        "dest": "js/comm/"
+	},{
+        "psrc": "js/location/getCity",
+        "dest": "js/"
+	},{
+        "src": "js/*",
+        "debar": "{js/_subDir/,js/_subDir/**/*.*,js/Psub_file/,js/Psub_file/**/*.*}"
+	},{
+		"psrc": "js/zeptoJs1.1.6/plugins/json/zepto.json.min",
+		"dest":"js/zepto/"
+	}],
+    "jsDstDir": "js/",
+    
+
+    "sassFile": [{
+        "src":"sass/**/*",
+        "dest":"css/"
+    }],
+    
+    "concatCss":"",
+    "concatDstCssFileName":"",
+    
+    "cssFile":[{
+		"src":"css/**/*",
+		"psrc":"css/control"
+	}],
+    "cssDstDir": "css/",
+
+	"ifminhtml": false,
+	"ifminhtmlObj":{
+        "removeComments": true,
+        "collapseWhitespace": false,
+        "conservativeCollapse": false,
+        "preserveLineBreaks": false,
+        "removeAttributeQuotes":false,
+        "removeEmptyAttributes": false,
+        "removeEmptyElements": false,
+        "removeScriptTypeAttributes": false,
+        "collapseBooleanAttributes": false,
+        "removeStyleLinkTypeAttributes": false,
+        "keepClosingSlash": true,
+        "minifyJS": false,
+        "minifyCSS":false
+    },
+    "htmlFile": [{
+		"changIf":true,
+        "root":"",
+        "src":"html/*",
+        "tpls":"html/tpls/"
+    }],
+    "tplsHtmlFile": "html/tpls/",
+    "htmlDstDir":"",
+    "injectPath":""
+}

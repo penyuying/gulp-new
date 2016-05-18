@@ -1,0 +1,20 @@
+{
+  "name": "gulp-loadobj",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gulp",
+    "load-plugin"
+  ],
+  "author": "",
+  "license": "MIT",
+  "readme": "ERROR: No README data found!",
+  "_id": "gulp-loadobj@1.0.0",
+  "_shasum": "50dda8e705b446fe5937aae88dbf0bd4089d691d",
+  "_from": "G:\\gulpInst\\instconfig\\userModules\\gulp-loadobj",
+  "_resolved": "file:G:\\gulpInst\\instconfig\\userModules\\gulp-loadobj"
+}

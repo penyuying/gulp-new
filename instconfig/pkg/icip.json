@@ -1,0 +1,141 @@
+{
+    "name": "icip",
+    "userName": "",
+    "version": "1.0.0",
+
+    "ifmin": false,
+    "gzipIf": false,
+    "srcRev": false,
+    "suffix": "",
+	"injectIf":true,
+	"changIf":true,
+
+    "srcPath": "{#webappDir#}develop/icip/html/",
+    "destPath": "{#webPath#}/BMS1/",
+    "revDestPath":"{#webappDstDir#}temp/rev/BMS1/",
+
+    "jsDoc3Temp":"{#webappDstDir#}temp/jsDoc/BMS1/",
+    "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
+    "ifJsDoc":true,
+
+    "host": "127.0.0.1",
+    "port": "8093",
+    "serverPath": "{#webPath#}/BMS1/",
+    "browser": "chrome",
+
+    "copyFile":[{
+            "psrc": "js/jquery/jquery-1.11.3.min.js",
+            "dest":"js/"
+		},{
+            "psrc": "sass/ListBox/listBox.scss",
+            "dsrc":"sass/",
+			"newFileName":"_listBox.scss"
+		}],
+    "copyDstDir": "",
+
+    "jsonFile": [{"src":"json/plot"}],
+    "jsonDstDir": "json/",
+
+    "imgFile": [{
+        "src": "img/**/*"
+	}, {
+        "src": "css/**/*",
+        "dest": "css/"
+	},{
+        "src": "sass/**/*",
+        "dest": "css/"
+	},{
+        "psrc": "sass/ListBox/img/*",
+        "dsrc": "sass/img/"
+	}],
+    "imgDstDir": "img/",
+
+    "dirConcatJs": [{
+        "src": "",
+        "psrc":"",
+        "dest": "js/"
+	}],
+    
+    
+    "concatJs":[{
+        "jsAnonymous":true,
+        "psrc":"js/sub_js/initial/initial_jq",
+        "fileName":"initial.js",
+        "dest": "js/"
+	},{
+        "jsAnonymous":true,
+		"jsGlobalObj":"window,YW,$",
+        "psrc":"js/sub_js/treeSelectBox/{AddListBox,ListBox}",
+        "fileName":"listBox.js",
+        "dest": "js/"
+	},{
+        "jsAnonymous":true,
+        "psrc":"js/sub_js/switch/{Tab,Accordion,Align,Popup,Widescreen,Floatfixed}",
+        "fileName":"switch.js",
+        "dest": "js/"
+	},{
+        "jsAnonymous":true,
+        "psrc":"js/sub_js/controls/{Checkbox,CheckboxAll,Radio,Button,Adjustment}",
+        "fileName":"controls.js",
+        "dest": "js/"
+	}],
+    "concatDstJsFileName":"",
+    
+    
+    "jsFile": [{
+        "src": "js/*",
+        "dest": "js/",
+        "debar": "{_subDir/,_subDir/**/*.*}"
+	}, {
+        "jsAnonymous":true,
+        "jsGlobalObj":"window",
+        "psrc": "{js/public-obj,js/slide}",
+        "dest": "js/"
+	}],
+    "jsDstDir": "js/",
+    
+
+    "sassFile": [{
+        "src":"sass/**/*",
+        "dest":"css/"
+    }],
+    
+    "concatCss":"",
+    "concatDstCssFileName":"concatCss.css",
+    
+    "cssFile":[{
+		"src":"css/**/*"
+	},{
+		"psrc":"css/control"
+	}],
+    "cssDstDir": "css/",
+
+	"ifminhtml": true,
+	"ifminhtmlObj":{
+        "removeComments": true,
+        "collapseWhitespace": true,
+        "conservativeCollapse": true,
+        "preserveLineBreaks": true,
+        "removeAttributeQuotes":false,
+        "removeEmptyAttributes": false,
+        "removeEmptyElements": false,
+        "removeScriptTypeAttributes": false,
+        "collapseBooleanAttributes": false,
+        "removeStyleLinkTypeAttributes": false,
+        "keepClosingSlash": true,
+        "minifyJS": false,
+        "minifyCSS":false
+    },
+
+
+    "htmlFile":[{
+		"changIf":true,
+        "root":"",
+        "src":"*"
+    }],
+    
+    "tplsHtmlFile": "tpls/",
+    "htmlDstDir":"",
+
+    "injectPath":false
+}

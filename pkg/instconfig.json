@@ -1,0 +1,56 @@
+{
+    "rem": "/*处理过后的json的文件和目录存放的目录*/",
+    "name": "instconfig",
+    "userName": "penyu",
+    "version": "1.0.0",
+    "ifmin": false,
+    "ifminhtml": false,
+    "gzipIf": false,
+    "changIf": false,
+    "srcRev": false,
+    "suffix": "",
+    "srcPath": "./instconfig/",
+    "publicPath": "public/",
+    "destRoot": "",
+    "destPath": "",
+    "tempPath": "",
+    "mapsPath": "maps",
+    "mapIf": false,
+    "bakPath": "",
+    "debarPath": "",
+    "serverPath": "c:/gulp/",
+
+    "jsDoc3Temp":"./temp/jsDoc/instconfig/",
+    "jsDoc3Dir":"./Doc/{#name#}/",
+    "ifJsDoc":true,
+
+    "browser": "",
+    "copyFile": "",
+    "copyDstDir": "",
+    "jsonFile": [{
+        "src":["package","webAppConfig"],
+        "dest":"c:/gulp/"
+    },{
+        "src":"pkg/*",
+        "dest":"e:/webapp/pkg/"
+    }],
+
+    "jsonDstDir": "",
+    "imgFile": "",
+    "imgDstDir": "c:/gulp/",
+    "dirConcatJs": "",
+    "concatJs": "",
+    "concatDstJsFileName": "",
+    "jsFile": "gulpfile",
+    "jsDstDir": "c:/gulp/",
+    "sassFile": "",
+    "concatCss": "",
+    "concatDstCssFileName": "",
+    "cssFile": "",
+    "cssDstDir": "",
+    "htmlFile": "",
+    "tplsHtmlFile": "",
+    "htmlDstDir": "",
+    "injectPath": "",
+    "injectName": "inject"
+}
