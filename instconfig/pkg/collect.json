@@ -5,7 +5,7 @@
 
     "ifmin": false,
     "gzipIf": false,
-    "srcRev": false,
+    "srcRev": true,
     "suffix": "",
 	"injectIf":true,
 	"bannerIf":false,
@@ -223,6 +223,14 @@
         "minifyJS": true,
         "minifyCSS":true
     },
+    
+    "templateFile":[{
+        "injectIf":false,
+        "src":"tpls/**/*",
+        "dest":"tpls/"
+    }],
+    "templateDstDir":"tpls/",
+    
     "htmlFile": [{
 		"changIf":true,
         "src":"*",
@@ -232,10 +240,6 @@
         "injectIf":false,
         "src":"!demo/**/*",
         "dest":"demo/"
-    },{
-        "injectIf":false,
-        "src":"tpls/**/*",
-        "dest":"tpls/"
     }],
     
     "tplsHtmlFile": "html/tpls/",

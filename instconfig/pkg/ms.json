@@ -5,7 +5,7 @@
 
     "ifmin": false,
     "gzipIf": false,
-    "srcRev": false,
+    "srcRev": true,
     "suffix": "",
 	"injectIf":true,
 	"changIf":true,
