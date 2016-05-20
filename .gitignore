@@ -1,1 +1,4 @@
-node_modules
+node_modules/
+废弃/
+temp/
+**/废弃/
