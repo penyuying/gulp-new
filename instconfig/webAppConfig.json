@@ -67,6 +67,7 @@
   "publicPath": "{#webappDir#}develop/public/",
   "destRoot": "",
   "destPath": "{#webappDstDir#}web/",
+  "destTest": "{#webPath#}test/",
   "revDestPath":"{#webappDstDir#}temp/",
   "revType":"part",
   "revCollectorType":"part",

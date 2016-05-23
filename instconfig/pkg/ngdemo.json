@@ -26,6 +26,7 @@
 	"anonymous":true,
 
     "copyFile": [{
+        "changIf":false,
         "psrc": "sass/global/mixin.scss",
         "dsrc":"sass/",
         "newFileName":"_mixin.scss"

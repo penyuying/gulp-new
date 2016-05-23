@@ -15,12 +15,13 @@
 
     "srcPath": "{#webappDir#}develop/collect/html/",
     "destPath": "{#webPath#}collect/",
-    "revDestPath":"{#webappDstDir#}temp/rev/sf/",
+    "destTest": "{#webPath#}test/collect/",
+    "revDestPath":"{#webappDstDir#}temp/rev/collect/",
 
     "jsDocType":"angular",
     "jsDocLink":"/api",
-    "jsDoc3Temp":"{#webappDstDir#}temp/jsDoc/sf/",
-    "jsDoc3Dir":"{#webPath#}Doc/{#name#}/sf/",
+    "jsDoc3Temp":"{#webappDstDir#}temp/jsDoc/collect/",
+    "jsDoc3Dir":"{#webPath#}Doc/{#name#}/collect/",
     "ifJsDoc":true,
 	"testConfig":{
         "srcPath":[
@@ -41,7 +42,7 @@
 			"../test/**/*.js",
 			"*.js"
         ],
-        "testConfigFile":"{#destPath#}/sf/test/config/karma.conf.js",
+        "testConfigFile":"{#destTest#}sf/test/config/karma.conf.js",
         "singleRun":false
     },
     "destRoot":"sf/",
@@ -57,10 +58,12 @@
             "dest":"js/angular/"
 		},{
             "src": "test/**/*.*",
-            "dest":"test/"
+            "dest":"test/",
+            "destPath":"{#destTest#}"
 		},{
             "psrc": "js/angular/angular-1.2.29/angular-mocks.js",
-            "dest":"test/test_lib/"
+            "dest":"test/test_lib/",
+            "destPath":"{#destTest#}"
 		},{
             "psrc": "js/require/requirejs2.1.11/require.min.js",
             "dest":"js/"
@@ -89,6 +92,8 @@
             "psrc": "js/jquery/plugins/layer-v2.0/{layer/**/*.*,layer/}",
             "dest":"js/layer/"
 		},{
+            
+        "changIf":false,
         "psrc": "sass/global/mixin.scss",
         "dsrc":"sass/",
         "newFileName":"_mixin.scss"

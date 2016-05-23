@@ -27,6 +27,7 @@
             "psrc": "js/jquery/jquery-1.11.3.min.js",
             "dest":"js/"
 		},{
+            "changIf":false,
             "psrc": "sass/ListBox/listBox.scss",
             "dsrc":"sass/",
 			"newFileName":"_listBox.scss"

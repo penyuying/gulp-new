@@ -39,10 +39,12 @@
             "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*.*",
             "dest":"js/layer/"
 		},{
+            "changIf":false,
             "psrc": "sass/global/globalSkin.scss",
             "dsrc":"sass/",
 			"newFileName":"globalSkin.scss"
 		},{
+            "changIf":false,
             "psrc": "sass/global/mixin.scss",
             "dsrc":"sass/",
 			"newFileName":"_mixin.scss"

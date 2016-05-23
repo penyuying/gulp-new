@@ -26,10 +26,12 @@
             "psrc": "js/zeptoJs1.1.6/zepto.min.js",
             "dest":"js/zepto/"
 		},{
+            "changIf":false,
             "psrc": "sass/global/globalSkin.scss",
             "dsrc":"sass/",
 			"newFileName":"globalSkin.scss"
 		},{
+            "changIf":false,
             "psrc": "sass/global/mixin.scss",
             "dsrc":"sass/",
 			"newFileName":"_mixin.scss"

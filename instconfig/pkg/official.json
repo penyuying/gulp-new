@@ -30,6 +30,7 @@
             "psrc": "js/jquery/plugins/layer-v2.0/layer/**/*.*",
             "dest":"js/layer/"
 		},{
+            "changIf":false,
             "psrc": "sass/control/control.scss",
             "dsrc":"sass/",
             "newFileName":"_control.scss"
@@ -40,6 +41,7 @@
             "psrc": "js/jquery/plugins/DatePickerBeta/My97DatePicker/**/*.*",
             "dest":"js/My97DatePicker/"
         },{
+            "changIf":false,
             "psrc": "sass/ListBox/listBox.scss",
             "dsrc":"sass/",
             "newFileName":"_listBox.scss"

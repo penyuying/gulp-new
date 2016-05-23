@@ -594,22 +594,25 @@
                         return "";
                     }
                 }
-                var root = pkg.destRoot || "";
-                if (obj && typeof obj.root != "undefined") {
-                    root = obj.root;
+                var root = pkg.destRoot || "",destPath=pkg.destPath||"";
+                if (obj) {
+                    if(typeof obj.root != "undefined"){
+                        root = obj.root;
+                    }
+                    destPath=returnObj(obj, "destPath", returnObj(pkg, 'destPath', ""));
                 }
 
                 if (obj && obj.dsrc) {//存储到开发目录
                     return path.normalize(pkg.srcPath + obj.dsrc).replace(/\\/g, "/");
                 } else if (obj && obj.dest) {//存储到生成目录
-                    return path.normalize(pkg.destPath + root + obj.dest).replace(/\\/g, "/");
+                    return path.normalize(destPath + root + obj.dest).replace(/\\/g, "/");
                 } else if (subDst) {
                     if (pkg[subDst]) {
-                        return path.normalize(pkg.destPath + root + pkg[subDst]).replace(/\\/g, "/");
+                        return path.normalize(destPath + root + pkg[subDst]).replace(/\\/g, "/");
                     }
                 }
-                if (pkg.destPath) {
-                    return path.normalize(pkg.destPath + root).replace(/\\/g, "/");
+                if (destPath) {
+                    return path.normalize(destPath + root).replace(/\\/g, "/");
                 } else {
                     return "";
                 }
@@ -2055,16 +2058,15 @@
                 var runstart = false;
                 if (arrObj.length > 0) {
                     var subMerge = new PY.mergestream();
-                    var i = 0;
                     for (var j = 0; j < arrObj.length; j++) {
-                        i = j;
                         if (arrObj[j].cfgArr && arrObj[j].cfgArr.length > 0) {
                             runstart = true;
                             switch (arrObj[j].imgtype) {
                                 case 'png':
                                     //                                    i+=1;
                                     //                                    i=0;
-                                    subMerge.add(arrObj[j].cfgArr.map(function (cfg) {
+
+                                    subMerge.add(arrObj[j].cfgArr.map(function (cfg,k) {
                                         return PY.gulp.src(cfg.srcPath)
                                             .pipe(PY.gulpchanged(cfg.destPath))
                                             .pipe(PY.gulpif(cfg.ifminimg === true, PY.imageminpngquant({ quality: '60-' + cfg.imgquality })()))//.pipe(imageminPng({ quality: '65-80', speed: 4 })())
@@ -2075,14 +2077,14 @@
                                                 suffix: cfg.suffix
                                             }))) //加后缀
                                             .pipe(PY.gulp.dest(cfg.destPath))
-                                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest-png" + i + ".json", dest: cfg.revDestPath, merge: true })))
+                                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest-png" + k + ".json", dest: cfg.revDestPath, merge: true })))
                                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)));
                                     }));
                                     break;
                                 case 'jpg':
                                     //                                    i+=1;
                                     //                                    i=1;
-                                    subMerge.add(arrObj[j].cfgArr.map(function (cfg) {
+                                    subMerge.add(arrObj[j].cfgArr.map(function (cfg,k) {
                                         return PY.gulp.src(cfg.srcPath)
                                             .pipe(PY.gulpchanged(cfg.destPath))
                                             .pipe(PY.gulpif(cfg.ifminimg === true, PY.imageminmozjpeg({ quality: cfg.imgquality * 1 })()))
@@ -2092,14 +2094,14 @@
                                                 suffix: cfg.suffix
                                             }))) //加后缀
                                             .pipe(PY.gulp.dest(cfg.destPath))
-                                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest-jpg" + i + ".json", dest: cfg.revDestPath, merge: true })))
+                                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest-jpg" + k + ".json", dest: cfg.revDestPath, merge: true })))
                                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)));
                                     }));
                                     break;
                                 case 'gif':
                                     //                                    i+=1;
                                     //                                    i=2;
-                                    subMerge.add(arrObj[j].cfgArr.map(function (cfg) {
+                                    subMerge.add(arrObj[j].cfgArr.map(function (cfg,k) {
                                         return PY.gulp.src(cfg.srcPath)
                                             .pipe(PY.gulpchanged(cfg.destPath))
                                             .pipe(PY.gulpif(cfg.ifminimg === true, PY.imagemingifsicle({ interlaced: false })()))
@@ -2109,7 +2111,7 @@
                                                 suffix: cfg.suffix
                                             }))) //加后缀
                                             .pipe(PY.gulp.dest(cfg.destPath))
-                                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest-gif" + i + ".json", dest: cfg.revDestPath, merge: true })))
+                                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest-gif" + k + ".json", dest: cfg.revDestPath, merge: true })))
                                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)));
                                     }));
                                     break;
@@ -2146,6 +2148,7 @@
                                         ret = true;
                                         var i = 0;
                                         subMerge.add(folders.map(function (folder, k1) {
+                                            var revCollectorSrc;
                                             if (cfg.srcRev === true) {
                                                 revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + "**/*.json");
                                             } else {
@@ -2200,12 +2203,12 @@
                                                     suffix: cfg.suffix
                                                 }))) //加后缀
                                                 .pipe(PY.gulp.dest(cfg.destPath))
-                                                .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
-                                                .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
                                                 .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulpgzip({
                                                     append: true
                                                 })))
                                                 .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulp.dest(cfg.destPath)))
+                                                .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
+                                                .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
                                                 .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
                                         }));
                                     }
@@ -2283,12 +2286,12 @@
                                     suffix: cfg.suffix
                                 }))) //加后缀
                                 .pipe(PY.gulp.dest(cfg.destPath)) //保存更改后的文件
-                                .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
-                                .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
                                 .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulpgzip({
                                     append: true
                                 })))
                                 .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulp.dest(cfg.destPath)))
+                                .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
+                                .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
                                 .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
                         }
                     }));
@@ -2360,12 +2363,12 @@
                                 suffix: cfg.suffix
                             }))) //加后缀
                             .pipe(PY.gulp.dest(cfg.destPath)) //保存更改后的文件
-                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
-                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
                             .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulpgzip({
                                 append: true
                             })))
                             .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulp.dest(cfg.destPath)))
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
                             .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
                     }));
                     return subMerge;
@@ -2437,12 +2440,12 @@
                                 suffix: cfg.suffix
                             }))) //加后缀
                             .pipe(PY.gulp.dest(cfg.destPath))
-                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
-                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
                             .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulpgzip({
                                 append: true
                             })))
                             .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulp.dest(cfg.destPath)))
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
                             .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
                     }));
                     return subMerge;
@@ -2496,13 +2499,13 @@
                                     suffix: cfg.suffix
                                 }))) //加后缀
                                 .pipe(PY.gulp.dest(cfg.destPath))
-                                .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
-                                .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
 //                                .pipe(PY.gulp.dest(cfg.destPath)) //保存更改后的文件
                                 .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulpgzip({
                                     append: true
                                 })))
                                 .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulp.dest(cfg.destPath)))
+                                .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
+                                .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
                                 .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
                         }
                     }));
@@ -2557,13 +2560,13 @@
                                 suffix: cfg.suffix
                             }))) //加后缀
                             .pipe(PY.gulp.dest(cfg.destPath))
-                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
-                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
 //                            .pipe(PY.gulp.dest(cfg.destPath))
                             .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulpgzip({
                                 append: true
                             })))
                             .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulp.dest(cfg.destPath)))
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
                             .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
                     }));
                     return subMerge;
@@ -2652,7 +2655,7 @@
                         if (cfg.srcRev === true) {
                             revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + "**/*.json");
                         } else {
-                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + "**/*.json");
+                            revCollectorSrc = PY.gulp.src("");
                         }
                         return PY.streamqueue({ objectMode: true }, PY.gulp.src(cfg.srcPath)
                             .pipe(PY.gulpplumber())
@@ -2692,7 +2695,7 @@
                         if (cfg.srcRev === true) {
                             revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + "**/*.json");
                         } else {
-                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + "**/*.json");
+                            revCollectorSrc = PY.gulp.src("");
                         }
 
                         return PY.streamqueue({ objectMode: true }, PY.gulp.src(cfg.srcPath)
