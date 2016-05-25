@@ -95,7 +95,7 @@
         
         PY.karmaServer=PY.karma.Server;
         PY.gulpconnectmulti=PY.gulpconnectmulti();
-        PY.gulpdocs = require('gulp-ngdocs');
+        //PY.gulpdocs = require('gulp-ngdocs');
 //		PY.removeplugin()
 
     //var build = {};
@@ -233,23 +233,26 @@
      * }
      */
     function replaceItem(item, tempPkg, reg) {
-        item = item.replace(reg, function ($1, $2) {
-            var ret = $1, tempObj = tempPkg, $2Arr = $2.split("."), jl = false;
-            for (var i = 0; i < $2Arr.length; i++) {
-                if (typeof tempObj[$2Arr[i]] != "undefined") {
-                    tempObj = tempObj[$2Arr[i]];
-                    jl = true;
-                } else {
-                    jl = false;
-                    break;
+        if(item){
+            item = item.replace(reg, function ($1, $2) {
+                var ret = $1, tempObj = tempPkg, $2Arr = $2.split("."), jl = false;
+                for (var i = 0; i < $2Arr.length; i++) {
+                    if (typeof tempObj[$2Arr[i]] != "undefined") {
+                        tempObj = tempObj[$2Arr[i]];
+                        jl = true;
+                    } else {
+                        jl = false;
+                        break;
+                    }
                 }
-            }
-            if (jl) {
-                //ret=tempObj;
-                ret = replaceItem(tempObj, tempPkg, reg);
-            }
-            return ret;
-        });
+                if (jl) {
+                    //ret=tempObj;
+                    ret = replaceItem(tempObj, tempPkg, reg);
+                }
+                return ret;
+            });
+        }
+        
         return item;
     }
     
@@ -441,9 +444,13 @@
             "q+": Math.floor((dateObj.getMonth() + 3) / 3), //季度
             "S": dateObj.getMilliseconds() //毫秒
         };
-        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (dateObj.getFullYear() + "").substr(4 - RegExp.$1.length));
+        if (fmt && /(y+)/.test(fmt)){
+            fmt = fmt.replace(RegExp.$1, (dateObj.getFullYear() + "").substr(4 - RegExp.$1.length));
+        }
         for (var k in o) {
-            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            if (fmt && new RegExp("(" + k + ")").test(fmt)){
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            }
         }
         return fmt;
     }
@@ -854,7 +861,7 @@
                 var temparr = [], pathArr = this.splitSrc(objPath);
                 if (pathArr && pathArr.length > 0) {
                     pathArr.map(function (v, k) {
-                        if (v.indexOf("!") != -1) {
+                        if (v && v.indexOf("!") != -1) {
                             ret.push("!" + v.replace(/\!/g, ""));
                         } else {
                             if (v.slice(-1) === "*") {
@@ -1327,9 +1334,9 @@
 			 * @returns {Object} 返回cfgObj配置参数对象
 			 */
             getImgPath: function () {
-                var pngobj = this.setObj("imgFile", "imgDstDir", "imgFile", "png", ".{png,PNG}");
-                var jpgobj = this.setObj("imgFile", "imgDstDir", "imgFile", "jpg", ".{jpg,JPG}");
-                var gifobj = this.setObj("imgFile", "imgDstDir", "imgFile", "gif", ".{gif,GIF}");
+                var pngobj = this.setObj("imgFile", "imgDstDir", "imgFile", ".{png,PNG}");
+                var jpgobj = this.setObj("imgFile", "imgDstDir", "imgFile", ".{jpg,JPG}");
+                var gifobj = this.setObj("imgFile", "imgDstDir", "imgFile", ".{gif,GIF}");
                 var retGSrc = [];
                 if (pngobj.gSrc && pngobj.gSrc.length > 0) {
                     retGSrc = retGSrc.concat(pngobj.gSrc);
@@ -1452,12 +1459,13 @@
 			 * 输出jshint检查语法错误信息
 			 */
             myReporter: function (file, cb) {
+                var errArr=[];
                 console.log('   JSHINT file in：' + file.path);
                 if (file.jshint.data && file.jshint.data[0] && file.jshint.data[0].globals) {
                     console.log("   globals Object in： " + file.jshint.data[0].globals);
                 }
                 if (!file.jshint.success) {
-                    console.log('   error info：');
+                    
                     //不显示的错误信息
                     var errorObj = {
                         "W041": true, //错误码W041:(!=)
@@ -1469,12 +1477,24 @@
                             //错误码W041:(!=)
                             //错误码W083:(函数未命名)
                             if (!errorObj[err.error.code]) {
-                                console.log('      行 ' + err.error.line + ', 列 ' + err.error.character + ', code ' + err.error.code + ', ' + err.error.reason);
+                                errArr.push('      行 ' + err.error.line + ', 列 ' + err.error.character + ', code ' + err.error.code + ', ' + err.error.reason);
                             }
                         }
                     });
+                    if(errArr.length>0){
+                        console.log('   error info：');
+                        errArr.forEach(function(err){
+                            console.log(err);
+                        });
+                        console.log("");
+                    }else{
+                        console.log('   success');
+                        console.log("");
+                    }
+                    
                 } else {
                     console.log('   success');
+                    console.log("");
                 }
                 cb(null, file);
             }
@@ -1564,34 +1584,40 @@
          * @returns {String} 返回模板替换完后的内容
          */
         function txtSet(templateText, val, htmlKeyName, obj, key) {
-            var narr = [];
+            var narr = [],a=templateText;
             if (htmlKeyName) {
                 narr = htmlKeyName.split(",");
             }
-            var a = templateText.toString().replace(/\{\$([^}]+)\$\}/ig, function ($1, $2) {
-                if (!$2) { return $1; }
-                var otmp;
-                if ($2 == narr[0] || $2 == narr[1]) {
-                    if (narr.length == 1) {
-                        return val;
-                    } else {
-                        if ($2 == narr[0]) {
-                            return key;
-                        }
-                        if ($2 == narr[1]) {
+            if(templateText){
+               templateText=templateText.toString();
+            }
+            if(templateText){
+                a = templateText.replace(/\{\$([^}]+)\$\}/ig, function ($1, $2) {
+                    if (!$2) { return $1; }
+                    var otmp;
+                    if ($2 == narr[0] || $2 == narr[1]) {
+                        if (narr.length == 1) {
                             return val;
+                        } else {
+                            if ($2 == narr[0]) {
+                                return key;
+                            }
+                            if ($2 == narr[1]) {
+                                return val;
+                            }
+                            return $2;
                         }
-                        return $2;
+                    } else {
+                        otmp = keyInObj($2, obj, val, narr);
+                        if (typeof otmp == "undefined") {
+                            otmp = $1;
+                        }
+                        return otmp;
                     }
-                } else {
-                    otmp = keyInObj($2, obj, val, narr);
-                    if (typeof otmp == "undefined") {
-                        otmp = $1;
-                    }
-                    return otmp;
-                }
 
-            });
+                });
+            }
+            
             return a;
         }
 
@@ -1619,29 +1645,32 @@
 
             if (objType) {
                 arr = objType.split(':');
-                if (arr[0].slice(0, 3) == "for") {
+                if (arr[0] && arr[0].slice(0, 3) == "for") {
                     tempFor = arr[0].replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ').replace('(', "").replace(')', "").split(' ');
                     if (tempFor[0] === "for") {
                         forParam = tempFor;
                         arr.splice(0, 1);
                     }
                 }
-                if (arr.length > 1 && arr[0].toLowerCase() == "obj") {
+                if(arr && arr.length > 1 && arr[0]){
+                    if (arr[0].toLowerCase() == "obj") {
 
-                    //html里的内容需接转对象
-                    arr.splice(0, 1);
-                    jsondata = arr.join(':').replace(/\'/gi, "\"");
-                    try {
-                        obj = JSON.parse(jsondata);
-                    } catch (e) {
-                        console.log("引用" + (fileTplsDir) + "内容JSON对象格式转换错误：" + e.message);
+                        //html里的内容需接转对象
+                        arr.splice(0, 1);
+                        jsondata = arr.join(':').replace(/\'/gi, "\"");
+                        try {
+                            obj = JSON.parse(jsondata);
+                        } catch (e) {
+                            console.log("引用" + (fileTplsDir) + "内容JSON对象格式转换错误：" + e.message);
+                        }
+                    } else if (arr[0].toLowerCase() == "json") {
+
+                        //json文件转对象
+                        arr.splice(0, 1);
+                        obj = getJson(cfg.tplsPath + "json/" + arr.join(':'));
                     }
-                } else if (arr.length > 1 && arr[0].toLowerCase() == "json") {
-
-                    //json文件转对象
-                    arr.splice(0, 1);
-                    obj = getJson(cfg.tplsPath + "json/" + arr.join(':'));
                 }
+                
             }
             ret = {
                 data: obj,//模板中替换需要用的数据对象
@@ -1694,15 +1723,18 @@
          * @returns {String} 返回格式化后的模板内容
          */
         function formatTxt(template, spaces) {
-            template = template.replace(/\n/gi, function ($1, $2, $3) {
-                return "\n" + spaces;
-            });
-            if (spaces && spaces.length > 0) {//删除空行的空白符
-                var reg = new RegExp(spaces + "(\r\n|\n)", "gi");
-                template = template.replace(reg, function ($1, $2) {
-                    return $2;
+            if(template){
+                template = template.replace(/\n/gi, function ($1, $2, $3) {
+                    return "\n" + spaces;
                 });
+                if (spaces && spaces.length > 0) {//删除空行的空白符
+                    var reg = new RegExp(spaces + "(\r\n|\n)", "gi");
+                    template = template.replace(reg, function ($1, $2) {
+                        return $2;
+                    });
+                }
             }
+            
             return template;
         }
 
@@ -1807,10 +1839,12 @@
                 } else {
                     fortxt = txtSet(template, obj);
                 }
-
-                template = fortxt.replace(regExp, function (content, $s, path, r1, objType) {
-                    return replaceHtml(cfg, regExp, content, $s, path, r1, objType);
-                });
+                if(fortxt){
+                    template = fortxt.replace(regExp, function (content, $s, path, r1, objType) {
+                        return replaceHtml(cfg, regExp, content, $s, path, r1, objType);
+                    });
+                }
+                
                 template = formatTxt(template, spaces);
                 //template = template.replace(/\n/gi, function ($1, $2, $3) {
                 //    return "\n" + spaces;
@@ -2168,6 +2202,7 @@
                                                 //.pipe(changed(cfg.destPath))
                                                 .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.init()))
                                                 .pipe(PY.gulpjshint()) //检查语法
+                                                .pipe(PY.gulpif(cfg.ifJsDoc === true, PY.gulp.dest(cfg.jsDoc3Temp)))
                                                 .pipe(myReporter)
                                                 .pipe(PY.gulpconcat(folder + '.js'))
 //                                                .pipe(PY.gulp.dest(cfg.destPath))
@@ -2178,8 +2213,6 @@
                                                         return true;
                                                     }
                                                 })))
-
-                                                .pipe(PY.gulpif(cfg.ifJsDoc === true, PY.gulp.dest(cfg.jsDoc3Temp)))
                                                 .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpuglify()))
 //                                                .pipe(PY.gulpif(cfg.suffix !== false, PY.gulprename(folder + cfg.suffix + '.js')))
                                                 .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpheaderfooter({
@@ -2252,6 +2285,8 @@
                                 //.pipe(changed(cfg.destPath))
                                 .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.init()))
                                 .pipe(PY.gulpjshint()) //检查语法
+
+                                .pipe(PY.gulpif(cfg.ifJsDoc === true, PY.gulp.dest(cfg.jsDoc3Temp)))
                                 .pipe(myReporter)
                                 .pipe(PY.gulpconcat(cfg.concatFileName)) //合并文件合并后的文件名为xxx.js
 								.pipe(PY.gulpif(cfg.jsAnonymous == true, PY.gulpheaderfooter({//文件前后增加内容
@@ -2261,8 +2296,6 @@
 								        return true;
 								    }
 								})))
-
-                                .pipe(PY.gulpif(cfg.ifJsDoc === true, PY.gulp.dest(cfg.jsDoc3Temp)))
                                 //.pipe(PY.gulp.dest(cfg.destPath))
                                 .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpuglify())) //压缩JS
                                 //.pipe(livereload(server))
@@ -2326,6 +2359,8 @@
                             .pipe(PY.gulpplumber())
                             //.pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath)))
                             .pipe(PY.gulpjshint()) //检查语法
+
+                            .pipe(PY.gulpif(cfg.ifJsDoc === true, PY.gulp.dest(cfg.jsDoc3Temp)))
                             .pipe(myReporter)//(jshint.reporter('default', { verbose: true })//'fail'
                             .pipe(PY.gulpif(cfg.jsAnonymous == true, PY.gulpheaderfooter({//文件前后增加内容
                                 header: cfg.jsHeader,
@@ -2334,8 +2369,6 @@
                                     return true;
                                 }
                             })))
-
-                            .pipe(PY.gulpif(cfg.ifJsDoc === true, PY.gulp.dest(cfg.jsDoc3Temp)))
                             .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpuglify())) //压缩JS
 //                            .pipe(obfuscate())//JS代码混淆
 //                            .on('error', gutil.log)
@@ -2382,7 +2415,7 @@
                 if (this.options.testConfig && this.options.testConfig.testConfigFile) {
                     var testConfig = this.options.testConfig;
                     new PY.karmaServer({
-                        configFile: path.normalize(testConfig.testConfigFile).replace(/\\/g, "/"),
+                        configFile: testConfig.testConfigFile && path.normalize(testConfig.testConfigFile).replace(/\\/g, "/"),
                         singleRun: testConfig.singleRun
                     }, done).start();
                 }
@@ -2587,12 +2620,12 @@
                                     //                        scripts: ['../app.min.js'],
                                     //                        html5Mode: true,
                                     //                        startPage: '/api',
-                                    startPage: cfg.jsDocLink + "" || "",
+//                                    startPage: cfg.jsDocLink + "" || "",
                                     title: cfg.name + " angular Api",
                                     //                        image: "path/to/my/image.png",
                                     //                        imageLink: "http://my-domain.com",
                                     //                        titleLink: "/api"
-                                    titleLink: cfg.jsDocLink + "" || ""
+//                                    titleLink: cfg.jsDocLink + "" || ""
                                 };
                             }
 
@@ -2627,7 +2660,9 @@
                                      }
                                  }, cb)))
                                 .pipe(PY.gulpplumber())
-                                .pipe(PY.gulpif(cfg.ifJsDoc === true && cfg.jsDocType === "angular", PY.gulpdocs.process(options)))
+                                .pipe(PY.gulpif(cfg.ifJsDoc === true && cfg.jsDocType === "angular", PY.gulpngdocs.process(options)))
+
+//                                .pipe(PY.gulpif(cfg.ifJsDoc === true && cfg.jsDocType === "angular", PY.gulpdocs.process(options)))
                                 .pipe(PY.gulpif(cfg.ifJsDoc === true && cfg.jsDocType === "angular", PY.gulp.dest(cfg.jsDoc3Dir + cfg.jsDocType + "/")))
                                 .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
 
