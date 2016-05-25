@@ -3176,3 +3176,158 @@
     //#endregion
 
 })();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+*配置参数说明
+*/
+
+/**
+ *JSON配置文件参数说明<br/>
+ *项目本身的JSON配置文件参数比全局配置参数优先级高
+ *{#xxx#}的引用除特殊说明外的其它都只能在pkg对象内部引用,多级的可以直接用{#xx.xx#}形式引用
+ *@module pkg
+ * @protected
+ * @property {String} [name="webapp"] 项目名称
+ * @property {String} [userName="penyu"] 作者
+ * @property {String} [version="1.0.0"] 版本号
+ * @property {String} [fileTime="mtime"] 文件操作时间：<br/>1、mtime:就是modify time。（修改时间）<br/>2、ctime：是指change time。<br/>（注：mtime和ctime的区别在于，只有修改了文件的内容，才会更新文件的mtime，而对文件更名，修改文件的属主等操作，只会更新ctime）
+ * @property {String} [fileTimeName="filetime"] 文件时间使用的别名(在文件中用{#filetime#}引用将会替换成文件操作时间)
+ * @property {String} [bowersrc="E:/bower/app/"] bower文件存放的根目录
+ * @property {Array} items 项目名称(设置的名称必须要在subJsonPath项对应的目录有对应名的JSON配置文件，此项在项目对应的JSON文件中设置将无效)
+ * @property {Object} [testConfig=""] 单元测试配置项
+ * @property {String} testConfig.testConfigFile 单元测试配置文件路径
+ * @property {String} testConfig.singleRun 设置为flase这意味着每次都会在浏览器中重新运行，每次都会改变一个文件
+ * @property {String} [webappDir="e:/webapp/"] 工作引用目录（task中不用）
+ * @property {String} [webappDstDir="e:/webapp/"] 文件存放引用目录（task中不用）
+ * @property {String} [jsDocType=""] JSDoc生成的文件类型（如:angular）如果填写表示jsdoc和ngdocs一起生成
+ * @property {String} [jsDocLink=""] JSDoc生成的链接(类型是angular时用)
+ * @property {String} [jsDoc3Temp=""] 项目用JSDoc生成API时存放项目的临时文件根目录 
+ * @property {String} [jsDoc3Dir=""] 项目用JSDoc生成的API存放的根目录 
+ * @property {Boolean} [ifJsDoc=false] 项目JS是否生成API文件(false表示不生成，true表示生成)
+ * @property {String} [subJsonPath= "{#webappDstDir#}pkg/] 项目源文件所在目录
+ * @property {String} [bakDest="d:/webapp/bak/"] 备份文件引用存放根目录(task中不用)
+ * @property {String} [bakDstDir="{#bakDest#}{#bakDateDir#}"] 备份文件存放目录(如果bakFile项中未设置dest项，则使用此项)
+ * @property {Boolean} [ifmin=false] 是否压缩JS、CSS、JSON文件（false：为压缩；true：为不压缩）
+ * @property {Boolean} [ifminimg=false] 是否压缩图片文件（false：为不压缩；true：为压缩）
+ * @property {Number} [imgquality=80] 图片压缩的质量，最小不能小于60(ifminimg=true时才有效)
+ * @property {Boolean} [ifminhtml= false] 是否压缩html（false：为压缩；true：为不压缩）
+ * @property {Object} ifminhtmlObj 压缩HTML的参数
+ * @property {Boolean} [ifminhtmlObj.removeComments=false] 删除注释
+ * @property {Boolean} [ifminhtmlObj.collapseWhitespace=false] 删除空行和空格
+ * @property {Boolean} [ifminhtmlObj.conservativeCollapse=true] 删除行配合collapseWhitespace=true用
+ * @property {Boolean} [ifminhtmlObj.preserveLineBreaks=true] 删除行前空格配合collapseWhitespace=true用
+ * @property {Boolean} [ifminhtmlObj.removeAttributeQuotes=false] 在可能的情况下删除引号
+ * @property {Boolean} [ifminhtmlObj.removeEmptyAttributes=false] 删除空白属性
+ * @property {Boolean} [ifminhtmlObj.removeEmptyElements=false] 删除所有内容为空的元素
+ * @property {Boolean} [ifminhtmlObj.removeScriptTypeAttributes=false] 除去type=“text/javascript”从脚本标记。其他类型的属性值是左不变的。
+ * @property {Boolean} [ifminhtmlObj.collapseBooleanAttributes=false] 删除可以不赋值的属性的值input disabled="disabled"改成input disabled
+ * @property {Boolean} [ifminhtmlObj.removeStyleLinkTypeAttributes=false] 除去type="text/css" 其他类型的属性值是左不变的。
+ * @property {Boolean} [ifminhtmlObj.keepClosingSlash=true] 保持单元素的结尾"/"
+ * @property {Boolean} [ifminhtmlObj.minifyJS=false] 压缩页面上的JS
+ * @property {Boolean} [ifminhtmlObj.minifyCSS=false] 压缩页面上的CSS
+ * @property {Boolean} [gzipIf=false] 是否把文件压缩成gzip格式（true为是，false为否）
+ * @property {Boolean} [changIf=false] 是否改变时才更新文件（true为否，false为是）
+ * @property {Boolean} [srcRev=false] 是否给引用文件加后缀如：xxx.x?=xxxx（true为是，false为否））
+ * @property {String} [prefix=""] 是否给文件加前缀（有内空时为加，没有内容时为不加）
+ * @property {String} [suffix=".min"] 是否给文件加后缀（有内空时为加，没有内容时为不加）
+ * @property {Boolean} [injectIf=true] 是否注入文件到html（true为是，false为否）
+ * @property {Boolean} [bannerIf=false] 是否给文件加banner（true为否，false为是）
+ * @property {String} [srcPath="{#webappDir#}develop/"] 需要处理的项目源文件目录
+ * @property {String} [publicPath="{#webappDir#}develop/public/"] 项目的公用源文件根目录
+ * @property {String} [destPath="{#webappDstDir#}web/"] 项目生成存放的根目录
+ * @property {String} [destRoot=""] 项目生成存放的根目录的子项目根目录
+ * @property {String} [destTest="{#webPath#}test/"] 测试文件存放的根目录
+ * @property {String} [revDestPath="{#webappDstDir#}temp/"] 生成文件MD5的对应JSON文件存放目录
+ * @property {String} [revType="part"] rev生成和替换静态文件名的类型（"part"为参数形式,其它为文件名形式）
+ * @property {String} [tempPath="{#webappDir#}temp/"] 临时文件存放的根目录引用（task中不用）
+ * @property {String} [mapsPath="maps"] map文件存放的子路径
+ * @property {Boolean} [mapIf=false] 是否生成map文件（true为是，false为否）
+ * @property {String} [debarPath="{废弃/** /*.*, /**\/废弃.*,/** /废弃/*.*,/** /废弃/** /*.*}"] 生成文件时不包含的文件
+ * @property {String} [host="127.0.0.1"] 本地服务器地址（暂时无用）
+ * @property {String} [port="8020"] 本地服务器端口号
+ * @property {String} [webPath= "{#webappDstDir#}web/"] web文件根目录
+ * @property {String} [serverPath="{#webPath#}"] 本地服务器文件目录路径
+ * @property {String} [browser=""] 自动打开的浏览器名称如：chrome
+ * @property {String} [bakDateDir=""] 用时间作目录(此项不需要设置值,系统会自动读取当前时间需要引用的地方使用{#bakDateDir#})
+ * @property {String|Array} [bakFile=""] 备份文件配置项
+ * @property {String|Array} [bakFile.src=""] 备份源文件目录
+ * @property {Object} [bakFile.dest=""] 备份文件存放目录(如果根目录非项目当前目录，前面必须加上根目录如:{#bakDest#}{#bakDateDir#}develop/)
+ * @property {String|Array} [copyFile=""] 拷贝文件的配置项
+ * @property {String} [copyFile.src=""] 拷贝文件源文件目录
+ * @property {String} [copyFile.psrc=""] 拷贝公共文件源文件目录
+ * @property {String} [copyFile.debar=""] 拷贝文件时不包含的文件此项会包含全局项字段debarPath
+ * @property {String} [copyFile.dest=""] 拷贝文件存放目录(前面不需要加上根目录如:"js/angular/")
+ * @property {String} [copyFile.destPath=""] 拷贝文件存放目录的根目录
+ * @property {String} [copyFile.root=""] 项目生成存放的根目录的子项目根目录如果不设置此项则使用destRoot
+ * @property {Boolean} [copyFile.changIf=true] 是否改变时才更新文件;true为否，false为是。(如果不设置此项则用全局的changIf)
+ * @property {String} [copyDstDir=""] 拷贝文件的存放目录
+ */
+/**
+  "jsonFile": "",
+  "jsonDstDir": "json/",
+  "imgFile": [
+    {
+      "src": ""
+    },
+    {
+      "src": "",
+      "dest": "css/",
+      "debar": "css/"
+    }
+  ],
+  "autoprefixerBrowsers":["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 6", "ie_mob >= 6", "ios_saf >= 6", "opera >= 5","safari >= 6"],
+  "imgDstDir": "img/",
+  "dirConcatJs": "",
+  "concatJs": "",
+  "jsAnonymous":false,
+  "jsGlobalObj":"",
+  "jsHeader":"",
+  "jsFooter":"",
+  "concatDstJsFileName": "",
+  "jsFile": "",
+  "jsDstDir": "js/",
+  "sassFile": "",
+  "concatCss": "",
+  "concatDstCssFileName": "",
+  "cssFile": "",
+  "cssDstDir": "",
+  "templateFile":"",
+  "templateDstDir":"",
+  "htmlFile": "",
+  "tplsHtmlFile": "html/tpls/",
+  "htmlDstDir": "",
+  "injectPath": "",
+  "injectName": "inject"
+*/

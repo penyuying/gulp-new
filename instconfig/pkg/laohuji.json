@@ -13,7 +13,7 @@
     "jsGlobalObj":"window",
     "srcPath": "{#webappDir#}develop/laohuji/html/",
     "destPath": "{#webPath#}/collect/ms/",
-    "revDestPath":"{#webappDstDir#}temp/rev/ms/",
+    "revDestPath":"{#tempPath#}rev/ms/",
 	"destRoot":"laohuji/",
 
     "host": "127.0.0.1",

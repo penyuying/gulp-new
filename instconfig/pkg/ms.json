@@ -12,9 +12,9 @@
 
     "srcPath": "{#webappDir#}develop/wybb/html/",
     "destPath": "{#webPath#}/collect/ms/",
-    "revDestPath":"{#webappDstDir#}temp/rev/ms/",
+    "revDestPath":"{#tempPath#}rev/ms/",
 
-    "jsDoc3Temp":"{#webappDstDir#}temp/jsDoc/ms/",
+    "jsDoc3Temp":"{#tempPath#}jsDoc/ms/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
     "ifJsDoc":true,
 

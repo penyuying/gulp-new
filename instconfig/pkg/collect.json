@@ -16,11 +16,11 @@
     "srcPath": "{#webappDir#}develop/collect/html/",
     "destPath": "{#webPath#}collect/",
     "destTest": "{#webPath#}test/collect/",
-    "revDestPath":"{#webappDstDir#}temp/rev/collect/",
+    "revDestPath":"{#tempPath#}/rev/collect/",
 
     "jsDocType":"angular",
     "jsDocLink":"/api",
-    "jsDoc3Temp":"{#webappDstDir#}temp/jsDoc/collect/",
+    "jsDoc3Temp":"{#tempPath#}jsDoc/collect/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/collect/",
     "ifJsDoc":true,
 	"testConfig":{

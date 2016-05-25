@@ -12,9 +12,9 @@
 
     "srcPath": "{#webappDir#}develop/icip/html/",
     "destPath": "{#webPath#}/BMS1/",
-    "revDestPath":"{#webappDstDir#}temp/rev/BMS1/",
+    "revDestPath":"{#tempPath#}rev/BMS1/",
 
-    "jsDoc3Temp":"{#webappDstDir#}temp/jsDoc/BMS1/",
+    "jsDoc3Temp":"{#tempPath#}jsDoc/BMS1/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
     "ifJsDoc":true,
 

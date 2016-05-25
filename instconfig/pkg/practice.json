@@ -14,9 +14,9 @@
 
     "srcPath": "{#webappDir#}develop/practice/",
     "destPath": "{#webPath#}/practice/",
-    "revDestPath":"{#webappDstDir#}temp/rev/practice/",
+    "revDestPath":"{#tempPath#}rev/practice/",
     
-    "jsDoc3Temp":"{#webappDstDir#}temp/jsDoc/practice/",
+    "jsDoc3Temp":"{#tempPath#}jsDoc/practice/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
     "ifJsDoc":true,
 

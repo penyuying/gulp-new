@@ -15,7 +15,7 @@
 
     "srcPath": "{#webappDir#}develop/{#name#}/html/",
     "destPath": "{#webPath#}/{#name#}/",
-    "revDestPath":"{#webappDstDir#}temp/rev/{#name#}/",
+    "revDestPath":"{#tempPath#}rev/{#name#}/",
 	
     "destRoot":"",
 

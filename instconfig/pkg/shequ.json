@@ -14,7 +14,7 @@
 
     "srcPath": "{#webappDir#}develop/shequ123/html/",
     "destPath": "{#webPath#}/shequ123/",
-    "revDestPath":"{#webappDstDir#}temp/rev/shequ123/",
+    "revDestPath":"{#tempPath#}rev/shequ123/",
     "destRoot":"",
 
     "host": "127.0.0.1",

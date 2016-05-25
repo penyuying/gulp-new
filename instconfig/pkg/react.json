@@ -11,10 +11,10 @@
 	"changIf":true,
     "srcPath": "{#webappDir#}develop/react/src/",
     "destPath": "{#webPath#}react/",
-    "revDestPath":"{#webappDstDir#}temp/rev/react/",
+    "revDestPath":"{#tempPath#}rev/react/",
     "destRoot":"",
 
-    "jsDoc3Temp":"{#webappDstDir#}temp/jsDoc/react/",
+    "jsDoc3Temp":"{#tempPath#}jsDoc/react/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
     "ifJsDoc":true,
 

@@ -11,10 +11,10 @@
 	"changIf":false,
     "srcPath": "{#webappDir#}develop/official/html/",
     "destPath": "{#webPath#}/collect/",
-    "revDestPath":"{#webappDstDir#}temp/rev/official/",
+    "revDestPath":"{#tempPath#}rev/official/",
     "destRoot":"mp/",
 
-    "jsDoc3Temp":"{#webappDstDir#}temp/jsDoc/official/",
+    "jsDoc3Temp":"{#tempPath#}jsDoc/official/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
     "ifJsDoc":true,
 

@@ -13,18 +13,18 @@
 	"jsAnonymous":false,
 
     "srcPath": "{#webappDir#}develop/carPay/html/",
-    "destPath": "{#webPath#}/collect/carPay/",
-    "revDestPath":"{#webappDstDir#}temp/rev/carPay/",
+    "destPath": "{#webPath#}collect/carPay/",
+    "revDestPath":"{#tempPath#}rev/carPay/",
 	"revType":"part",
     "destRoot":"",
 
-    "jsDoc3Temp":"{#webappDstDir#}temp/jsDoc/carPay/",
+    "jsDoc3Temp":"{#tempPath#}jsDoc/carPay/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
     "ifJsDoc":true,
 
     "host": "127.0.0.1",
     "port": "8096",
-    "serverPath": "{#webPath#}/collect/carPay/",
+    "serverPath": "{#webPath#}collect/carPay/",
     "browser": "chrome",
 	"anonymous":true,
 

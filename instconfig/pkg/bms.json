@@ -11,7 +11,7 @@
 	"changIf":false,
 
     "srcPath": "{#webappDir#}develop/icip/html/",
-    "destPath": "{#webPath#}/BMS/",
+    "destPath": "{#webPath#}BMS/",
     "revDestPath":"{#webappDstDir#}temp/rev/BMS/",
 
     "host": "127.0.0.1",
