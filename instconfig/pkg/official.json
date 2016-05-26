@@ -170,7 +170,7 @@
         "debar": "tpls/**/*.*",
         "tpls":"html/tpls/"
     },{
-        "root":"",
+        "destRoot":"",
 		"changIf":true,
         "src":"*",
         "tpls":"html/tpls/",

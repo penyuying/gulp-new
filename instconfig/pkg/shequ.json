@@ -112,7 +112,7 @@
     },
     "htmlFile": [{
 		"changIf":true,
-        "root":"",
+        "destRoot":"",
         "src":"html/*",
         "tpls":"html/tpls/"
     }],

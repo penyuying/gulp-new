@@ -116,7 +116,7 @@
         "src": "css/**/*",
         "dest": "css/"
 	},{
-		"root":"",
+		"destRoot":"",
         "psrc": "img/wxpic/**/*",
         "dest": "wxpic/"
 	}],
@@ -184,7 +184,7 @@
 		"psrc": "js/angular/plugins/ui-bootstrap-tpls/sub_js/pagination",
         "dest":"js/angular/"
 	}, {
-        "root":"",
+        "destRoot":"",
         "psrc": "js/comm/comm",
         "dest": "js/",
         "debar": "{js/_subDir/,js/_subDir/**/*.*}"
@@ -239,7 +239,7 @@
     "htmlFile": [{
 		"changIf":true,
         "src":"*",
-		"root":"",
+		"destRoot":"",
 		"dest":"sf/"
     },{
         "injectIf":false,

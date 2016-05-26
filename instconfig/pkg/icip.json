@@ -131,7 +131,7 @@
 
     "htmlFile":[{
 		"changIf":true,
-        "root":"",
+        "destRoot":"",
         "src":"*"
     }],
     

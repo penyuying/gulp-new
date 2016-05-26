@@ -37,7 +37,10 @@
     "browser": "chrome",
 	"anonymous":true,
 
-    "copyFile": "",
+    "copyFile": [{
+        "psrc": "js/jquery/jquery-1.11.3.min.js",
+        "dest":"js/jquery/"
+    }],
     "copyDstDir": "",
 	
 	
@@ -103,7 +106,7 @@
     },
     "htmlFile": [{
 		"changIf":true,
-        "root":"",
+        "destRoot":"",
         "src":"html/*",
         "debar": "tpls/**/*.*",
         "tpls":"html/tpls/"

@@ -30,11 +30,17 @@
   "bakDest": "d:/webapp/bak/",
   "bakDateDir":"",
   "bakFile": [{
-    "src":["{#srcPath#}**/*","!{#srcPath#}**/node_modules/","!{#srcPath#}**/node_modules/**/*","!{#srcPath#}**/bower_components/","!{#srcPath#}**/bower_components/**/*"],
-    "dest":"{#bakDest#}{#bakDateDir#}develop/"
+    "src":["**/*"],
+    "dest":"{#bakDateDir#}develop/",
+    "destPath":"{#bakDest#}",
+    "srcPath":"{#srcPath#}",
+    "debarPath":"{node_modules/**/*,/**/node_modules/**/*,bower_components/**/*,/**/bower_components/**/*}"
   },{
-    "src":"{#subJsonPath#}**/*",
-    "dest":"{#bakDest#}{#bakDateDir#}pkg/"
+    "src":"**/*",
+    "dest":"{#bakDateDir#}pkg/",
+    "destPath":"{#bakDest#}",
+    "srcPath":"{#subJsonPath#}",
+    "debarPath":"{node_modules/**/*,/**/node_modules/**/*,bower_components/**/*,/**/bower_components/**/*}"
   }],
   "bakDstDir": "{#bakDest#}{#bakDateDir#}",
   "ifmin": false,

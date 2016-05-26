@@ -110,7 +110,7 @@
 	"htmlFile": [{
 		"changIf":true,
         "src":"html/**/*",
-		"root":"",
+		"destRoot":"",
         "debar": "tpls/**/*.*",
         "tpls":"html/tpls/"
     }],

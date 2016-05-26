@@ -332,10 +332,10 @@
         /// <param name="t" type="属性名称">需要判断的属性名</param>
         /// <param name="d" type="对象">如果属性不存在返回的值</param>
         var ret = "";
-        if (d) {
+        if (typeof d != "undefined") {
             ret = d;
         }
-        if (typeof o[t] != "undefined") {
+        if (o && typeof o[t] != "undefined") {
             ret = o[t];
         }
         return ret;
@@ -592,21 +592,26 @@
              * @returns {string}   处理好的路径
              */
             _getDestPath: function (pkg, obj, subDst) {//获取处理完后的文件的存储目录
-                if (subDst == "bakDstDir") {//处理备份存储目录
-                    if (obj.dest) {
-                        return path.normalize(obj.dest).replace(/\\/g, "/");
-                    } else if (pkg[subDst]) {
-                        return path.normalize(pkg[subDst]).replace(/\\/g, "/");
-                    } else {
-                        return "";
-                    }
-                }
-                var root = pkg.destRoot || "",destPath=pkg.destPath||"";
+                
+                // if (subDst == "bakDstDir") {//处理备份存储目录
+                //     if (obj.dest) {
+                //         return path.normalize(obj.dest).replace(/\\/g, "/");
+                //     } else if (pkg[subDst]) {
+                //         return path.normalize(pkg[subDst]).replace(/\\/g, "/");
+                //     } else {
+                //         return "";
+                //     }
+                // }
+                var root = returnObj(obj,"destRoot",returnObj(pkg,"destRoot","")),
+                 destPath = returnObj(obj, "destPath", returnObj(pkg, 'destPath', ""));//pkg.destPath||"";
+                // if (subDst == "bakDstDir") {//处理备份存储目录
+                //     root = "";
+                // }
                 if (obj) {
                     if(typeof obj.root != "undefined"){
                         root = obj.root;
                     }
-                    destPath=returnObj(obj, "destPath", returnObj(pkg, 'destPath', ""));
+                    //destPath=returnObj(obj, "destPath", returnObj(pkg, 'destPath', ""));
                 }
 
                 if (obj && obj.dsrc) {//存储到开发目录
@@ -635,21 +640,22 @@
              * @returns {string} 处理好的路径
              */
             getRevDestPath: function (pkg, obj, subDst, revDst) {//获取处理rev生成的JSON文件
-                var root = pkg.destRoot || "";
-                pkg.revDestPath = pkg.revDestPath || "";
-                if (obj && typeof obj.root != "undefined") {
-                    root = obj.root;
-                }
+                var root = returnObj(obj,"destRoot",returnObj(pkg,"destRoot","")),
+                tempRevDestPath=returnObj(obj,"revDestPath",returnObj(pkg,"revDestPath",""));
+                // pkg.revDestPath = pkg.revDestPath || "";
+                // if (obj && typeof obj.root != "undefined") {
+                //     root = obj.root;
+                // }
 
                 if (obj && obj.revDest) {//存储到生成目录
-                    return path.normalize(pkg.revDestPath + root + revDst + "\\" + obj.revDest).replace(/\\/g, "/");
+                    return path.normalize(tempRevDestPath + root + revDst + "\\" + obj.revDest).replace(/\\/g, "/");
                 } else if (subDst) {
                     if (pkg[subDst]) {
-                        return path.normalize(pkg.revDestPath + root + pkg[subDst] + revDst + "\\").replace(/\\/g, "/");
+                        return path.normalize(tempRevDestPath + root + pkg[subDst] + revDst + "\\").replace(/\\/g, "/");
                     }
                 }
-                if (pkg.revDestPath) {
-                    return path.normalize(pkg.revDestPath + root + revDst + "\\").replace(/\\/g, "/");
+                if (tempRevDestPath) {
+                    return path.normalize(tempRevDestPath + root + revDst + "\\").replace(/\\/g, "/");
                 } else {
                     return "";
                 }
@@ -665,13 +671,13 @@
              * @returns {string} 返回处理好的路径
              */
             getJsDoc3Temp: function (pkg, obj, subDst, docDst) {//获取jsDoc临时文件存放的目录
-                var root = pkg.destRoot || "",
+                var root = returnObj(obj,"destRoot",returnObj(pkg,"destRoot","")),
                     dest,
-                    jsDoc3Temp = pkg.jsDoc3Temp || "";
+                    jsDoc3Temp = returnObj(obj,"jsDoc3Temp",returnObj(pkg,"jsDoc3Temp",""));
                 
-                if (obj && typeof obj.root != "undefined") {
-                    root = obj.root;
-                }
+                // if (obj && typeof obj.root != "undefined") {
+                //     root = obj.root;
+                // }
 
                 if (obj && obj.dest) {//存储到生成目录
                     //return path.normalize(jsDoc3Temp + root +"\\").replace(/\\/g,"/");
@@ -794,10 +800,12 @@
 
                 if (isData.isArray(dirFile) && dirFile.length > 0 && isData.isObject(dirFile[0])) {
                     dirFile.map(function (obj) {
-                        var root = pkg.destRoot || "", destPath, ret;
-                        if (obj && typeof obj.root != "undefined") {
-                            root = obj.root;
-                        }
+                        var root = returnObj(obj,"destRoot",returnObj(pkg,"destRoot","")), 
+                        destPath, 
+                        ret;
+                        // if (obj && typeof obj.root != "undefined") {
+                        //     root = obj.root;
+                        // }
                         if (obj.src) {
                             destPath = pkg.destPath || "";
                             ret = _this.getSrc(destPath + root, obj.src);
@@ -854,9 +862,9 @@
                 }
                 ext = "";
                 var ret = [];
-                if (dirName == "bakFile") {
-                    return ret;
-                }
+                //if (dirName == "bakFile") {
+                //    return ret;
+                //}
                 var pkg = this.pkg;
                 var temparr = [], pathArr = this.splitSrc(objPath);
                 if (pathArr && pathArr.length > 0) {
@@ -888,21 +896,25 @@
              * @param   {string} [ext=""]     扩展名可以为空
              * @param   {Boolean} [debar=false]   是否启用过滤文件(false为启用，true为不启用)
              * @param   {string} dirName 路径来源对象key名
+             * @param   {Object} taskObj 当前task的子数据对象
              * @returns {Array} 返回存放要处理文件路径的数组
              */
-            getSrc: function (srcPath, obj, ext, debar, dirName) {
+            getSrc: function (srcPath, obj, ext, debar, dirName,taskObj) {
                 if (!ext) {
                     ext = "";
                 }
-                if (dirName == "bakFile") {
-                    srcPath = "";
-                }
+                //if (dirName == "bakFile") {
+                //    srcPath = "";
+                //}
                 var ret = [], _this = this;
-                var pkg = this.pkg, debarArr = [], tempsrc;
+                var pkg = this.pkg,
+                    debarArr = [],
+                    tempsrc,
+                    tempDebarPath = returnObj(taskObj, "debarPath", returnObj(pkg, "debarPath", ""));
                 if (isData.isArray(obj)) {
                     for (var i = 0; i < obj.length; i++) {
                         if (!debar) {
-                            debarArr = _this.getDebarPath(srcPath + obj[i], pkg.debarPath, ext, dirName);
+                            debarArr = _this.getDebarPath(srcPath + obj[i], tempDebarPath, ext, dirName);
                             if (debarArr && debarArr.length > 0) {
                                 ret = ret.concat(debarArr);
                             }
@@ -916,7 +928,7 @@
                     }
                 } else if (obj) {
                     if (!debar) {
-                        debarArr = _this.getDebarPath(srcPath + obj, pkg.debarPath, ext, dirName);
+                        debarArr = _this.getDebarPath(srcPath + obj, tempDebarPath, ext, dirName);
                         if (debarArr && debarArr.length > 0) {
                             ret = ret.concat(debarArr);
                         }
@@ -1025,11 +1037,15 @@
                         footbanner = "\n\n" + _this._banner();
                     }
                 }
+
                 var dirFile = this.pkg[dirName];
                 if (isData.isArray(dirFile) && dirFile.length > 0 && !isData.isString(dirFile[0])) {
                     if (dirFile.length > 0) {
                         dirFile.map(function (obj) {
-                            var src = [], injectIf = false;
+                            var src = [],
+                                injectIf = false,
+                                tempSrcPath = returnObj(obj, 'srcPath', returnObj(pkg, 'srcPath', "")),//源文件的根目录
+                                tempPublicPath = returnObj(obj, 'publicPath', returnObj(pkg, 'publicPath', ""));//公共源文件的根目录
                             //                            if (!debar) {
                             //                                src = _this.gArr();
                             //                            }
@@ -1038,7 +1054,7 @@
                             }
 
                             if (obj.psrc) {
-                                var psrcTxt = _this.getSrc(pkg.publicPath, obj.psrc, ext, debar, dirName);
+                                var psrcTxt = _this.getSrc(tempPublicPath, obj.psrc, ext, debar, dirName,obj);
                                 if (isData.isArray(psrcTxt) && psrcTxt.length > 0) {
                                     src = src.concat(psrcTxt);
                                     retGSrc = retGSrc.concat(psrcTxt);
@@ -1048,16 +1064,16 @@
                                 }
 
                                 if (obj.debar && !debar) {
-                                    debarArr = _this.getDebarPath(pkg.publicPath + obj.psrc, obj.debar, "", dirName);
+                                    debarArr = _this.getDebarPath(tempPublicPath + obj.psrc, obj.debar, "", dirName);
                                     if (debarArr && debarArr.length > 0) {
                                         src = src.concat(debarArr);
                                     }
                                     //                                    src.push("!" + pkg.publicPath + obj.debar);
                                 }
                             }
-
+                            
                             if (obj.src) {
-                                var srcTxt = _this.getSrc(pkg.srcPath, obj.src, ext, debar, dirName);
+                                var srcTxt = _this.getSrc(tempSrcPath, obj.src, ext, debar, dirName,obj);
                                 if (isData.isArray(srcTxt) && srcTxt.length > 0) {
                                     src = src.concat(srcTxt);
                                     retGSrc = retGSrc.concat(srcTxt);
@@ -1068,7 +1084,7 @@
 
 
                                 if (obj.debar && !debar) {
-                                    debarArr = _this.getDebarPath(pkg.srcPath + obj.src, obj.debar, "", dirName);
+                                    debarArr = _this.getDebarPath(tempSrcPath + obj.src, obj.debar, "", dirName);
                                     if (debarArr && debarArr.length > 0) {
                                         src = src.concat(debarArr);
                                     }
@@ -1077,9 +1093,9 @@
                             }
 
                             if (tplsPath && obj.tpls) {
-                                retGSrc.push(pkg.srcPath + obj.tpls + "**/*" + ext);
+                                retGSrc.push(tempSrcPath + obj.tpls + "**/*" + ext);
                             } else if (tplsPath) {
-                                retGSrc.push(pkg.srcPath + pkg[tplsPath] + "**/*" + ext);
+                                retGSrc.push(tempSrcPath + pkg[tplsPath] + "**/*" + ext);
                             }
 
                             var destPath = _this._getDestPath(pkg, obj, subDst);
@@ -1118,7 +1134,7 @@
                              * @property {String} [prefix=""] 是否给文件加前缀（有内空时为加，没有内容时为不加）
                              * @property {String} [suffix=""] 是否给文件加后缀（有内空时为加，没有内容时为不加）
                              * @property {Boolean} [ifmin=false] 是否压缩JS、CSS（true为否，false为是）
-                             * @property {Array} autoprefixerBrowsers 加前缀要兼容的浏览器版本例：["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 6", "ie_mob >= 6", "ios_saf >= 6", "opera >= 5","safari >= 6"]
+                             * @property {Array} [autoprefixerBrowsers=["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5"]] 加前缀要兼容的浏览器版本例：["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 6", "ie_mob >= 6", "ios_saf >= 6", "opera >= 5","safari >= 6"]
                              * @property {Boolean} [ifminhtml=false] 是否压缩html（true为否，false为是）
                              * @property {Boolean} [injectIf=false] 是否注入文件到html（true为是，false为否）
                              * @property {Boolean} [bannerIf=false] 是否加banner（true为否，false为是）
@@ -1138,10 +1154,11 @@
 							 * @property {String} mapObj.includeContent map文件是否引入映射内容
 							 * @property {String} mapObj.sourceRoot map文件映射内容到source目录
                              */
+
                             cfg = {
                                 name: returnObj(pkg, 'name', ""),//项目名称
                                 concatFileName: obj.fileName || concatDstJsFileName && pkg[concatDstJsFileName] || "",//合并文件后文件的名称
-                                tplsPath: obj.tpls && path.normalize(pkg.srcPath + obj.tpls).replace(/\\/g, "/") || tplsPath && pkg[tplsPath] && path.normalize(pkg.srcPath + pkg[tplsPath]).replace(/\\/g, "/") || pkg.srcPath,//HTML的模板文件目录
+                                tplsPath: obj.tpls && path.normalize(tempSrcPath + obj.tpls).replace(/\\/g, "/") || tplsPath && pkg[tplsPath] && path.normalize(tempSrcPath + pkg[tplsPath]).replace(/\\/g, "/") || tempSrcPath,//HTML的模板文件目录
                                 destPath: destPath,//处理完后的文件存储目录
                                 jsDocLink: returnObj(pkg, 'jsDocLink', ""),//api文档链接
                                 jsDocType: returnObj(pkg, 'jsDocType', ""),//api文档类型
@@ -1149,38 +1166,38 @@
                                 jsDoc3Temp: jsDocTempPath,//JSDoc临时文件存放的路径
                                 ifJsDoc: returnObj(obj, 'ifJsDoc', returnObj(pkg, 'ifJsDoc', false)),//JSDoc是否生成文档
                                 revDestPath: revDestPath,//存放rev生成的JSON文件
-                                revCollectorSrcPath: pkg.revDestPath,//存放rev生成的主目录
+                                revCollectorSrcPath:returnObj(obj, 'revDestPath', returnObj(pkg, 'revDestPath', "")),//存放rev生成的主目录
                                 revType: returnObj(obj, 'revType', pkg.revType),//rev生成文件名的类型
                                 //                                revCollectorType:returnObj(obj, 'revCollectorType',pkg.revCollectorType),//revCollector替换文件的类型
-                                mapIf: pkg.mapIf,//是否生成map文件（true为是，false为否）
-                                mapsPath: returnObj(obj, 'map', pkg.mapsPath),//obj.map || pkg.mapsPath,
+                                mapIf: returnObj(obj, 'mapIf', pkg.mapIf),//是否生成map文件（true为是，false为否）
+                                mapsPath: returnObj(obj, 'mapsPath', pkg.mapsPath),//obj.mapsPath || pkg.mapsPath,
                                 ifminimg: returnObj(obj, 'ifminimg', pkg.ifminimg),//obj.ifmin || pkg.ifminimg,//是否压缩图片（true为是，false为否）
                                 imgquality: returnObj(obj, 'imgquality', pkg.imgquality) || 100,//图片质量
                                 newFileName: returnObj(obj, 'newFileName', ""),//处理完后的文件的新名称
                                 prefix: returnObj(obj, "prefix", returnObj(pkg, 'prefix', false)),//是否给文件加前缀（有内空时为加，没有内容时为不加）
                                 suffix: returnObj(obj, "suffix", returnObj(pkg, 'suffix', false)),//是否给文件加后缀（有内空时为加，没有内容时为不加）
-                                ifmin: pkg.ifmin,//是否压缩JS、CSS（true为否，false为是）
-                                autoprefixerBrowsers: pkg.autoprefixerBrowsers,//加前缀要兼容的浏览器版本
-                                ifminhtml: returnObj(obj, 'ifminhtml', pkg.ifminhtml),//obj.ifminhtml || pkg.ifminhtml,//是否压缩html（true为否，false为是）
-                                injectIf: returnObj(obj, 'injectIf', pkg.injectIf),//injectIf,//是否注入文件到html（true为是，false为否）
-                                bannerIf: returnObj(obj, 'bannerIf', pkg.bannerIf),//bannerIf,//是否加banner（true为否，false为是）
-                                gzipIf: pkg.gzipIf,//是否把文件压缩成gzip格式（true为是，false为否）
+                                ifmin: returnObj(obj, "ifmin", returnObj(pkg, 'ifmin', false)),//是否压缩JS、CSS（true为否，false为是）
+                                autoprefixerBrowsers: returnObj(obj, "autoprefixerBrowsers", returnObj(pkg, 'autoprefixerBrowsers', ["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5"])),//加前缀要兼容的浏览器版本
+                                ifminhtml: returnObj(obj, 'ifminhtml', returnObj(pkg, 'ifminhtml', false)),//obj.ifminhtml || pkg.ifminhtml,//是否压缩html（true为否，false为是）
+                                injectIf: returnObj(obj, 'injectIf', returnObj(pkg, 'injectIf', false)),//injectIf,//是否注入文件到html（true为是，false为否）
+                                bannerIf: returnObj(obj, 'bannerIf', returnObj(pkg, 'bannerIf', false)),//bannerIf,//是否加banner（true为否，false为是）
+                                gzipIf: returnObj(obj, 'gzipIf', returnObj(pkg, 'gzipIf', false)),//是否把文件压缩成gzip格式（true为是，false为否）
                                 header: headbanner,//banner的头内容
                                 footer: footbanner,//banner的脚内容
-                                srcRev: pkg.srcRev,//是否给引用文件加后缀如：xxx.x?=xxxx（true为是，false为否）
-                                changIf: returnObj(obj, 'changIf', pkg.changIf),//是否改变时才更新文件（true为否，false为是）//obj.changIf||pkg.changIf,
-                                jsAnonymous: returnObj(obj, 'jsAnonymous', pkg.jsAnonymous),//jsAnonymous,//合并js文件时是否用匿名函数包起来（true为是，false为否）
+                                srcRev: returnObj(obj, 'srcRev', returnObj(pkg, 'srcRev', false)),//是否给引用文件加后缀如：xxx.x?=xxxx（true为是，false为否）
+                                changIf: returnObj(obj, 'changIf', returnObj(pkg, 'changIf', false)),//是否改变时才更新文件（true为否，false为是）//obj.changIf||pkg.changIf,
+                                jsAnonymous: returnObj(obj, 'jsAnonymous', returnObj(pkg, 'jsAnonymous', false)),//jsAnonymous,//合并js文件时是否用匿名函数包起来（true为是，false为否）
                                 jsHeader: tempJsHeader,//合并JS前面加的代码
                                 jsFooter: tempJsFooter,//"\n})("+returnObj(obj, 'concatJsGlobalObj', pkg.concatJsGlobalObj)+")",//合并JS后面加的代码
                                 srcPath: unique(src),//需要处理的文件
                                 //concatJsGlobalObj:returnObj(obj, 'concatJsGlobalObj', pkg.concatJsGlobalObj),//合并JS时需用到的全局变量名称
                                 connectStart: pkg.connectStart,//是否启动服务器
-                                fileTime: returnObj(pkg, "fileTime", "mtime"),//文件时间类型默认为mtime
-                                fileTimeName: returnObj(pkg, "fileTimeName", "filetime"),//文件时间使用的别名默认为filetime
-                                mapObj: {
+                                fileTime: returnObj(obj, "fileTime", returnObj(pkg, "fileTime", "mtime")),//文件时间类型默认为mtime
+                                fileTimeName: returnObj(obj, "fileTimeName", returnObj(pkg, "fileTimeName", "filetime")),//文件时间使用的别名默认为filetime
+                                mapObj: returnObj(obj, "mapObj", returnObj(pkg, "mapObj", {//map文件生成时的参数
                                     includeContent: true,//是否引入映射内容
                                     sourceRoot: 'source'//映射内容到source目录
-                                }//map文件生成时的参数
+                                }))
                             };
                             if (obj.src || obj.psrc) {
                                 if (dirName == "concatJs" || dirName == "concatCss") {
@@ -1252,10 +1269,10 @@
                         connectStart: pkg.connectStart,//是否启动服务器
                         fileTime: returnObj(pkg, "fileTime", "mtime"),//文件时间类型默认为mtime
                         fileTimeName: returnObj(pkg, "fileTimeName", "filetime"),//文件时间使用的别名默认为filetime
-                        mapObj: {
+                        mapObj: returnObj(pkg, "mapObj", {
                             includeContent: true,
                             sourceRoot: 'source'
-                        }
+                        })
                     };
                     if (tplsPath) {
                         retGSrc.push(pkg.srcPath + pkg[tplsPath] + "**/*" + ext);
@@ -1465,7 +1482,7 @@
                     console.log("   globals Object in： " + file.jshint.data[0].globals);
                 }
                 if (!file.jshint.success) {
-                    
+
                     //不显示的错误信息
                     var errorObj = {
                         "W041": true, //错误码W041:(!=)
@@ -1998,7 +2015,7 @@
                 //    destPath: ""
                 //};
                 if (this.options.bakPath.cfgArr.length > 0) {
-
+                    
                     var subMerge = new PY.mergestream();
                     subMerge.add(this.options.bakPath.cfgArr.map(function (cfg) {
                         return PY.gulp.src(cfg.srcPath)
@@ -3274,60 +3291,79 @@
  * @property {String} [tempPath="{#webappDir#}temp/"] 临时文件存放的根目录引用（task中不用）
  * @property {String} [mapsPath="maps"] map文件存放的子路径
  * @property {Boolean} [mapIf=false] 是否生成map文件（true为是，false为否）
- * @property {String} [debarPath="{废弃/** /*.*, /**\/废弃.*,/** /废弃/*.*,/** /废弃/** /*.*}"] 生成文件时不包含的文件
+ * @property {String} [debarPath="{废弃/** /*.*, /** /废弃.*,/** /废弃/*.*,/** /废弃/** /*.*}"] 生成文件时不包含的文件
  * @property {String} [host="127.0.0.1"] 本地服务器地址（暂时无用）
  * @property {String} [port="8020"] 本地服务器端口号
  * @property {String} [webPath= "{#webappDstDir#}web/"] web文件根目录
  * @property {String} [serverPath="{#webPath#}"] 本地服务器文件目录路径
  * @property {String} [browser=""] 自动打开的浏览器名称如：chrome
  * @property {String} [bakDateDir=""] 用时间作目录(此项不需要设置值,系统会自动读取当前时间需要引用的地方使用{#bakDateDir#})
+ * @property {String} [autoprefixerBrowsers=["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 6", "ie_mob >= 6", "ios_saf >= 6", "opera >= 5","safari >= 6"]] 给CSS3自动加产商前缀
+ * 
  * @property {String|Array} [bakFile=""] 备份文件配置项
  * @property {String|Array} [bakFile.src=""] 备份源文件目录
+ * @property {String} [bakFile.destPath=""] 备份文件存放目录的根目录(设置此项则全局destPath字段当前无效)
  * @property {Object} [bakFile.dest=""] 备份文件存放目录(如果根目录非项目当前目录，前面必须加上根目录如:{#bakDest#}{#bakDateDir#}develop/)
- * @property {String|Array} [copyFile=""] 拷贝文件的配置项
- * @property {String} [copyFile.src=""] 拷贝文件源文件目录
- * @property {String} [copyFile.psrc=""] 拷贝公共文件源文件目录
+ * @property {Object} [bakFile.debarPath=""] 备份文件时不包含的文件此项为局部公共(设置此项则全局debarPath字段当前无效)
+ * @property {String} [bakFile.debar=""] 拷贝文件时不包含的文件此项会包含全局项字段debarPath
+ * 
+ * @property {String|Array} [copyFile=""] 拷贝文件的配置项(大部份全局项可以支持在子项Object,以下只是部份)
+ * @property {String|Array} [copyFile.src=""] 拷贝文件源文件目录
+ * @property {String|Array} [copyFile.psrc=""] 拷贝公共文件源文件目录
+ * @property {Object} [copyFile.debarPath=""] 拷贝文件时不包含的文件此项为局部公共(设置此项则全局debarPath字段当前无效)
  * @property {String} [copyFile.debar=""] 拷贝文件时不包含的文件此项会包含全局项字段debarPath
  * @property {String} [copyFile.dest=""] 拷贝文件存放目录(前面不需要加上根目录如:"js/angular/")
- * @property {String} [copyFile.destPath=""] 拷贝文件存放目录的根目录
- * @property {String} [copyFile.root=""] 项目生成存放的根目录的子项目根目录如果不设置此项则使用destRoot
+ * @property {String} [copyFile.destPath=""] 拷贝文件存放目录的根目录(设置此项则全局destPath字段当前无效)
+ * @property {String} [copyFile.destRoot=""] 项目生成存放的根目录的子项目根目录如果不设置此项则使用destRoot
  * @property {Boolean} [copyFile.changIf=true] 是否改变时才更新文件;true为否，false为是。(如果不设置此项则用全局的changIf)
  * @property {String} [copyDstDir=""] 拷贝文件的存放目录
+ * 
+ * @property {String|Array} [jsonFile=""] JSON文件的配置项(具体配置参照拷贝文件的配置项)
+ * @property {String} [jsonDstDir=""] JSON文件的存放目录
+ * 
+ * @property {String|Array} [imgFile=""] 图片文件的配置项(具体配置参照拷贝文件的配置项)
+ * @property {String} [imgDstDir=""] 图片文件的存放目录
+ * 
+ * @property {Object} [jsAnonymous=false] 合并js文件时是否用匿名函数包起来（true为是，false为否）(用在:按目录合并JS、按文件合并JS、JS文件)
+ * @property {String} [jsGlobalObj=""] js用匿名函数包裹时需要传入的参数(用在:按目录合并JS、按文件合并JS、JS文件)
+ * @property {String} jsHeader JS内容前面加的代码(jsAnonymous=true时有效)(用在:按目录合并JS、按文件合并JS、JS文件)
+ * @property {String} jsFooter JS内容后面加的代码(jsAnonymous=true时有效)(用在:按目录合并JS、按文件合并JS、JS文件)
+ * @property {String} [jsDstDir="js/"] JS文件的存放目录(用在:按目录合并JS、按文件合并JS、JS文件)
+ * 
+ * @property {String|Array} [dirConcatJs=""] 按目录合并JS文件的配置项(具体配置参照拷贝文件的配置项)
+ * 
+ * @property {String|Array} [concatJs=""] 按文件合并JS文件的配置项(具体配置参照拷贝文件的配置项)
+ * @property {String} [concatDstJsFileName=""] 按文件合并JS文件时的新文件名
+ * 
+ * @property {String|Array} [jsFile=""] JS文件处理的配置项(具体配置参照拷贝文件的配置项)
+ * 
+ * @property {String} [cssDstDir="js/"] JS文件的存放目录(用在:sass文件处理、按文件合并CSS、CSS文件处理)
+ * @property {String|Array} [sassFile=""] sass文件处理的配置项(具体配置参照拷贝文件的配置项)
+ * 
+ * @property {String|Array} [concatCss=""] 按文件合并CSS文件的配置项(具体配置参照拷贝文件的配置项)
+ * @property {String} [concatDstCssFileName=""] 按文件合并CSS文件时的新文件名
+ * 
+ * @property {String|Array} [cssFile=""] CSS文件处理的配置项(具体配置参照拷贝文件的配置项)
+ * 
+ * @property {String|Array} [templateFile=""] 项目引用HTML模板文件处理的配置项(具体配置参照拷贝文件的配置项)
+ * @property {String} [templateDstDir=""] JSON文件的存放目录
+ * 
+ * @property {String|Array} [htmlFile=""] HTML文件处理的配置项(具体配置参照拷贝文件的配置项)
+ * @property {String} [htmlDstDir=""] HTML文件的存放目录
+ * @property {String} [tplsHtmlFile=""] 开发时用的模块模板文件的目录
+ * 
+ * @property {String|Array} [injectPath=""] 注入静态文件时静态文件的静态文件路径对象
+ * @property {String} [injectName="inject"] 注入静态文件引用时写在标签名称
+ * 
+ * @example 
+ * //injectPath例：
+ * //可以单独存放在(pkg.srcPath + 'pkg/inject.json')文件中,如果有此文件内容优先级高
+ * injectPath＝[{
+ *           "src": [
+ *               "css/indexpage.css",//文件路径
+ *               "js/comm/switch.js",//文件路径
+ *               "js/default2.0.js"//文件路径
+ *			],
+ *           "injectName": "Newdefault"//注入时引用的名称
+ *		}]
  */
-/**
-  "jsonFile": "",
-  "jsonDstDir": "json/",
-  "imgFile": [
-    {
-      "src": ""
-    },
-    {
-      "src": "",
-      "dest": "css/",
-      "debar": "css/"
-    }
-  ],
-  "autoprefixerBrowsers":["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 6", "ie_mob >= 6", "ios_saf >= 6", "opera >= 5","safari >= 6"],
-  "imgDstDir": "img/",
-  "dirConcatJs": "",
-  "concatJs": "",
-  "jsAnonymous":false,
-  "jsGlobalObj":"",
-  "jsHeader":"",
-  "jsFooter":"",
-  "concatDstJsFileName": "",
-  "jsFile": "",
-  "jsDstDir": "js/",
-  "sassFile": "",
-  "concatCss": "",
-  "concatDstCssFileName": "",
-  "cssFile": "",
-  "cssDstDir": "",
-  "templateFile":"",
-  "templateDstDir":"",
-  "htmlFile": "",
-  "tplsHtmlFile": "html/tpls/",
-  "htmlDstDir": "",
-  "injectPath": "",
-  "injectName": "inject"
-*/

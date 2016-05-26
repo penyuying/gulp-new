@@ -2269,7 +2269,7 @@
             
                 <td class="default">
                 
-                    "{废弃/** /*.*, /**\/废弃.*,/** /废弃/*.*,/** /废弃/** /*.*}"
+                    "{废弃/** /*.*, /** /废弃.*,/** /废弃/*.*,/** /废弃/** /*.*}"
                 
                 </td>
             
@@ -2509,6 +2509,44 @@
 
         <tr>
             
+                <td class="name"><code>autoprefixerBrowsers</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 6", "ie_mob >= 6", "ios_saf >= 6", "opera >= 5","safari >= 6"]
+                
+                </td>
+            
+
+            <td class="description last"><p>给CSS3自动加产商前缀</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>bakFile</code></td>
             
 
@@ -2613,6 +2651,44 @@
 
         <tr>
             
+                <td class="name"><code>destPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>备份文件存放目录的根目录(设置此项则全局destPath字段当前无效)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>dest</code></td>
             
 
@@ -2645,6 +2721,82 @@
             
 
             <td class="description last"><p>备份文件存放目录(如果根目录非项目当前目录，前面必须加上根目录如:{#bakDest#}{#bakDateDir#}develop/)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>debarPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>备份文件时不包含的文件此项为局部公共(设置此项则全局debarPath字段当前无效)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>debar</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>拷贝文件时不包含的文件此项会包含全局项字段debarPath</p></td>
         </tr>
 
     
@@ -2692,7 +2844,7 @@
                 </td>
             
 
-            <td class="description last"><p>拷贝文件的配置项</p>
+            <td class="description last"><p>拷贝文件的配置项(大部份全局项可以支持在子项Object,以下只是部份)</p>
                 <h6>Properties</h6>
 
 <table class="props table table-striped">
@@ -2728,6 +2880,9 @@
             
                 
 <span class="param-type">String</span>
+|
+
+<span class="param-type">Array</span>
 
 
 
@@ -2766,6 +2921,9 @@
             
                 
 <span class="param-type">String</span>
+|
+
+<span class="param-type">Array</span>
 
 
 
@@ -2791,6 +2949,44 @@
             
 
             <td class="description last"><p>拷贝公共文件源文件目录</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>debarPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>拷贝文件时不包含的文件此项为局部公共(设置此项则全局debarPath字段当前无效)</p></td>
         </tr>
 
     
@@ -2904,14 +3100,14 @@
                 </td>
             
 
-            <td class="description last"><p>拷贝文件存放目录的根目录</p></td>
+            <td class="description last"><p>拷贝文件存放目录的根目录(设置此项则全局destPath字段当前无效)</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>root</code></td>
+                <td class="name"><code>destRoot</code></td>
             
 
             <td class="type">
@@ -3029,6 +3225,981 @@
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>jsonFile</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Array</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>JSON文件的配置项(具体配置参照拷贝文件的配置项)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>jsonDstDir</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>JSON文件的存放目录</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>imgFile</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Array</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>图片文件的配置项(具体配置参照拷贝文件的配置项)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>imgDstDir</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>图片文件的存放目录</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>jsAnonymous</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>合并js文件时是否用匿名函数包起来（true为是，false为否）(用在:按目录合并JS、按文件合并JS、JS文件)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>jsGlobalObj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>js用匿名函数包裹时需要传入的参数(用在:按目录合并JS、按文件合并JS、JS文件)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>jsHeader</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>JS内容前面加的代码(jsAnonymous=true时有效)(用在:按目录合并JS、按文件合并JS、JS文件)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>jsFooter</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>JS内容后面加的代码(jsAnonymous=true时有效)(用在:按目录合并JS、按文件合并JS、JS文件)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>jsDstDir</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "js/"
+                
+                </td>
+            
+
+            <td class="description last"><p>JS文件的存放目录(用在:按目录合并JS、按文件合并JS、JS文件)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>dirConcatJs</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Array</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>按目录合并JS文件的配置项(具体配置参照拷贝文件的配置项)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>concatJs</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Array</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>按文件合并JS文件的配置项(具体配置参照拷贝文件的配置项)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>concatDstJsFileName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>按文件合并JS文件时的新文件名</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>jsFile</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Array</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>JS文件处理的配置项(具体配置参照拷贝文件的配置项)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cssDstDir</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "js/"
+                
+                </td>
+            
+
+            <td class="description last"><p>JS文件的存放目录(用在:sass文件处理、按文件合并CSS、CSS文件处理)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sassFile</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Array</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>sass文件处理的配置项(具体配置参照拷贝文件的配置项)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>concatCss</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Array</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>按文件合并CSS文件的配置项(具体配置参照拷贝文件的配置项)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>concatDstCssFileName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>按文件合并CSS文件时的新文件名</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cssFile</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Array</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>CSS文件处理的配置项(具体配置参照拷贝文件的配置项)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>templateFile</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Array</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>项目引用HTML模板文件处理的配置项(具体配置参照拷贝文件的配置项)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>templateDstDir</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>JSON文件的存放目录</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>htmlFile</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Array</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>HTML文件处理的配置项(具体配置参照拷贝文件的配置项)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>htmlDstDir</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>HTML文件的存放目录</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>tplsHtmlFile</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>开发时用的模块模板文件的目录</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>injectPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Array</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>注入静态文件时静态文件的静态文件路径对象</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>injectName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "inject"
+                
+                </td>
+            
+
+            <td class="description last"><p>注入静态文件引用时写在标签名称</p></td>
+        </tr>
+
+    
     </tbody>
 </table>
 </dl>
@@ -3069,6 +4240,12 @@
 
 	
 </dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">//injectPath例：//可以单独存放在(pkg.srcPath + &#x27;pkg/inject.json&#x27;)文件中,如果有此文件内容优先级高injectPath＝[{          &quot;src&quot;: [              &quot;css/indexpage.css&quot;,//文件路径              &quot;js/comm/switch.js&quot;,//文件路径              &quot;js/default2.0.js&quot;//文件路径			],          &quot;injectName&quot;: &quot;Newdefault&quot;//注入时引用的名称		}]</pre>
 
 
         
@@ -3134,7 +4311,7 @@
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
 	
-		on May 26th 2016, 2:22:20 am
+		on May 26th 2016, 6:05:44 pm
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
