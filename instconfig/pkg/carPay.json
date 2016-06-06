@@ -59,6 +59,12 @@
 	}],
     "concatJs":[{
         "jsAnonymous":true,
+        "psrc":"js/sub_js/switch/Keyboard",
+        "src":"js/carPay",
+        "fileName":"carPay.js",
+        "dest": "js/"
+    },{
+        "jsAnonymous":true,
         "psrc":"js/sub_js/initial/initial_jq",
         "fileName":"initial.js",
         "dest": "js/comm/"
@@ -83,6 +89,10 @@
 	}],
     "concatDstJsFileName":"",
     "jsFile": [{
+        "psrc": "js/comm/comm",
+        "dest": "js/",
+        "destPath":"{#tempPath#}jsdocTemp/{#name#}/"
+	},{
         "psrc": "js/{viewport,pinyin}",
         "dest": "js/comm/"
 	},{
@@ -98,7 +108,7 @@
         "dest": "js/"
 	},{
         "src": "js/*",
-        "debar": "{js/_subDir/,js/_subDir/**/*.*,js/Psub_file/,js/Psub_file/**/*.*}"
+        "debar": "{js/_subDir/,js/_subDir/**/*.*,js/Psub_file/,js/Psub_file/**/*.*,**/carPay.js}"
 	},{
 		"psrc": "js/zeptoJs1.1.6/plugins/json/zepto.json.min",
 		"dest":"js/zepto/"
@@ -121,11 +131,11 @@
     "cssDstDir": "css/",
 
 	"ifminhtml": false,
-	"ifminhtmlObj":{
+    "ifminhtmlObj":{
         "removeComments": true,
-        "collapseWhitespace": false,
-        "conservativeCollapse": false,
-        "preserveLineBreaks": false,
+        "collapseWhitespace": true,
+        "conservativeCollapse": true,
+        "preserveLineBreaks": true,
         "removeAttributeQuotes":false,
         "removeEmptyAttributes": false,
         "removeEmptyElements": false,
@@ -133,8 +143,8 @@
         "collapseBooleanAttributes": false,
         "removeStyleLinkTypeAttributes": false,
         "keepClosingSlash": true,
-        "minifyJS": false,
-        "minifyCSS":false
+        "minifyJS": true,
+        "minifyCSS":true
     },
     "htmlFile": [{
 		"changIf":true,

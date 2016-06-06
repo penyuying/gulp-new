@@ -1093,9 +1093,9 @@
                             }
 
                             if (tplsPath && obj.tpls) {
-                                retGSrc.push(tempSrcPath + obj.tpls + "**/*" + ext);
+                                retGSrc.push(tempSrcPath + obj.tpls + "**/*");
                             } else if (tplsPath) {
-                                retGSrc.push(tempSrcPath + pkg[tplsPath] + "**/*" + ext);
+                                retGSrc.push(tempSrcPath + pkg[tplsPath] + "**/*");
                             }
 
                             var destPath = _this._getDestPath(pkg, obj, subDst);
@@ -1592,6 +1592,20 @@
         }
 
         /**
+         * 转数字
+         * @param {*} nb 需要转换的内容
+         * @returns {*} 如果能转成数字则返回转换好的数字，如果失败则返回未转换前的内容。
+         */
+        function toNumber(nb) {
+            var txt=parseInt(nb);
+            if (isNaN(txt)) {
+                return nb;
+            } else {
+                return txt;
+            }
+        }
+
+        /**
          * 把模板内的数据引用标签替换成真实数据
          * @param {String} templateText 模板文本
          * @param {Object} val 每次循环对像从对应key或length中取得的value
@@ -1611,8 +1625,11 @@
             if(templateText){
                 a = templateText.replace(/\{\$([^}]+)\$\}/ig, function ($1, $2) {
                     if (!$2) { return $1; }
-                    var otmp;
-                    if ($2 == narr[0] || $2 == narr[1]) {
+                    var otmp,
+                        tempValue,
+                        arr$2 = $2.split("+") || [];
+
+                    if ($2 === narr[0] || $2 === narr[1] || arr$2[0] === narr[0] || arr$2[0] === narr[1]) {
                         if (narr.length == 1) {
                             return val;
                         } else {
@@ -1621,6 +1638,17 @@
                             }
                             if ($2 == narr[1]) {
                                 return val;
+                            }
+                            if (arr$2.length > 1) {
+                                tempValue = "";
+                                if (arr$2[0] == narr[0]) {
+                                    tempValue = toNumber(key) + toNumber(arr$2[1]);
+                                    return tempValue;
+                                }
+                                if (arr$2[0] == narr[1]) {
+                                    tempValue = toNumber(val) + toNumber(arr$2[1]);
+                                    return tempValue;
+                                }
                             }
                             return $2;
                         }
@@ -1684,7 +1712,7 @@
 
                         //json文件转对象
                         arr.splice(0, 1);
-                        obj = getJson(cfg.tplsPath + "json/" + arr.join(':'));
+                        obj = getJson(cfg.tplsPath + arr.join(':'));
                     }
                 }
                 
@@ -2778,6 +2806,7 @@
                                 return "\n";
                             }))),revCollectorSrc)
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprevcollector({ type: cfg.revType, file: cfg.revCollectorSrcPath })))
+							.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))
                             .pipe(PY.gulp.dest(cfg.destPath))
 //                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulpreveasy())) //或rev
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.destPath)))
@@ -2867,8 +2896,14 @@
                         PY.gulp.run(option.uid + '_css');
                     }
                 });
-
-
+                
+                
+                PY.gulp.watch(option.templatePath.gSrc, function (event) {
+                    if (event.type == "changed") {
+                        PY.gulp.run(option.uid + '_template');
+                    }
+                });
+                
                 option.htmlPath.gSrc.push(_pkg.srcPath + 'pkg/inject.json');
                 PY.gulp.watch(option.htmlPath.gSrc, function (event) {
                     if (event.type == "changed") {

@@ -79,7 +79,7 @@
   "tempPath": "{#webappDir#}temp/",
   "mapsPath": "maps",
   "mapIf": false,
-  "debarPath": "{废弃/**/*.*,/**/废弃.*,/**/废弃/*.*,/**/废弃/**/*.*}",
+  "debarPath": "{*废弃*/**/*.*,/**/废弃*.*,/**/*废弃*/*.*,/**/*废弃*/**/*.*}",
   "host": "127.0.0.1",
   "port": "8020",
   "webPath": "{#webappDstDir#}web/",

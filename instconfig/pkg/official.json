@@ -94,6 +94,10 @@
 	"concatDstJsFileName":"",
 
 	"jsFile": [{
+        "psrc": "js/comm/comm",
+        "dest": "js/",
+        "destPath":"{#tempPath#}jsdocTemp/{#name#}/"
+	},{
         "jsAnonymous":true,
         "jsGlobalObj":"YW,$,layer",
         "src": "js/**/*",
@@ -175,6 +179,12 @@
         "src":"*",
         "tpls":"html/tpls/",
         "debar": "tpls/**/*.*"
+    },{
+        "changIf":true,
+        "src":"index",
+        "tpls":"html/tpls/",
+        "debar": "tpls/**/*.*",
+        "newFileName":"default.html"
     }],
 
     "tplsHtmlFile": "html/tpls/",

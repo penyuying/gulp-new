@@ -132,6 +132,12 @@
     
     
     "concatJs":[{
+        "destRoot":"",
+        "jsAnonymous":false,
+        "psrc":["js/encrypt/AES/tripledes","js/encrypt/AES/mode-ecb","js/comm/comm"],
+        "fileName":"comm.js",
+        "dest": "js/"
+    },{
         "jsAnonymous":true,
         "psrc":"!js/sub_js/initial/initial_ng",
         "fileName":"initial.js",
@@ -185,7 +191,7 @@
         "dest":"js/angular/"
 	}, {
         "destRoot":"",
-        "psrc": "js/comm/comm",
+        "psrc": "!js/comm/comm",
         "dest": "js/",
         "debar": "{js/_subDir/,js/_subDir/**/*.*}"
 	}, {

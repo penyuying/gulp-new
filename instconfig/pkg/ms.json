@@ -89,6 +89,10 @@
 	"concatDstJsFileName":"",
 	
 	"jsFile": [{
+        "psrc": "js/comm/comm",
+        "dest": "js/",
+        "destPath":"{#tempPath#}jsdocTemp/{#name#}/"
+	},{
         "src": "js/**/*",
         "dest": "js/",
         "debar": "_subDir/**/*.*"
