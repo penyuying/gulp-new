@@ -15,6 +15,7 @@
     "gulp-htmlmin": "file:G:\\gulpInst\\instconfig\\userModules\\gulp-htmlmin",
     "gulp-if": "^2.0.0",
     "gulp-inject": "^3.0.0",
+	"gulp-jsdoc3": "^0.2.1",
     "gulp-jshint": "^2.0.0",
     "gulp-jsonlint": "^1.1.2",
     "gulp-loadobj": "file:G:\\gulpInst\\instconfig\\userModules\\gulp-loadobj",

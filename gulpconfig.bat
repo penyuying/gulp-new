@@ -16,7 +16,7 @@
 	echo "第五组完成"
 	call npm install --save-dev streamqueue imagemin-gifsicle imagemin-mozjpeg imagemin-pngquant
 	echo "第六组图片处理工具完成"
-	call npm install --save-dev gulp-ngdocs gulp-ngdocs
+	call npm install --save-dev gulp-jsdoc3 gulp-ngdocs
 	echo "第七组生成文档工具完成"
 	call npm install --save karma
 	echo "第八组测试工具(karma)完成"
