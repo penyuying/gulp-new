@@ -1,0 +1,171 @@
+{
+    "name": "collectMobile",
+    "userName": "",
+    "version": "1.0.0",
+
+    "ifmin": true,
+    "gzipIf": false,
+    "srcRev": true,
+    "suffix": "",
+	"injectIf":true,
+	"bannerIf":false,
+	"changIf":false,
+	"jsAnonymous":false,
+    "mapIf": false,
+
+    "srcPath": "{#webappDir#}develop/collectMobile/html/",
+    "destPath": "{#webPath#}collect/",
+    "destTest": "{#webPath#}test/collectMobile/",
+    "revDestPath":"{#tempPath#}/rev/collectMobile/",
+
+    "jsDocType":"angular",
+    "jsDocLink":"/api",
+    "jsDoc3Temp":"{#tempPath#}jsDoc/wapsf/",
+    "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
+    "ifJsDoc":false,
+    "destRoot":"wapsf/",
+
+    "host": "127.0.0.1",
+    "port": "8091",
+    "serverPath": "{#webPath#}/wapsf/",
+    "browser": "chrome",
+	"anonymous":true,
+
+    "copyFile": [{
+                "changIf":false,
+                "psrc": "sass/global/mixin.scss",
+                "dsrc":"sass/",
+                "newFileName":"_mixin.scss"
+        },{
+            "src":"bower/app/ionic_1.0.0/release/fonts/**/*",
+            "dest":"js/ionic/fonts/",
+            "srcPath":"e:/"
+        },{
+            "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*.*",
+            "dest":"js/layer/"
+        }],
+    "copyDstDir": "",
+
+
+    "jsonFile": [{
+            "src": "json/QueryChargeResponse",
+            "dest": "json/"
+	}],
+    "jsonDstDir": "json/",
+
+    "imgFile": [{
+            "src": "{img/,img/**/*}"
+    	},{
+            "src": "sass/**/*",
+            "dest": "css/"
+    	},{
+            "src": "css/**/*",
+            "dest": "css/"
+    	},{
+    		"destRoot":"",
+            "psrc": "img/wxpic/**/*",
+            "dest": "wxpic/"
+	}],
+    "imgDstDir": "img/",
+
+    "dirConcatJs":"",
+
+    "concatJs":[{
+            "jsAnonymous":true,
+            "psrc": "js/zeptoJs1.1.6/{zepto,ajax,event,data}",
+            "fileName":"zepto.min.js",
+            "dest":"js/zepto/"
+        },{
+            "jsAnonymous":true,
+            "jsGlobalObj":"window",
+            "psrc": "js/public-obj",
+            "fileName":"public-obj.js",
+            "dest": "js/comm/"
+        },{
+            "jsAnonymous":true,
+            "jsGlobalObj":"window,angular",
+            "src": "js/collect/_subJs/collect/**/*",
+            "psrc":"js/collect/_subJs/collect/{factory,filter}",
+            "fileName":"collect.js",
+            "dest": "js/collect/",
+            "publicPath": "{#webappDir#}develop/collect/html/"
+        }],
+    "concatDstJsFileName":"",
+
+    "jsFile": [{
+            "psrc": "js/encrypt/sha1",
+            "dest": "js/comm/"
+        },{
+            "psrc": "js/location/getCity",
+            "dest": "js/comm/"
+        },{
+            "psrc": "js/{viewport,pinyin}",
+            "dest": "js/comm/"
+        },{
+            "src": "bower/app/ionic_1.0.0/release/js/ionic.bundle.min",
+            "dest":"js/ionic/",
+            "srcPath":"e:/"
+        },{
+            "psrc": "js/angular/plugins/ui_router/angular-ui-router",
+            "dest":"js/angular/"
+        },{
+            "psrc": "js/zeptoJs1.1.6/plugins/json/zepto.json.min",
+            "dest":"js/zepto/"
+        },{
+            "src": "js/*",
+            "dest": "js/",
+            "debar": "{js/_subDir/,js/_subDir/**/*.*}"
+     }],
+    "jsDstDir": "js/",
+
+
+    "sassFile": [{
+            "src":"sass/**/*",
+            "dest":"css/"
+        },{
+            "src":"bower/app/ionic_1.0.0/scss/**/*",
+            "dest":"js/ionic/css/",
+            "srcPath":"e:/"
+    }],
+
+    "concatCss":"",
+    "concatDstCssFileName":"",
+
+    "cssFile":"css/**/*",
+    "cssDstDir": "css/",
+
+	"ifminhtml": false,
+	"ifminhtmlObj":{
+        "removeComments": true,
+        "collapseWhitespace": true,
+        "conservativeCollapse": true,
+        "preserveLineBreaks": true,
+        "removeAttributeQuotes":false,
+        "removeEmptyAttributes": false,
+        "removeEmptyElements": false,
+        "removeScriptTypeAttributes": false,
+        "collapseBooleanAttributes": false,
+        "removeStyleLinkTypeAttributes": false,
+        "keepClosingSlash": true,
+        "minifyJS": true,
+        "minifyCSS":true
+    },
+
+    "templateFile":[{
+        "injectIf":false,
+        "src":"tpls/**/*",
+        "dest":"tpls/"
+    }],
+    "templateDstDir":"tpls/",
+
+    "htmlFile": [{
+		"changIf":true,
+        "src":"html/**/*",
+		"destRoot":"",
+		"dest":"wapsf/"
+    }],
+
+    "tplsHtmlFile": "html/tpls/",
+    "htmlDstDir":"",
+    "injectPath":""
+}

@@ -3,7 +3,7 @@
     "userName": "",
     "version": "1.0.0",
 
-    "ifmin": false,
+    "ifmin": true,
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",
@@ -14,14 +14,14 @@
     "mapIf": false,
 
     "srcPath": "{#webappDir#}develop/collect/html/",
-    "destPath": "{#webPath#}collect/",
-    "destTest": "{#webPath#}test/collect/",
-    "revDestPath":"{#tempPath#}/rev/collect/",
+    "destPath": "{#webPath#}collectAll/",
+    "destTest": "{#webPath#}test/collectAll/",
+    "revDestPath":"{#tempPath#}/rev/collectAll/",
 
     "jsDocType":"angular",
     "jsDocLink":"/api",
-    "jsDoc3Temp":"{#tempPath#}jsDoc/collect/",
-    "jsDoc3Dir":"{#webPath#}Doc/{#name#}/collect/",
+    "jsDoc3Temp":"{#tempPath#}jsDoc/collectAll/",
+    "jsDoc3Dir":"{#webPath#}Doc/{#name#}/collectAll/",
     "ifJsDoc":true,
 	"testConfig":{
         "srcPath":[
@@ -37,19 +37,19 @@
 			"../../js/layer/layer.js",
 			"../../js/layer/extend/*.js",
 			"../../js/layer/skin/**/*.js",
-			"../../js/collect/**/*.js",
+			"../../js/collectAll/**/*.js",
 			"../../js/app.js",
 			"../test/**/*.js",
 			"*.js"
         ],
-        "testConfigFile":"{#destTest#}sf/test/config/karma.conf.js",
+        "testConfigFile":"",
         "singleRun":false
     },
     "destRoot":"sf/",
 
     "host": "127.0.0.1",
     "port": "8091",
-    "serverPath": "{#webPath#}/collect/",
+    "serverPath": "{#webPath#}/collectAll/",
     "browser": "chrome",
 	"anonymous":true,
 
@@ -91,18 +91,12 @@
 		},{
             "psrc": "js/jquery/plugins/layer-v2.0/{layer/**/*.*,layer/}",
             "dest":"js/layer/"
-		},{
-            
-        "changIf":false,
-        "psrc": "sass/global/mixin.scss",
-        "dsrc":"sass/",
-        "newFileName":"_mixin.scss"
-        }],
+		}],
     "copyDstDir": "",
 
 
     "jsonFile": [{
-            "src": "json/QueryChargeResponse",
+            "src": "json/**/*",
             "dest": "json/"
 	}],
     "jsonDstDir": "json/",
@@ -122,19 +116,13 @@
 	}],
     "imgDstDir": "img/",
 
-    "dirConcatJs": [{
-        "jsAnonymous":true,
-		"jsGlobalObj":"window,angular",
-        "src": "js/collect/_subJs/",
-        "psrc":"",
-        "dest": "js/collect/"
-	}],
+    "dirConcatJs": "",
     
     
     "concatJs":[{
         "destRoot":"",
         "jsAnonymous":false,
-        "psrc":["js/encrypt/AES/tripledes","js/encrypt/jbase64","js/encrypt/AES/mode-ecb","js/comm/comm"],
+        "psrc":["js/encrypt/AES/tripledes","js/encrypt/AES/mode-ecb","js/comm/comm"],
         "fileName":"comm.js",
         "dest": "js/"
     },{
@@ -163,7 +151,7 @@
 	},{
         "jsAnonymous":true,
         "jsGlobalObj":"window",
-        "psrc": "js/{public-obj,jquery/plugins/json/jquery.json.min}",
+        "psrc": "js/{public-obj,encrypt/jbase64,jquery/plugins/json/jquery.json.min}",
         "fileName":"public-obj.js",
         "dest": "js/comm/"
     }],
@@ -171,6 +159,12 @@
     
     
     "jsFile": [{
+        "jsAnonymous":true,
+        "jsGlobalObj":"window,angular",
+        "src": "js/collect/_subJs/collect/**/*",
+        "psrc":"",
+        "dest": "js/collect/"
+    },{
         "psrc": "!js/jquery/plugins/form/jquery.form",
         "dest":"js/jquery/"
     },{
@@ -218,7 +212,7 @@
     "cssFile":"css/**/*",
     "cssDstDir": "css/",
 
-	"ifminhtml": false,
+	"ifminhtml": true,
 	"ifminhtmlObj":{
         "removeComments": true,
         "collapseWhitespace": true,

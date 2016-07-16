@@ -27,13 +27,9 @@
     "serverPath": "{#webPath#}collect/carPay/",
     "browser": "chrome",
 	"anonymous":true,
-
     "copyFile": [{
             "psrc": "js/jquery/jquery-1.11.3.min.js",
             "dest":"js/jquery/"
-		},{
-            "psrc": "js/zeptoJs1.1.6/zepto.min.js",
-            "dest":"js/zepto/"
 		},{
             "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*.*",
             "dest":"js/layer/"
@@ -45,10 +41,10 @@
     "jsonDstDir": "json/",
 
     "imgFile": [{
-        "src": "{img/,img/**/*}"
-	},{
-        "src": ["css/**/*","sass/**/*"],
-        "dest": "css/"
+            "src": "{img/,img/**/*}"
+    	},{
+            "src": ["css/**/*","sass/**/*"],
+            "dest": "css/"
 	}],
     "imgDstDir": "img/",
 
@@ -58,60 +54,58 @@
         "dest": "js/"
 	}],
     "concatJs":[{
-        "jsAnonymous":true,
-        "psrc":"js/sub_js/switch/Keyboard",
-        "src":"js/carPay",
-        "fileName":"carPay.js",
-        "dest": "js/"
-    },{
-        "jsAnonymous":true,
-        "psrc":"js/sub_js/initial/initial_jq",
-        "fileName":"initial.js",
-        "dest": "js/comm/"
-	},{
-        "jsAnonymous":true,
-        "psrc":"js/sub_js/controls/Radio",
-        "fileName":"controls.js",
-        "dest": "js/comm/"
-	},{
-        "jsAnonymous":true,
-		"jsGlobalObj":"window,$",
-        "psrc":"js/qrcode/{qrcode,jquery.qrcode,utf16to8}",
-        "fileName":"qrcode.js",
-        "dest": "js/comm/"
-	},{
-        "jsAnonymous":true,
-		"jsGlobalObj":"window,$,YW",
-        "psrc":"js/sub_js/createListNode/createListNode",
-        "src":"js/Psub_file/community",
-        "fileName":"community.js",
-        "dest": "js/"
+            "jsAnonymous":true,
+            "psrc": "js/zeptoJs1.1.6/{zepto,ajax,event,data}",
+            "fileName":"zepto.min.js",
+            "dest":"js/zepto/"
+        },{
+            "jsAnonymous":true,
+            "psrc":"js/sub_js/switch/Keyboard",
+            "src":"js/carPay",
+            "fileName":"carPay.js",
+            "dest": "js/"
+        },{
+            "jsAnonymous":true,
+            "psrc":"js/sub_js/initial/initial_jq",
+            "fileName":"initial.js",
+            "dest": "js/comm/"
+    	},{
+            "jsAnonymous":true,
+            "psrc":"js/sub_js/controls/Radio",
+            "fileName":"controls.js",
+            "dest": "js/comm/"
+    	},{
+            "jsAnonymous":true,
+    		"jsGlobalObj":"window,$",
+            "psrc":"js/qrcode/{qrcode,jquery.qrcode,utf16to8}",
+            "fileName":"qrcode.js",
+            "dest": "js/comm/"
 	}],
     "concatDstJsFileName":"",
     "jsFile": [{
-        "psrc": "js/comm/comm",
-        "dest": "js/",
-        "destPath":"{#tempPath#}jsdocTemp/{#name#}/"
-	},{
-        "psrc": "js/{viewport,pinyin}",
-        "dest": "js/comm/"
-	},{
-        "jsAnonymous":true,
-        "jsGlobalObj":"window",
-        "psrc": "js/public-obj",
-        "dest": "js/comm/"
-	},{
-        "psrc": "js/encrypt/sha1",
-        "dest": "js/comm/"
-	},{
-        "psrc": "js/location/getCity",
-        "dest": "js/"
-	},{
-        "src": "js/*",
-        "debar": "{js/_subDir/,js/_subDir/**/*.*,js/Psub_file/,js/Psub_file/**/*.*,**/carPay.js}"
-	},{
-		"psrc": "js/zeptoJs1.1.6/plugins/json/zepto.json.min",
-		"dest":"js/zepto/"
+            "psrc": "js/comm/comm",
+            "dest": "js/",
+            "destPath":"{#tempPath#}jsdocTemp/{#name#}/"
+    	},{
+            "psrc": "js/{viewport,pinyin}",
+            "dest": "js/comm/"
+    	},{
+            "jsAnonymous":true,
+            "jsGlobalObj":"window",
+            "psrc": "js/public-obj",
+            "dest": "js/comm/"
+    	},{
+            "psrc": "js/encrypt/sha1",
+            "dest": "js/comm/"
+    	},{
+            "psrc": "js/location/getCity",
+            "dest": "js/"
+    	},{
+            "src": "js/*",
+            "debar": "{js/_subDir/,js/_subDir/**/*.*,js/Psub_file/,js/Psub_file/**/*.*,**/carPay.js}"
+    	},{
+    		"psrc": "js/zeptoJs1.1.6/plugins/json/zepto.json.min",
+    		"dest":"js/zepto/"
 	}],
     "jsDstDir": "js/",
     

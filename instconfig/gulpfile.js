@@ -2498,6 +2498,7 @@
                             //.pipe(changed(cfg.destPath))
                             //.pipe(PY.gulpautoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
                             .pipe(PY.gulpautoprefixer({ browsers: cfg.autoprefixerBrowsers, cascade: false }))
+                            .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpminifycss()))
                             .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpheaderfooter({
                                 header: cfg.header,
                                 footer: cfg.footer,
