@@ -866,7 +866,13 @@
                 //    return ret;
                 //}
                 var pkg = this.pkg;
-                var temparr = [], pathArr = this.splitSrc(objPath);
+                var _this=this,temparr = [], pathArr =[] ;
+                if(isData.isArray(objPath)){
+                    objPath.map(function(v, k){
+                        pathArr=pathArr.concat(_this.splitSrc(v));
+                    });
+                }
+
                 if (pathArr && pathArr.length > 0) {
                     pathArr.map(function (v, k) {
                         if (v && v.indexOf("!") != -1) {
@@ -1009,6 +1015,30 @@
             },
 
             /**
+            * 遍历来源地址合并成完整路径数组
+            * @param {String} srcPath 来源根路径
+            * @param {String|Array} objSrc 当前src路径
+            * @returns {Array} 返回合并好的地址数组
+            */
+            forEachSrc:function(srcPath,objSrc){
+                var resArr=[];
+                srcPath=srcPath||"";
+
+                if(isData.isArray(objSrc)){
+                    if(srcPath){
+                        objSrc.map(function(v,k){
+                            resArr.push(srcPath+v);
+                        });
+                    }else{
+                        resArr=objSrc;
+                    }
+
+                }else{
+                    resArr.push(srcPath+objSrc);
+                }
+                return resArr;
+            },
+            /**
              * 设置task处理参数配置
              * @param   {string}       dirName         来源路径key名
              * @param   {string}       subDst          处理后存放文件的子目录
@@ -1064,7 +1094,7 @@
                                 }
 
                                 if (obj.debar && !debar) {
-                                    debarArr = _this.getDebarPath(tempPublicPath + obj.psrc, obj.debar, "", dirName);
+                                    debarArr = _this.getDebarPath(_this.forEachSrc(tempPublicPath,obj.psrc), obj.debar, "", dirName);
                                     if (debarArr && debarArr.length > 0) {
                                         src = src.concat(debarArr);
                                     }
@@ -1084,7 +1114,7 @@
 
 
                                 if (obj.debar && !debar) {
-                                    debarArr = _this.getDebarPath(tempSrcPath + obj.src, obj.debar, "", dirName);
+                                    debarArr = _this.getDebarPath(_this.forEachSrc(tempSrcPath,obj.src), obj.debar, "", dirName);
                                     if (debarArr && debarArr.length > 0) {
                                         src = src.concat(debarArr);
                                     }

@@ -3,7 +3,7 @@
     "userName": "",
     "version": "1.0.0",
 
-    "ifmin": false,
+    "ifmin": true,
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",
@@ -12,7 +12,6 @@
 	"changIf":false,
 	"jsAnonymous":false,
     "mapIf": false,
-
 
     "srcPath": "{#webappDir#}develop/collectMobile/html/",
     "destPath": "{#webPath#}collect/",
@@ -33,10 +32,10 @@
 	"anonymous":true,
 
     "copyFile": [{
-            "changIf":false,
-            "psrc": "sass/global/mixin.scss",
-            "dsrc":"sass/",
-            "newFileName":"_mixin.scss"
+                "changIf":false,
+                "psrc": "sass/global/mixin.scss",
+                "dsrc":"sass/",
+                "newFileName":"_mixin.scss"
         },{
             "src":"bower/app/ionic_1.0.0/release/fonts/**/*",
             "dest":"js/ionic/fonts/",
@@ -49,8 +48,8 @@
 
 
     "jsonFile": [{
-        "src": "json/QueryChargeResponse",
-        "dest": "json/"
+            "src": "json/QueryChargeResponse",
+            "dest": "json/"
 	}],
     "jsonDstDir": "json/",
 
@@ -90,50 +89,7 @@
             "fileName":"collect.js",
             "dest": "js/collect/",
             "publicPath": "{#webappDir#}develop/collect/html/"
-        },{
-            "jsAnonymous":true,
-            "jsGlobalObj":"window",
-            "src": [
-                "release/js/angular/angular",
-                "release/js/angular/angular-animate",
-                "release/js/angular/angular-sanitize",
-                "release/js/angular-ui/angular-ui-router",
-
-                "js/ionic",
-                "js/utils/delegateService",
-                "js/utils/dom",
-                "js/utils/events",
-                "js/utils/gestures",
-                "js/utils/platform",
-                "js/utils/poly",
-                "js/utils/tap",
-                "js/utils/activator",
-                "js/utils/utils",
-                "js/utils/list",
-                "js/utils/keyboard",
-                "js/utils/viewport",
-
-                "js/views/view",
-                "js/views/scrollView",
-                "js/views/scrollViewNative",
-                "js/views/listView",
-                "js/views/modalView",
-                "js/views/sideMenuView",
-                "js/views/sliderView",
-                "js/views/toggleView",
-
-                "js/angular/*",
-                "js/angular/service/**/*",
-                "js/angular/controller/**/*",
-                "js/angular/directive/**/*"
-            ],
-
-            "dest":"js/ionic/",
-            "debar": "{slide*.*,side*.*,menu*.*,tab*.*,checkbox*.*,popover*.*,spinner*.*,modal*.*,popup*.*}",
-            "fileName":"ionic.bundle.min.js",
-            "srcPath":"e:/github/ionic/"
         }],
-
     "concatDstJsFileName":"",
 
     "jsFile": [{
@@ -146,18 +102,16 @@
             "psrc": "js/{viewport,pinyin}",
             "dest": "js/comm/"
         },{
-            "src": "!bower/app/ionic_1.0.0/release/js/ionic.bundle.min",
+            "src": "bower/app/ionic_1.0.0/release/js/ionic.bundle.min",
             "dest":"js/ionic/",
             "srcPath":"e:/"
         },{
-            "psrc": "!js/angular/plugins/ui_router/angular-ui-router",
+            "psrc": "js/angular/plugins/ui_router/angular-ui-router",
             "dest":"js/angular/"
         },{
             "psrc": "js/zeptoJs1.1.6/plugins/json/zepto.json.min",
             "dest":"js/zepto/"
         },{
-            "jsAnonymous":true,
-            "jsGlobalObj":"window",
             "src": "js/*",
             "dest": "js/",
             "debar": "{js/_subDir/,js/_subDir/**/*.*}"
@@ -169,9 +123,9 @@
             "src":"sass/**/*",
             "dest":"css/"
         },{
-            "src":"scss/*",
+            "src":"bower/app/ionic_1.0.0/scss/**/*",
             "dest":"js/ionic/css/",
-            "srcPath":"e:/github/ionic/"
+            "srcPath":"e:/"
     }],
 
     "concatCss":"",
