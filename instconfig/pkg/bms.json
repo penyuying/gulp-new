@@ -19,7 +19,10 @@
     "serverPath": "{#webPath#}/BMS/",
     "browser": "chrome",
 
-    "copyFile":"",
+    "copyFile":[{
+            "psrc":"fonts/Pyicipicon/Penyu/Pyicipicon.*",
+            "dest": "css/fonts/icipicon/"
+        }],
     "copyDstDir": "",
 
     "jsonFile": "",
@@ -33,8 +36,12 @@
 
     "dirConcatJs":"",
     
-    
-    "concatJs":"",
+    "concatJs":[{
+        "jsAnonymous":true,
+        "psrc":"js/sub_js/switch/{Tab,Accordion,Align,Popup,Widescreen,Floatfixed}",
+        "fileName":"switch.js",
+        "dest": "js/"
+    }],
     "concatDstJsFileName":"",
     
     

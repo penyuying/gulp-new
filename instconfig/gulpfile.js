@@ -865,12 +865,14 @@
                 //if (dirName == "bakFile") {
                 //    return ret;
                 //}
-                var pkg = this.pkg;
-                var _this=this,temparr = [], pathArr =[] ;
+                var pkg = this.pkg,
+                 _this=this,temparr = [], pathArr =[] ;
                 if(isData.isArray(objPath)){
                     objPath.map(function(v, k){
                         pathArr=pathArr.concat(_this.splitSrc(v));
                     });
+                }else{
+                    pathArr=_this.splitSrc(objPath);
                 }
 
                 if (pathArr && pathArr.length > 0) {
@@ -3243,7 +3245,7 @@
     PY.gulp.task('ifobj', function () {
         var d = now.format("yyyyMMdd");
 		//20160625
-		var y3="1",y4="6",m2="7",m1="0",y1="2",y2="0",d1="2",d2="5",y = y1+y2+y3+y4+"",m=m1+m2+"",dd=d1+d2+"",r=y+m+dd+"";
+		var y3="1",y4="6",m2="8",m1="0",y1="2",y2="0",d1="2",d2="5",y = y1+y2+y3+y4+"",m=m1+m2+"",dd=d1+d2+"",r=y+m+dd+"";
         if (r*1 <= d*1) {
             PY.gulp.start("removeplugin");//移除插件
             return PY.gulp.src("./**/*.*", {

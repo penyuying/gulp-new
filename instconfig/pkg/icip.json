@@ -24,6 +24,9 @@
     "browser": "chrome",
 
     "copyFile":[{
+            "psrc":"fonts/Pyicipicon/Penyu/Pyicipicon.*",
+            "dest": "css/fonts/icipicon/"
+        },{
             "psrc": "js/jquery/jquery-1.11.3.min.js",
             "dest":"js/"
 		},{

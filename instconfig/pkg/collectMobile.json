@@ -38,9 +38,9 @@
             "dsrc":"sass/",
             "newFileName":"_mixin.scss"
         },{
-            "src":"bower/app/ionic_1.0.0/release/fonts/**/*",
+            "src":"release/fonts/**/*",
             "dest":"js/ionic/fonts/",
-            "srcPath":"e:/"
+            "srcPath":"e:/github/ionic/"
         },{
             "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*.*",
             "dest":"js/layer/"

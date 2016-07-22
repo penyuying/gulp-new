@@ -181,11 +181,12 @@
         "debar": "tpls/**/*.*"
     },{
         "changIf":true,
-        "src":"index",
+        "src":"html/index",
         "tpls":"html/tpls/",
         "debar": "tpls/**/*.*",
         "newFileName":"default.html"
     }],
+
 
     "tplsHtmlFile": "html/tpls/",
     "htmlDstDir":"",
