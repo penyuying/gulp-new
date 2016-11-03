@@ -22,8 +22,16 @@
     "port": "8093",
     "serverPath": "{#webPath#}/BMS1/",
     "browser": "chrome",
-
     "copyFile":[{
+            "src":"AraleQRCode/dist/arale-qrcode/3.0.5/index.js",
+            "dest":"js/",
+            "newFileName":"AraleQRCode.js",
+            "srcPath":"e:/github/"
+        },{
+            "src":"JsBarcode/dist/JsBarcode.all.min.js",
+            "dest":"js/",
+            "srcPath":"e:/github/"
+        },{
             "psrc":"fonts/Pyicipicon/Penyu/Pyicipicon.*",
             "dest": "css/fonts/icipicon/"
         },{
@@ -93,7 +101,13 @@
 	}, {
         "jsAnonymous":true,
         "jsGlobalObj":"window",
-        "psrc": "{js/public-obj,js/slide}",
+        "psrc": "js/sub_js/switch/mobileAndPc_slide",
+        "newFileName":"slide.js",
+        "dest": "js/"
+    }, {
+        "jsAnonymous":true,
+        "jsGlobalObj":"window",
+        "psrc": "js/public-obj",
         "dest": "js/"
 	}],
     "jsDstDir": "js/",

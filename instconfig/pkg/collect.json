@@ -3,6 +3,8 @@
     "userName": "",
     "version": "1.0.0",
 
+
+
     "ifmin": false,
     "gzipIf": false,
     "srcRev": true,
@@ -23,6 +25,7 @@
     "jsDoc3Temp":"{#tempPath#}jsDoc/collect/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/collect/",
     "ifJsDoc":true,
+    "isTest":true,
 	"testConfig":{
         "srcPath":[
             "http://www.fuwuqu.me/ifs/script/sysdict.js",
@@ -54,6 +57,9 @@
 	"anonymous":true,
 
     "copyFile": [{
+            "psrc":"fonts/Pyicipicon/Penyu/Pyicipicon.*",
+            "dest": "css/fonts/icipicon/"
+        },{
             "psrc": "js/angular/angular-1.2.29/angular.min.js",
             "dest":"js/angular/"
 		},{
@@ -92,7 +98,6 @@
             "psrc": "js/jquery/plugins/layer-v2.0/{layer/**/*.*,layer/}",
             "dest":"js/layer/"
 		},{
-            
         "changIf":false,
         "psrc": "sass/global/mixin.scss",
         "dsrc":"sass/",
@@ -200,7 +205,13 @@
 	},{
 		"psrc": "!js/jquery/plugins/json/jquery.json.min",
 		"dest":"js/jquery/"
-	}],
+	}, {
+        "jsAnonymous":true,
+        "jsGlobalObj":"window",
+        "psrc": "js/sub_js/switch/mobileAndPc_slide",
+        "newFileName":"slide.js",
+        "dest": "js/comm/"
+    }],
     "jsDstDir": "js/",
     
 
@@ -238,6 +249,7 @@
     "templateFile":[{
         "injectIf":false,
         "src":"tpls/**/*",
+        "tpls":"_tpls/",
         "dest":"tpls/"
     }],
     "templateDstDir":"tpls/",
@@ -246,6 +258,7 @@
 		"changIf":true,
         "src":"*",
 		"destRoot":"",
+        "tpls":"_tpls/",
 		"dest":"sf/"
     },{
         "injectIf":false,

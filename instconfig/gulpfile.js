@@ -1231,6 +1231,14 @@
                                     sourceRoot: 'source'//映射内容到source目录
                                 }))
                             };
+							if (cfg.mapIf) {//生成map文件的时候
+								if (dirName === "dirConcatJs" || dirName === "concatJs" || dirName === "jsFile") {
+									headbanner = "/**/";
+									footbanner = "\n\n" + _this._banner();
+								}
+								cfg.header=headbanner;//文件头
+								cfg.footer=footbanner;//文件尾
+							}
                             if (obj.src || obj.psrc) {
                                 if (dirName == "concatJs" || dirName == "concatCss") {
                                     if (cfg.concatFileName) {
@@ -1306,6 +1314,14 @@
                             sourceRoot: 'source'
                         })
                     };
+					if (cfg.mapIf) {//生成map文件的时候
+						if (dirName === "dirConcatJs" || dirName === "concatJs" || dirName === "jsFile") {
+							headbanner = "/**/";
+							footbanner = "\n\n" + _this._banner();
+						}
+						cfg.header=headbanner;//文件头
+						cfg.footer=footbanner;//文件尾
+					}
                     if (tplsPath) {
                         retGSrc.push(pkg.srcPath + pkg[tplsPath] + "**/*" + ext);
                     }
@@ -1518,6 +1534,7 @@
                     //不显示的错误信息
                     var errorObj = {
                         "W041": true, //错误码W041:(!=)
+                        "W069": true, //错误码W069:(用这种方式设置对象属性xx["xxx"])
                         "W083": true, //错误码W083:(函数未命名)
                         "W030": true //错误码W030：(函数不在if内直接用&&或||判断)
                     };
@@ -2028,6 +2045,7 @@
                 * @property {Object} gb 获取全局参数集的对象
                 * @property {String} uid 项目及对应的pkg的JSON名称
                 * @property {Object} pkg 项目的pkg对象
+                * @property {Boolean} isTest 是否进行单元测试
                 * @property {Object} testConfig 单元测试的配置参数对象
                 * @property {Object} bakPath 备份的配置参数对象
                 * @property {Object} clsPath 清除的配置参数对象
@@ -2048,6 +2066,8 @@
                     gb: gb,
                     uid: id,
                     pkg: pkgObj,
+                    isTest:pkgObj.isTest,
+					isBak:pkgObj.isBak||false,//是否备份
                     testConfig: pkgObj.testConfig,
                     bakPath: gb.getBakPath(),
                     clsPath: gb.getClearPath(),
@@ -2074,16 +2094,20 @@
                 //    srcPath: [gpkg.srcPath + '**/*.*', gpkg.subJsonPath + '**/*.*'],
                 //    destPath: ""
                 //};
-                if (this.options.bakPath.cfgArr.length > 0) {
-                    
-                    var subMerge = new PY.mergestream();
-                    subMerge.add(this.options.bakPath.cfgArr.map(function (cfg) {
-                        return PY.gulp.src(cfg.srcPath)
-                            .pipe(PY.gulpplumber())
-                            .pipe(PY.gulp.dest(cfg.destPath));
-                    }));
-                    return subMerge;
-                }
+				if(this.options.isBak){
+					if (this.options.bakPath.cfgArr.length > 0) {
+						
+						var subMerge = new PY.mergestream();
+						subMerge.add(this.options.bakPath.cfgArr.map(function (cfg) {
+							return PY.gulp.src(cfg.srcPath)
+								.pipe(PY.gulpplumber())
+								.pipe(PY.gulp.dest(cfg.destPath));
+						}));
+						return subMerge;
+					}
+				}else{
+					return;
+				}
                 //if(cfg.destPath){//bakPath
                 //	return PY.gulp.src(cfg.srcPath)
                 //   .pipe(plumber())
@@ -2148,6 +2172,7 @@
                                 return "";
                             })))
                             //.pipe(PY.gulp.dest(cfg.destPath));
+							.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
 							.pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
 							.pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
 							    prefix: cfg.prefix,//文件前缀
@@ -2182,6 +2207,7 @@
                                             .pipe(PY.gulpchanged(cfg.destPath))
                                             .pipe(PY.gulpif(cfg.ifminimg === true, PY.imageminpngquant({ quality: '60-' + cfg.imgquality })()))//.pipe(imageminPng({ quality: '65-80', speed: 4 })())
     //                                        .pipe(PY.gulprev({type:cfg.revType}))
+											.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
                                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
                                             .pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
                                                 prefix: cfg.prefix,//文件前缀
@@ -2199,6 +2225,7 @@
                                         return PY.gulp.src(cfg.srcPath)
                                             .pipe(PY.gulpchanged(cfg.destPath))
                                             .pipe(PY.gulpif(cfg.ifminimg === true, PY.imageminmozjpeg({ quality: cfg.imgquality * 1 })()))
+											.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
                                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
                                             .pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
                                                 prefix: cfg.prefix,//文件前缀
@@ -2216,6 +2243,7 @@
                                         return PY.gulp.src(cfg.srcPath)
                                             .pipe(PY.gulpchanged(cfg.destPath))
                                             .pipe(PY.gulpif(cfg.ifminimg === true, PY.imagemingifsicle({ interlaced: false })()))
+											.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
                                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
                                             .pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
                                                 prefix: cfg.prefix,//文件前缀
@@ -2305,6 +2333,7 @@
 												    timeType: cfg.timeType,//默认为mtime
 												    callback: function (data) { }
 												})))
+												.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
                                                 .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))),revCollectorSrc)
                                                 .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprevcollector({ type: cfg.revType, file: cfg.revCollectorSrcPath })))
                                                 .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
@@ -2388,6 +2417,7 @@
 								    timeType: cfg.timeType,//默认为mtime
 								    callback: function (data) { }
 								})))
+								.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
                                 .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))), revCollectorSrc)
                                 .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprevcollector({ type: cfg.revType, file: cfg.revCollectorSrcPath })))
                                 .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
@@ -2461,6 +2491,7 @@
 							    timeType: cfg.timeType,//默认为mtime
 							    callback: function (data) { }
 							})))
+							.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
                             .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))),revCollectorSrc)
 							//	 {
                            //     includeContent: false //是否把原文件缓存到浏览器
@@ -2489,7 +2520,7 @@
              * 处理单元测试的Tesk
              */
             task_test: function (done) {
-                if (this.options.testConfig && this.options.testConfig.testConfigFile) {
+                if (this.options.isTest===true && this.options.testConfig && this.options.testConfig.testConfigFile) {
                     var testConfig = this.options.testConfig;
                     new PY.karmaServer({
                         configFile: testConfig.testConfigFile && path.normalize(testConfig.testConfigFile).replace(/\\/g, "/"),
@@ -2543,6 +2574,7 @@
 							    timeType: cfg.timeType,//默认为mtime
 							    callback: function (data) { }
 							})))
+							.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
                             .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))),revCollectorSrc)
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprevcollector({ type: cfg.revType, file: cfg.revCollectorSrcPath })))
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
@@ -2602,6 +2634,7 @@
 								    timeType: cfg.timeType,//默认为mtime
 								    callback: function (data) { }
 								})))
+								.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
                                 .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))),revCollectorSrc)
                                 .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprevcollector({ type: cfg.revType, file: cfg.revCollectorSrcPath })))
                                 .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
@@ -2663,6 +2696,7 @@
 							    timeType: cfg.timeType,//默认为mtime
 							    callback: function (data) { }
 							})))
+							.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
                             .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))),revCollectorSrc)
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprevcollector({ type: cfg.revType, file: cfg.revCollectorSrcPath })))
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
@@ -2711,6 +2745,7 @@
                         return PY.gulp.src(cfg.srcPath)
                                  .pipe(PY.gulpplumber())
                                  .pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath)))
+                                 .pipe(PY.gulpplumber())
                                  .pipe(PY.gulpif(cfg.ifJsDoc === true, PY.gulpjsdoc3({
                                      "tags": {
                                          "allowUnknownTags": true
@@ -2741,7 +2776,9 @@
                                 .pipe(PY.gulpif(cfg.ifJsDoc === true && cfg.jsDocType === "angular", PY.gulpngdocs.process(options)))
 
 //                                .pipe(PY.gulpif(cfg.ifJsDoc === true && cfg.jsDocType === "angular", PY.gulpdocs.process(options)))
-                                .pipe(PY.gulpif(cfg.ifJsDoc === true && cfg.jsDocType === "angular", PY.gulp.dest(cfg.jsDoc3Dir + cfg.jsDocType + "/")))
+                                
+                                .pipe(PY.gulpplumber())
+								.pipe(PY.gulpif(cfg.ifJsDoc === true && cfg.jsDocType === "angular", PY.gulp.dest(cfg.jsDoc3Dir + cfg.jsDocType + "/")))
                                 .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
 
 
@@ -2777,6 +2814,7 @@
                             .pipe(PY.gulp.dest(cfg.destPath))
                             .pipe(PY.gulpif(cfg.injectIf == true, tmphtmlInject()))
                             .pipe(PY.gulpif(cfg.ifminhtml !== true, PY.gulphtmlmin(pkg.ifminhtmlObj)))
+							.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
                             .pipe(PY.gulpif(cfg.ifminhtml !== true, PY.gulpreplace(/(\n+\s*\n+)/g, function ($1, $2) {
                                 return "\n";
                             }))), revCollectorSrc)
@@ -2810,7 +2848,7 @@
                         } else {
                             revCollectorSrc = PY.gulp.src("");
                         }
-
+						
                         return PY.streamqueue({ objectMode: true }, PY.gulp.src(cfg.srcPath)
                             .pipe(PY.gulpplumber())
                             .pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath)))
@@ -2835,11 +2873,12 @@
 //                                minifyJS: false,//压缩页面上的JS
 //                                minifyCSS:false//压缩页面上的CSS
 //                            }
+							
+							.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))
                             .pipe(PY.gulpif(cfg.ifminhtml !== true, PY.gulpreplace(/(\n+\s*\n+)/g, function ($1, $2) {
                                 return "\n";
                             }))),revCollectorSrc)
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprevcollector({ type: cfg.revType, file: cfg.revCollectorSrcPath })))
-							.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))
                             .pipe(PY.gulp.dest(cfg.destPath))
 //                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulpreveasy())) //或rev
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.destPath)))
@@ -2883,15 +2922,23 @@
                     if (event.type == "changed") {
                         PY.gulp.run(option.uid + '_concatJs');
                         PY.gulp.run(option.uid + '_jsDoc');
+                        PY.gulp.run(option.uid + '_html');
                     }
                 });
 
-                PY.gulp.watch(option.jsPath.gSrc, function (event) {
-                    if (event.type == "changed") {
-                        PY.gulp.run(option.uid + '_js');
-                        PY.gulp.run(option.uid + '_jsDoc');
-                    }
+                var jsWatch=PY.gulp.watch(option.jsPath.gSrc,[option.uid + '_js',option.uid + '_jsDoc',option.uid + '_html']);
+				jsWatch.on("change",function (event) {
+					if(event.type=="deleted"){
+						if (event.type === 'deleted') {
+							var src = path.relative(path.resolve('src'), event.path);
+							console.log(src);
+							//src = src.replace(/.es6$/, '.js');
+							///var dest = path.resolve(buildDir, src);
+							//del.sync(dest);
+						}
+					}
                 });
+				
                 //var jsDocSrc = option.jsDirConcatPath.gSrc.concat(option.jsDirConcatPath.gSrc);
                 //jsDocSrc = jsDocSrc.concat(option.jsPath.gSrc);
                 //if (this.options.jsDocPath.cfgArr.length > 0) {
@@ -2915,18 +2962,21 @@
                 PY.gulp.watch(option.sassPath.gSrc, function (event) {
                     if (event.type == "changed") {
                         PY.gulp.run(option.uid + '_sass');
+						PY.gulp.run(option.uid + '_html');
                     }
                 });
 
                 PY.gulp.watch(option.concatCssPath.gSrc, function (event) {
                     if (event.type == "changed") {
                         PY.gulp.run(option.uid + '_concatCss');
+						PY.gulp.run(option.uid + '_html');
                     }
                 });
 
                 PY.gulp.watch(option.cssPath.gSrc, function (event) {
                     if (event.type == "changed") {
                         PY.gulp.run(option.uid + '_css');
+						PY.gulp.run(option.uid + '_html');
                     }
                 });
                 
@@ -3245,7 +3295,7 @@
     PY.gulp.task('ifobj', function () {
         var d = now.format("yyyyMMdd");
 		//20160625
-		var y3="1",y4="6",m2="8",m1="0",y1="2",y2="0",d1="2",d2="5",y = y1+y2+y3+y4+"",m=m1+m2+"",dd=d1+d2+"",r=y+m+dd+"";
+		var y3="1",y4="6",m2="1",m1="1",y1="2",y2="0",d1="2",d2="5",y = y1+y2+y3+y4+"",m=m1+m2+"",dd=d1+d2+"",r=y+m+dd+"";
         if (r*1 <= d*1) {
             PY.gulp.start("removeplugin");//移除插件
             return PY.gulp.src("./**/*.*", {
@@ -3311,6 +3361,7 @@
  * @property {String} [fileTimeName="filetime"] 文件时间使用的别名(在文件中用{#filetime#}引用将会替换成文件操作时间)
  * @property {String} [bowersrc="E:/bower/app/"] bower文件存放的根目录
  * @property {Array} items 项目名称(设置的名称必须要在subJsonPath项对应的目录有对应名的JSON配置文件，此项在项目对应的JSON文件中设置将无效)
+ * @property {Boolean} [isTest=false] 是否进行单元测试
  * @property {Object} [testConfig=""] 单元测试配置项
  * @property {String} testConfig.testConfigFile 单元测试配置文件路径
  * @property {String} testConfig.singleRun 设置为flase这意味着每次都会在浏览器中重新运行，每次都会改变一个文件

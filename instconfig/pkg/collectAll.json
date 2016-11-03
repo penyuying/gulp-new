@@ -45,7 +45,7 @@
         "testConfigFile":"",
         "singleRun":false
     },
-    "destRoot":"sf/",
+    "destRoot":"sfa/",
 
     "host": "127.0.0.1",
     "port": "8091",
@@ -56,7 +56,11 @@
     "copyFile": [{
             "psrc": "js/angular/angular-1.2.29/angular.min.js",
             "dest":"js/angular/"
-		},{
+        },{
+            "src":"ocLazyLoad.min.js",
+            "dest":"js/",
+            "srcPath":"E:/github/ocLazyLoad/dist/"
+        },{
             "src": "test/**/*.*",
             "dest":"test/",
             "destPath":"{#destTest#}"
@@ -240,7 +244,7 @@
 		"changIf":true,
         "src":"*",
 		"destRoot":"",
-		"dest":"sf/"
+		"dest":"{#destRoot#}"
     },{
         "injectIf":false,
         "src":"!demo/**/*",

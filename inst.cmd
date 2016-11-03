@@ -28,7 +28,8 @@
 	)
 	call cls
 	call gem sources --remove https://rubygems.org/
-	call gem sources -a https://ruby.taobao.org/
+	rem call gem sources -a https://ruby.taobao.org/
+	call gem sources -a http://gems.ruby-china.org/
 	call gem sources -l
 	call gem install sass
 	rem npm config set registry https://registry.npm.taobao.org 

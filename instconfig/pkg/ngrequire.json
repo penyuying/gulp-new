@@ -1,5 +1,5 @@
 {
-	"name": "react",
+	"name": "ngrquire",
     "userName": "penyu",
     "version": "1.0.0",
 
@@ -9,31 +9,24 @@
     "suffix": "",
 	"injectIf":true,
 	"changIf":true,
-    "srcPath": "{#webappDir#}develop/react/src/",
-    "destPath": "{#webPath#}react/",
-    "revDestPath":"{#tempPath#}rev/react/",
+    "srcPath": "{#webappDir#}develop/ngrquire/src/",
+    "destPath": "{#webPath#}ngrquire/",
+    "revDestPath":"{#tempPath#}rev/ngrquire/",
     "destRoot":"",
 
-    "jsDoc3Temp":"{#tempPath#}jsDoc/react/",
+    "jsDoc3Temp":"{#tempPath#}jsDoc/ngrquire/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
     "ifJsDoc":true,
 
     "host": "127.0.0.1",
     "port": "8098",
-    "serverPath": "{#webPath#}react/",
+    "serverPath": "{#webPath#}ngrquire/",
     "browser": "chrome",
 
-	
     "copyFile": [{
-            "src": "jsx/**/*.*",
-            "dest":"jsx/"
-		},{
-			"psrc":"js/react/react-15.0.2/build/browser.min.js",
-			"dest":"js/react/"
-		},{
-			"psrc":"js/react/react-15.0.2/build/{react,react-dom,react-with-addons}.js",
-			"suffix":".min",
-			"dest":"js/react/"
+            "src": "ocLazyLoad.require.min.js",
+            "dest":"js/",
+            "srcPath":"E:/github/ocLazyLoad/dist/"
 		}],
     "copyDstDir": "",
 

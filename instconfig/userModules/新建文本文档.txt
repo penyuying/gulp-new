@@ -1,0 +1,1 @@
+新版的gulp-uglify压缩的在IE8不能用

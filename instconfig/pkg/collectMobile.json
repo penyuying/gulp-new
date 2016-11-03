@@ -23,7 +23,7 @@
     "jsDocLink":"/api",
     "jsDoc3Temp":"{#tempPath#}jsDoc/wapsf/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
-    "ifJsDoc":false,
+    "ifJsDoc":true,
     "destRoot":"wapsf/",
 
     "host": "127.0.0.1",
@@ -37,6 +37,9 @@
             "psrc": "sass/global/mixin.scss",
             "dsrc":"sass/",
             "newFileName":"_mixin.scss"
+        },{
+            "psrc": "js/require/requirejs2.1.11/require.min.js",
+            "dest":"js/comm/"
         },{
             "src":"release/fonts/**/*",
             "dest":"js/ionic/fonts/",
@@ -91,6 +94,7 @@
             "dest": "js/collect/",
             "publicPath": "{#webappDir#}develop/collect/html/"
         },{
+            "ifJsDoc":false,
             "jsAnonymous":true,
             "jsGlobalObj":"window",
             "src": [
@@ -129,10 +133,11 @@
             ],
 
             "dest":"js/ionic/",
-            "debar": "{slide*.*,side*.*,menu*.*,tab*.*,checkbox*.*,popover*.*,spinner*.*,modal*.*,popup*.*}",
+            "debar": "{slide*.*,side*.*,menu*.*,tab*.*,checkbox*.*,popover*.*,spinner*.*,modal*.*,popup*.*,keyboard*.*}",
             "fileName":"ionic.bundle.min.js",
             "srcPath":"e:/github/ionic/"
         }],
+
 
     "concatDstJsFileName":"",
 

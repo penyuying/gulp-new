@@ -19,7 +19,7 @@
     "jsDoc3Temp":"{#tempPath#}jsDoc/practice/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
     "ifJsDoc":true,
-
+    "isTest":false,
     "testConfig":{
         "srcPath":[
             "src/**/*.js",
@@ -78,7 +78,10 @@
         "src": "js/**/*",
         "dest": "js/",
         "debar": "{_subDir/,_subDir/**/*.*}"
-	}],
+	},{
+        "psrc": "js/jquery/plugins/json/jquery.json.min",
+        "dest":"js/"
+    }],
     "jsDstDir": "js/",
     
 
@@ -109,12 +112,20 @@
         "minifyJS": false,
         "minifyCSS":false
     },
+    
     "htmlFile": [{
-		"changIf":true,
+        "changIf":true,
         "destRoot":"",
         "src":"html/*",
         "debar": "tpls/**/*.*",
         "tpls":"html/tpls/"
+    },{
+		"changIf":true,
+        "destRoot":"",
+        "src":"html/webgl/**/*",
+        "debar": "tpls/**/*.*",
+        "tpls":"html/tpls/",
+        "dest":"webgl/"
     }],
     "tplsHtmlFile": "html/tpls/",
     "htmlDstDir":"",

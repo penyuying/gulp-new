@@ -63,7 +63,10 @@
 	}, {
         "src": "css/**/*",
         "dest": "css/"
-	}],
+	},{
+        "src": "sass/**/*",
+        "dest": "css/"
+    }],
     "imgDstDir": "img/",
 	"concatJs":[{
         "jsAnonymous":true,
@@ -87,7 +90,7 @@
         "dest": "js/comm/"
     }],
 	"concatDstJsFileName":"",
-	
+
 	"jsFile": [{
         "psrc": "js/comm/comm",
         "dest": "js/",
@@ -105,6 +108,9 @@
         "psrc": "js/public-obj",
         "dest": "js/comm/"
 	}, {
+        "psrc": "js/sub_js/switch/shake",
+        "dest": "js/"
+    }, {
         "psrc": "js/encrypt/{md5,sha1}",
         "dest": "js/comm/"
 	},{
