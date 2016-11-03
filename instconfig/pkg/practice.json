@@ -55,6 +55,9 @@
 	}, {
         "src": "sass/**/*",
         "dest": "css/"
+    }, {
+        "src": "compass/**/*",
+        "dest": "css/"
 	}],
     "imgDstDir": "img/",
 
@@ -89,7 +92,19 @@
         "src":"sass/**/*",
         "dest":"css/"
     }],
-    
+
+    "compassFile": [{
+        "src":"compass/**/*",
+        "dest":"css/"
+    }],
+    "compassTemp":"{#tempPath#}compass/practice/",
+    "compassConfig": {
+        "project": "{#srcPath#}/",
+        "config_file": "./config.rb",
+        "sass": "compass/",
+        "image": "compass/img/"
+    },
+
     "concatCss":"",
     "concatDstCssFileName":"",
     

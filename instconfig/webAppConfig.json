@@ -116,6 +116,14 @@
   "jsFile": "js/**/*",
   "jsDstDir": "js/",
   "sassFile": "",
+  "compassFile": "",
+  "compassConfig": {
+        "config_file": "./config.rb",
+        "css": "css",
+        "sass": "sass",
+        "image": "images"
+    },
+  "compassTemp":"",
   "concatCss": "",
   "concatDstCssFileName": "",
   "cssFile": "css/**/*",

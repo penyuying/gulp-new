@@ -670,10 +670,10 @@
              * @param   {string} docDst jsDoc配置文件临时存放的目录(暂时无用)
              * @returns {string} 返回处理好的路径
              */
-            getJsDoc3Temp: function (pkg, obj, subDst, docDst) {//获取jsDoc临时文件存放的目录
+            getJsDoc3Temp: function (pkg, obj, subDst, docDst,jsDoc3Temp) {//获取jsDoc临时文件存放的目录
                 var root = returnObj(obj,"destRoot",returnObj(pkg,"destRoot","")),
                     dest,
-                    jsDoc3Temp = returnObj(obj,"jsDoc3Temp",returnObj(pkg,"jsDoc3Temp",""));
+                    jsDoc3Temp = returnObj(obj,jsDoc3Temp,returnObj(pkg,jsDoc3Temp,""));
                 
                 // if (obj && typeof obj.root != "undefined") {
                 //     root = obj.root;
@@ -1132,7 +1132,13 @@
 
                             var destPath = _this._getDestPath(pkg, obj, subDst);
                             var revDestPath = _this.getRevDestPath(pkg, obj, subDst, subRevDst);
-                            var jsDocTempPath = _this.getJsDoc3Temp(pkg, obj, subDst, subRevDst);
+                            var jsDocTempPath = _this.getJsDoc3Temp(pkg, obj, subDst, subRevDst,"jsDoc3Temp");//获取jsDoc3存放临时文件的目录
+                            var compassConfig=returnObj(obj, 'compassConfig', pkg.compassConfig||{});//获取compass的配置参数
+                            if(dirName=="compassFile"){
+                                var compassTempPath = _this.getJsDoc3Temp(pkg, obj, subDst, subRevDst,"compassTemp");//获取compass存放临时文件的目录
+                                compassConfig.css=compassTempPath||"css"
+                            }
+                            
 
                             var tempJsHeader = returnObj(obj, 'jsHeader', returnObj(pkg, (pkg.jsHeader && 'jsHeader') || "", "(function(" + returnObj(obj, 'jsGlobalObj', pkg.jsGlobalObj) + ") {\n"));
 
@@ -1160,6 +1166,7 @@
                              * @property {String} revType rev生成和替换静态文件名的类型（"part"为参数形式,其它为文件名形式）
                              * @property {Boolean} [mapIf=false] 是否生成map文件（true为是，false为否）
                              * @property {String} mapsPath map文件存放路径
+                             * @property {Object} compassConfig compass配置参数
                              * @property {String} [ifminimg=false] 是否压缩图片（true为是，false为否）
                              * @property {Number} [imgquality=100] 图片质量，最小不能小于60(ifminimg=true时才有效)
                              * @property {String} newFileName 处理完后的文件的新名称
@@ -1203,6 +1210,7 @@
                                 //                                revCollectorType:returnObj(obj, 'revCollectorType',pkg.revCollectorType),//revCollector替换文件的类型
                                 mapIf: returnObj(obj, 'mapIf', pkg.mapIf),//是否生成map文件（true为是，false为否）
                                 mapsPath: returnObj(obj, 'mapsPath', pkg.mapsPath),//obj.mapsPath || pkg.mapsPath,
+                                compassConfig: compassConfig,//obj.compassConfig || pkg.compassConfig,
                                 ifminimg: returnObj(obj, 'ifminimg', pkg.ifminimg),//obj.ifmin || pkg.ifminimg,//是否压缩图片（true为是，false为否）
                                 imgquality: returnObj(obj, 'imgquality', pkg.imgquality) || 100,//图片质量
                                 newFileName: returnObj(obj, 'newFileName', ""),//处理完后的文件的新名称
@@ -1269,7 +1277,12 @@
                     }
                     var destPath = _this._getDestPath(pkg, "", subDst);
                     var revDestPath = _this.getRevDestPath(pkg, "", subDst, subRevDst);
-                    var jsDocTempPath = _this.getJsDoc3Temp(pkg, "", subDst, subRevDst);
+                    var jsDocTempPath = _this.getJsDoc3Temp(pkg, "", subDst, subRevDst,"jsDoc3Temp");
+                    var compassConfig=returnObj(pkg, 'compassConfig',{});
+                    if(dirName=="compassFile"){
+                        var compassTempPath = _this.getJsDoc3Temp(pkg, "", subDst, subRevDst,"compassTemp");
+                        compassConfig.css=compassTempPath||"css"
+                    }
                     cfg = {
                         name: returnObj(pkg, 'name', ""),//项目名称
                         concatFileName: concatDstJsFileName && pkg[concatDstJsFileName],
@@ -1287,6 +1300,7 @@
                         //                        revCollectorType:returnObj(pkg, 'revCollectorType',""),//revCollector替换文件的类型
                         mapIf: pkg.mapIf,
                         mapsPath: pkg.mapsPath,
+                        compassConfig: compassConfig,//obj.compassConfig || pkg.compassConfig,
                         ifminimg: pkg.ifminimg,//是否压缩图片（true为是，false为否）
                         newFileName: "",//处理完后的文件的新名称
                         prefix: returnObj(pkg, 'prefix', false),//是否给文件前后缀（有内空时为加，没有内容时为不加）
@@ -1454,11 +1468,20 @@
             },
 
             /**
+             * 获取sass处理参数配置
+             * @returns {Object} 返回cfgObj配置参数对象
+             */
+            getSassPath: function () {
+                var obj = this.setObj("sassFile", "cssDstDir", "sassFile", "{.scss,.sass}", true);
+                return obj;
+            },
+
+            /**
 			 * 获取sass处理参数配置
 			 * @returns {Object} 返回cfgObj配置参数对象
 			 */
-            getSassPath: function () {
-                var obj = this.setObj("sassFile", "cssDstDir", "sassFile", "{.scss,.sass}", true);
+            getCompassPath: function () {
+                var obj = this.setObj("compassFile", "cssDstDir", "compassFile", "{.scss,.sass}", true);
                 return obj;
             },
 
@@ -2078,6 +2101,7 @@
                     jsDirConcatPath: gb.getJsDirConcatPath(),
                     concatJsPath: gb.getConcatJsPath(),
                     sassPath: gb.getSassPath(),
+                    compassPath: gb.getCompassPath(),
                     concatCssPath: gb.getConcatCssPath(),
                     cssPath: gb.getCssPath(),
                     jsDocPath: gb.getJsDocPath(),
@@ -2569,6 +2593,73 @@
                                     return true;
                                 }
                             })))
+                            .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpfiletime({
+                                fileTimeName: cfg.fileTimeName,//默认为filetime
+                                timeType: cfg.timeType,//默认为mtime
+                                callback: function (data) { }
+                            })))
+                            .pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
+                            .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))),revCollectorSrc)
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprevcollector({ type: cfg.revType, file: cfg.revCollectorSrcPath })))
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
+                            .pipe(PY.gulpif(cfg.suffix !== false, PY.gulprename({
+                                prefix: cfg.prefix,//文件前缀
+                                suffix: cfg.suffix
+                            }))) //加后缀
+                            .pipe(PY.gulp.dest(cfg.destPath))
+                            .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulpgzip({
+                                append: true
+                            })))
+                            .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulp.dest(cfg.destPath)))
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
+                            .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
+                    }));
+                    return subMerge;
+                }
+
+
+            },
+
+            /**
+             * compass生成CSS的Tesk
+             */
+            task_compass: function () { // compass样式处理
+                if (this.options.compassPath.cfgArr.length > 0) {
+                    var subMerge = new PY.mergestream();
+                    var i = 0;
+                    subMerge.add(this.options.compassPath.cfgArr.map(function (cfg, k) {
+                        var s = 'expanded';
+                        if (cfg.ifmin !== true) {
+                            s = "compressed";
+                        }
+                        //                        i+=1;
+                        i = k;
+                        var revCollectorSrc;
+                        if (cfg.srcRev === true) {
+                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + "**/*.json");
+                        } else {
+                            revCollectorSrc = PY.gulp.src("");
+                        }
+                        
+                        return PY.streamqueue({ objectMode: true }, PY.gulp.src(cfg.srcPath)
+                            .pipe(PY.gulpplumber())
+                            .pipe(PY.gulpcompass(cfg.compassConfig))
+                            .pipe(PY.gulp.dest(cfg.compassConfig.css))
+                            .on('error', function (err) {
+                                this.end();
+                            })
+                            //.pipe(PY.gulpchanged(cfg.destPath))
+                            //.pipe(PY.gulpautoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
+                            .pipe(PY.gulpautoprefixer({ browsers: cfg.autoprefixerBrowsers, cascade: false }))
+                            .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpminifycss()))
+                            .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpheaderfooter({
+                                header: cfg.header,
+                                footer: cfg.footer,
+                                filter: function (file) {
+                                    return true;
+                                }
+                            })))
 							.pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpfiletime({
 							    fileTimeName: cfg.fileTimeName,//默认为filetime
 							    timeType: cfg.timeType,//默认为mtime
@@ -2962,6 +3053,13 @@
                 PY.gulp.watch(option.sassPath.gSrc, function (event) {
                     if (event.type == "changed") {
                         PY.gulp.run(option.uid + '_sass');
+                        PY.gulp.run(option.uid + '_html');
+                    }
+                });
+
+                PY.gulp.watch(option.compassPath.gSrc, function (event) {
+                    if (event.type == "changed") {
+                        PY.gulp.run(option.uid + '_compass');
 						PY.gulp.run(option.uid + '_html');
                     }
                 });
@@ -3409,6 +3507,7 @@
  * @property {String} [revType="part"] rev生成和替换静态文件名的类型（"part"为参数形式,其它为文件名形式）
  * @property {String} [tempPath="{#webappDir#}temp/"] 临时文件存放的根目录引用（task中不用）
  * @property {String} [mapsPath="maps"] map文件存放的子路径
+ * @property {Object} compassConfig compass配置参数
  * @property {Boolean} [mapIf=false] 是否生成map文件（true为是，false为否）
  * @property {String} [debarPath="{废弃/** /*.*, /** /废弃.*,/** /废弃/*.*,/** /废弃/** /*.*}"] 生成文件时不包含的文件
  * @property {String} [host="127.0.0.1"] 本地服务器地址（暂时无用）
