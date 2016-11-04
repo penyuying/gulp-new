@@ -2847,7 +2847,11 @@
                         return PY.gulp.src(cfg.srcPath)
                                  .pipe(PY.gulpplumber())
                                  .pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath)))
-                                 .pipe(PY.gulpplumber())
+                                 .pipe(PY.gulpplumber({
+                                      errorHandler: function (error) {
+                                        console.log(error.message);
+                                        this.emit('end');
+                                    }}))
                                  .pipe(PY.gulpif(cfg.ifJsDoc === true, PY.gulpjsdoc3({
                                      "tags": {
                                          "allowUnknownTags": true
@@ -2874,12 +2878,20 @@
                                          "dateFormat": "MMMM Do YYYY, h:mm:ss a"
                                      }
                                  }, cb)))
-                                .pipe(PY.gulpplumber())
+                                .pipe(PY.gulpplumber({
+                                  errorHandler: function (error) {
+                                    console.log(error.message);
+                                    this.emit('end');
+                                }}))
                                 .pipe(PY.gulpif(cfg.ifJsDoc === true && cfg.jsDocType === "angular", PY.gulpngdocs.process(options)))
 
 //                                .pipe(PY.gulpif(cfg.ifJsDoc === true && cfg.jsDocType === "angular", PY.gulpdocs.process(options)))
                                 
-                                .pipe(PY.gulpplumber())
+                                .pipe(PY.gulpplumber({
+                                  errorHandler: function (error) {
+                                    console.log(error.message);
+                                    this.emit('end');
+                                }}))
 								.pipe(PY.gulpif(cfg.ifJsDoc === true && cfg.jsDocType === "angular", PY.gulp.dest(cfg.jsDoc3Dir + cfg.jsDocType + "/")))
                                 .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
 
