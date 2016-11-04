@@ -1137,6 +1137,10 @@
                             if(dirName=="compassFile"){
                                 var compassTempPath = _this.getJsDoc3Temp(pkg, obj, subDst, subRevDst,"compassTemp");//获取compass存放临时文件的目录
                                 compassConfig.css=compassTempPath||"css"
+                                 if(compassConfig.config_file){
+                                    retGSrc.push(path.normalize((compassConfig.project||returnObj(pkg, 'srcPath', "")) + compassConfig.config_file).replace(/\\/g, "/"));
+                                 }
+                                
                             }
                             
 
@@ -1281,7 +1285,10 @@
                     var compassConfig=returnObj(pkg, 'compassConfig',{});
                     if(dirName=="compassFile"){
                         var compassTempPath = _this.getJsDoc3Temp(pkg, "", subDst, subRevDst,"compassTemp");
-                        compassConfig.css=compassTempPath||"css"
+                        compassConfig.css=compassTempPath||"css";
+                        if(compassConfig.config_file){
+                            retGSrc.push(path.normalize((compassConfig.project||returnObj(pkg, 'srcPath', "")) + compassConfig.config_file).replace(/\\/g, "/"));
+                         }
                     }
                     cfg = {
                         name: returnObj(pkg, 'name', ""),//项目名称
@@ -2643,7 +2650,11 @@
                         }
                         
                         return PY.streamqueue({ objectMode: true }, PY.gulp.src(cfg.srcPath)
-                            .pipe(PY.gulpplumber())
+                            .pipe(PY.gulpplumber({
+                              errorHandler: function (error) {
+                                console.log(error.message);
+                                this.emit('end');
+                            }}))
                             .pipe(PY.gulpcompass(cfg.compassConfig))
                             .pipe(PY.gulp.dest(cfg.compassConfig.css))
                             .on('error', function (err) {
