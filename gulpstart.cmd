@@ -25,7 +25,7 @@ exit
 :ST
 call cd /d %p%
 start gulp
-call startup.bat
+REM call startup.bat
 call cd /d %gulpdir%
 start %p%cgulp
 call cd /d %p%

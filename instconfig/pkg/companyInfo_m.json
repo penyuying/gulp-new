@@ -37,9 +37,9 @@
 			"dsrc":"sass/",
 			"newFileName":"_mixin.scss"
         },{
-            "src":"bower/app/ionic_1.0.0/release/fonts/**/*",
+            "src":"ionic_1.0.0/release/fonts/**/*",
             "dest":"js/ionic/fonts/",
-            "srcPath":"e:/"
+            "srcPath":"{#bowersrc#}"
         },{
             "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*.*",
             "dest":"js/layer/"
@@ -93,9 +93,9 @@
             "psrc": "js/{viewport,pinyin}",
             "dest": "js/comm/"
         },{
-            "src": "bower/app/ionic_1.0.0/release/js/ionic.bundle.min",
+            "src": "ionic_1.0.0/release/js/ionic.bundle.min",
             "dest":"js/ionic/",
-            "srcPath":"e:/"
+            "srcPath":"{#bowersrc#}"
         },{
             "psrc": "js/angular/plugins/ui_router/angular-ui-router",
             "dest":"js/angular/"
@@ -114,9 +114,9 @@
             "src":"sass/**/*",
             "dest":"css/"
         },{
-            "src":"bower/app/ionic_1.0.0/scss/**/*",
+            "src":"ionic_1.0.0/scss/**/*",
             "dest":"js/ionic/css/",
-            "srcPath":"e:/"
+            "srcPath":"{#bowersrc#}"
     }],
 
     "concatCss":"",

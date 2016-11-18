@@ -3,7 +3,7 @@
     "userName": "penyu",
     "version": "1.0.0",
 
-    "ifmin": false,
+    "ifmin": true,
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",
@@ -24,6 +24,9 @@
     "browser": "chrome",
 
     "copyFile": [{
+            "psrc":"fonts/Pympicon/Penyu/Pympicon.*",
+            "dest": "css/fonts/mpicon/"
+        },{
             "psrc": "js/jquery/jquery-1.11.3.min.js",
             "dest":"js/jquery/"
 		},{

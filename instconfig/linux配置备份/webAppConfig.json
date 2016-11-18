@@ -1,15 +1,15 @@
 {
   "rem": "/*处理过后的json的文件和目录存放的目录*/",
 
-
-  "bowersrc":"E:/bower/app/",
-  "githubsrc":"e:/github/",
-  "webappDir":"e:/webapp/",
-  "webappDstDir":"e:/webapp/",
-  "bakDest": "d:/webapp/bak/",
-  "tempPath": "{#webappDir#}temp/",
-
   
+  "bowersrc":"/mnt/hgfs/bower/app/",
+  "githubsrc":"/mnt/github/",
+  "webappDir":"/mnt/hgfs/webapp/",
+  "webappDstDir":"/mnt/hgfs/webapp/",
+  "bakDest": "/mnt/hgfs/webapp/bak/",
+  "tempPath": "/mnt/gulp/temp/",
+
+
   "name": "webapp",
   "userName": "penyu",
   "version": "1.0.0",
@@ -17,19 +17,19 @@
   "fileTimeName":"filetime",
   "isBak":false,
   "items": [
-		"icip",
-		"ms",
-		"collect",
-		"collectMobile",
-		"shequ",
-		"practice",
-		"carPay",
-		"official",
-		"laohuji",
-		"bms",
-		"javaBMS",
-		"react",
-		"companyInfo_m"
+    "icip",
+    "ms",
+    "collect",
+    "collectMobile",
+    "shequ",
+    "practice",
+    "carPay",
+    "official",
+    "laohuji",
+    "bms",
+    "javaBMS",
+    "react",
+    "companyInfo_m"
   ],
   "isTest":false,
   "testConfig":"",

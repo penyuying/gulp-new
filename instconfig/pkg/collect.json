@@ -25,7 +25,7 @@
     "jsDoc3Temp":"{#tempPath#}jsDoc/collect/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/collect/",
     "ifJsDoc":true,
-    "isTest":true,
+    "isTest":false,
 	"testConfig":{
         "srcPath":[
             "http://www.fuwuqu.me/ifs/script/sysdict.js",
@@ -60,7 +60,7 @@
             "psrc":"fonts/Pyicipicon/Penyu/Pyicipicon.*",
             "dest": "css/fonts/icipicon/"
         },{
-            "psrc": "js/angular/angular-1.2.29/angular.min.js",
+            "psrc": "js/angular/angular-1.2.29/{angular.min.js,angular-animate.min.js}",
             "dest":"js/angular/"
 		},{
             "src": "test/**/*.*",
@@ -247,6 +247,7 @@
     },
     
     "templateFile":[{
+        "changIf":true,
         "injectIf":false,
         "src":"tpls/**/*",
         "tpls":"_tpls/",

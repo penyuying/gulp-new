@@ -8,9 +8,11 @@
 	echo "第一组完成"
 	call npm install --save-dev gulp-connect-multi gulp-gzip gulp-header-footer gulp-htmlmin gulp-if
 	echo "第二组完成"
-	call npm install --save-dev gulp-inject gulp-jshint map-stream gulp-minify-css gulp-plumber
+    rem gulp-minify-css设置（{compatibility: 'ie7',keepSpecialComments: '*'}）
+    rem gulp-clean-css设置（{compatibility: 'ie8',keepSpecialComments: '*'}）
+	call npm install --save-dev gulp-inject gulp-jshint map-stream gulp-minify-css gulp-clean-css gulp-plumber
 	echo "第三组完成"
-	call npm install --save-dev gulp-rename gulp-replace gulp-rev-easy gulp-ruby-sass gulp-sourcemaps
+	call npm install --save-dev gulp-rename gulp-replace gulp-rev-easy gulp-ruby-sass gulp-compass gulp-sourcemaps
 	echo "第四组完成"
 	call npm install --save-dev gulp-uglify lazypipe map-stream merge-stream gulp-jsonlint
 	echo "第五组完成"

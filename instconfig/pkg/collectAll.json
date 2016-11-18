@@ -59,7 +59,7 @@
         },{
             "src":"ocLazyLoad.min.js",
             "dest":"js/",
-            "srcPath":"E:/github/ocLazyLoad/dist/"
+            "srcPath":"{#githubsrc#}ocLazyLoad/dist/"
         },{
             "src": "test/**/*.*",
             "dest":"test/",

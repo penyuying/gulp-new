@@ -108,7 +108,12 @@
     "concatCss":"",
     "concatDstCssFileName":"",
     
-    "cssFile":"css/**/*",
+    "cssFile":[
+        {
+            "src":"css/**/*",
+            "dest":"css/"
+        }
+    ],
     "cssDstDir": "css/",
 
 	"ifminhtml": false,

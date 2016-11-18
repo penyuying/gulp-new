@@ -26,7 +26,7 @@
     "copyFile": [{
             "src": "ocLazyLoad.require.min.js",
             "dest":"js/",
-            "srcPath":"E:/github/ocLazyLoad/dist/"
+            "srcPath":"{#githubsrc#}ocLazyLoad/dist/"
 		}],
     "copyDstDir": "",
 

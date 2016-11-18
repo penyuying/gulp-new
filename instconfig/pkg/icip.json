@@ -26,11 +26,11 @@
             "src":"AraleQRCode/dist/arale-qrcode/3.0.5/index.js",
             "dest":"js/",
             "newFileName":"AraleQRCode.js",
-            "srcPath":"e:/github/"
+            "srcPath":"{#githubsrc#}"
         },{
             "src":"JsBarcode/dist/JsBarcode.all.min.js",
             "dest":"js/",
-            "srcPath":"e:/github/"
+            "srcPath":"{#githubsrc#}"
         },{
             "psrc":"fonts/Pyicipicon/Penyu/Pyicipicon.*",
             "dest": "css/fonts/icipicon/"

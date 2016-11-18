@@ -761,18 +761,13 @@
                 function getfilepath(obj) {//处理注入路径
 
 
-                    return function (_filepath, file, i, length, targetFile) {
-                        var tObj = obj,
-                        j = 0, 
-                        k = 0,
-                        pathArr = path.dirname(targetFile.path).split(path.sep),
-                        pathlength = pathArr.length,
-                        filepath=file.path,//注入的文件路径
-                        fileArr = path.dirname(filepath.replace(/\\/g,'/')).split("/"),
-                        dir = "";
-                         // console.log(targetFile.path);
-                         // console.log(file.path);
-                         // console.log(_filepath);
+                    return function (filepath, file, i, length, targetFile) {
+                        var tObj = obj;
+                        var j = 0, k = 0;
+                        var pathArr = path.dirname(targetFile.path).split(path.sep);
+                        var pathlength = pathArr.length;
+                        var fileArr = path.dirname(filepath).split("/");
+                        var dir = "";
                         if (path.extname(targetFile.path).toLowerCase() == ".html") {
                             for (k = 0; k < pathlength; k++) {
                                 if (pathArr.length > 0 && pathArr[0] == fileArr[0]) {
@@ -3143,7 +3138,6 @@
         taskBakArr = [],
         taskClsArr = [],
         taskHtmlArr = [],
-        taskJsDocArr = [],
         taskImgArr = [],
         taskTemplateArr=[],
         jsDirConcatArr = [],
@@ -3161,7 +3155,6 @@
             sub[taskName].taskBakArr = [];
             sub[taskName].taskClsArr = [];
             sub[taskName].taskHtmlArr = [];
-            sub[taskName].taskJsDocArr = [];
             sub[taskName].taskImgArr = [];
             sub[taskName].taskTemplateArr = [];
             sub[taskName].jsDirConcatArr = [];
@@ -3182,9 +3175,6 @@
                                 sub[taskName].taskClsArr.push(taskName + "_" + arr[1]);
                                 break;
                             case "jsDoc":
-                                taskJsDocArr.push(taskName + "_" + arr[1]);
-                                sub[taskName].taskJsDocArr.push(taskName + "_" + arr[1]);
-                                break;
                             case "html":
                                 taskHtmlArr.push(taskName + "_" + arr[1]);
                                 sub[taskName].taskHtmlArr.push(taskName + "_" + arr[1]);
@@ -3304,12 +3294,6 @@
             
             //jsDirConcatArr目录每个目录合并成一个单独的JS文件
             PY.gulp.task(taskName + "_taskHtmlArr", sub[taskName].taskHtmlArr, function () {
-                // 现在任务 "taskHtmlArr" html处理已经完成了,如果在处理html之前处理taskJsDocArr文件，将会出错
-                PY.gulp.start(taskName + "_taskJsDocArr");
-            });
-            
-            //jsDirConcatArr目录每个目录合并成一个单独的JS文件
-            PY.gulp.task(taskName + "_taskJsDocArr", sub[taskName].taskJsDocArr, function () {
                 // 现在任务 "taskHtmlArr" html处理已经完成了,如果在处理html之前处理jsDirConcatArr文件，将会出错
 //                PY.gulp.start(taskName + "_taskWatchArr");
             });
@@ -3411,18 +3395,11 @@
         // 现在任务 "jsDirConcatArr" 每个目录合并成一个单独的JS文件已经完成了
         PY.gulp.start("taskHtmlArr");
     });
-    
-    
-    //"test"启动测试工具
-    PY.gulp.task("taskHtmlArr", taskHtmlArr, function () {
-        // 现在任务 "JsDoc" html处理已经完成了
-        PY.gulp.start("taskJsDocArr");
-    });
 	
     
 	//"test"启动测试工具
-    PY.gulp.task("taskJsDocArr", taskJsDocArr, function () {
-        // 现在任务 "test" JsDoc处理已经完成了
+    PY.gulp.task("taskHtmlArr", taskHtmlArr, function () {
+        // 现在任务 "test" html处理已经完成了
         PY.gulp.start("testArr");
     });
     

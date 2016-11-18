@@ -43,7 +43,7 @@
         },{
             "src":"release/fonts/**/*",
             "dest":"js/ionic/fonts/",
-            "srcPath":"e:/github/ionic/"
+            "srcPath":"{#githubsrc#}ionic/"
         },{
             "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*.*",
             "dest":"js/layer/"
@@ -135,7 +135,7 @@
             "dest":"js/ionic/",
             "debar": "{slide*.*,side*.*,menu*.*,tab*.*,checkbox*.*,popover*.*,spinner*.*,modal*.*,popup*.*,keyboard*.*}",
             "fileName":"ionic.bundle.min.js",
-            "srcPath":"e:/github/ionic/"
+            "srcPath":"{#githubsrc#}ionic/"
         }],
 
 
@@ -151,9 +151,9 @@
             "psrc": "js/{viewport,pinyin}",
             "dest": "js/comm/"
         },{
-            "src": "!bower/app/ionic_1.0.0/release/js/ionic.bundle.min",
+            "src": "!ionic_1.0.0/release/js/ionic.bundle.min",
             "dest":"js/ionic/",
-            "srcPath":"e:/"
+            "srcPath":"{#bowersrc#}"
         },{
             "psrc": "!js/angular/plugins/ui_router/angular-ui-router",
             "dest":"js/angular/"
@@ -176,7 +176,7 @@
         },{
             "src":"scss/*",
             "dest":"js/ionic/css/",
-            "srcPath":"e:/github/ionic/"
+            "srcPath":"{#githubsrc#}ionic/"
     }],
 
     "concatCss":"",

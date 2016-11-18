@@ -1,21 +1,11 @@
 {
   "rem": "/*处理过后的json的文件和目录存放的目录*/",
-
-
-  "bowersrc":"E:/bower/app/",
-  "githubsrc":"e:/github/",
-  "webappDir":"e:/webapp/",
-  "webappDstDir":"e:/webapp/",
-  "bakDest": "d:/webapp/bak/",
-  "tempPath": "{#webappDir#}temp/",
-
-  
   "name": "webapp",
   "userName": "penyu",
   "version": "1.0.0",
   "fileTime":"mtime",
   "fileTimeName":"filetime",
-  "isBak":false,
+  "bowersrc":"E:/bower/app/",
   "items": [
 		"icip",
 		"ms",
@@ -33,12 +23,16 @@
   ],
   "isTest":false,
   "testConfig":"",
+  "webappDir":"e:/webapp/",
+  "webappDstDir":"e:/webapp/",
   "jsDocType":"",
   "jsDocLink":"",
   "jsDoc3Temp":"",
   "jsDoc3Dir":"",
   "ifJsDoc":false,
   "subJsonPath": "{#webappDstDir#}pkg/",
+  "isBak":false,
+  "bakDest": "d:/webapp/bak/",
   "bakDateDir":"",
   "bakFile": [{
     "src":["**/*"],
@@ -87,6 +81,7 @@
   "destTest": "{#webPath#}test/",
   "revDestPath":"{#tempPath#}/",
   "revType":"part",
+  "tempPath": "{#webappDir#}temp/",
   "mapsPath": "maps",
   "mapIf": false,
   "debarPath": "{*废弃*/**/*.*,/**/废弃*.*,/**/*废弃*/*.*,/**/*废弃*/**/*.*,*备份*/**/*.*,/**/备份*.*,/**/*备份*/*.*,/**/*备份*/**/*.*}",
