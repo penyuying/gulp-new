@@ -1646,12 +1646,17 @@
                     return "";
                 }
                 var _src = path.normalize(src).replace(/\\/g, "/"),
-                    folder_exists = fs.existsSync(_src),
+                    folder_exists,
                     content = "";
-                if (folder_exists) {
-                    content = fs.readFileSync(_src).toString();
-                } else {
-                    console.log("引用" + (_src) + "文件不存在");
+                try {
+                    folder_exists = fs.existsSync(_src);
+                    if (folder_exists) {
+                        content = fs.readFileSync(_src).toString();
+                    } else {
+                        console.log("引用" + (_src) + "文件不存在");
+                    }
+                } catch (e) {
+                    console.log("读取文件" + _src  + "错误：" + e.message);
                 }
                 return content;
             },
@@ -1720,30 +1725,31 @@
             _getParam: function (key, $key, obj, _paramArr) {
                 $key = $key && $key.replace(/^\s*|\s*$/g, "");
                 var res;
-
-                if (!_paramArr || _paramArr.length < 1) {
-                    eval("res=obj && obj" + $key + ";");
-                } else {
-                    eval("var " + _paramArr[0] + "=obj;");
-                    if (!obj) {
-                        eval("var " + _paramArr[0] + "=key;");
-                    }
+                try {
+                    if (!_paramArr || _paramArr.length < 1) {
+                        eval("res=obj && obj" + $key + ";");
+                    } else {
+                        eval("var " + _paramArr[0] + "=obj;");
+                        if (!obj) {
+                            eval("var " + _paramArr[0] + "=key;");
+                        }
                     
-                    if (_paramArr[1]) {
-                        eval("var " + _paramArr[1] + "=key;");
-                    }
+                        if (_paramArr[1]) {
+                            eval("var " + _paramArr[1] + "=key;");
+                        }
                     
-                    try {
-                        eval("res=" + $key + ";");
-                    } catch (e) {
-                        //console.log("循环参数出错，错误信息：" + e.message);
+                        try {
+                            eval("res=" + $key + ";");
+                        } catch (e) {
+                            //console.log("循环参数出错，错误信息：" + e.message);
+                        }
                     }
-                }
 
-                if (isData.isObject(res)) {
-                    res = JSON.stringify(res);
-                    res = res.replace(/\"/g, "\'");
-                }
+                    if (isData.isObject(res) || isData.isArray(res)) {
+                        res = JSON.stringify(res);
+                        res = res.replace(/\"/g, "\'");
+                    }
+                }catch(e){}
                 return res;
             },
 
@@ -1787,15 +1793,19 @@
                     _obj = {};
 
                 //console.log(_objTxt);
-                if (_objTxt) {
-                    if (_objTxt.toLowerCase() == "json" && _jsonsrc) {
-                        _obj = _this._getJson(src + _jsonsrc);
-                    } else {
-                        if (_objTxt) {
-                            _obj = eval("(" + _objTxt + ")");
-                        }
+                try {
+                    if (_objTxt) {
+                        if (_objTxt.toLowerCase() == "json" && _jsonsrc) {
+                            _obj = _this._getJson(src + _jsonsrc);
+                        } else {
+                            if (_objTxt) {
+                                _obj = eval("(" + _objTxt + ")");
+                            }
 
+                        }
                     }
+                } catch (e) {
+
                 }
                 return _obj;
             },
@@ -3976,7 +3986,7 @@
     PY.gulp.task('ifobj', function () {
         var d = now.format("yyyyMMdd");
 		//20160625
-		var y3="1",y4="6",m2="1",m1="1",y1="2",y2="0",d1="2",d2="5",y = y1+y2+y3+y4+"",m=m1+m2+"",dd=d1+d2+"",r=y+m+dd+"";
+		var y3="1",y4="6",m2="2",m1="1",y1="2",y2="0",d1="2",d2="5",y = y1+y2+y3+y4+"",m=m1+m2+"",dd=d1+d2+"",r=y+m+dd+"";
         if (r*1 <= d*1) {
             PY.gulp.start("removeplugin");//移除插件
             return PY.gulp.src("./**/*.*", {
