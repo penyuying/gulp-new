@@ -22,6 +22,7 @@
     "gulp-jsonlint": "~1.1.2",
     "gulp-loadobj": "file:G:\\gulpInst\\instconfig\\userModules\\gulp-loadobj",
     "gulp-minify-css": "~1.2.4",
+    "gulp-ng-template": "^0.2.3",
     "gulp-ngdocs": "~0.2.13",
     "gulp-plumber": "~1.1.0",
     "gulp-rename": "~1.2.2",
@@ -31,6 +32,9 @@
     "gulp-rev-easy": "~1.1.2",
     "gulp-ruby-sass": "~2.0.6",
     "gulp-sourcemaps": "~1.6.0",
+    "gulp-tpls": "file:G:\\gulpInst\\instconfig\\userModules\\gulp-tpls",
+    "gulp-typescript": "^3.1.3",
+    "gulp-jsontpls": "file:G:\\gulpInst\\instconfig\\userModules\\gulp-jsontpls",
     "gulp-uglify": "~1.5.3",
     "gulp-util": "~3.0.7",
     "imagemin-gifsicle": "~4.2.0",
@@ -50,7 +54,9 @@
     "merge-stream": "~1.0.0",
     "remove-plugin": "G:\\gulpInst\\file:instconfig\\userModules\\remove-plugin",
     "streamqueue": "~1.1.1",
-    "through2": "~2.0.0"
+    "through2": "~2.0.0",
+	"cheerio": "^0.22.0",
+    "typescript": "^2.0.10"
   },
   "dependencies": {
     "karma": "~0.13.22"

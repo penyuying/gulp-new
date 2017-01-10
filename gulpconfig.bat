@@ -16,15 +16,17 @@
 	echo "第四组完成"
 	call npm install --save-dev gulp-uglify lazypipe map-stream merge-stream gulp-jsonlint
 	echo "第五组完成"
+	call npm install --save-dev gulp-typescript typescript gulp-ng-template
+	echo "第六组编译typescript工具和ng模板工具完成"
 	call npm install --save-dev streamqueue imagemin-gifsicle imagemin-mozjpeg imagemin-pngquant
-	echo "第六组图片处理工具完成"
+	echo "第七组图片处理工具完成"
 	call npm install --save-dev gulp-jsdoc3 gulp-ngdocs
-	echo "第七组生成文档工具完成"
+	echo "第八组生成文档工具完成"
 	call npm install --save karma
-	echo "第八组测试工具(karma)完成"
+	echo "第九组测试工具(karma)完成"
 	call npm install --save-dev karma-jasmine karma-junit-reporter karma-commonjs karma-coverage karma-chrome-launcher karma-firefox-launcher karma-ie-launcher
-	echo "第九组测试工具完成"
-	call npm install --save-dev %localmod%gulp-fileTime %localmod%remove-plugin %localmod%gulp-loadobj %localmod%gulp-connect-multi %localmod%gulp-htmlmin  %localmod%gulp-rev   %localmod%gulp-rev-collector
-	rem call npm install --save-dev /mnt/userModules/gulp-fileTime /mnt/userModules/remove-plugin /mnt/userModules/gulp-loadobj /mnt/userModules/gulp-connect-multi /mnt/userModules/gulp-htmlmin  /mnt/userModules/gulp-rev   /mnt/userModules/gulp-rev-collector
-	echo "第十组安装本地插件完成"
+	echo "第十组测试工具完成"
+	call npm install --save-dev %localmod%gulp-fileTime %localmod%gulp-jsontpls %localmod%gulp-tpls %localmod%remove-plugin %localmod%gulp-loadobj %localmod%gulp-connect-multi %localmod%gulp-htmlmin  %localmod%gulp-rev   %localmod%gulp-rev-collector
+	rem call npm install --save-dev /mnt/userModules/gulp-fileTime /mnt/userModules/gulp-jsontpls /mnt/userModules/gulp-tpls /mnt/userModules/remove-plugin /mnt/userModules/gulp-loadobj /mnt/userModules/gulp-connect-multi /mnt/userModules/gulp-htmlmin  /mnt/userModules/gulp-rev   /mnt/userModules/gulp-rev-collector
+	echo "第十一组安装本地插件完成"
 :exit

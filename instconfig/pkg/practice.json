@@ -3,7 +3,9 @@
     "userName": "",
     "version": "1.0.0",
 
-    "ifmin": false,
+    "ifmin": true,
+    "ifEncrypt":false,
+    "encryptConfig":{},
     "gzipIf": false,
     "srcRev":true,
     "suffix": "",
@@ -40,11 +42,22 @@
     "copyFile": [{
         "psrc": "js/jquery/jquery-1.11.3.min.js",
         "dest":"js/jquery/"
+    },{
+        "psrc": "js/jquery/plugins/select2/select2-3.5.2/{select2.min.js,select2.css,select2.png,select2-spinner.gif}",
+        "dest":"js/jquery/"
     }],
     "copyDstDir": "",
 	
 	
-    "jsonFile": "",
+    "jsonFile": [{
+        "src":"json/**/*",
+        "ifEncrypt":true,
+        "encryptConfig":{
+            "type":"unicode,des",
+            "extname":"ud",
+            "password":"penyuying"
+        }
+    }],
     "jsonDstDir": "json/",
 
     "imgFile": [{
@@ -77,6 +90,12 @@
     }],
     "concatDstJsFileName":"",
 
+    "tsFile":[{
+        "src":"ts/*",
+        "fileName":"",
+        "dest": "tsJs/"
+    }],
+
     "jsFile": [{
         "src": "js/**/*",
         "dest": "js/",
@@ -107,7 +126,7 @@
 
     "concatCss":"",
     "concatDstCssFileName":"",
-    
+
     "cssFile":[
         {
             "src":"css/**/*",
@@ -115,11 +134,32 @@
         }
     ],
     "cssDstDir": "css/",
-
+    "ngTplsFile":[{
+        "destRoot":"",
+        "jsAnonymous":false,
+        "src":"ngtpls/**/*",
+        "dest":"js/",
+        "destPath":"{#srcPath#}",
+        "conf":{
+            "moduleName": "genTemplates",
+            "standalone": false,
+            "useStrict": false,
+            "prefix":"tpls/",
+            "filePath": "templates.js"
+        }
+    }],
+    "ngTplsConf":{
+          "moduleName": "genTemplates",
+          "standalone": false,
+          "useStrict": false,
+          "prefix":"",
+          "filePath": "templates.js"
+    },
+    "ngTplsDstDir":"js/",
 	"ifminhtml": false,
 	"ifminhtmlObj":{
         "removeComments": true,
-        "collapseWhitespace": false,
+        "collapseWhitespace": true,
         "conservativeCollapse": true,
         "preserveLineBreaks": true,
         "removeAttributeQuotes":false,

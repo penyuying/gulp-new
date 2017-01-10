@@ -154,6 +154,14 @@
     
     "tplsHtmlFile": "tpls/",
     "htmlDstDir":"",
+	
+
+    "jsonPageFile":[{
+		"changIf":true,
+        "destRoot":"",
+        "src":"jsonpage/*"
+    }],
+	"jsonPageDstDir":"",
 
     "injectPath":false
 }

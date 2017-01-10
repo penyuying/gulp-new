@@ -28,13 +28,29 @@
     "copyFile": "",
     "copyDstDir": "",
     "jsonFile": [{
-        "src":["package","webAppConfig"],
+        "src":["package"],
         "dest":"c:/gulp/"
     },{
+        "src":["webAppConfig"],
+        "dest":"c:/gulp/",
+        "ifEncrypt":true,
+        "encryptConfig":{
+            "type":"unicode,des,unicode",
+            "extname":"ud",
+            "password":"niCaiCai"
+        }
+    },{
         "src":"pkg/*",
-        "dest":"e:/webapp/pkg/"
+        "dest":"e:/webapp/pkg/",
+        "ifEncrypt":true,
+        "encryptConfig":{
+            "type":"unicode,des,unicode",
+            "extname":"ud",
+            "password":"niCaiCai"
+        }
     }],
-
+    "ifEval":true,
+    "evalConfig":{},
     "jsonDstDir": "",
     "imgFile": "",
     "imgDstDir": "c:/gulp/",

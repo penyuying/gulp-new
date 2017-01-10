@@ -54,7 +54,7 @@
 			<li class="dropdown">
 				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="global.html#addObj">addObj</a></li><li><a href="global.html#againPkg">againPkg</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#getFolders">getFolders</a></li><li><a href="global.html#getJson">getJson</a></li><li><a href="global.html#htmlReplace">htmlReplace</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#replaceItem">replaceItem</a></li><li><a href="global.html#returnObj">returnObj</a></li><li><a href="global.html#unique">unique</a></li>
+					<li><a href="global.html#addObj">addObj</a></li><li><a href="global.html#againPkg">againPkg</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#getFolders">getFolders</a></li><li><a href="global.html#getJson">getJson</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#replaceItem">replaceItem</a></li><li><a href="global.html#returnObj">returnObj</a></li><li><a href="global.html#unique">unique</a></li>
 				</ul>
 			</li>
 			
@@ -958,6 +958,196 @@
             
 
             <td class="description last"><p>是否压缩JS、CSS、JSON文件（false：为压缩；true：为不压缩）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ifminimg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否压缩图片（true为是，false为否）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ifEval</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>js是否eval加密文件</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>evalConfig</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last"><p>js eval加密文件配置参数</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ifEncrypt</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否加密文件</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>encryptConfig</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last"></td>
         </tr>
 
     
@@ -4272,6 +4462,189 @@
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>ngTplsConf</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last"><p>设置生成ng模板配置参数(obj.conf || pkg.ngTplsConf)</p>
+                <h6>Properties</h6>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>moduleName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>模块名称</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>standalone</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>是否创建新的ng模块</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>useStrict</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>是否加JS文件头加'use strict'</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>prefix</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>引用模板路径的前缀</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>filePath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>生成文件的名称</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
     </tbody>
 </table>
 </dl>
@@ -4383,7 +4756,7 @@
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
 	
-		on November 19th 2016, 1:09:04 am
+		on January 9th 2017, 6:09:18 pm
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

@@ -30,7 +30,7 @@
             "psrc": "js/jquery/jquery-1.11.3.min.js",
             "dest":"js/jquery/"
 		},{
-            "psrc": "js/zeptoJs1.1.6/zepto.min.js",
+            "psrc": "!js/zeptoJs1.1.6/zepto.min.js",
             "dest":"js/zepto/"
 		},{
             "psrc": "!js/jquery/plugins/layer-v2.0/layer/**/*.*",
@@ -74,6 +74,11 @@
         "fileName":"initial.js",
         "dest": "js/comm/"
 	},{
+        "jsAnonymous":true,
+        "psrc": "js/zeptoJs1.1.6/{zepto,ajax,event,data,touch}",
+        "fileName":"zepto.min.js",
+        "dest":"js/zepto/"
+    },{
         "jsAnonymous":true,
         "psrc":"js/sub_js/controls/Button",
         "fileName":"controls.js",

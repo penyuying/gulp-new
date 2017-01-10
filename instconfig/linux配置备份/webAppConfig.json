@@ -1,7 +1,7 @@
 {
   "rem": "/*处理过后的json的文件和目录存放的目录*/",
 
-  
+
   "bowersrc":"/mnt/hgfs/bower/app/",
   "githubsrc":"/mnt/github/",
   "webappDir":"/mnt/hgfs/webapp/",
@@ -29,7 +29,8 @@
     "bms",
     "javaBMS",
     "react",
-    "companyInfo_m"
+    "companyInfo_m",
+    "rongyun"
   ],
   "isTest":false,
   "testConfig":"",
@@ -119,6 +120,9 @@
   "jsFooter":"",
   "concatDstJsFileName": "",
   "jsFile": "js/**/*",
+  "tsFile": "",
+  "tsConfFile":"",
+  "tsFileName": "",
   "jsDstDir": "js/",
   "sassFile": "",
   "compassFile": "",
@@ -133,11 +137,16 @@
   "concatDstCssFileName": "",
   "cssFile": "css/**/*",
   "cssDstDir": "css/",
+  "ngTplsFile":"",
+  "ngTplsConf":{},
+  "ngTplsDstDir":"",
   "templateFile":"",
   "templateDstDir":"",
   "htmlFile": "{html/*,html/**/*}",
   "tplsHtmlFile": "html/tpls/",
   "htmlDstDir": "",
+  "jsonPageFile":"",
+  "jsonPageDstDir": "",
   "injectPath": "js/**/*.js",
   "injectName": "inject"
 }

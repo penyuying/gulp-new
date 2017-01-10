@@ -54,7 +54,7 @@
 			<li class="dropdown">
 				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="global.html#addObj">addObj</a></li><li><a href="global.html#againPkg">againPkg</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#getFolders">getFolders</a></li><li><a href="global.html#getJson">getJson</a></li><li><a href="global.html#htmlReplace">htmlReplace</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#replaceItem">replaceItem</a></li><li><a href="global.html#returnObj">returnObj</a></li><li><a href="global.html#unique">unique</a></li>
+					<li><a href="global.html#addObj">addObj</a></li><li><a href="global.html#againPkg">againPkg</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#getFolders">getFolders</a></li><li><a href="global.html#getJson">getJson</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#replaceItem">replaceItem</a></li><li><a href="global.html#returnObj">returnObj</a></li><li><a href="global.html#unique">unique</a></li>
 				</ul>
 			</li>
 			
@@ -1084,7 +1084,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="htmlReplace"><span class="type-signature"></span>htmlReplace(cfg, regExp, content, spaces, path, param1, objType)</h4>
+    <h4 class="name" id="getJson"><span class="type-signature"></span>getJson(dir)</h4>
     
     
 </dt>
@@ -1092,7 +1092,7 @@
 
     
     <div class="description">
-        <p>替换HTML入口</p>
+        <p>获取JSON文件并返回对象</p>
     </div>
     
 
@@ -1127,55 +1127,7 @@
 
         <tr>
             
-                <td class="name"><code>cfg</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>tesk配置参数对象</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>regExp</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">RegExp</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>查找分割内容的正则表达式</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>content</code></td>
+                <td class="name"><code>dir</code></td>
             
 
             <td class="type">
@@ -1192,103 +1144,7 @@
 
             
 
-            <td class="description last"><p>完整被替换的内容如下</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>spaces</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>引用处前面空白字符如：&quot;     这前面的空格或回车&lt;!--include &quot;xxx.xx&quot;-->&quot;</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>path</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>模板内容或模板路径。（文件路径或HTML内容，内容用&quot;html:&quot;形式开头如:&quot;html:<div id='xxx'><div>&quot;,注属性引号只能是单引号）</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>param1</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>引入处理数据对象如：&quot;:&quot;for in obj:obj:{'xxxx':'xxxx'}&quot;&quot;</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>objType</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>对象和JSON或循环（加引入处理数据对象如）如：&quot;for in obj:obj:{'xxxx':'xxxx'}&quot;</p></td>
+            <td class="description last"><p>JSON文件路径</p></td>
         </tr>
 
     
@@ -1348,36 +1204,6 @@
     
 
     
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    <p>返回处理好的文本</p>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">String</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-        <h5>Example</h5>
-        
-    <pre class="sunlight-highlight-javascript">//参数content//如果为:&lt;!--include &quot;xxx.html&quot;:&quot;for in obj:obj:{&#x27;xxxx&#x27;:&#x27;xxxx&#x27;}&quot;--&gt;obj:{&#x27;xxxx&#x27;:&#x27;xxxx&#x27;}前为obj表示Object或Array对象//如果为：&lt;!----include &quot;xxx.html&quot;:&quot;for leng in obj:json:xxx.json&quot;--&gt;json:xxx.json前为json表示是JSON文件</pre>
-
 
     
 </dd>
@@ -1582,7 +1408,7 @@
     
         <h5>Examples</h5>
         
-    <pre class="sunlight-highlight-javascript">var obj={   a:&quot;abcString&quot;,   b:&quot;{#a#}  这里第一个&quot;} replaceItem(obj[&quot;b&quot;], obj, /\{\#([^}]+)\#\}/ig);//返回:{   a:&quot;abcString&quot;,   b:&quot;abcString  这里第一个&quot;} </pre>
+    <pre class="sunlight-highlight-javascript">var obj={   a:&quot;abcString&quot;,   b:&quot;{#a#}  这里第一个&quot;}replaceItem(obj[&quot;b&quot;], obj, /\{\#([^}]+)\#\}/ig);//返回:{   a:&quot;abcString&quot;,   b:&quot;abcString  这里第一个&quot;} </pre>
 
     <pre class="sunlight-highlight-javascript">var obj1={   a:{       c:&quot;adb&quot;,       d:&quot;abcString&quot;,   },   b:&quot;{#a.c#}  这里第二个&quot;}replaceItem(obj1[&quot;b&quot;], obj1, /\{\#([^}]+)\#\}/ig);//返回:{   a:{       c:&quot;abc&quot;,       d:&quot;abcString&quot;,   },   b:&quot;abc 这里第二个&quot;}</pre>
 
@@ -1990,7 +1816,7 @@
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
 	
-		on November 19th 2016, 1:09:04 am
+		on January 9th 2017, 6:09:18 pm
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

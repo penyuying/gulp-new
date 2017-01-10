@@ -25,7 +25,7 @@
     "jsDoc3Temp":"{#tempPath#}jsDoc/collect/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/collect/",
     "ifJsDoc":true,
-    "isTest":false,
+    "isTest":true,
 	"testConfig":{
         "srcPath":[
             "http://www.fuwuqu.me/ifs/script/sysdict.js",

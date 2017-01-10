@@ -7,12 +7,12 @@ set p=%~dp0
 
 if exist %gulpdir%gulpfile.js (
 	call xcopy %p%instconfig\package.json %gulpdir% /y
-	call xcopy %p%instconfig\webAppConfig.json %gulpdir% /y
+rem	call xcopy %p%instconfig\webAppConfig.json %gulpdir% /y
 	goto ST
 	
 ) else (
 	call xcopy %p%instconfig\package.json %gulpdir% /y
-	call xcopy %p%instconfig\webAppConfig.json %gulpdir% /y
+rem	call xcopy %p%instconfig\webAppConfig.json %gulpdir% /y
 	goto IT
 )
 

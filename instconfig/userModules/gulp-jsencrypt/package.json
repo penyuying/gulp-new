@@ -1,0 +1,19 @@
+{
+  "name": "gulp-jsEncrypt",
+  "version": "1.0.0",
+  "description": "js混淆",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "js混淆"
+  ],
+  "peerDependencies": {
+    "gulp-util": "3.0.7",
+    "through2": "2.0.0",
+    "cheerio": "0.22.0"
+  },
+  "author": "penyu",
+  "license": "MIT"
+}

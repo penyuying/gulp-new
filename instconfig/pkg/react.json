@@ -16,7 +16,7 @@
 
     "jsDoc3Temp":"{#tempPath#}jsDoc/react/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
-    "ifJsDoc":true,
+    "ifJsDoc":false,
 
     "host": "127.0.0.1",
     "port": "8098",

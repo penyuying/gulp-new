@@ -55,12 +55,12 @@
 	}],
     "concatJs":[{
             "jsAnonymous":true,
-            "psrc": "js/zeptoJs1.1.6/{zepto,ajax,event,data}",
+            "psrc": "js/zeptoJs1.1.6/{zepto,ajax,event,data,touch}",
             "fileName":"zepto.min.js",
             "dest":"js/zepto/"
         },{
             "jsAnonymous":true,
-            "psrc":"js/sub_js/switch/Keyboard",
+            "psrc":"js/sub_js/switch/{Keyboard,mobileStock,mobileTimeSolt}",
             "src":"js/carPay",
             "fileName":"carPay.js",
             "dest": "js/"
