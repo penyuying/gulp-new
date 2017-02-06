@@ -65,7 +65,7 @@
         "removeComments": true,
         "collapseWhitespace": true,
         "conservativeCollapse": true,
-        "preserveLineBreaks": true,
+        "preserveLineBreaks": false,
         "removeAttributeQuotes":false,
         "removeEmptyAttributes": false,
         "removeEmptyElements": false,

@@ -3613,7 +3613,7 @@
  * @property {Boolean} [ifminhtmlObj.removeComments=false] 删除注释
  * @property {Boolean} [ifminhtmlObj.collapseWhitespace=false] 删除空行和空格
  * @property {Boolean} [ifminhtmlObj.conservativeCollapse=true] 删除行配合collapseWhitespace=true用
- * @property {Boolean} [ifminhtmlObj.preserveLineBreaks=true] 删除行前空格配合collapseWhitespace=true用
+ * @property {Boolean} [ifminhtmlObj.preserveLineBreaks=true] 删除行前空格配合collapseWhitespace=true用(true为不删除)
  * @property {Boolean} [ifminhtmlObj.removeAttributeQuotes=false] 在可能的情况下删除引号
  * @property {Boolean} [ifminhtmlObj.removeEmptyAttributes=false] 删除空白属性
  * @property {Boolean} [ifminhtmlObj.removeEmptyElements=false] 删除所有内容为空的元素

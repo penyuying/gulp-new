@@ -16,7 +16,7 @@
     "gulp-fileTime": "file:N:\\gulpInst\\instconfig\\userModules\\gulp-fileTime",
     "gulp-gzip": "~1.2.0",
     "gulp-header-footer": "0.0.3",
-    "gulp-htmlmin": "file:N:\\gulpInst\\instconfig\\userModules\\gulp-htmlmin",
+    "gulp-htmlmin": "3.0.0",
     "gulp-if": "~2.0.0",
     "gulp-inject": "~3.0.0",
     "gulp-jsEncrypt": "file:N:\\gulpInst\\instconfig\\userModules\\gulp-jsEncrypt",
