@@ -9,10 +9,15 @@
   "keywords": [
     "js混淆"
   ],
+  "dependencies": {
+	"gulp-util": "^3.0.7",
+    "through2": "^2.0.0",
+    "cheerio": "^0.22.0"
+  },
   "peerDependencies": {
-    "gulp-util": "3.0.7",
-    "through2": "2.0.0",
-    "cheerio": "0.22.0"
+    "gulp-util": "^3.0.7",
+    "through2": "^2.0.0",
+    "cheerio": "^0.22.0"
   },
   "author": "penyu",
   "license": "MIT"

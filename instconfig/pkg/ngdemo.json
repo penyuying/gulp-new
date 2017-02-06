@@ -1,9 +1,11 @@
 {
     "name": "ngdemo",
-    "userName": "",
+    "userName": "penyu",
     "version": "1.0.0",
 
+
     "ifmin": false,
+    "ifEval":true,
     "gzipIf": false,
     "srcRev": false,
     "suffix": "",
@@ -13,10 +15,11 @@
 	"jsAnonymous":false,
     "mapIf": false,
 
+    "webPath": "{#webTestPath#}",
     "srcPath": "{#webappDir#}develop/{#name#}/html/",
     "destPath": "{#webPath#}/{#name#}/",
     "revDestPath":"{#tempPath#}rev/{#name#}/",
-	
+
     "destRoot":"",
 
     "host": "127.0.0.1",
@@ -56,6 +59,7 @@
     "imgDstDir": "img/",
 
     "dirConcatJs": [{
+        "ifEval":false,
         "jsAnonymous":true,
 		"jsGlobalObj":"window,angular",
         "src": "js/collect/_subJs/",
@@ -65,18 +69,24 @@
 
 
     "concatJs":[{
+        "ifmin": false,
+        "ifEval":true,
         "jsAnonymous":true,
         "psrc":"!js/sub_js/initial/initial_ng",
         "fileName":"initial.js",
         "dest": "js/comm/"
 	}],
     "concatDstJsFileName":"",
-    
-    
+
+
     "jsFile": [{
+        "ifmin": false,
+        "ifEval":true,
         "psrc": "!js/jquery/plugins/form/jquery.form",
         "dest":"js/jquery/"
     },{
+        "ifmin": false,
+        "ifEval":true,
         "psrc": "!js/jquery/plugins/cookie/jquery.cookie",
         "dest":"js/jquery/"
     },{
@@ -90,9 +100,13 @@
 		"psrc": "!js/angular/plugins/ui-bootstrap-tpls/ui-bootstrap-tpls-0.11.0",
         "dest":"js/angular/"
 	},{
+        "ifmin": false,
+        "ifEval":true,
 		"psrc": "js/angular/plugins/ui-bootstrap-tpls/sub_js/pagination",
         "dest":"js/angular/"
 	}, {
+        "ifmin": false,
+        "ifEval":true,
         "destRoot":"",
         "psrc": "js/comm/comm",
         "dest": "js/",
@@ -105,7 +119,7 @@
 		"dest":"js/jquery/"
 	}],
     "jsDstDir": "js/",
-    
+
 
     "sassFile": [{
         "src":"sass/**/*",
@@ -114,10 +128,10 @@
         "psrc":"!sass/datepicker/datepicker",
         "dest":"css/"
     }],
-    
+
     "concatCss":"css/{test2,test1}",
     "concatDstCssFileName":"concatCss.css",
-    
+
     "cssFile":"css/**/*",
     "cssDstDir": "css/",
 
@@ -151,7 +165,7 @@
         "src":"tpls/**/*",
         "dest":"tpls/"
     }],
-    
+
     "tplsHtmlFile": "html/tpls/",
     "htmlDstDir":"",
     "injectPath":""

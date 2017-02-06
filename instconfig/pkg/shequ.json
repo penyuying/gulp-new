@@ -28,8 +28,8 @@
             "dest":"js/jquery/"
 		}],
     "copyDstDir": "",
-	
-	
+
+
     "jsonFile": "",
     "jsonDstDir": "json/",
 
@@ -81,16 +81,16 @@
         "debar": "{js/_subDir/,js/_subDir/**/*.*}"
 	}],
     "jsDstDir": "js/",
-    
+
 
     "sassFile": [{
         "src":"sass/**/*",
         "dest":"css/"
     }],
-    
+
     "concatCss":"",
     "concatDstCssFileName":"",
-    
+
     "cssFile":"css/**/*",
     "cssDstDir": "css/",
 

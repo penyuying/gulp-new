@@ -1,12 +1,12 @@
 {
     "name": "IST",
-    "userName": "",
+    "userName": "penyu",
     "version": "1.0.0",
-
 
 
     "ifmin": false,
     "ifEval":true,
+    "ifJsDoc":true,
     "evalConfig":{},
     "gzipIf": false,
     "srcRev": true,
@@ -29,7 +29,6 @@
     "jsDocLink":"/api",
     "jsDoc3Temp":"{#tempPath#}jsDoc/{#dirName#}/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/{#dirName#}/",
-    "ifJsDoc":true,
     "isTest":false,
 	"testConfig":{
         "srcPath":[],
@@ -48,8 +47,8 @@
             "psrc":"fonts/PyISTicon/Penyu/PyISTicon.*",
             "dest": "css/fonts/ISTicon/"
         },{
-            "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*.*",
-            "dest":"js/layer/"
+            "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*.css",
+            "dest":"js/comm/"
         },{
             "changIf":false,
             "psrc": "sass/global/mixin.scss",
@@ -88,11 +87,12 @@
 
 
     "concatJs":[{
+            "ifmin":false,
+            "ifEval":true,
             "jsAnonymous":true,
             "jsGlobalObj":"window",
-            "psrc": "js/{public-obj,encrypt/jbase64}",
+            "psrc": "js/{public-obj,encrypt/jbase64,copy,layer.mobile/layer.mobile-v1.6/layer.m/**/*}",
             "fileName":"public-obj.js",
-            "ifEval":true,
             "dest": "js/comm/"
         },{
             "jsAnonymous":true,
@@ -106,7 +106,7 @@
             "dest": "js/{#dirName#}/"
         },{
             "jsAnonymous":true,
-            "psrc": "js/zeptoJs1.1.6/{zepto,ajax,event,data}",
+            "psrc": "!js/zeptoJs1.1.6/{zepto,ajax,event,data}",
             "fileName":"zepto.min.js",
             "dest":"js/zepto/"
         },{
@@ -176,6 +176,9 @@
     "jsFile": [{
         "src": "js/**/*",
         "dest":"js/"
+    },{
+        "psrc": "!js/layer.mobile/layer.mobile-v1.6/layer.m/**/*",
+        "dest":"js/layer/"
     }],
     "jsDstDir": "js/",
 
@@ -217,6 +220,7 @@
         "destRoot":"",
         "ifEval":false,
         "jsAnonymous":false,
+        "bannerIf":true,
         "src":"ts/**/*",
         "dest":"{#buildTempDir#}",
         "destPath":"{#srcPath#}",

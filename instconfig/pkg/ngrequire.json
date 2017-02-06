@@ -5,10 +5,13 @@
 
     "ifmin": true,
     "gzipIf": false,
+    "ifJsDoc":true,
+
     "srcRev": false,
     "suffix": "",
 	"injectIf":true,
 	"changIf":true,
+    "webPath": "{#webTestPath#}",
     "srcPath": "{#webappDir#}develop/ngrquire/src/",
     "destPath": "{#webPath#}ngrquire/",
     "revDestPath":"{#tempPath#}rev/ngrquire/",
@@ -16,8 +19,6 @@
 
     "jsDoc3Temp":"{#tempPath#}jsDoc/ngrquire/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
-    "ifJsDoc":true,
-
     "host": "127.0.0.1",
     "port": "8098",
     "serverPath": "{#webPath#}ngrquire/",

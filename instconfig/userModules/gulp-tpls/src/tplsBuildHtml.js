@@ -426,10 +426,10 @@ var cheerio = require('cheerio'),//HTML节点处理
                             _dom = _this._includeTpls(src, _dom);
                         }
 
-                        _dom = _this._ifNode(_dom);
-
                         _dom = _this._repeatTpls(src, _dom);
-
+                        
+                        _dom = _this._ifNode(_dom);
+                        
                         $(value).replaceWith(_dom.html());
 
                     });

@@ -4,6 +4,7 @@
     "version": "1.0.0",
 
     "ifmin": false,
+    "ifEval":true,
     "gzipIf": false,
     "srcRev": false,
     "suffix": "",
@@ -23,9 +24,6 @@
 	
 
     "copyFile": [{
-            "psrc": "js/zeptoJs1.1.6/zepto.min.js",
-            "dest":"js/zepto/"
-		},{
             "changIf":false,
             "psrc": "sass/global/globalSkin.scss",
             "dsrc":"sass/",
@@ -57,12 +55,16 @@
     "imgDstDir": "img/",
 	
 	"concatJs":[{
+        "ifmin": false,
+        "ifEval":true,
         "psrc":"js/sub_js/initial/sub_initial_jq/control",
         "jsHeader":"$(function() {var cls = $('.JsW').get();for (var i = 0; i < cls.length; i++) {",
         "jsFooter":"}});",
         "fileName":"initial.js",
         "dest": "js/comm/"
     },{
+        "ifmin": false,
+        "ifEval":true,
         "psrc":"js/sub_js/controls/Button",
         "fileName":"controls.js",
         "dest": "js/comm/"
@@ -70,26 +72,35 @@
 	"concatDstJsFileName":"",
 	
 	"jsFile": [{
+        "ifmin": false,
+        "ifEval":true,
+        "psrc": "js/zeptoJs1.1.6/zepto.min",
+        "dest":"js/zepto/"
+    },{
         "src": "js/**/*",
         "dest": "js/",
         "debar": "_subDir/**/*.*"
 	}, {
+        "ifmin": false,
+        "ifEval":true,
         "psrc": ["js/{viewport,public-obj}","js/sub_js/switch/mobile_iscroll"],
         "dest": "js/comm/"
 	},{
+        "ifmin": false,
+        "ifEval":true,
 		"psrc": "js/zeptoJs1.1.6/plugins/json/zepto.json.min",
 		"dest":"js/zepto/"
 	}],
     "jsDstDir": "js/",
-	
+
 	"sassFile": [{
         "src":"sass/**/*",
         "dest":"css/"
     }],
-	
+
 	"cssFile":"css/**/*",
     "cssDstDir": "css/",
-	
+
 
 	"ifminhtml": false,
 	"ifminhtmlObj":{
@@ -114,9 +125,9 @@
         "debar": "tpls/**/*.*",
         "tpls":"html/tpls/"
     }],
-    
+
     "tplsHtmlFile": "html/tpls/",
     "htmlDstDir":"",
-	
+
 	"injectPath":""
 }

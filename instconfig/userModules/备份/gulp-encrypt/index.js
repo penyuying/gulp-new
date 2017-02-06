@@ -21,12 +21,6 @@ var modeEcb=require("./des_md5/mode-ecb"),//加密
             case "ununicode":
                 res=unicode.toGB2312(text);
                 break;
-            case "unicode2":
-                res=unicode.toUnicode(text,"");
-                break;
-            case "ununicode2":
-                res=unicode.toGB2312(text,2);
-                break;
             case "des":
                 res=modeEcb.encryptByDES(text, options.password||"des");
                 break;
@@ -77,7 +71,7 @@ var modeEcb=require("./des_md5/mode-ecb"),//加密
                 _type=_typeArr[i];
 				_type=_type.toLowerCase();
                 if(_type){
-					if(!options.unType|| extname&& options.unType && options.unType.toLowerCase()==extname.toLowerCase() && (_type=="ununicode"||_type=="ununicode2"||_type=="undes"||_type=="unbase64")){
+					if(!options.unType|| extname&& options.unType && options.unType.toLowerCase()==extname.toLowerCase() && (_type=="ununicode"||_type=="undes"||_type=="unbase64")){
 						res=encryptText(res,_type,options);
 					}
                 }

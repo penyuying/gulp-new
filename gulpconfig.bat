@@ -26,7 +26,7 @@
 	echo "第九组测试工具(karma)完成"
 	call npm install --save-dev karma-jasmine karma-junit-reporter karma-commonjs karma-coverage karma-chrome-launcher karma-firefox-launcher karma-ie-launcher
 	echo "第十组测试工具完成"
-	call npm install --save-dev %localmod%gulp-fileTime %localmod%gulp-jsontpls %localmod%gulp-tpls %localmod%remove-plugin %localmod%gulp-loadobj %localmod%gulp-connect-multi %localmod%gulp-htmlmin  %localmod%gulp-rev   %localmod%gulp-rev-collector
-	rem call npm install --save-dev /mnt/userModules/gulp-fileTime /mnt/userModules/gulp-jsontpls /mnt/userModules/gulp-tpls /mnt/userModules/remove-plugin /mnt/userModules/gulp-loadobj /mnt/userModules/gulp-connect-multi /mnt/userModules/gulp-htmlmin  /mnt/userModules/gulp-rev   /mnt/userModules/gulp-rev-collector
+	call npm install --save-dev %localmod%gulp-fileTime %localmod%gulp-jsontpls %localmod%gulp-tpls %localmod%remove-plugin %localmod%gulp-loadobj %localmod%gulp-connect-multi %localmod%gulp-htmlmin  %localmod%gulp-rev %localmod%gulp-rev-collector %localmod%gulp-encrypt %localmod%gulp-jsencrypt
+	rem call npm install --save-dev /mnt/userModules/gulp-fileTime /mnt/userModules/gulp-jsontpls /mnt/userModules/gulp-tpls /mnt/userModules/remove-plugin /mnt/userModules/gulp-loadobj /mnt/userModules/gulp-connect-multi /mnt/userModules/gulp-htmlmin  /mnt/userModules/gulp-rev   /mnt/userModules/gulp-rev-collector /mnt/userModules/gulp-encrypt /mnt/userModules/gulp-jsencrypt
 	echo "第十一组安装本地插件完成"
 :exit

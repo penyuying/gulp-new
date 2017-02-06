@@ -3,7 +3,9 @@
     "userName": "penyu",
     "version": "1.0.0",
 
-    "ifmin": true,
+    "ifmin": false,
+    "ifEval":true,
+    "ifJsDoc":false,
     "gzipIf": false,
     "srcRev": false,
     "suffix": "",
@@ -16,14 +18,13 @@
 
     "jsDoc3Temp":"{#tempPath#}jsDoc/react/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
-    "ifJsDoc":false,
 
     "host": "127.0.0.1",
     "port": "8098",
     "serverPath": "{#webPath#}react/",
     "browser": "chrome",
 
-	
+
     "copyFile": [{
             "src": "jsx/**/*.*",
             "dest":"jsx/"

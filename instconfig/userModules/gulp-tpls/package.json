@@ -13,10 +13,15 @@
   "keywords": [
     "gulp-tpls"
   ],
+  "dependencies": {
+    "gulp-util": "^3.0.7",
+    "through2": "^2.0.0",
+    "cheerio": "^0.22.0"
+  },
   "peerDependencies": {
-    "gulp-util": "3.0.7",
-    "through2": "2.0.0",
-    "cheerio": "0.22.0"
+    "gulp-util": "^3.0.7",
+    "through2": "^2.0.0",
+    "cheerio": "^0.22.0"
   },
   "author": {
     "name": "penyuying"
@@ -26,9 +31,5 @@
     "url": "https://github.com/penyuying/gulp-tpls/issues"
   },
   "homepage": "https://github.com/penyuying/gulp-tpls#readme",
-  "readme": "ERROR: No README data found!",
-  "_id": "gulp-tpls@1.0.0",
-  "_shasum": "47b352b11c55f9239c227766bdd5ee60a3829c2c",
-  "_from": "G:\\gulpInst\\instconfig\\userModules\\gulp-tpls",
-  "_resolved": "file:G:\\gulpInst\\instconfig\\userModules\\gulp-tpls"
+  "readme": "ERROR: No README data found!"
 }

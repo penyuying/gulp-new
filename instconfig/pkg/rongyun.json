@@ -1,11 +1,13 @@
 {
     "name": "chat",
-    "userName": "",
+    "userName": "penyu",
     "version": "1.0.0",
 
 
 
-    "ifmin": true,
+    "ifmin": false,
+    "ifEval":true,
+    "ifJsDoc":true,
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",
@@ -26,7 +28,6 @@
     "jsDocLink":"/api",
     "jsDoc3Temp":"{#tempPath#}jsDoc/{#dirName#}/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/{#dirName#}/",
-    "ifJsDoc":true,
     "isTest":false,
 	"testConfig":{
         "srcPath":[],
@@ -80,15 +81,18 @@
     "imgDstDir": "images/",
 
     "dirConcatJs": "",
-    
-    
+
+
     "concatJs":[{
+        "ifmin": false,
+        "ifEval":true,
         "jsAnonymous":true,
         "jsGlobalObj":"window",
         "psrc": "js/{public-obj,jquery/plugins/json/jquery.json.min}",
         "fileName":"public-obj.js",
         "dest": "js/comm/"
     },{
+        "ifEval":false,
         "jsAnonymous":true,
         "jsGlobalObj":"window",
         "src": [
@@ -113,6 +117,7 @@
     "concatDstJsFileName":"",
 
     "tsFile":[{
+        "ifEval":false,
         "bannerIf":true,
         "src":["ts/**/*.module","ts/**/*"],
         "fileName":"main.js",
@@ -144,6 +149,7 @@
     "cssDstDir": "css/",
 
     "ngTplsFile":[{
+        "ifEval":false,
         "destRoot":"",
         "jsAnonymous":false,
         "src":"ts/**/*",
@@ -176,7 +182,7 @@
         "minifyJS": true,
         "minifyCSS":true
     },
-    
+
     "templateFile":[{
         "changIf":true,
         "injectIf":false,
@@ -185,7 +191,7 @@
         "dest":"tpls/"
     }],
     "templateDstDir":"tpls/",
-    
+
     "htmlFile": [{
 		"changIf":true,
         "src":"html/**/*",
@@ -193,7 +199,7 @@
         "tpls":"_tpls/",
 		"dest":"{#destRoot#}"
     }],
-    
+
     "tplsHtmlFile": "html/tpls/",
     "htmlDstDir":"",
     "injectPath":""

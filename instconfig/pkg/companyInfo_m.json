@@ -1,9 +1,11 @@
 {
     "name": "companyInfo_m",
-    "userName": "",
+    "userName": "penyu",
     "version": "1.0.0",
 
-    "ifmin": true,
+    "ifmin": false,
+    "ifEval":false,
+    "ifJsDoc":false,
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",
@@ -13,6 +15,7 @@
 	"jsAnonymous":false,
     "mapIf": false,
 
+    "webPath": "{#webTestPath#}",
     "srcPath": "{#webappDir#}develop/companyInfo_m/html/",
     "destPath": "{#webPath#}collect/",
     "destTest": "{#webPath#}test/companyInfo_m/",
@@ -22,7 +25,6 @@
     "jsDocLink":"/api",
     "jsDoc3Temp":"{#tempPath#}jsDoc/wapsf1/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
-    "ifJsDoc":false,
     "destRoot":"wapsf1/",
 
     "host": "127.0.0.1",
@@ -41,7 +43,7 @@
             "dest":"js/ionic/fonts/",
             "srcPath":"{#bowersrc#}"
         },{
-            "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*.*",
+            "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*.css",
             "dest":"js/layer/"
         }],
     "copyDstDir": "",
@@ -64,11 +66,15 @@
     "dirConcatJs":"",
 
     "concatJs":[{
+            "ifmin":false,
+            "ifEval":true,
             "jsAnonymous":true,
             "psrc": "js/zeptoJs1.1.6/{zepto,ajax,event,data}",
             "fileName":"zepto.min.js",
             "dest":"js/zepto/"
         },{
+            "ifmin":false,
+            "ifEval":true,
             "jsAnonymous":true,
             "jsGlobalObj":"window",
             "psrc": "js/public-obj",
@@ -84,29 +90,44 @@
     "concatDstJsFileName":"",
 
     "jsFile": [{
+            "ifmin":false,
+            "ifEval":true,
             "psrc": "js/encrypt/sha1",
             "dest": "js/comm/"
         },{
+            "ifmin":false,
+            "ifEval":true,
             "psrc": "js/location/getCity",
             "dest": "js/comm/"
         },{
+            "ifmin":false,
+            "ifEval":true,
             "psrc": "js/{viewport,pinyin}",
             "dest": "js/comm/"
         },{
+            "ifEval":false,
             "src": "ionic_1.0.0/release/js/ionic.bundle.min",
             "dest":"js/ionic/",
             "srcPath":"{#bowersrc#}"
         },{
+            "ifEval":false,
             "psrc": "js/angular/plugins/ui_router/angular-ui-router",
             "dest":"js/angular/"
         },{
+            "ifmin":false,
+            "ifEval":true,
             "psrc": "js/zeptoJs1.1.6/plugins/json/zepto.json.min",
             "dest":"js/zepto/"
         },{
             "src": "js/*",
             "dest": "js/",
             "debar": "{js/_subDir/,js/_subDir/**/*.*}"
-     }],
+        },{
+            "ifmin":false,
+            "ifEval":true,
+            "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*",
+            "dest":"js/layer/"
+        }],
     "jsDstDir": "js/",
 
 

@@ -3,7 +3,10 @@
     "userName": "penyu",
     "version": "1.0.0",
 
+
     "ifmin": false,
+    "ifEval":true,
+    "ifJsDoc":true,
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",
@@ -20,7 +23,6 @@
 
     "jsDoc3Temp":"{#tempPath#}jsDoc/carPay/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
-    "ifJsDoc":true,
 
     "host": "127.0.0.1",
     "port": "8096",
@@ -31,12 +33,12 @@
             "psrc": "js/jquery/jquery-1.11.3.min.js",
             "dest":"js/jquery/"
 		},{
-            "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*.*",
+            "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*.css",
             "dest":"js/layer/"
 		}],
     "copyDstDir": "",
-	
-	
+
+
     "jsonFile": "json/{city,proJson}",
     "jsonDstDir": "json/",
 
@@ -54,6 +56,8 @@
         "dest": "js/"
 	}],
     "concatJs":[{
+            "ifmin": false,
+            "ifEval":true,
             "jsAnonymous":true,
             "psrc": "js/zeptoJs1.1.6/{zepto,ajax,event,data,touch}",
             "fileName":"zepto.min.js",
@@ -65,16 +69,22 @@
             "fileName":"carPay.js",
             "dest": "js/"
         },{
+            "ifmin": false,
+            "ifEval":true,
             "jsAnonymous":true,
             "psrc":"js/sub_js/initial/initial_jq",
             "fileName":"initial.js",
             "dest": "js/comm/"
     	},{
+            "ifmin": false,
+            "ifEval":true,
             "jsAnonymous":true,
             "psrc":"js/sub_js/controls/Radio",
             "fileName":"controls.js",
             "dest": "js/comm/"
     	},{
+            "ifmin": false,
+            "ifEval":true,
             "jsAnonymous":true,
     		"jsGlobalObj":"window,$",
             "psrc":"js/qrcode/{qrcode,jquery.qrcode,utf16to8}",
@@ -83,41 +93,58 @@
 	}],
     "concatDstJsFileName":"",
     "jsFile": [{
+            "ifmin": false,
+            "ifEval":true,
             "psrc": "js/comm/comm",
             "dest": "js/",
             "destPath":"{#tempPath#}jsdocTemp/{#name#}/"
     	},{
+            "ifmin": false,
+            "ifEval":true,
+            "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*",
+            "dest":"js/layer/"
+        },{
+            "ifmin": false,
+            "ifEval":true,
             "psrc": "js/{viewport,pinyin}",
             "dest": "js/comm/"
     	},{
+            "ifmin": false,
+            "ifEval":true,
             "jsAnonymous":true,
             "jsGlobalObj":"window",
             "psrc": "js/public-obj",
             "dest": "js/comm/"
     	},{
+            "ifmin": false,
+            "ifEval":true,
             "psrc": "js/encrypt/sha1",
             "dest": "js/comm/"
     	},{
+            "ifmin": false,
+            "ifEval":true,
             "psrc": "js/location/getCity",
             "dest": "js/"
     	},{
             "src": "js/*",
             "debar": "{js/_subDir/,js/_subDir/**/*.*,js/Psub_file/,js/Psub_file/**/*.*,**/carPay.js}"
     	},{
+            "ifmin": false,
+            "ifEval":true,
     		"psrc": "js/zeptoJs1.1.6/plugins/json/zepto.json.min",
     		"dest":"js/zepto/"
 	}],
     "jsDstDir": "js/",
-    
+
 
     "sassFile": [{
         "src":"sass/**/*",
         "dest":"css/"
     }],
-    
+
     "concatCss":"",
     "concatDstCssFileName":"",
-    
+
     "cssFile":[{
 		"src":"css/**/*",
 		"psrc":"css/control"

@@ -1,9 +1,10 @@
 {
     "name": "icip",
-    "userName": "",
+    "userName": "penyu",
     "version": "1.0.0",
 
     "ifmin": false,
+    "ifEval":true,
     "gzipIf": false,
     "srcRev": false,
     "suffix": "",
@@ -35,28 +36,30 @@
     "imgDstDir": "img/",
 
     "dirConcatJs":"",
-    
+
     "concatJs":[{
+        "ifmin": false,
+        "ifEval":true,
         "jsAnonymous":true,
         "psrc":"js/sub_js/switch/{Tab,Accordion,Align,Popup,Widescreen,Floatfixed}",
         "fileName":"switch.js",
         "dest": "js/"
     }],
     "concatDstJsFileName":"",
-    
-    
+
+
     "jsFile": "",
     "jsDstDir": "",
-    
+
 
     "sassFile": [{
         "src":"sass/**/*",
         "dest":"css/"
     }],
-    
+
     "concatCss":"",
     "concatDstCssFileName":"concatCss.css",
-    
+
     "cssFile":[{
 		"psrc":"css/control",
 		"dest":"css/"
@@ -85,7 +88,7 @@
         "destRoot":"",
         "src":"BMS/**/*"
     }],
-    
+
     "tplsHtmlFile": "tpls/",
     "htmlDstDir":"WEB-INF/html/",
 

@@ -9,8 +9,13 @@
     "changIf": false,
     "srcRev": false,
     "suffix": "",
-    "srcPath": "./instconfig/",
-    "publicPath": "public/",
+    "srcPath": "../",
+    "installSrc":"gulpInst/instconfig/",
+    "publicPath": "{#srcPath#}publicTool/public/",
+    "subroot":"e:/webapp/",
+    "subDevelop":"{#subroot#}develop/",
+    "subPublic":"{#subDevelop#}public/",
+    "pExtName":"uud",
     "destRoot": "",
     "destPath": "",
     "tempPath": "",
@@ -25,26 +30,144 @@
     "ifJsDoc":true,
 
     "browser": "",
-    "copyFile": "",
+    "copyFile": [{
+        "src":"github/fonteditor/save/PyISTicon/PyISTicon.*",
+        "dest":"{#subPublic#}fonts/PyISTicon/Penyu/"
+    },{
+        "src":"github/fonteditor/save/Pyicipicon/Pyicipicon.*",
+        "dest":"{#subPublic#}fonts/Pyicipicon/Penyu/"
+    },{
+        "src":"github/fonteditor/save/Pyrongyun/Pyrongyun.*",
+        "dest":"{#subPublic#}fonts/Pyrongyun/Penyu/"
+    },{
+        "psrc":"js/*.js",
+        "dest":"{#subPublic#}js/",
+        "ifEncrypt":true,
+        "encryptConfig":{
+            "type":"des,unicode2",
+            "extname":"{#pExtName#}",
+            "password":"miMaHenJianDan"
+        }
+    },{
+        "src":"github/clipboard.js/dist/clipboard.js",
+        "newFileName":"copy.uud",
+        "dest":"{#subPublic#}js/",
+        "ifEncrypt":true,
+        "encryptConfig":{
+            "type":"des,unicode2",
+            "extname":"{#pExtName#}",
+            "password":"miMaHenJianDan"
+        }
+    },{
+        "psrc":"js/sub_js/switch/*.js",
+        "dest":"{#subPublic#}js/sub_js/switch/",
+        "ifEncrypt":true,
+        "encryptConfig":{
+            "type":"des,unicode2",
+            "extname":"{#pExtName#}",
+            "password":"miMaHenJianDan"
+        }
+    },{
+        "psrc":"js/location/*.js",
+        "dest":"{#subPublic#}js/location/",
+        "ifEncrypt":true,
+        "encryptConfig":{
+            "type":"des,unicode2",
+            "extname":"{#pExtName#}",
+            "password":"miMaHenJianDan"
+        }
+    },{
+        "psrc":"js/qrcode/*.js",
+        "dest":"{#subPublic#}js/qrcode/",
+        "ifEncrypt":true,
+        "encryptConfig":{
+            "type":"des,unicode2",
+            "extname":"{#pExtName#}",
+            "password":"miMaHenJianDan"
+        }
+    },{
+        "psrc":"js/comm/*.js",
+        "dest":"{#subPublic#}js/comm/",
+        "ifEncrypt":true,
+        "encryptConfig":{
+            "type":"des,unicode2",
+            "extname":"{#pExtName#}",
+            "password":"miMaHenJianDan"
+        }
+    },{
+        "psrc":"js/encrypt/**/*.js",
+        "dest":"{#subPublic#}js/encrypt/",
+        "ifEncrypt":true,
+        "encryptConfig":{
+            "type":"des,unicode2",
+            "extname":"{#pExtName#}",
+            "password":"miMaHenJianDan"
+        }
+    },{
+        "psrc":"js/jquery/plugins/GetPlace/*.js",
+        "dest":"{#subPublic#}js/jquery/plugins/GetPlace/",
+        "ifEncrypt":true,
+        "encryptConfig":{
+            "type":"des,unicode2",
+            "extname":"{#pExtName#}",
+            "password":"miMaHenJianDan"
+        }
+    },{
+        "psrc":"js/jquery/plugins/json/*.js",
+        "dest":"{#subPublic#}js/jquery/plugins/json/",
+        "ifEncrypt":true,
+        "encryptConfig":{
+            "type":"des,unicode2",
+            "extname":"{#pExtName#}",
+            "password":"miMaHenJianDan"
+        }
+    },{
+        "psrc":"js/jquery/plugins/fileupload/*.js",
+        "dest":"{#subPublic#}js/jquery/plugins/fileupload/",
+        "ifEncrypt":true,
+        "encryptConfig":{
+            "type":"des,unicode2",
+            "extname":"{#pExtName#}",
+            "password":"miMaHenJianDan"
+        }
+    },{
+        "psrc":"js/layer.mobile/layer.mobile-v1.6/layer.m/*.js",
+        "dest":"{#subPublic#}js/layer.mobile/layer.mobile-v1.6/layer.m/",
+        "ifEncrypt":true,
+        "encryptConfig":{
+            "type":"des,unicode2",
+            "extname":"{#pExtName#}",
+            "password":"miMaHenJianDan"
+        }
+    },{
+        "psrc":"js/angular/plugins/ui-bootstrap-tpls/sub_js/*.js",
+        "dest":"{#subPublic#}js/angular/plugins/ui-bootstrap-tpls/sub_js/",
+        "ifEncrypt":true,
+        "encryptConfig":{
+            "type":"des,unicode2",
+            "extname":"{#pExtName#}",
+            "password":"miMaHenJianDan"
+        }
+    }],
     "copyDstDir": "",
     "jsonFile": [{
-        "src":["package"],
+        "src":["{#installSrc#}package"],
         "dest":"c:/gulp/"
     },{
-        "src":["webAppConfig"],
+        "src":["{#installSrc#}webAppConfig"],
         "dest":"c:/gulp/",
         "ifEncrypt":true,
         "encryptConfig":{
-            "type":"unicode,des,unicode",
+            "type":"unicode,des,unicode2",
             "extname":"ud",
             "password":"niCaiCai"
         }
     },{
-        "src":"pkg/*",
-        "dest":"e:/webapp/pkg/",
+        "src":"{#installSrc#}pkg/*",
+        "dest":"{#subroot#}pkg/",
         "ifEncrypt":true,
         "encryptConfig":{
-            "type":"unicode,des,unicode",
+            "type":"unicode,des,unicode2",
             "extname":"ud",
             "password":"niCaiCai"
         }
@@ -57,7 +180,7 @@
     "dirConcatJs": "",
     "concatJs": "",
     "concatDstJsFileName": "",
-    "jsFile": "gulpfile",
+    "jsFile": "{#installSrc#}gulpfile",
     "jsDstDir": "c:/gulp/",
     "sassFile": "",
     "concatCss": "",

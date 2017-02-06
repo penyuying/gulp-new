@@ -1,11 +1,13 @@
 {
     "name": "collect",
-    "userName": "",
+    "userName": "penyu",
     "version": "1.0.0",
 
 
 
     "ifmin": false,
+    "ifEval":true,
+    "ifJsDoc":true,
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",
@@ -24,7 +26,6 @@
     "jsDocLink":"/api",
     "jsDoc3Temp":"{#tempPath#}jsDoc/collect/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/collect/",
-    "ifJsDoc":true,
     "isTest":true,
 	"testConfig":{
         "srcPath":[
@@ -98,10 +99,10 @@
             "psrc": "js/jquery/plugins/layer-v2.0/{layer/**/*.*,layer/}",
             "dest":"js/layer/"
 		},{
-        "changIf":false,
-        "psrc": "sass/global/mixin.scss",
-        "dsrc":"sass/",
-        "newFileName":"_mixin.scss"
+            "changIf":false,
+            "psrc": "sass/global/mixin.scss",
+            "dsrc":"sass/",
+            "newFileName":"_mixin.scss"
         }],
     "copyDstDir": "",
 
@@ -127,45 +128,57 @@
 	}],
     "imgDstDir": "img/",
 
-    "dirConcatJs": [{
-        "jsAnonymous":true,
-		"jsGlobalObj":"window,angular",
-        "src": "js/collect/_subJs/",
-        "psrc":"",
-        "dest": "js/collect/"
-	}],
-    
-    
+    "dirConcatJs": "",
+
     "concatJs":[{
+        "ifEval":false,
+        "jsAnonymous":true,
+        "src": "{js/app,js/collect/_subJs/**/*}",
+        "psrc":"",
+        "fileName":"collect.js",
+        "dest": "js/collect/"
+    },{
+        "ifEval":true,
+        "ifmin":false,
         "destRoot":"",
         "jsAnonymous":false,
         "psrc":["js/encrypt/AES/tripledes","js/encrypt/jbase64","js/encrypt/AES/mode-ecb","js/comm/comm"],
         "fileName":"comm.js",
         "dest": "js/"
     },{
+        "ifEval":true,
+        "ifmin":false,
         "jsAnonymous":true,
         "psrc":"!js/sub_js/initial/initial_ng",
         "fileName":"initial.js",
         "dest": "js/comm/"
 	},{
+        "ifEval":true,
+        "ifmin":false,
         "jsAnonymous":true,
         "jsGlobalObj":"window,YW,$",
         "psrc":"!js/sub_js/{switch/Tab,switch/Accordion,switch/Align,switch/Popup,switch/Widescreen}",
         "fileName":"switch.js",
         "dest": "js/comm/"
 	},{
+        "ifEval":true,
+        "ifmin":false,
         "jsAnonymous":true,
 		"jsGlobalObj":"window,YW,$",
         "psrc":"!js/sub_js/{controls/Checkbox,controls/CheckboxAll,controls/Disabled,controls/Radio,controls/SelectSwap,controls/Button,controls/Adjustment}",
         "fileName":"controls.js",
         "dest": "js/comm/"
 	},{
+        "ifEval":true,
+        "ifmin":false,
         "jsAnonymous":true,
 		"jsGlobalObj":"window,YW,$",
         "psrc":"js/sub_js/{switch/Tab,switch/Accordion,switch/Align,switch/Popup,switch/Widescreen,controls/Checkbox,controls/CheckboxAll,controls/Disabled,controls/Radio,controls/SelectSwap,controls/Button,controls/Adjustment,initial/initial_ng}",
         "fileName":"controlsAndSwitch.js",
         "dest": "js/comm/"
 	},{
+        "ifEval":true,
+        "ifmin":false,
         "jsAnonymous":true,
         "jsGlobalObj":"window",
         "psrc": "js/{public-obj,jquery/plugins/json/jquery.json.min}",
@@ -173,8 +186,7 @@
         "dest": "js/comm/"
     }],
     "concatDstJsFileName":"",
-    
-    
+
     "jsFile": [{
         "psrc": "!js/jquery/plugins/form/jquery.form",
         "dest":"js/jquery/"
@@ -182,8 +194,8 @@
         "psrc": "!js/jquery/plugins/cookie/jquery.cookie",
         "dest":"js/jquery/"
     },{
-        "src": "{js/*,js/comm/**/*}",
-        "dest": "js/",
+        "src": "js/comm/**/*",
+        "dest": "js/comm/",
         "debar": "{js/_subDir/,js/_subDir/**/*.*}"
 	},{
         "psrc": "js/angular/plugins/ui_router/angular-ui-router",
@@ -192,6 +204,8 @@
 		"psrc": "!js/angular/plugins/ui-bootstrap-tpls/ui-bootstrap-tpls-0.11.0",
         "dest":"js/angular/"
 	},{
+        "ifEval":true,
+        "ifmin":false,
 		"psrc": "js/angular/plugins/ui-bootstrap-tpls/sub_js/pagination",
         "dest":"js/angular/"
 	}, {
@@ -206,6 +220,8 @@
 		"psrc": "!js/jquery/plugins/json/jquery.json.min",
 		"dest":"js/jquery/"
 	}, {
+        "ifEval":true,
+        "ifmin":false,
         "jsAnonymous":true,
         "jsGlobalObj":"window",
         "psrc": "js/sub_js/switch/mobileAndPc_slide",
@@ -213,7 +229,24 @@
         "dest": "js/comm/"
     }],
     "jsDstDir": "js/",
-    
+
+    "ngTplsFile":[{
+        "ifEval":false,
+        "jsAnonymous":false,
+        "bannerIf":true,
+        "tpls":"_tpls/",
+        "src":"ng_tpls/**/*",
+        "dest":"js/collect/",
+        "conf":{
+            "moduleName": "routerApp",
+            "standalone": false,
+            "useStrict": false,
+            "prefix":"tpls/",
+            "filePath": "tpslCache.js"
+        }
+    }],
+    "ngTplsConf":{},
+    "ngTplsDstDir":"js/",
 
     "sassFile": [{
         "src":"sass/**/*",
@@ -222,10 +255,10 @@
         "psrc":"!sass/datepicker/datepicker",
         "dest":"css/"
     }],
-    
+
     "concatCss":"css/{test2,test1}",
     "concatDstCssFileName":"concatCss.css",
-    
+
     "cssFile":"css/**/*",
     "cssDstDir": "css/",
 
@@ -245,7 +278,7 @@
         "minifyJS": true,
         "minifyCSS":true
     },
-    
+
     "templateFile":[{
         "changIf":true,
         "injectIf":false,
@@ -254,7 +287,7 @@
         "dest":"tpls/"
     }],
     "templateDstDir":"tpls/",
-    
+
     "htmlFile": [{
 		"changIf":true,
         "src":"*",
@@ -266,7 +299,7 @@
         "src":"!demo/**/*",
         "dest":"demo/"
     }],
-    
+
     "tplsHtmlFile": "html/tpls/",
     "htmlDstDir":"",
     "injectPath":""

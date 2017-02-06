@@ -1,9 +1,12 @@
 {
     "name": "collectMobile",
-    "userName": "",
+    "userName": "penyu",
     "version": "1.0.0",
 
+
     "ifmin": false,
+    "ifEval":true,
+    "ifJsDoc":true,
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",
@@ -23,7 +26,6 @@
     "jsDocLink":"/api",
     "jsDoc3Temp":"{#tempPath#}jsDoc/wapsf/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
-    "ifJsDoc":true,
     "destRoot":"wapsf/",
 
     "host": "127.0.0.1",
@@ -45,7 +47,7 @@
             "dest":"js/ionic/fonts/",
             "srcPath":"{#githubsrc#}ionic/"
         },{
-            "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*.*",
+            "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*.css",
             "dest":"js/layer/"
         }],
     "copyDstDir": "",
@@ -75,11 +77,15 @@
     "dirConcatJs":"",
 
     "concatJs":[{
+            "ifmin": false,
+            "ifEval":true,
             "jsAnonymous":true,
             "psrc": "js/zeptoJs1.1.6/{zepto,ajax,event,data}",
             "fileName":"zepto.min.js",
             "dest":"js/zepto/"
         },{
+            "ifmin": false,
+            "ifEval":true,
             "jsAnonymous":true,
             "jsGlobalObj":"window",
             "psrc": "js/public-obj",
@@ -94,6 +100,7 @@
             "dest": "js/collect/",
             "publicPath": "{#webappDir#}develop/collect/html/"
         },{
+            "ifEval":false,
             "ifJsDoc":false,
             "jsAnonymous":true,
             "jsGlobalObj":"window",
@@ -142,12 +149,23 @@
     "concatDstJsFileName":"",
 
     "jsFile": [{
+            "ifmin": false,
+            "ifEval":true,
             "psrc": "js/encrypt/sha1",
             "dest": "js/comm/"
         },{
+            "ifmin": false,
+            "ifEval":true,
+            "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*",
+            "dest":"js/layer/"
+        },{
+            "ifmin": false,
+            "ifEval":true,
             "psrc": "js/location/getCity",
             "dest": "js/comm/"
         },{
+            "ifmin": false,
+            "ifEval":true,
             "psrc": "js/{viewport,pinyin}",
             "dest": "js/comm/"
         },{
@@ -158,6 +176,8 @@
             "psrc": "!js/angular/plugins/ui_router/angular-ui-router",
             "dest":"js/angular/"
         },{
+            "ifmin": false,
+            "ifEval":true,
             "psrc": "js/zeptoJs1.1.6/plugins/json/zepto.json.min",
             "dest":"js/zepto/"
         },{

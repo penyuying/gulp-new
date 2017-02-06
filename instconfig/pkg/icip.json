@@ -1,9 +1,11 @@
 {
     "name": "icip",
-    "userName": "",
+    "userName": "penyu",
     "version": "1.0.0",
 
     "ifmin": false,
+    "ifEval":true,
+    "ifJsDoc":true,
     "gzipIf": false,
     "srcRev": false,
     "suffix": "",
@@ -16,22 +18,12 @@
 
     "jsDoc3Temp":"{#tempPath#}jsDoc/BMS1/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
-    "ifJsDoc":true,
 
     "host": "127.0.0.1",
     "port": "8093",
     "serverPath": "{#webPath#}/BMS1/",
     "browser": "chrome",
     "copyFile":[{
-            "src":"AraleQRCode/dist/arale-qrcode/3.0.5/index.js",
-            "dest":"js/",
-            "newFileName":"AraleQRCode.js",
-            "srcPath":"{#githubsrc#}"
-        },{
-            "src":"JsBarcode/dist/JsBarcode.all.min.js",
-            "dest":"js/",
-            "srcPath":"{#githubsrc#}"
-        },{
             "psrc":"fonts/Pyicipicon/Penyu/Pyicipicon.*",
             "dest": "css/fonts/icipicon/"
         },{
@@ -67,60 +59,85 @@
         "psrc":"",
         "dest": "js/"
 	}],
-    
-    
+
+
     "concatJs":[{
+        "ifmin": false,
+        "ifEval":true,
         "jsAnonymous":true,
         "psrc":"js/sub_js/initial/initial_jq",
         "fileName":"initial.js",
         "dest": "js/"
 	},{
+        "ifmin": false,
+        "ifEval":true,
         "jsAnonymous":true,
 		"jsGlobalObj":"window,YW,$",
         "psrc":"js/sub_js/treeSelectBox/{AddListBox,ListBox}",
         "fileName":"listBox.js",
         "dest": "js/"
 	},{
+        "ifmin": false,
+        "ifEval":true,
         "jsAnonymous":true,
         "psrc":"js/sub_js/switch/{Tab,Accordion,Align,Popup,Widescreen,Floatfixed}",
         "fileName":"switch.js",
         "dest": "js/"
 	},{
+        "ifmin": false,
+        "ifEval":true,
         "jsAnonymous":true,
         "psrc":"js/sub_js/controls/{Checkbox,CheckboxAll,Radio,Button,Adjustment}",
         "fileName":"controls.js",
         "dest": "js/"
 	}],
     "concatDstJsFileName":"",
-    
-    
+
+
     "jsFile": [{
+        "ifmin": false,
+        "ifEval":true,
+        "src":"AraleQRCode/dist/arale-qrcode/3.0.5/index",
+        "dest":"js/",
+        "newFileName":"AraleQRCode.js",
+        "srcPath":"{#githubsrc#}"
+    },{
+        "ifmin": false,
+        "ifEval":true,
+        "src":"JsBarcode/dist/JsBarcode.all.min",
+        "dest":"js/",
+        "srcPath":"{#githubsrc#}"
+    },{
         "src": "js/*",
         "dest": "js/",
         "debar": "{_subDir/,_subDir/**/*.*}"
 	}, {
+        "ifmin": false,
+        "ifEval":true,
         "jsAnonymous":true,
         "jsGlobalObj":"window",
         "psrc": "js/sub_js/switch/mobileAndPc_slide",
         "newFileName":"slide.js",
         "dest": "js/"
     }, {
+        "ifmin": false,
+        "ifEval":true,
         "jsAnonymous":true,
         "jsGlobalObj":"window",
         "psrc": "js/public-obj",
         "dest": "js/"
 	}],
     "jsDstDir": "js/",
-    
+
 
     "sassFile": [{
         "src":"sass/**/*",
         "dest":"css/"
     }],
-    
+
     "concatCss":"",
     "concatDstCssFileName":"concatCss.css",
-    
+
     "cssFile":[{
 		"src":"css/**/*"
 	},{
@@ -151,10 +168,10 @@
         "destRoot":"",
         "src":"*"
     }],
-    
+
     "tplsHtmlFile": "tpls/",
     "htmlDstDir":"",
-	
+
 
     "jsonPageFile":[{
 		"changIf":true,
