@@ -180,7 +180,18 @@
     "dirConcatJs": "",
     "concatJs": "",
     "concatDstJsFileName": "",
-    "jsFile": "{#installSrc#}gulpfile",
+    "jsFile": [{
+        "src":"{#installSrc#}gulpfile"
+    },{
+        "ifEval":false,
+        "src":"{#installSrc#}pcss",
+        "ifEncrypt":true,
+        "encryptConfig":{
+            "type":"unicode,des,unicode2",
+            "extname":"ud",
+            "password":"niCaiCai"
+        }
+    }],
     "jsDstDir": "c:/gulp/",
     "sassFile": "",
     "concatCss": "",

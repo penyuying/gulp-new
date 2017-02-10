@@ -5,7 +5,7 @@
 
     "ifmin": true,
     "ifEval":false,
-    "ifJsDoc":true,
+    "ifJsDoc":false,
     "ifEncrypt":false,
     "encryptConfig":{},
     "gzipIf": false,
@@ -131,7 +131,7 @@
 
     "cssFile":[
         {
-            "src":"css/**/*",
+            "src":"!css/**/*",
             "dest":"css/"
         }
     ],

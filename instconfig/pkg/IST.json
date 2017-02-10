@@ -4,9 +4,9 @@
     "version": "1.0.0",
 
 
-    "ifmin": false,
-    "ifEval":true,
-    "ifJsDoc":true,
+    "ifmin": true,
+    "ifEval":false,
+    "ifJsDoc":false,
     "evalConfig":{},
     "gzipIf": false,
     "srcRev": true,
@@ -235,7 +235,7 @@
     "ngTplsConf":{},
     "ngTplsDstDir":"js/",
 
-	"ifminhtml": false,
+	"ifminhtml": true,
 	"ifminhtmlObj":{
         "removeComments": true,
         "collapseWhitespace": true,

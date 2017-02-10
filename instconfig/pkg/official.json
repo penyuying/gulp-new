@@ -3,9 +3,9 @@
     "userName": "penyu",
     "version": "1.0.0",
 
-    "ifmin": false,
-    "ifEval":true,
-    "ifJsDoc":true,
+    "ifmin": true,
+    "ifEval":false,
+    "ifJsDoc":false,
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",
@@ -108,7 +108,7 @@
 	"jsFile": [{
         "ifmin": false,
         "ifEval":true,
-        "psrc": "js/comm/comm",
+        "psrc": "!js/comm/comm",
         "dest": "js/",
         "destPath":"{#tempPath#}jsdocTemp/{#name#}/"
 	},{
@@ -182,7 +182,7 @@
     "cssDstDir": "css/",
 
 
-	"ifminhtml": false,
+	"ifminhtml": true,
 	"ifminhtmlObj":{
         "removeComments": true,
         "collapseWhitespace": true,

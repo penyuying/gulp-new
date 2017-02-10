@@ -39,6 +39,30 @@
     "IST",
     "practice"
   ],
+  "postcssBak":[
+      {"postcsssprites":"postcsssprites"},
+      {"postcsscustomproperties":"postcsscustomproperties"},
+      {"postcsssassextend":"postcsssassextend"},
+      "postcssfor",
+      {"postcssadvancedvariables":"postcssadvancedvariables"},
+      {"postcssconditionals":"postcssconditionals"},
+      {"postcsssimplevars":"postcsssimplevars"},
+      "postcssnestedprops",
+      {"postcssnested":"postcssnested"},
+      {"autoprefixer":"autoprefixer"},
+      {"postcsscssnext":"postcsscssnext"},
+      "cssgrace"
+  ],
+  "postcss":[
+      {"postcsscustomproperties":"postcsscustomproperties"},
+      {"postcsssassextend":"postcsssassextend"},
+      "postcssfor",
+      {"postcssadvancedvariables":"postcssadvancedvariables"},
+      {"postcssconditionals":"postcssconditionals"},
+      {"postcsssimplevars":"postcsssimplevars"},
+      {"postcssnested":"postcssnested"},
+      {"postcsscssnext":"postcsscssnext"}
+  ],
   "isTest":false,
   "testConfig":"",
   "jsDocType":"",
@@ -49,17 +73,17 @@
   "subJsonPath": "{#webappDstDir#}pkg/",
   "bakDateDir":"",
   "bakFile": [{
-    "src":["**/*"],
-    "dest":"{#bakDateDir#}develop/",
-    "destPath":"{#bakDest#}",
-    "srcPath":"{#srcPath#}",
-    "debarPath":"{node_modules/**/*,/**/node_modules/**/*,bower_components/**/*,/**/bower_components/**/*}"
+      "src":["**/*"],
+      "dest":"{#bakDateDir#}develop/",
+      "destPath":"{#bakDest#}",
+      "srcPath":"{#srcPath#}",
+      "debarPath":"{node_modules/**/*,/**/node_modules/**/*,bower_components/**/*,/**/bower_components/**/*}"
   },{
-    "src":"**/*",
-    "dest":"{#bakDateDir#}pkg/",
-    "destPath":"{#bakDest#}",
-    "srcPath":"{#subJsonPath#}",
-    "debarPath":"{node_modules/**/*,/**/node_modules/**/*,bower_components/**/*,/**/bower_components/**/*}"
+      "src":"**/*",
+      "dest":"{#bakDateDir#}pkg/",
+      "destPath":"{#bakDest#}",
+      "srcPath":"{#subJsonPath#}",
+      "debarPath":"{node_modules/**/*,/**/node_modules/**/*,bower_components/**/*,/**/bower_components/**/*}"
   }],
   "bakDstDir": "{#bakDest#}{#bakDateDir#}",
   "ifmin": false,
@@ -129,7 +153,7 @@
       "debar": "css/{废弃/**/*.*,**/废弃.*}"
     }
   ],
-  "autoprefixerBrowsers":["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 5", "ie_mob >= 6", "ios_saf >= 6", "opera >= 5","safari >= 6"],
+  "!autoprefixerBrowsers":["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 5", "ie_mob >= 6", "ios_saf >= 6", "opera >= 5","safari >= 6"],
   "imgDstDir": "img/",
   "dirConcatJs": "",
   "concatJs": "",

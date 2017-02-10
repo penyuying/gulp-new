@@ -95,6 +95,62 @@
 
         PY.karmaServer=PY.karma.Server;
         PY.gulpconnectmulti=PY.gulpconnectmulti();
+        var PyPostCssOption=getUdJs("./pcss"+pkgExt);
+
+
+        /**
+        *获取postcss的插件
+        *@param {string} pluginName 插件名称
+        *@param {string} optionName 选项名称
+        *@param {Boolean} flag 是否为对象（true为对象，false为function）
+        */
+        function getPostPlugin(pluginName,optionName,flag){
+            var _plugin=PY[pluginName],
+                _res;
+            if(flag){
+                _res=_plugin;
+            }else{
+                if(optionName && PyPostCssOption[optionName]){
+                    _res=_plugin(PyPostCssOption[optionName]||{});
+                }else{
+                    _res=_plugin();
+                }
+            }
+            return _res;
+        }
+
+        /**
+        *获取postcss的插件参数
+        *@param {string} pluginNameList 插件项列表
+        */
+        function getPostOption(pluginNameList){
+            var _res=[];
+            if(pluginNameList && pluginNameList.length>0){
+                pluginNameList=pluginNameList.map(function(item){
+                    var _plugin;
+                    if(item instanceof Object){
+                        for (var key in item) {
+                            _plugin=getPostPlugin(key,item[key]);
+                            if(_plugin){
+                                _res.push(_plugin);
+                            }
+                        };
+                    }else{
+                        _plugin=getPostPlugin(item,'',true);
+                        if(_plugin){
+                            _res.push(_plugin);
+                        }
+                    }
+                })
+            }
+            // console.log(_res);
+            return _res;
+        }
+    //     a={"postcss":[{
+    //   "autoprefixer":"autoprefixer"
+    // },
+    // {"cssnext":""}]};
+    //     console.log(getPostOption(a.postcss));
         //PY.gulpdocs = require('gulp-ngdocs');
 //		PY.removeplugin()
 
@@ -392,7 +448,7 @@
     /**
     *获取JSON文件并返回对象
     * @global
-    *@function getJson
+    *@function getUd
     *@param {String} dir JSON文件路径
     *@retrun {Object} 返回对象
     */
@@ -422,6 +478,35 @@
                 console.log("\x1B[33m"+dir+PY.gulpencrypt.encrypt("dSnUpxbs0gpMkocxd6btGiawtoXNovpe",{type:"undes"})+"\x1B[39m\x1B[31m" + e.message+"\x1B[39m");
                 // console.log(dir+"格式转换错误：" + e.message);
                 _pkg = {};
+            }
+        }
+        return _pkg;
+    }
+
+    /**
+    *获取JS文件并返回对象
+    * @global
+    *@function getUdJs
+    *@param {String} dir JSON文件路径
+    *@retrun {Object} 返回对象
+    */
+    function getUdJs(dir) {//ud文件对象
+        var folder_exists = fs.existsSync(dir);
+        var _pkg = {};
+        if (folder_exists) {
+            var data = fs.readFileSync(dir, 'utf-8'),
+                a="3q+iesGZAoTHueBH",
+                b="h6KcEnbz6UDV2a10NYa",
+                c="A6sa3DhzZF9dc/85",
+                d="xWI7tyEApeclD2gdb5Hx6",
+                e="e8D2ARzim+w"
+                f="AIn81rF+j+awdHR34Wac0/x8=",
+                _textp=PY.gulpencrypt.encrypt(a+b+c+d+e+f,{type:"undes"}),
+                _pamar=JSON.parse(_textp);
+            if(data){
+                data=PY.gulpencrypt.encrypt(data,_pamar);
+                _pkg=eval(data);
+
             }
         }
         return _pkg;
@@ -1357,7 +1442,8 @@
                                 unEncryptConfig:extend({},returnObj(obj, "unEncryptConfig", returnObj(pkg, 'unEncryptConfig', {}))),//解密文件时的配置
                                 ifEncrypt:returnObj(obj, "ifEncrypt", returnObj(pkg, 'ifEncrypt', false)),//是否加密文件
                                 encryptConfig:returnObj(obj, "encryptConfig", returnObj(pkg, 'encryptConfig', {})),//加密文件时的配置
-                                autoprefixerBrowsers: returnObj(obj, "autoprefixerBrowsers", returnObj(pkg, 'autoprefixerBrowsers', ["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5"])),//加前缀要兼容的浏览器版本
+                                // autoprefixerBrowsers: returnObj(obj, "autoprefixerBrowsers", returnObj(pkg, 'autoprefixerBrowsers', ["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5"])),//加前缀要兼容的浏览器版本
+                                postcss:getPostOption(returnObj(obj, "postcss",returnObj(pkg, "postcss",[]))),//处理CSS兼容（如：autoprefixerBrowsers加前缀要兼容的浏览器版本）
                                 ifminhtml: returnObj(obj, 'ifminhtml', returnObj(pkg, 'ifminhtml', false)),//obj.ifminhtml || pkg.ifminhtml,//是否压缩html（true为否，false为是）
                                 injectIf: returnObj(obj, 'injectIf', returnObj(pkg, 'injectIf', false)),//injectIf,//是否注入文件到html（true为是，false为否）
                                 bannerIf: returnObj(obj, 'bannerIf', returnObj(pkg, 'bannerIf', false)),//bannerIf,//是否加banner（true为否，false为是）
@@ -1471,7 +1557,8 @@
                         encryptConfig:returnObj(pkg, 'encryptConfig', {}),//加密文件时的配置
                         ifUnEncrypt:returnObj(pkg, 'ifUnEncrypt', false),//是否加密文件
                         unEncryptConfig:extend({},returnObj(pkg, 'unEncryptConfig', {})),//加密文件时的配置
-                        autoprefixerBrowsers: pkg.autoprefixerBrowsers,
+                        // autoprefixerBrowsers: pkg.autoprefixerBrowsers,
+                        postcss:getPostOption(returnObj(pkg, "postcss",[])),
                         ifminhtml: pkg.ifminhtml,
                         injectIf: pkg.injectIf,
                         bannerIf: pkg.bannerIf,
@@ -2587,7 +2674,8 @@
                             })
                             //.pipe(changed(cfg.destPath))
                             //.pipe(PY.gulpautoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
-                            .pipe(PY.gulpautoprefixer({ browsers: cfg.autoprefixerBrowsers, cascade: false }))
+                            // .pipe(PY.gulpautoprefixer({ browsers: cfg.autoprefixerBrowsers, cascade: false }))
+                            .pipe(PY.gulppostcss(cfg.postcss))
                             // gulp-minify-css设置（{compatibility: 'ie7',keepSpecialComments: '*'}）
                             // gulp-clean-css设置（{compatibility: 'ie8',keepSpecialComments: '*'}）
                             .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpcleancss({compatibility: 'ie8',keepSpecialComments: '*'})))
@@ -2662,7 +2750,8 @@
                             })
                             //.pipe(PY.gulpchanged(cfg.destPath))
                             //.pipe(PY.gulpautoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
-                            .pipe(PY.gulpautoprefixer({ browsers: cfg.autoprefixerBrowsers, cascade: false }))
+                            // .pipe(PY.gulpautoprefixer({ browsers: cfg.autoprefixerBrowsers, cascade: false }))
+                            .pipe(PY.gulppostcss(cfg.postcss))
                             .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpcleancss({compatibility: 'ie8',keepSpecialComments: '*'})))
                             .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpheaderfooter({
                                 header: cfg.header,
@@ -2721,7 +2810,8 @@
                                 .pipe(PY.gulpif(cfg.ifUnEncrypt=== true,PY.gulpencrypt(cfg.unEncryptConfig||{})))//解密
                                 .pipe(PY.gulpsourcemaps.init({ loadMaps: true }))
                                 .pipe(PY.gulpconcat(cfg.concatFileName)) //合并文件合并后的文件名为xxx.css
-                                .pipe(PY.gulpautoprefixer({ browsers: cfg.autoprefixerBrowsers, cascade: false }))
+                                // .pipe(PY.gulpautoprefixer({ browsers: cfg.autoprefixerBrowsers, cascade: false }))
+                                .pipe(PY.gulppostcss(cfg.postcss))
                                 .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpcleancss({compatibility: 'ie8',keepSpecialComments: '*'}))) //压缩CSS
 //                                .pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
 //                                    suffix: cfg.suffix
@@ -2785,7 +2875,8 @@
                             .pipe(PY.gulpsourcemaps.init({ loadMaps: true, debug: true }))
                             .pipe(PY.gulpplumber())
                             .pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath)))
-                            .pipe(PY.gulpautoprefixer({ browsers: cfg.autoprefixerBrowsers, cascade: false }))
+                            // .pipe(PY.gulpautoprefixer({ browsers: cfg.autoprefixerBrowsers, cascade: false }))
+                            .pipe(PY.gulppostcss(cfg.postcss))
                             .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpcleancss({compatibility: 'ie8',keepSpecialComments: '*'})))
 //                            .pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
 //                                suffix: cfg.suffix
@@ -3649,6 +3740,7 @@
  * @property {String} [browser=""] 自动打开的浏览器名称如：chrome
  * @property {String} [bakDateDir=""] 用时间作目录(此项不需要设置值,系统会自动读取当前时间需要引用的地方使用{#bakDateDir#})
  * @property {String} [autoprefixerBrowsers=["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 6", "ie_mob >= 6", "ios_saf >= 6", "opera >= 5","safari >= 6"]] 给CSS3自动加产商前缀
+ * @property {String} postcss//处理CSS兼容（如：autoprefixerBrowsers加前缀要兼容的浏览器版本）
  *
  * @property {String|Array} [bakFile=""] 备份文件配置项
  * @property {String|Array} [bakFile.src=""] 备份源文件目录

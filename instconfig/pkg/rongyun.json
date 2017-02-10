@@ -5,9 +5,9 @@
 
 
 
-    "ifmin": false,
-    "ifEval":true,
-    "ifJsDoc":true,
+    "ifmin": true,
+    "ifEval":false,
+    "ifJsDoc":false,
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",
@@ -46,7 +46,7 @@
             "psrc":"fonts/Pyrongyun/Penyu/Pyrongyun.*",
             "dest": "css/fonts/ricip/"
         },{
-            "psrc": "js/angular/angular-1.2.29/angular.min.js",
+            "psrc": "js/angular/angular-1.2.29/{angular.min.js,angular-animate.min.js}",
             "dest":"js/angular/"
 		},{
             "psrc": "js/jquery/jquery-1.11.3.min.js",
@@ -88,7 +88,7 @@
         "ifEval":true,
         "jsAnonymous":true,
         "jsGlobalObj":"window",
-        "psrc": "js/{public-obj,jquery/plugins/json/jquery.json.min}",
+        "psrc": "js/{public-obj,jquery/plugins/json/jquery.json.min,sub_js/switch/mobileAndPc_slide}",
         "fileName":"public-obj.js",
         "dest": "js/comm/"
     },{
@@ -96,12 +96,13 @@
         "jsAnonymous":true,
         "jsGlobalObj":"window",
         "src": [
-            "../vendor/jqueryrebox/jquery-rebox",
             "../vendor/nicescroll/jquery.nicescroll.min",
+            "../vendor/qiniu/plupload.full.min-2.1.1",
+            "../vendor/qiniu/qiniu-1.0.17",
+            "../vendor/jqueryrebox/jquery-rebox",
             "{#buildTempDir#}main",
             "{#buildTempDir#}myAppHTMLCache",
-            "../vendor/loadscript/script.min",
-            "../vendor/qiniu/qiniu"
+            "../vendor/loadscript/script.min"
         ],
         "fileName":"RongIMWidget.js",
         "dest": "js/{#dirName#}/"
@@ -153,6 +154,7 @@
         "destRoot":"",
         "jsAnonymous":false,
         "src":"ts/**/*",
+        "tpls":"_tpls/",
         "dest":"{#buildTempDir#}",
         "destPath":"{#srcPath#}",
         "conf":{
@@ -166,7 +168,7 @@
     "ngTplsConf":{},
     "ngTplsDstDir":"js/",
 
-	"ifminhtml": false,
+	"ifminhtml": true,
 	"ifminhtmlObj":{
         "removeComments": true,
         "collapseWhitespace": true,
@@ -200,7 +202,7 @@
 		"dest":"{#destRoot#}"
     }],
 
-    "tplsHtmlFile": "html/tpls/",
+    "tplsHtmlFile": "_tpls/",
     "htmlDstDir":"",
     "injectPath":""
 }

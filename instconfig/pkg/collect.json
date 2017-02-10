@@ -5,9 +5,9 @@
 
 
 
-    "ifmin": false,
-    "ifEval":true,
-    "ifJsDoc":true,
+    "ifmin": true,
+    "ifEval":false,
+    "ifJsDoc":false,
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",
@@ -26,7 +26,7 @@
     "jsDocLink":"/api",
     "jsDoc3Temp":"{#tempPath#}jsDoc/collect/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/collect/",
-    "isTest":true,
+    "isTest":false,
 	"testConfig":{
         "srcPath":[
             "http://www.fuwuqu.me/ifs/script/sysdict.js",
@@ -230,7 +230,7 @@
     }],
     "jsDstDir": "js/",
 
-    "ngTplsFile":[{
+    "ngTplsFile!":[{
         "ifEval":false,
         "jsAnonymous":false,
         "bannerIf":true,
@@ -262,7 +262,7 @@
     "cssFile":"css/**/*",
     "cssDstDir": "css/",
 
-	"ifminhtml": false,
+	"ifminhtml": true,
 	"ifminhtmlObj":{
         "removeComments": true,
         "collapseWhitespace": true,
@@ -284,6 +284,12 @@
         "changIf":true,
         "injectIf":false,
         "src":"tpls/**/*",
+        "tpls":"_tpls/",
+        "dest":"tpls/"
+    },{
+        "changIf":true,
+        "injectIf":false,
+        "src":"ng_tpls/**/*",
         "tpls":"_tpls/",
         "dest":"tpls/"
     }],
