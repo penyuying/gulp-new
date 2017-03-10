@@ -1,5 +1,5 @@
 @echo off
-	set gulpdir=c:\gulp\
+	set gulpdir=d:\gulp\
 	set nodemd=%gulpdir%node_modules\
 	set p=%~dp0
 	if exist %gulpdir% (
@@ -13,7 +13,7 @@
 	if exist %nodemd% (
 		call xcopy %p%instconfig\userModules\gulp-fileTime %nodemd%\gulp-fileTime\ /E /y
 		call xcopy %p%instconfig\userModules\gulp-loadobj %nodemd%\gulp-loadobj\ /E /y
-		call xcopy %p%instconfig\userModules\remove-plugin %nodemd%\remove-plugin\ /E /y
+		call xcopy %p%instconfig\userModules\remove-plugin %nodemd%\remove-plugin\ /E /y
 		call xcopy %p%instconfig\userModules\gulp-connect-multi %nodemd%\gulp-connect-multi\ /E /y
 		call xcopy %p%instconfig\userModules\gulp-rev %nodemd%\gulp-rev\ /E /y
 		call xcopy %p%instconfig\userModules\gulp-rev-collector %nodemd%\gulp-rev-collector\ /E /y

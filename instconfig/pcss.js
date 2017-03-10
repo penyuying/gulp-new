@@ -14,13 +14,14 @@ module.exports={
 	//     warnForDuplicates:false
 	// },
 	postcsscssnext:{
+		browsers:["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 5", "ie_mob >= 6", "ios_saf >= 6", "opera >= 5","safari >= 6"],
 		autoprefixer: {
-			browsers: ["> 0.1%","ie >= 6", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 5", "ie_mob >= 6", "ios_saf >= 6", "opera >= 5","safari >= 6"],
+			browsers: ["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 5", "ie_mob >= 6", "ios_saf >= 6", "opera >= 5","safari >= 6"],
 			cascade: false
-		}//,
-		// features: {
-	 //      customProperties: false
-	 //    }
+		},
+		features: {
+	      customProperties: false
+	    }
 	},
 
 	//让CSS兼容旧版IE

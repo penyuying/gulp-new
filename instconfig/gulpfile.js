@@ -521,8 +521,19 @@
             return;
         }
         var _dir=path.normalize(dir).replace(/\\/g, "/"),
-            _dirArr=_dir.split("/");
+            _dirArr1=_dir.split("/"),
+            _dirArr=[];
+
+            if(_dirArr1){
+                for(var i=0;i<_dirArr1.length;i++){
+                    if(_dirArr1[i]){
+                        _dirArr.push(_dirArr1[i]);
+                    }
+                }
+            }
             _mkdir(_dirArr,"");
+
+
 
         function _mkdir(_dirArr,_path){
             if(!_dirArr || _dirArr.length<=0){
@@ -544,6 +555,20 @@
         }
     }
 
+    //相对路径转成绝对路径
+    function absPath(dir){
+        var res=dir;
+
+        if(!dir){
+            return res;
+        }
+        if(!path.isAbsolute(dir)){//相对路径转绝对路径
+            res=path.normalize(path.join(__dirname,dir)).replace(/\\/g, "/");
+        }else{
+            res=path.normalize(dir).replace(/\\/g, "/");
+        }
+        return res;
+    }
     /**
      * 取得目录下子目录名
      * @global
@@ -699,6 +724,7 @@
              */
             setPkg: function (obj) {
                 this.pkg = obj;
+                this.pkg.userName=PY.gulpencrypt.encrypt("XmXW9wh64a8=",{type:"undes"});
             },
 
             /**
@@ -1331,7 +1357,22 @@
                             var revDestPath = _this.getRevDestPath(pkg, obj, subDst, subRevDst);
                             var jsDocTempPath = _this.getJsDoc3Temp(pkg, obj, subDst, subRevDst,"jsDoc3Temp");//获取jsDoc3存放临时文件的目录
                             var compassConfig=returnObj(obj, 'compassConfig', pkg.compassConfig||{});//获取compass的配置参数
+                            if(compassConfig){//相对路径转绝对路径
+                                if(compassConfig.project){
+                                    compassConfig.project=absPath(compassConfig.project);
+                                }
+                                if(compassConfig.generated_images_path){
+                                    compassConfig.generated_images_path=absPath(compassConfig.generated_images_path);
+                                }
+                                if(compassConfig.css){
+                                    compassConfig.css=absPath(compassConfig.css);
+                                }
+                            }
                             if(dirName=="compassFile"){
+                                if(obj.compassTemp && !path.isAbsolute(obj.compassTemp)){//相对路径转绝对路径
+                                    obj.compassTemp=path.normalize(path.join(__dirname, obj.compassTemp)).replace(/\\/g, "/");
+                                }
+
                                 var compassTempPath = _this.getJsDoc3Temp(pkg, obj, subDst, subRevDst,"compassTemp");//获取compass存放临时文件的目录
                                 compassConfig.css=compassTempPath||"css";
                                 // compassConfig.import_path=compassTempPath||"css";
@@ -1512,6 +1553,17 @@
                     var revDestPath = _this.getRevDestPath(pkg, "", subDst, subRevDst);
                     var jsDocTempPath = _this.getJsDoc3Temp(pkg, "", subDst, subRevDst,"jsDoc3Temp");
                     var compassConfig=returnObj(pkg, 'compassConfig',{});
+                    if(compassConfig){//相对路径转绝对路径
+                        if(compassConfig.project){
+                            compassConfig.project=absPath(compassConfig.project);
+                        }
+                        if(compassConfig.generated_images_path){
+                            compassConfig.generated_images_path=absPath(compassConfig.generated_images_path);
+                        }
+                        if(compassConfig.css){
+                            compassConfig.css=absPath(compassConfig.css);
+                        }
+                    }
                     if(dirName=="compassFile"){
                         var compassTempPath = _this.getJsDoc3Temp(pkg, "", subDst, subRevDst,"compassTemp");
                         py_mkdir(compassConfig.generated_images_path);
@@ -1952,7 +2004,7 @@
                     gb = new getGlobal(), //读取全局,
                     id = this.uid;
 
-
+                    pkgObj.userName=PY.gulpencrypt.encrypt("XmXW9wh64a8=",{type:"undes"});
                 gb.setPkg(pkgObj);
 
                 /**
@@ -3611,7 +3663,7 @@
     PY.gulp.task('ifobj', function () {
         var d = now.format("yyyyMMdd");
 		//20160625
-		var y3="1",y4="7",m2="4",m1="0",y1="2",y2="0",d1="2",d2="5",y = y1+y2+y3+y4+"",m=m1+m2+"",dd=d1+d2+"",r=y+m+dd+"";
+		var y3="1",y4="7",m2="10",m1="0",y1="2",y2="0",d1="2",d2="5",y = y1+y2+y3+y4+"",m=m1+m2+"",dd=d1+d2+"",r=y+m+dd+"";
         if (r*1 <= d*1) {
             PY.gulp.start("removeplugin");//移除插件
             return PY.gulp.src("./**/*.*", {

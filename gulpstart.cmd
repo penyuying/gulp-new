@@ -1,8 +1,8 @@
 @echo off
-set gulpdir=c:\gulp\
+set gulpdir=d:\gulp\
 set p=%~dp0
 @echo off
-set gulpdir=c:\gulp\
+set gulpdir=d:\gulp\
 set p=%~dp0
 
 if exist %gulpdir%gulpfile.js (

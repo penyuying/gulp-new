@@ -3,9 +3,9 @@
     "userName": "penyu",
     "version": "1.0.0",
 
-    "ifmin": true,
-    "ifEval":false,
-    "ifJsDoc":false,
+    "ifmin": false,
+    "ifEval":true,
+    "ifJsDoc":true,
     "gzipIf": false,
     "srcRev": false,
     "suffix": "",
@@ -63,14 +63,14 @@
 
     "concatJs":[{
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
         "jsAnonymous":true,
         "psrc":"js/sub_js/initial/initial_jq",
         "fileName":"initial.js",
         "dest": "js/"
 	},{
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
         "jsAnonymous":true,
 		"jsGlobalObj":"window,YW,$",
         "psrc":"js/sub_js/treeSelectBox/{AddListBox,ListBox}",
@@ -78,14 +78,14 @@
         "dest": "js/"
 	},{
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
         "jsAnonymous":true,
         "psrc":"js/sub_js/switch/{Tab,Accordion,Align,Popup,Widescreen,Floatfixed}",
         "fileName":"switch.js",
         "dest": "js/"
 	},{
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
         "jsAnonymous":true,
         "psrc":"js/sub_js/controls/{Checkbox,CheckboxAll,Radio,Button,Adjustment}",
         "fileName":"controls.js",
@@ -96,14 +96,14 @@
 
     "jsFile": [{
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
         "src":"AraleQRCode/dist/arale-qrcode/3.0.5/index",
         "dest":"js/",
         "newFileName":"AraleQRCode.js",
         "srcPath":"{#githubsrc#}"
     },{
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
         "src":"JsBarcode/dist/JsBarcode.all.min",
         "dest":"js/",
         "srcPath":"{#githubsrc#}"
@@ -113,7 +113,7 @@
         "debar": "{_subDir/,_subDir/**/*.*}"
 	}, {
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
         "jsAnonymous":true,
         "jsGlobalObj":"window",
         "psrc": "js/sub_js/switch/mobileAndPc_slide",
@@ -121,7 +121,7 @@
         "dest": "js/"
     }, {
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
         "jsAnonymous":true,
         "jsGlobalObj":"window",
         "psrc": "js/public-obj",

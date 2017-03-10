@@ -6,7 +6,8 @@
   "fileTimeName":"userfiletime",
   "bowersrc":"",
   "items": [
-    "instconfig"
+    "instconfig",
+    "copysvn"
   ],
   "testConfig":"",
   "webappDir":"",
@@ -55,14 +56,14 @@
   "publicPath": "",
   "destRoot": "",
   "connectStart":true,
-  "destPath": "c:/gulp/",
+  "destPath": "D:/gulp/",
   "revDestPath":"./temp/",
   "revType":"part",
   "revCollectorType":"part",
   "tempPath": "./temp/",
   "mapsPath": "maps",
   "mapIf": false,
-  "debarPath": "{废弃/**/*.*,/**/废弃.*,/**/废弃/*.*,/**/废弃/**/*.*}",
+  "debarPath": "{*废弃*/**/*.*,/**/废弃*.*,/**/*废弃*/*.*,/**/*废弃*/**/*.*,*备份*/**/*.*,/**/备份*.*,/**/*备份*/*.*,/**/*备份*/**/*.*}",
   "host": "127.0.0.1",
   "port": "8020",
   "webPath": "",

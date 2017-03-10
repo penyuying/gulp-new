@@ -5,9 +5,9 @@
 
 
 
-    "ifmin": true,
-    "ifEval":false,
-    "ifJsDoc":false,
+    "ifmin": false,
+    "ifEval":true,
+    "ifJsDoc":true,
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",
@@ -58,8 +58,8 @@
 	"anonymous":true,
 
     "copyFile": [{
-            "psrc":"fonts/Pyicipicon/Penyu/Pyicipicon.*",
-            "dest": "css/fonts/icipicon/"
+            "psrc":"fonts/PySfIcon/Penyu/PySfIcon.*",
+            "dest": "css/fonts/collecticon/"
         },{
             "psrc": "js/angular/angular-1.2.29/{angular.min.js,angular-animate.min.js}",
             "dest":"js/angular/"
@@ -72,7 +72,7 @@
             "dest":"test/test_lib/",
             "destPath":"{#destTest#}"
 		},{
-            "psrc": "js/require/requirejs2.1.11/require.min.js",
+            "psrc": "！js/require/requirejs2.1.11/require.min.js",
             "dest":"js/"
 		},{
             "psrc": "!js/angular/plugins/ui-bootstrap-tpls/ui-bootstrap-tpls-0.11.0.js",
@@ -138,22 +138,18 @@
         "fileName":"collect.js",
         "dest": "js/collect/"
     },{
-        "ifEval":true,
-        "ifmin":false,
         "destRoot":"",
         "jsAnonymous":false,
         "psrc":["js/encrypt/AES/tripledes","js/encrypt/jbase64","js/encrypt/AES/mode-ecb","js/comm/comm"],
         "fileName":"comm.js",
         "dest": "js/"
     },{
-        "ifEval":true,
         "ifmin":false,
         "jsAnonymous":true,
         "psrc":"!js/sub_js/initial/initial_ng",
         "fileName":"initial.js",
         "dest": "js/comm/"
 	},{
-        "ifEval":true,
         "ifmin":false,
         "jsAnonymous":true,
         "jsGlobalObj":"window,YW,$",
@@ -161,7 +157,6 @@
         "fileName":"switch.js",
         "dest": "js/comm/"
 	},{
-        "ifEval":true,
         "ifmin":false,
         "jsAnonymous":true,
 		"jsGlobalObj":"window,YW,$",
@@ -169,7 +164,6 @@
         "fileName":"controls.js",
         "dest": "js/comm/"
 	},{
-        "ifEval":true,
         "ifmin":false,
         "jsAnonymous":true,
 		"jsGlobalObj":"window,YW,$",
@@ -177,7 +171,6 @@
         "fileName":"controlsAndSwitch.js",
         "dest": "js/comm/"
 	},{
-        "ifEval":true,
         "ifmin":false,
         "jsAnonymous":true,
         "jsGlobalObj":"window",
@@ -204,7 +197,6 @@
 		"psrc": "!js/angular/plugins/ui-bootstrap-tpls/ui-bootstrap-tpls-0.11.0",
         "dest":"js/angular/"
 	},{
-        "ifEval":true,
         "ifmin":false,
 		"psrc": "js/angular/plugins/ui-bootstrap-tpls/sub_js/pagination",
         "dest":"js/angular/"
@@ -220,7 +212,6 @@
 		"psrc": "!js/jquery/plugins/json/jquery.json.min",
 		"dest":"js/jquery/"
 	}, {
-        "ifEval":true,
         "ifmin":false,
         "jsAnonymous":true,
         "jsGlobalObj":"window",
@@ -230,7 +221,7 @@
     }],
     "jsDstDir": "js/",
 
-    "ngTplsFile!":[{
+    "ngTplsFile":[{
         "ifEval":false,
         "jsAnonymous":false,
         "bannerIf":true,
@@ -262,7 +253,7 @@
     "cssFile":"css/**/*",
     "cssDstDir": "css/",
 
-	"ifminhtml": true,
+	"ifminhtml": false,
 	"ifminhtmlObj":{
         "removeComments": true,
         "collapseWhitespace": true,
@@ -286,18 +277,12 @@
         "src":"tpls/**/*",
         "tpls":"_tpls/",
         "dest":"tpls/"
-    },{
-        "changIf":true,
-        "injectIf":false,
-        "src":"ng_tpls/**/*",
-        "tpls":"_tpls/",
-        "dest":"tpls/"
     }],
     "templateDstDir":"tpls/",
 
     "htmlFile": [{
 		"changIf":true,
-        "src":"*",
+        "src":"index",
 		"destRoot":"",
         "tpls":"_tpls/",
 		"dest":"sf/"

@@ -1,0 +1,183 @@
+{
+    "name": "companyInfo_m",
+    "userName": "penyu",
+    "version": "1.0.0",
+
+    "ifmin": false,
+    "ifEval":false,
+    "ifJsDoc":false,
+    "gzipIf": false,
+    "srcRev": true,
+    "suffix": "",
+	"injectIf":true,
+	"bannerIf":false,
+	"changIf":false,
+	"jsAnonymous":false,
+    "mapIf": false,
+
+    "webPath": "{#webTestPath#}",
+    "srcPath": "{#webappDir#}develop/companyInfo_m/html/",
+    "destPath": "{#webPath#}collect/",
+    "destTest": "{#webPath#}test/companyInfo_m/",
+    "revDestPath":"{#tempPath#}/rev/companyInfo_m/",
+
+    "jsDocType":"angular",
+    "jsDocLink":"/api",
+    "jsDoc3Temp":"{#tempPath#}jsDoc/wapsf1/",
+    "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
+    "destRoot":"wapsf1/",
+
+    "host": "127.0.0.1",
+    "port": "8091",
+    "serverPath": "{#webPath#}/wapsf1/",
+    "browser": "chrome",
+	"anonymous":true,
+
+    "copyFile": [{
+			"changIf":false,
+			"psrc": "sass/global/mixin.scss",
+			"dsrc":"sass/",
+			"newFileName":"_mixin.scss"
+        },{
+            "src":"ionic_1.0.0/release/fonts/**/*",
+            "dest":"js/ionic/fonts/",
+            "srcPath":"{#bowersrc#}"
+        },{
+            "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*.css",
+            "dest":"js/layer/"
+        }],
+    "copyDstDir": "",
+
+
+    "jsonFile":"",
+    "jsonDstDir": "json/",
+
+    "imgFile": [{
+            "src": "{img/,img/**/*}"
+    	},{
+            "src": "sass/**/*",
+            "dest": "css/"
+    	},{
+            "src": "css/**/*",
+            "dest": "css/"
+    	}],
+    "imgDstDir": "img/",
+
+    "dirConcatJs":"",
+
+    "concatJs":[{
+            "ifmin":false,
+            "ifEval":true,
+            "jsAnonymous":true,
+            "psrc": "js/zeptoJs1.1.6/{zepto,ajax,event,data}",
+            "fileName":"zepto.min.js",
+            "dest":"js/zepto/"
+        },{
+            "ifmin":false,
+            "ifEval":true,
+            "jsAnonymous":true,
+            "jsGlobalObj":"window",
+            "psrc": "js/public-obj",
+            "fileName":"public-obj.js",
+            "dest": "js/comm/"
+        },{
+            "jsAnonymous":true,
+            "jsGlobalObj":"window,angular",
+            "src": "js/collect/_subJs/collect/**/*",
+            "fileName":"companyInfo.js",
+            "dest": "js/collect/"
+        }],
+    "concatDstJsFileName":"",
+
+    "jsFile": [{
+            "ifmin":false,
+            "ifEval":true,
+            "psrc": "js/encrypt/sha1",
+            "dest": "js/comm/"
+        },{
+            "ifmin":false,
+            "ifEval":true,
+            "psrc": "js/location/getCity",
+            "dest": "js/comm/"
+        },{
+            "ifmin":false,
+            "ifEval":true,
+            "psrc": "js/{viewport,pinyin}",
+            "dest": "js/comm/"
+        },{
+            "ifEval":false,
+            "src": "ionic_1.0.0/release/js/ionic.bundle.min",
+            "dest":"js/ionic/",
+            "srcPath":"{#bowersrc#}"
+        },{
+            "ifEval":false,
+            "psrc": "js/angular/plugins/ui_router/angular-ui-router",
+            "dest":"js/angular/"
+        },{
+            "ifmin":false,
+            "ifEval":true,
+            "psrc": "js/zeptoJs1.1.6/plugins/json/zepto.json.min",
+            "dest":"js/zepto/"
+        },{
+            "src": "js/*",
+            "dest": "js/",
+            "debar": "{js/_subDir/,js/_subDir/**/*.*}"
+        },{
+            "ifmin":false,
+            "ifEval":true,
+            "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*",
+            "dest":"js/layer/"
+        }],
+    "jsDstDir": "js/",
+
+
+    "sassFile": [{
+            "src":"sass/**/*",
+            "dest":"css/"
+        },{
+            "src":"ionic_1.0.0/scss/**/*",
+            "dest":"js/ionic/css/",
+            "srcPath":"{#bowersrc#}"
+    }],
+
+    "concatCss":"",
+    "concatDstCssFileName":"",
+
+    "cssFile":"css/**/*",
+    "cssDstDir": "css/",
+
+	"ifminhtml": false,
+	"ifminhtmlObj":{
+        "removeComments": true,
+        "collapseWhitespace": true,
+        "conservativeCollapse": true,
+        "preserveLineBreaks": false,
+        "removeAttributeQuotes":false,
+        "removeEmptyAttributes": false,
+        "removeEmptyElements": false,
+        "removeScriptTypeAttributes": false,
+        "collapseBooleanAttributes": false,
+        "removeStyleLinkTypeAttributes": false,
+        "keepClosingSlash": true,
+        "minifyJS": true,
+        "minifyCSS":true
+    },
+
+    "templateFile":[{
+        "injectIf":false,
+        "src":"tpls/**/*",
+        "dest":"tpls/"
+    }],
+    "templateDstDir":"tpls/",
+
+    "htmlFile": [{
+		"changIf":true,
+        "src":"html/**/*",
+		"destRoot":"",
+		"dest":"wapsf1/"
+    }],
+
+    "tplsHtmlFile": "html/tpls/",
+    "htmlDstDir":"",
+    "injectPath":""
+}

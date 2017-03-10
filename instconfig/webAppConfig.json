@@ -37,7 +37,8 @@
     "laohuji",
     "rongyun",
     "IST",
-    "practice"
+    "practice",
+    "copysvn"
   ],
   "postcssBak":[
       {"postcsssprites":"postcsssprites"},
@@ -61,7 +62,7 @@
       {"postcssconditionals":"postcssconditionals"},
       {"postcsssimplevars":"postcsssimplevars"},
       {"postcssnested":"postcssnested"},
-      {"postcsscssnext":"postcsscssnext"}
+      {"autoprefixer":"autoprefixer"}
   ],
   "isTest":false,
   "testConfig":"",

@@ -1,0 +1,192 @@
+{
+	"name": "webapp",
+    "userName": "penyu",
+    "version": "1.0.0",
+
+
+    "ifmin": false,
+    "ifEval":true,
+    "gzipIf": false,
+    "srcRev": true,
+    "suffix": "",
+	"injectIf":true,
+	"changIf":true,
+
+    "srcPath": "{#webappDir#}code/wybb/html/",
+    "destPath": "{#webPath#}/collect/ms/",
+    "revDestPath":"{#tempPath#}rev/ms/",
+
+
+    "host": "127.0.0.1",
+    "port": "8092",
+    "serverPath": "{#webPath#}/collect/ms/",
+    "browser": "chrome",
+
+    "copyFile": [{
+            "src": "{music/,music/**/*.*}",
+            "dest":"music/"
+		},{
+            "psrc": "js/jquery/jquery-1.11.3.min.js",
+            "dest":"js/jquery/"
+		},{
+            "psrc": "!js/zeptoJs1.1.6/zepto.min.js",
+            "dest":"js/zepto/"
+		},{
+            "psrc": "!js/jquery/plugins/layer-v2.0/layer/**/*.*",
+            "dest":"!js/layer/"
+		},{
+            "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*.css",
+            "dest":"js/layer/"
+		},{
+            "changIf":false,
+            "psrc": "sass/global/globalSkin.scss",
+            "dsrc":"sass/",
+			"newFileName":"globalSkin.scss"
+		},{
+            "changIf":false,
+            "psrc": "sass/global/mixin.scss",
+            "dsrc":"sass/",
+			"newFileName":"_mixin.scss"
+		}],
+    "copyDstDir": "",
+
+    "jsonFile": [{
+            "!src": "json/**/*",
+            "dest": "json/"
+	}],
+    "jsonDstDir": "json/",
+
+	"imgFile": [{
+        "src": "img/**/*",
+		"dest": "img/"
+	}, {
+        "src": "css/**/*",
+        "dest": "css/"
+	},{
+        "src": "sass/**/*",
+        "dest": "css/"
+    }],
+    "imgDstDir": "img/",
+	"concatJs":[{
+        "ifmin": false,
+        "ifEval":false,
+        "jsAnonymous":true,
+        "psrc":"js/sub_js/initial/initial_jq",
+        "fileName":"initial.js",
+        "dest": "js/comm/"
+	},{
+        "ifmin": false,
+        "ifEval":false,
+        "evalConfig":{},
+        "jsAnonymous":true,
+        "psrc": "js/zeptoJs1.1.6/{zepto,ajax,event,data,touch}",
+        "fileName":"zepto.min.js",
+        "dest":"js/zepto/"
+    },{
+        "ifmin": false,
+        "ifEval":false,
+        "jsAnonymous":true,
+        "psrc":"js/sub_js/controls/Button",
+        "fileName":"controls.js",
+        "dest": "js/comm/"
+	},{
+        "ifmin": false,
+        "ifEval":false,
+        "jsAnonymous":true,
+        "psrc":"js/sub_js/switch/{Tab,Accordion,Align,Popup,Widescreen}",
+        "fileName":"switch.js",
+        "dest": "js/comm/"
+	}, {
+        "ifmin": false,
+        "ifEval":false,
+        "jsAnonymous":true,
+        "psrc": "js/sub_js/switch/mobileAndPc_slide",
+        "fileName":"mobile_slide.js",
+        "dest": "js/comm/"
+    }],
+	"concatDstJsFileName":"",
+
+	"jsFile": [{
+        "ifmin": false,
+        "ifEval":false,
+        "psrc": "!js/comm/comm",
+        "dest": "js/",
+        "destPath":"{#tempPath#}jsdocTemp/{#name#}/"
+	},{
+        "ifmin": false,
+        "ifEval":false,
+        "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*",
+        "dest":"js/layer/"
+    },{
+        "src": "js/**/*",
+        "dest": "js/",
+        "debar": "_subDir/**/*.*"
+	}, {
+        "ifmin": false,
+        "ifEval":false,
+        "evalConfig":{},
+        "psrc": ["js/viewport","js/sub_js/switch/mobile_iscroll"],
+        "dest": "js/comm/"
+	}, {
+        "ifmin": false,
+        "ifEval":false,
+        "evalConfig":{},
+        "jsAnonymous":true,
+        "jsGlobalObj":"window",
+        "psrc": "js/public-obj",
+        "dest": "js/comm/"
+	}, {
+        "ifmin": false,
+        "ifEval":false,
+        "psrc": "js/sub_js/switch/shake",
+        "dest": "js/"
+    }, {
+        "ifmin": false,
+        "ifEval":false,
+        "psrc": "js/encrypt/{md5,sha1}",
+        "dest": "js/comm/"
+	},{
+        "ifmin": false,
+        "ifEval":false,
+		"psrc": "js/zeptoJs1.1.6/plugins/json/zepto.json.min",
+		"dest":"js/zepto/"
+	}],
+    "jsDstDir": "js/",
+
+	"sassFile": [{
+        "src":"sass/**/*",
+        "dest":"css/"
+    }],
+
+	"cssFile":"css/**/*",
+    "cssDstDir": "css/",
+
+
+	"ifminhtml": false,
+	"ifminhtmlObj":{
+        "removeComments": true,
+        "collapseWhitespace": true,
+        "conservativeCollapse": true,
+        "preserveLineBreaks": false,
+        "removeAttributeQuotes":false,
+        "removeEmptyAttributes": false,
+        "removeEmptyElements": false,
+        "removeScriptTypeAttributes": false,
+        "collapseBooleanAttributes": false,
+        "removeStyleLinkTypeAttributes": false,
+        "keepClosingSlash": true,
+        "minifyJS": true,
+        "minifyCSS":true
+    },
+	"htmlFile": [{
+		"changIf":true,
+        "src":"html/**/*",
+        "debar": "tpls/**/*.*",
+        "tpls":"html/tpls/"
+    }],
+
+    "tplsHtmlFile": "html/tpls/",
+    "htmlDstDir":"",
+
+	"injectPath":""
+}

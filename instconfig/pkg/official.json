@@ -3,9 +3,9 @@
     "userName": "penyu",
     "version": "1.0.0",
 
-    "ifmin": true,
-    "ifEval":false,
-    "ifJsDoc":false,
+    "ifmin": false,
+    "ifEval":true,
+    "ifJsDoc":true,
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",
@@ -74,7 +74,7 @@
     "imgDstDir": "img/",
 	"concatJs":[{
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
         "jsAnonymous":true,
         "psrc":"js/sub_js/initial/sub_initial_jq/{control,widget,align,size,slide}",
         "jsHeader":"window.$ && $(function() {var cls = $(\".JsW\").get();for (var i = 0; i < cls.length; i++) { \n /**@file \n * \n * 初始化插件 \n * @author {#userName#} */ \n \n ",
@@ -83,21 +83,21 @@
         "dest": "js/comm/"
 	},{
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
         "jsAnonymous":true,
         "psrc":"js/sub_js/controls/{Button,Checkbox,FileButton}",
         "fileName":"controls.js",
         "dest": "js/comm/"
     },{
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
         "jsAnonymous":true,
         "psrc":"js/sub_js/DataTable/DataTable",
         "fileName":"DataTable.js",
         "dest": "js/"
 	},{
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
         "jsAnonymous":true,
         "psrc":["js/sub_js/switch/{Tab,Popup,align,Widescreen,mobileAndPc_slide}"],
         "fileName":"switch.js",
@@ -107,7 +107,7 @@
 
 	"jsFile": [{
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
         "psrc": "!js/comm/comm",
         "dest": "js/",
         "destPath":"{#tempPath#}jsdocTemp/{#name#}/"
@@ -119,48 +119,48 @@
         "debar": "{_subDir/,_subDir/**/*.*}"
 	},{
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
         "psrc": "js/viewport",
         "dest": "js/comm/"
 	},{
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
         "jsAnonymous":true,
         "jsGlobalObj":"window",
         "psrc": "js/public-obj",
         "dest": "js/comm/"
 	},{
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
         "psrc": "js/encrypt/sha1",
         "dest": "js/comm/"
 	},{
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
 		"psrc": "js/zeptoJs1.1.6/plugins/json/zepto.json.min",
 		"dest":"js/zepto/"
 	},{
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
         "psrc": "js/jquery/plugins/form/jquery.form",
         "dest":"js/form/"
     },{
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
         "jsAnonymous":true,
         "jsGlobalObj":"YW,$",
         "psrc": "js/jquery/plugins/fileupload/fileload",
         "dest":"js/fileupload/"
     },{
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
         "jsAnonymous":true,
         "jsGlobalObj":"YW,$",
         "psrc": "js/jquery/plugins/GetPlace/GetPlace",
         "dest":"js/GetPlace/"
     },{
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
         "jsAnonymous":true,
         "jsGlobalObj":"YW,$",
         "psrc":"js/sub_js/treeSelectBox/AddListBox",

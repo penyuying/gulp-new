@@ -5,9 +5,9 @@
 
 
 
-    "ifmin": true,
-    "ifEval":false,
-    "ifJsDoc":false,
+    "ifmin": false,
+    "ifEval":true,
+    "ifJsDoc":true,
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",
@@ -62,6 +62,9 @@
         },{
             "src": "images/**/*.mp3",
             "dest":"images/"
+        },{
+            "src": "../script/**/*.*",
+            "dest":"js/"
     }],
     "copyDstDir": "",
 
@@ -85,7 +88,7 @@
 
     "concatJs":[{
         "ifmin": false,
-        "ifEval":true,
+        "ifEval":false,
         "jsAnonymous":true,
         "jsGlobalObj":"window",
         "psrc": "js/{public-obj,jquery/plugins/json/jquery.json.min,sub_js/switch/mobileAndPc_slide}",
@@ -168,7 +171,7 @@
     "ngTplsConf":{},
     "ngTplsDstDir":"js/",
 
-	"ifminhtml": true,
+	"ifminhtml": false,
 	"ifminhtmlObj":{
         "removeComments": true,
         "collapseWhitespace": true,

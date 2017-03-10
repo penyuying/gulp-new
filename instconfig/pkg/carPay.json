@@ -4,9 +4,9 @@
     "version": "1.0.0",
 
 
-    "ifmin": true,
-    "ifEval":false,
-    "ifJsDoc":false,
+    "ifmin": false,
+    "ifEval":true,
+    "ifJsDoc":true,
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",
@@ -57,7 +57,7 @@
 	}],
     "concatJs":[{
             "ifmin": false,
-            "ifEval":true,
+            "ifEval":false,
             "jsAnonymous":true,
             "psrc": "js/zeptoJs1.1.6/{zepto,ajax,event,data,touch}",
             "fileName":"zepto.min.js",
@@ -70,21 +70,21 @@
             "dest": "js/"
         },{
             "ifmin": false,
-            "ifEval":true,
+            "ifEval":false,
             "jsAnonymous":true,
             "psrc":"js/sub_js/initial/initial_jq",
             "fileName":"initial.js",
             "dest": "js/comm/"
     	},{
             "ifmin": false,
-            "ifEval":true,
+            "ifEval":false,
             "jsAnonymous":true,
             "psrc":"js/sub_js/controls/Radio",
             "fileName":"controls.js",
             "dest": "js/comm/"
     	},{
             "ifmin": false,
-            "ifEval":true,
+            "ifEval":false,
             "jsAnonymous":true,
     		"jsGlobalObj":"window,$",
             "psrc":"js/qrcode/{qrcode,jquery.qrcode,utf16to8}",
@@ -94,35 +94,35 @@
     "concatDstJsFileName":"",
     "jsFile": [{
             "ifmin": false,
-            "ifEval":true,
+            "ifEval":false,
             "psrc": "!js/comm/comm",
             "dest": "js/",
             "destPath":"{#tempPath#}jsdocTemp/{#name#}/"
     	},{
             "ifmin": false,
-            "ifEval":true,
+            "ifEval":false,
             "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*",
             "dest":"js/layer/"
         },{
             "ifmin": false,
-            "ifEval":true,
+            "ifEval":false,
             "psrc": "js/{viewport,pinyin}",
             "dest": "js/comm/"
     	},{
             "ifmin": false,
-            "ifEval":true,
+            "ifEval":false,
             "jsAnonymous":true,
             "jsGlobalObj":"window",
             "psrc": "js/public-obj",
             "dest": "js/comm/"
     	},{
             "ifmin": false,
-            "ifEval":true,
+            "ifEval":false,
             "psrc": "js/encrypt/sha1",
             "dest": "js/comm/"
     	},{
             "ifmin": false,
-            "ifEval":true,
+            "ifEval":false,
             "psrc": "js/location/getCity",
             "dest": "js/"
     	},{
@@ -130,7 +130,7 @@
             "debar": "{js/_subDir/,js/_subDir/**/*.*,js/Psub_file/,js/Psub_file/**/*.*,**/carPay.js}"
     	},{
             "ifmin": false,
-            "ifEval":true,
+            "ifEval":false,
     		"psrc": "js/zeptoJs1.1.6/plugins/json/zepto.json.min",
     		"dest":"js/zepto/"
 	}],
@@ -151,7 +151,7 @@
 	}],
     "cssDstDir": "css/",
 
-	"ifminhtml": true,
+	"ifminhtml": false,
     "ifminhtmlObj":{
         "removeComments": true,
         "collapseWhitespace": true,

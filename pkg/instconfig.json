@@ -22,8 +22,7 @@
     "mapsPath": "maps",
     "mapIf": false,
     "bakPath": "",
-    "debarPath": "",
-    "serverPath": "c:/gulp/",
+    "serverPath": "d:/gulp/",
 
     "jsDoc3Temp":"./temp/jsDoc/instconfig/",
     "jsDoc3Dir":"./Doc/{#name#}/",
@@ -36,6 +35,9 @@
     },{
         "src":"github/fonteditor/save/Pyicipicon/Pyicipicon.*",
         "dest":"{#subPublic#}fonts/Pyicipicon/Penyu/"
+    },{
+        "src":"github/fonteditor/save/PySfIcon/PySfIcon.*",
+        "dest":"{#subPublic#}fonts/PySfIcon/Penyu/"
     },{
         "src":"github/fonteditor/save/Pyrongyun/Pyrongyun.*",
         "dest":"{#subPublic#}fonts/Pyrongyun/Penyu/"
@@ -87,13 +89,7 @@
         }
     },{
         "psrc":"js/comm/*.js",
-        "dest":"{#subPublic#}js/comm/",
-        "ifEncrypt":true,
-        "encryptConfig":{
-            "type":"des,unicode2",
-            "extname":"{#pExtName#}",
-            "password":"miMaHenJianDan"
-        }
+        "dest":"{#subPublic#}js/comm/"
     },{
         "psrc":"js/encrypt/**/*.js",
         "dest":"{#subPublic#}js/encrypt/",
@@ -152,10 +148,10 @@
     "copyDstDir": "",
     "jsonFile": [{
         "src":["{#installSrc#}package"],
-        "dest":"c:/gulp/"
+        "dest":"d:/gulp/"
     },{
         "src":["{#installSrc#}webAppConfig"],
-        "dest":"c:/gulp/",
+        "dest":"d:/gulp/",
         "ifEncrypt":true,
         "encryptConfig":{
             "type":"unicode,des,unicode2",
@@ -176,7 +172,7 @@
     "evalConfig":{},
     "jsonDstDir": "",
     "imgFile": "",
-    "imgDstDir": "c:/gulp/",
+    "imgDstDir": "d:/gulp/",
     "dirConcatJs": "",
     "concatJs": "",
     "concatDstJsFileName": "",
@@ -192,7 +188,7 @@
             "password":"niCaiCai"
         }
     }],
-    "jsDstDir": "c:/gulp/",
+    "jsDstDir": "d:/gulp/",
     "sassFile": "",
     "concatCss": "",
     "concatDstCssFileName": "",

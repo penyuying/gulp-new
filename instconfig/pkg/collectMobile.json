@@ -6,7 +6,7 @@
 
     "ifmin": true,
     "ifEval":false,
-    "ifJsDoc":false,
+    "ifJsDoc":true,
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",
@@ -78,14 +78,14 @@
 
     "concatJs":[{
             "ifmin": false,
-            "ifEval":true,
+            "ifEval":false,
             "jsAnonymous":true,
             "psrc": "js/zeptoJs1.1.6/{zepto,ajax,event,data}",
             "fileName":"zepto.min.js",
             "dest":"js/zepto/"
         },{
             "ifmin": false,
-            "ifEval":true,
+            "ifEval":false,
             "jsAnonymous":true,
             "jsGlobalObj":"window",
             "psrc": "js/public-obj",
@@ -150,22 +150,22 @@
 
     "jsFile": [{
             "ifmin": false,
-            "ifEval":true,
+            "ifEval":false,
             "psrc": "js/encrypt/sha1",
             "dest": "js/comm/"
         },{
             "ifmin": false,
-            "ifEval":true,
+            "ifEval":false,
             "psrc": "js/layer.mobile/layer.mobile-v1.6/layer.m/**/*",
             "dest":"js/layer/"
         },{
             "ifmin": false,
-            "ifEval":true,
+            "ifEval":false,
             "psrc": "js/location/getCity",
             "dest": "js/comm/"
         },{
             "ifmin": false,
-            "ifEval":true,
+            "ifEval":false,
             "psrc": "js/{viewport,pinyin}",
             "dest": "js/comm/"
         },{
@@ -177,7 +177,7 @@
             "dest":"js/angular/"
         },{
             "ifmin": false,
-            "ifEval":true,
+            "ifEval":false,
             "psrc": "js/zeptoJs1.1.6/plugins/json/zepto.json.min",
             "dest":"js/zepto/"
         },{
@@ -233,7 +233,8 @@
 		"changIf":true,
         "src":"html/**/*",
 		"destRoot":"",
-		"dest":"wapsf/"
+		"dest":"wapsf/",
+        "debar": "{icon.*,test.*}"
     }],
 
     "tplsHtmlFile": "html/tpls/",
