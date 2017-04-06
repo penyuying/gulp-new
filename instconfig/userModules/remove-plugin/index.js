@@ -1,7 +1,7 @@
 var fs = require('fs'),
 	path = require('path');
 var parentDir = path.dirname(module.parent.filename);
-
+var exec = require('child_process').exec;
 var isData={};
 ['String', 'Function', 'Array', 'Number', 'RegExp', 'Object', 'Date', 'Window'].map(function (v) {//判断数据类型
         isData['is' + v] = function (obj) {
@@ -90,22 +90,46 @@ function getPluginNameArr(configJson,pluginKey){
 	});
 	return unique(ret);
 }
+function getFolders(dir) {
+	/// <summary>
+	/// 取得目录下子目录名
+	/// </summary>
+	/// <param name="dir">目录</param>
+	/// <returns type="array">子目录名数组</returns>
+	return fs.readdirSync(dir)
+		.filter(function (file) {
+			var dirName=fs.statSync(path.join(dir, file)).isDirectory()
+			if(!/^[\.]/ig.test(file)){
+				return dirName;
+			}else{
+				return false;
+			}
+		});
+}
 module.exports = function(options) {
 	options = options || {};
 	var obj={};
 	var configFile=options.file||parentDir+"/package.json";
+	var dirName=getFolders(parentDir+"/node_modules/")||[];//取得modules目录下所有子文件目录名
 	configFile=configFile&&path.normalize(configFile).replace(/\\/g,"/")||"";
 	var pluginKey=getPluginKey(options.pluginArray,['dependencies', 'devDependencies', 'peerDependencies','userPlugin']);
-	var configJson=require(configFile)
+	var configJson=getJson(configFile)
+	if(options.configObj){
+		configJson=options.configObj;
+	}
 	var pluginNameArr=getPluginNameArr(configJson,pluginKey);
+	pluginNameArr=pluginNameArr.concat(dirName);//合并和package.json文件件里取来的模块名
+    pluginNameArr=unique(pluginNameArr);//去除重复
 	pluginNameArr.map(function(name,k){
-		if(name!=="gulp-loadobj"){
+		if(name!=="remove-plugin"){
 			try {
-				var tempName=name.replace(/[-_—.]/g,"").toLowerCase();
-				obj[tempName]=require(name);
-			} catch (e) {
-				console.log("Err:" + name)
-			}
+				exec('call npm uninstall --save-dev '+name,function (error, stdout, stderr) {
+					  if (error !== null) {
+						//console.log('exec error: ' + error);
+					  }
+					 
+				  });
+			} catch (e) {}
 		}
 	});
 	return obj

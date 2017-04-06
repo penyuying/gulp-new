@@ -1,0 +1,30 @@
+{
+  "name": "gulp-jsontpls",
+  "version": "1.0.0",
+  "description": "根据JSON生成HTML模板",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/penyuying/gulp-jsontpls.git"
+  },
+  "keywords": [
+    "jsontpls"
+  ],
+  "dependencies": {
+    "gulp-util": "^3.0.7",
+    "through2": "^2.0.0"
+  },
+  "peerDependencies": {
+    "gulp-util": "^3.0.7",
+    "through2": "^2.0.0"
+  },
+  "author": "penyuying",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/penyuying/gulp-jsontpls/issues"
+  },
+  "homepage": "https://github.com/penyuying/gulp-jsontpls#readme"
+}

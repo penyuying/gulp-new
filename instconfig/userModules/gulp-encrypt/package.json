@@ -1,0 +1,24 @@
+{
+  "name": "gulp-encrypt",
+  "version": "1.0.0",
+  "description": "数据加密",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "md5",
+    "des",
+    "ads"
+  ],
+  "dependencies": {
+    "gulp-util": "^3.0.7",
+    "through2": "^2.0.0"
+  },
+  "peerDependencies": {
+    "gulp-util": "^3.0.7",
+    "through2": "^2.0.0"
+  },
+  "author": "penyu",
+  "license": "MIT"
+}

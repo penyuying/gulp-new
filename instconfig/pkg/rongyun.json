@@ -7,7 +7,7 @@
 
     "ifmin": false,
     "ifEval":true,
-    "ifJsDoc":true,
+    "ifJsDoc":false,
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",

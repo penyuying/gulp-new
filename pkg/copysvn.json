@@ -113,7 +113,7 @@
     "concatJs": "",
     "concatDstJsFileName": "",
     "jsFile": [{
-        "src":"{#installSrc#}gulpfile"
+        "src":"!{#installSrc#}gulpfile"
     },{
         "ifEval":false,
         "src":"{#installSrc#}pcss",

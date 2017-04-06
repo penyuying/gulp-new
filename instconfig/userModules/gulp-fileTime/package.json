@@ -1,0 +1,21 @@
+{
+  "name": "gulp-fileTime",
+  "version": "1.0.0",
+  "description": "gulp fileTime",
+  "main": "index.js",
+  "repository" :{
+	  "type" : "git",
+	  "url" : "https://github.com/penyuying/gulp-fileTime.git"  
+  },
+  "dependencies": {
+    "gulp-util": "^3.0.7",
+    "through2": "^2.0.0"
+  },
+  "devDependencies": {},
+  "peerDependencies": {
+    "gulp-util": "^3.0.7",
+	"through2":"^2.0.0"
+  },
+  "author": "penyuying",
+  "license": "MIT"
+}

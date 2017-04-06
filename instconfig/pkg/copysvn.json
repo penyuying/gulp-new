@@ -22,7 +22,7 @@
     "serverPath": "{#webPath#}/current/",
     "browser": "chrome",
     "copyFile":[{
-        "src":"../../github/{AraleQRCode,ionic,JsBarcode,ocLazyLoad}/**/*.*",
+        "src":"../../github/{QRcode/AraleQRCode,ionic,BarCode/JsBarcode,ocLazyLoad}/**/*.*",
         "dest": "lib/"
     },{
         "src":"carPay/html/**/*.*",

@@ -1,5 +1,5 @@
 {
-  "name": "gulp-loadobj",
+  "name": "remove-plugin",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,8 +8,8 @@
   },
   "keywords": [
     "gulp",
-    "load-plugin"
+    "remove-plugin"
   ],
-  "author": "",
+  "author": "penyu",
   "license": "MIT"
 }

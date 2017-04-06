@@ -137,6 +137,8 @@
     ],
     "cssDstDir": "css/",
     "ngTplsFile":[{
+        "ifEval":false,
+        "bannerIf":true,
         "destRoot":"",
         "jsAnonymous":false,
         "src":"ngtpls/**/*",
@@ -171,8 +173,8 @@
         "collapseBooleanAttributes": false,
         "removeStyleLinkTypeAttributes": false,
         "keepClosingSlash": true,
-        "minifyJS": false,
-        "minifyCSS":false
+        "minifyJS": true,
+        "minifyCSS":true
     },
 
     "htmlFile": [{
