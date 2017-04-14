@@ -1,0 +1,172 @@
+{
+    "name": "ngdemo",
+    "userName": "penyu",
+    "version": "1.0.0",
+
+
+    "ifmin": false,
+    "ifEval":false,
+    "gzipIf": false,
+    "srcRev": false,
+    "suffix": "",
+	"injectIf":true,
+	"bannerIf":false,
+	"changIf":false,
+	"jsAnonymous":false,
+    "mapIf": false,
+
+    "webPath": "{#webTestPath#}",
+    "srcPath": "{#webappDir#}develop/{#name#}/html/",
+    "destPath": "{#webPath#}/{#name#}/",
+    "revDestPath":"{#tempPath#}rev/{#name#}/",
+
+    "destRoot":"",
+
+    "host": "127.0.0.1",
+    "port": "8091",
+    "serverPath": "{#webPath#}/{#name#}/",
+    "browser": "chrome",
+	"anonymous":true,
+
+    "copyFile": [{
+        "changIf":false,
+        "psrc": "sass/global/mixin.scss",
+        "dsrc":"sass/",
+        "newFileName":"_mixin.scss"
+        }],
+    "copyDstDir": "",
+
+
+    "jsonFile": [{
+            "src": "json/QueryChargeResponse",
+            "dest": "json/"
+	}],
+    "jsonDstDir": "json/",
+
+    "imgFile": [{
+        "src": "{img/,img/**/*}"
+	},{
+        "src": "sass/**/*",
+        "dest": "css/"
+	},{
+        "src": "css/**/*",
+        "dest": "css/"
+	},{
+		"destRoot":"",
+        "psrc": "img/wxpic/**/*",
+        "dest": "wxpic/"
+	}],
+    "imgDstDir": "img/",
+
+    "dirConcatJs": [{
+        "ifEval":false,
+        "jsAnonymous":true,
+		"jsGlobalObj":"window,angular",
+        "src": "js/collect/_subJs/",
+        "psrc":"",
+        "dest": "js/collect/"
+	}],
+
+
+    "concatJs":[{
+        "ifmin": false,
+        "ifEval":false,
+        "jsAnonymous":true,
+        "psrc":"!js/sub_js/initial/initial_ng",
+        "fileName":"initial.js",
+        "dest": "js/comm/"
+	}],
+    "concatDstJsFileName":"",
+
+
+    "jsFile": [{
+        "ifmin": false,
+        "ifEval":false,
+        "psrc": "!js/jquery/plugins/form/jquery.form",
+        "dest":"js/jquery/"
+    },{
+        "ifmin": false,
+        "ifEval":false,
+        "psrc": "!js/jquery/plugins/cookie/jquery.cookie",
+        "dest":"js/jquery/"
+    },{
+        "src": "{js/*,js/comm/**/*}",
+        "dest": "js/",
+        "debar": "{js/_subDir/,js/_subDir/**/*.*}"
+	},{
+        "psrc": "js/angular/plugins/ui_router/angular-ui-router",
+        "dest":"js/angular/"
+    },{
+		"psrc": "!js/angular/plugins/ui-bootstrap-tpls/ui-bootstrap-tpls-0.11.0",
+        "dest":"js/angular/"
+	},{
+        "ifmin": false,
+        "ifEval":false,
+		"psrc": "js/angular/plugins/ui-bootstrap-tpls/sub_js/pagination",
+        "dest":"js/angular/"
+	}, {
+        "ifmin": false,
+        "ifEval":false,
+        "destRoot":"",
+        "psrc": "js/comm/comm",
+        "dest": "js/",
+        "debar": "{js/_subDir/,js/_subDir/**/*.*}"
+	}, {
+        "src": "{!demo/,!demo/**/*}",
+        "dest": "demo/"
+	},{
+		"psrc": "!js/jquery/plugins/json/jquery.json.min",
+		"dest":"js/jquery/"
+	}],
+    "jsDstDir": "js/",
+
+
+    "sassFile": [{
+        "src":"sass/**/*",
+        "dest":"css/"
+    },{
+        "psrc":"!sass/datepicker/datepicker",
+        "dest":"css/"
+    }],
+
+    "concatCss":"css/{test2,test1}",
+    "concatDstCssFileName":"concatCss.css",
+
+    "cssFile":"css/**/*",
+    "cssDstDir": "css/",
+
+	"ifminhtml": false,
+	"ifminhtmlObj":{
+        "removeComments": true,
+        "collapseWhitespace": true,
+        "conservativeCollapse": true,
+        "preserveLineBreaks": false,
+        "removeAttributeQuotes":false,
+        "removeEmptyAttributes": false,
+        "removeEmptyElements": false,
+        "removeScriptTypeAttributes": false,
+        "collapseBooleanAttributes": false,
+        "removeStyleLinkTypeAttributes": false,
+        "keepClosingSlash": true,
+        "minifyJS": true,
+        "minifyCSS":true
+    },
+    "htmlFile": [{
+		"changIf":true,
+        "src":"*",
+		"destRoot":"",
+		"dest":"sf/"
+    },{
+        "injectIf":false,
+        "src":"!demo/**/*",
+        "dest":"demo/"
+    },{
+        "injectIf":false,
+        "src":"tpls/**/*",
+        "dest":"tpls/"
+    }],
+
+    "tplsHtmlFile": "html/tpls/",
+    "htmlDstDir":"",
+    "injectPath":""
+}

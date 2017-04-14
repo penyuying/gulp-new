@@ -6,6 +6,7 @@
 
     "ifmin": false,
     "ifEval":true,
+    "ifJsDoc":true,
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",
@@ -14,12 +15,14 @@
 	"changIf":false,
 	"jsAnonymous":false,
 
-    "srcPath": "{#webappDir#}code/carPay/html/",
+    "srcPath": "{#webappDir#}develop/carPay/html/",
     "destPath": "{#webPath#}collect/carPay/",
     "revDestPath":"{#tempPath#}rev/carPay/",
 	"revType":"part",
     "destRoot":"",
 
+    "jsDoc3Temp":"{#tempPath#}jsDoc/carPay/",
+    "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
 
     "host": "127.0.0.1",
     "port": "8096",

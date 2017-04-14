@@ -1,0 +1,84 @@
+{
+    "name": "icip",
+    "userName": "penyu",
+    "version": "1.0.0",
+
+    "ifmin": false,
+    "ifEval":false,
+    "gzipIf": false,
+    "srcRev": false,
+    "suffix": "",
+	"injectIf":true,
+	"changIf":false,
+    "webPath":"{#webappDstDir#}BMS/",
+    "srcPath": "{#webappDir#}develop/icip/html/",
+    "destPath": "{#webPath#}src/main/webapp/",
+    "revDestPath":"{#webappDstDir#}temp/rev/javaBMS/",
+
+    "host": "127.0.0.1",
+    "port": "8093",
+    "serverPath": "{#webPath#}src/main/webapp/",
+    "browser": "chrome",
+
+    "copyFile":"",
+    "copyDstDir": "",
+
+    "jsonFile": "",
+    "jsonDstDir": "",
+
+    "imgFile": [{
+        "src": "sass/**/*",
+        "dest": "css/"
+	}],
+    "imgDstDir": "img/",
+
+    "dirConcatJs":"",
+
+
+    "concatJs":"",
+    "concatDstJsFileName":"",
+
+
+    "jsFile": "",
+    "jsDstDir": "",
+
+
+    "sassFile": [{
+        "src":"sass/**/*",
+        "dest":"css/"
+    }],
+
+    "concatCss":"",
+    "concatDstCssFileName":"concatCss.css",
+
+    "cssFile":"",
+    "cssDstDir": "",
+
+	"ifminhtml": true,
+	"ifminhtmlObj":{
+        "removeComments": true,
+        "collapseWhitespace": true,
+        "conservativeCollapse": true,
+        "preserveLineBreaks": false,
+        "removeAttributeQuotes":false,
+        "removeEmptyAttributes": false,
+        "removeEmptyElements": false,
+        "removeScriptTypeAttributes": false,
+        "collapseBooleanAttributes": false,
+        "removeStyleLinkTypeAttributes": false,
+        "keepClosingSlash": true,
+        "minifyJS": false,
+        "minifyCSS":false
+    },
+
+    "htmlFile":[{
+		"changIf":true,
+        "destRoot":"",
+        "src":"BMS/**/*"
+    }],
+
+    "tplsHtmlFile": "tpls/",
+    "htmlDstDir":"WEB-INF/html/",
+
+    "injectPath":false
+}

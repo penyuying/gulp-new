@@ -7,6 +7,7 @@
 
     "ifmin": false,
     "ifEval":true,
+    "ifJsDoc":false,
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",
@@ -17,12 +18,16 @@
     "mapIf": false,
 
     "dirName":"chat",
-    "srcPath": "{#webappDir#}code/rongyun/html/",
+    "srcPath": "{#webappDir#}develop/rongyun/html/",
     "destPath": "{#webPath#}collect/{#dirName#}/",
     "destTest": "{#webPath#}test/{#dirName#}/",
     "revDestPath":"{#tempPath#}/rev/{#dirName#}/",
     "buildTempDir":"../temp/",
 
+    "jsDocType":"angular",
+    "jsDocLink":"/api",
+    "jsDoc3Temp":"{#tempPath#}jsDoc/{#dirName#}/",
+    "jsDoc3Dir":"{#webPath#}Doc/{#name#}/{#dirName#}/",
     "isTest":false,
 	"testConfig":{
         "srcPath":[],
@@ -111,7 +116,7 @@
         "psrc":"js/collect/_subJs/collect/factory",
         "fileName":"applib.js",
         "dest": "js/lib/",
-        "publicPath": "{#webappDir#}code/collect/html/"
+        "publicPath": "{#webappDir#}develop/collect/html/"
     }],
     "concatDstJsFileName":"",
 

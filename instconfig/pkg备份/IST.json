@@ -6,6 +6,7 @@
 
     "ifmin": false,
     "ifEval":true,
+    "ifJsDoc":true,
     "evalConfig":{},
     "gzipIf": false,
     "srcRev": true,
@@ -17,13 +18,17 @@
     "mapIf": false,
 
     "dirName":"GP",
-    "srcPath": "{#webappDir#}code/{#name#}/html/",
+    "srcPath": "{#webappDir#}develop/{#name#}/html/",
     "webPath": "{#webappDstDir#}webStock/",
     "destPath": "{#webPath#}{#dirName#}/",
     "destTest": "{#webPath#}test/{#dirName#}/",
     "revDestPath":"{#tempPath#}/rev/{#dirName#}/",
     "buildTempDir":"../temp/",
 
+    "jsDocType":"angular",
+    "jsDocLink":"/api",
+    "jsDoc3Temp":"{#tempPath#}jsDoc/{#dirName#}/",
+    "jsDoc3Dir":"{#webPath#}Doc/{#name#}/{#dirName#}/",
     "isTest":false,
 	"testConfig":{
         "srcPath":[],
@@ -34,7 +39,7 @@
 
     "host": "127.0.0.1",
     "port": "8091",
-    "serverPath": "{#webPath#}/{#dirName#}",
+    "serverPath": "{#webPath#}{#dirName#}/",
     "browser": "chrome",
 	"anonymous":true,
 
@@ -72,7 +77,7 @@
         "src": "compass/images/*",
         "dest": "css/img/"
     },{
-        "src": "{#tempPath#}compass/{#name#}/css/**/*",
+        "src": "{#compassTemp#}css/**/*",
         "dest": "css/",
         "srcPath":""
     }],
@@ -194,7 +199,7 @@
     }],
     "compassTemp":"{#tempPath#}compass/{#name#}/",
     "compassConfig": {
-        "project": "{#srcPath#}/",
+        "project": "{#srcPath#}",
         "css":"{#compassTemp#}/css/",
         "config_file": "./config.rb",
         "sass": "compass/",

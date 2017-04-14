@@ -6,6 +6,7 @@
 
     "ifmin": true,
     "ifEval":false,
+    "ifJsDoc":false,
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",
@@ -16,11 +17,15 @@
     "mapIf": false,
 
 
-    "srcPath": "{#webappDir#}code/collectMobile/html/",
+    "srcPath": "{#webappDir#}develop/collectMobile/html/",
     "destPath": "{#webPath#}collect/",
     "destTest": "{#webPath#}test/collectMobile/",
     "revDestPath":"{#tempPath#}/rev/collectMobile/",
 
+    "jsDocType":"angular",
+    "jsDocLink":"/api",
+    "jsDoc3Temp":"{#tempPath#}jsDoc/wapsf/",
+    "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
     "destRoot":"wapsf/",
 
     "host": "127.0.0.1",
@@ -93,7 +98,7 @@
             "psrc":"js/collect/_subJs/collect/{factory,filter}",
             "fileName":"collect.js",
             "dest": "js/collect/",
-            "publicPath": "{#webappDir#}code/collect/html/"
+            "publicPath": "{#webappDir#}develop/collect/html/"
         },{
             "ifEval":false,
             "ifJsDoc":false,

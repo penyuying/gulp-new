@@ -1,0 +1,100 @@
+{
+    "name": "icip",
+    "userName": "penyu",
+    "version": "1.0.0",
+
+    "ifmin": false,
+    "ifEval":true,
+    "gzipIf": false,
+    "srcRev": false,
+    "suffix": "",
+	"injectIf":true,
+	"changIf":false,
+
+    "srcPath": "C:/css/",
+    "destPath": "C:/css/cssc/",
+    "revDestPath":"C:/css/re/",
+
+    "host": "127.0.0.1",
+    "port": "8093",
+    "serverPath": "{#destPath#}",
+    "browser": "chrome",
+
+    "copyFile":"",
+    "copyDstDir": "",
+
+    "jsonFile": "",
+    "jsonDstDir": "",
+
+    "imgFile": [{
+        "src": "sass/**/*",
+        "dest": "css/"
+	}],
+    "imgDstDir": "img/",
+
+    "dirConcatJs":"",
+
+
+    "concatJs":"",
+    "concatDstJsFileName":"",
+
+
+    "jsFile": "",
+    "jsDstDir": "",
+
+
+    "sassFile": [{
+        "src":"sass/**/*",
+        "dest":"css/"
+    }],
+
+    "concatCss":[
+		 {
+		"src": [
+            "css/addinfo",
+            "css/control",
+            "css/core",
+            "css/DefaultSkin",
+            "css/jquery-ui-1.10.4.custom.min",
+            "css/load",
+            "css/multi-select",
+            "css/page",
+            "css/prettyPhoto"
+        ],
+        "fileName":"concatCss.css",
+        "dest":"css/"
+}
+	],
+    "concatDstCssFileName":"concatCss.css",
+
+    "cssFile":"",
+    "cssDstDir": "",
+
+	"ifminhtml": true,
+	"ifminhtmlObj":{
+        "removeComments": true,
+        "collapseWhitespace": true,
+        "conservativeCollapse": true,
+        "preserveLineBreaks": false,
+        "removeAttributeQuotes":false,
+        "removeEmptyAttributes": false,
+        "removeEmptyElements": false,
+        "removeScriptTypeAttributes": false,
+        "collapseBooleanAttributes": false,
+        "removeStyleLinkTypeAttributes": false,
+        "keepClosingSlash": true,
+        "minifyJS": false,
+        "minifyCSS":false
+    },
+
+    "htmlFile":[{
+		"changIf":true,
+        "destRoot":"",
+        "src":"BMS/**/*"
+    }],
+
+    "tplsHtmlFile": "tpls/",
+    "htmlDstDir":"WEB-INF/html/",
+
+    "injectPath":false
+}

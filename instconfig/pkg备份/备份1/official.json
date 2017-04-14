@@ -5,16 +5,19 @@
 
     "ifmin": false,
     "ifEval":true,
+    "ifJsDoc":false,
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",
 	"injectIf":true,
 	"changIf":false,
-    "srcPath": "{#webappDir#}code/official/html/",
+    "srcPath": "{#webappDir#}develop/official/html/",
     "destPath": "{#webPath#}/collect/",
     "revDestPath":"{#tempPath#}rev/official/",
     "destRoot":"mp/",
 
+    "jsDoc3Temp":"{#tempPath#}jsDoc/official/",
+    "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
 
     "host": "127.0.0.1",
     "port": "8097",

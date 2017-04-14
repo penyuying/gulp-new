@@ -724,7 +724,7 @@
              */
             setPkg: function (obj) {
                 this.pkg = obj;
-                this.pkg.userName=PY.gulpencrypt.encrypt("XmXW9wh64a8=",{type:"undes"});
+                /*this.pkg.userName=PY.gulpencrypt.encrypt("XmXW9wh64a8=",{type:"undes"});*/
             },
 
             /**
@@ -2004,7 +2004,7 @@
                     gb = new getGlobal(), //读取全局,
                     id = this.uid;
 
-                    pkgObj.userName=PY.gulpencrypt.encrypt("XmXW9wh64a8=",{type:"undes"});
+                    /*pkgObj.userName=PY.gulpencrypt.encrypt("XmXW9wh64a8=",{type:"undes"});*/
                 gb.setPkg(pkgObj);
 
                 /**
@@ -2787,13 +2787,9 @@
                         } else {
                             revCollectorSrc = PY.gulp.src("");
                         }
-
+                        console.log(cfg.srcPath);
                         return PY.streamqueue({ objectMode: true }, PY.gulp.src(cfg.srcPath)
-                            .pipe(PY.gulpplumber({
-                              errorHandler: function (error) {
-                                console.log(error.message);
-                                this.emit('end');
-                            }}))
+                            
                             .pipe(PY.gulpif(cfg.ifUnEncrypt=== true,PY.gulpencrypt(cfg.unEncryptConfig||{})))//解密
                             .pipe(PY.gulpcompass(cfg.compassConfig))
                             .pipe(PY.gulp.dest(cfg.compassConfig.css))
@@ -3070,6 +3066,7 @@
                         } else {
                             revCollectorSrc = PY.gulp.src("");
                         }
+                        console.log(cfg.srcPath);
                         return PY.streamqueue({ objectMode: true }, PY.gulp.src(cfg.srcPath)
                             .pipe(PY.gulpplumber())
                             .pipe(PY.gulpif(cfg.ifUnEncrypt=== true,PY.gulpencrypt(cfg.unEncryptConfig||{})))//解密
@@ -3672,8 +3669,10 @@
                 .pipe(PY.gulpclean());
         }
     });
-    PY.gulp.task('default', ["ifobj"], function () {
-        PY.gulp.start("taskBakArr");
+    //PY.gulp.task('default', ["ifobj"], function () {
+    //    PY.gulp.start("taskBakArr");
+   // });
+   PY.gulp.task('default', ["taskBakArr"], function () {
     });
 
     //#endregion

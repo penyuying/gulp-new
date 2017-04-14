@@ -5,16 +5,19 @@
 
     "ifmin": false,
     "ifEval":true,
+    "ifJsDoc":true,
     "gzipIf": false,
     "srcRev": false,
     "suffix": "",
 	"injectIf":true,
 	"changIf":true,
 
-    "srcPath": "{#webappDir#}code/icip/html/",
+    "srcPath": "{#webappDir#}develop/icip/html/",
     "destPath": "{#webPath#}/BMS1/",
     "revDestPath":"{#tempPath#}rev/BMS1/",
 
+    "jsDoc3Temp":"{#tempPath#}jsDoc/BMS1/",
+    "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
 
     "host": "127.0.0.1",
     "port": "8093",
@@ -94,14 +97,14 @@
     "jsFile": [{
         "ifmin": false,
         "ifEval":false,
-        "src":"AraleQRCode/dist/arale-qrcode/3.0.5/index",
+        "src":"QRcode/AraleQRCode/dist/arale-qrcode/3.0.5/index",
         "dest":"js/",
         "newFileName":"AraleQRCode.js",
         "srcPath":"{#githubsrc#}"
     },{
         "ifmin": false,
         "ifEval":false,
-        "src":"JsBarcode/dist/JsBarcode.all.min",
+        "src":"BarCode/JsBarcode/dist/JsBarcode.all.min",
         "dest":"js/",
         "srcPath":"{#githubsrc#}"
     },{

@@ -6,8 +6,7 @@
   "fileTimeName":"userfiletime",
   "bowersrc":"",
   "items": [
-    "instconfig",
-    "copysvn"
+    "instconfig"
   ],
   "testConfig":"",
   "webappDir":"",
