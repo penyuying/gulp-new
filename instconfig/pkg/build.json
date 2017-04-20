@@ -1,7 +1,7 @@
 {
     "name": "build",
-    "userName": "penyu",
-    "version": "1.0.0",
+    "userName": "",
+    "version": "v2.3.0",
 
 
 
@@ -15,7 +15,7 @@
 	"bannerIf":true,
 	"changIf":false,
 	"jsAnonymous":false,
-    "mapIf": false,
+    "mapIf": true,
 
     "srcPath": "{#webappDir#}src/",
     "destPath": "{#webPath#}build/",
@@ -50,6 +50,9 @@
         "src":"fonts/**/*.*",
         "dest":"fonts/"
     },{
+        "src":"sass/fonts/**/*.*",
+        "dest":"css/fonts/"
+    },{
         "src":"../lib/css/mui/**/*",
         "dest":"css/"
     },{
@@ -76,7 +79,10 @@
         "src": "js/**/*",
         "dest": "js/",
         "debar": "{js/_subDir/,js/_subDir/**/*.*}"
-	}],
+	},{
+        "src":"../lib/js/encrypt/md5",
+        "dest":"js/"
+    }],
     "jsDstDir": "js/",
 
     "ngTplsFile":"",
@@ -97,6 +103,7 @@
         "sass": "sass/",
         "image": "sass/img/",
         "relative":true,
+        "sourcemap":true,
         "generated_images_path":"{#compassTemp#}css/img/",
         "http_path":"./",
         "import_path":""
@@ -108,7 +115,7 @@
     "cssFile":"",
     "cssDstDir": "css/",
 
-	"ifminhtml": false,
+	"ifminhtml": true,
 	"ifminhtmlObj":{
         "removeComments": true,
         "collapseWhitespace": true,

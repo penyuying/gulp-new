@@ -28,7 +28,9 @@
       "ss"
   ],
   "items": [
-      "build"
+      "build",
+      "build.sit",
+      "build.uat"
     ],
   "postcssBak":[
       {"postcsssprites":"postcsssprites"},
@@ -51,8 +53,7 @@
       {"postcssadvancedvariables":"postcssadvancedvariables"},
       {"postcssconditionals":"postcssconditionals"},
       {"postcsssimplevars":"postcsssimplevars"},
-      {"postcssnested":"postcssnested"},
-      {"autoprefixer":"autoprefixer"}
+      {"postcssnested":"postcssnested"}
   ],
   "isTest":false,
   "testConfig":"",
@@ -78,6 +79,8 @@
   }],
   "bakDstDir": "{#bakDest#}{#bakDateDir#}",
   "ifmin": false,
+  "taskWatch":false,
+  "connectStart": false,
   "ifEval":false,
   "evalConfig":{},
   "ifEncrypt":false,

@@ -1965,34 +1965,65 @@
         function teemoGulp(id) { //模块对象开始
             //引入JSON文件
             this.uid = id;
-
-            /**
-            *项目对应该的JSON配置文件路径
-            */
-            var _dirpath=gpkg.subJsonPath + id,
-                _folder_exists = fs.existsSync(_dirpath+pkgExt),
-                pkgTemp;
-
-            if(_folder_exists){
-                pkgTemp=getUd(_dirpath+pkgExt);
-                _dirpath=_dirpath+pkgExt;
-            }else{
-                pkgTemp = require(_dirpath+".json");
-                _dirpath=_dirpath+".json";
-            }
-
-            this.pkgdir = _dirpath;
-            // var pkgTemp = require(this.pkgdir);
-            var _pkg = pkgTemp;
-            this.getCfg(_pkg);
+            var _pkg=this.getPkgObject(id);//获取项目对应该的JSON配置对象
+            this.setCfg(_pkg);
         }
 
         teemoGulp.prototype = {
             /**
+            * 获取项目对应该的JSON配置对象
+            * @param {String} id 项目及对应的pkg的JSON名称
+            * @return {Object} 项目对应该的配置对象
+            */
+            getPkgObject:function(id){
+                var _idArr=[];
+                if(id){
+                    _idArr=id.split('.');
+                }
+                /**
+                *项目对应该的JSON配置文件路径
+                */
+                var _dirpath=gpkg.subJsonPath + _idArr[0],
+                    _folder_exists = fs.existsSync(_dirpath+pkgExt),
+                    pkgTemp;
+
+                if(_folder_exists){
+                    _dirpath=_dirpath+pkgExt;
+                    pkgTemp=getUd(_dirpath);
+                }else{
+                    _dirpath=_dirpath+".json";
+                    pkgTemp = require(_dirpath);
+                }
+                this.pkgdir=[];
+                this.pkgdir.push(_dirpath);
+                var _pkg = pkgTemp;
+
+                if(_idArr && _idArr[1]){
+                    /**
+                    *项目对应该的JSON子配置文件路径
+                    */
+                    var _subDirpath=gpkg.subJsonPath + _idArr.join('.'),
+                        _subfolder_exists = fs.existsSync(_subDirpath+pkgExt),
+                        _subpkgTemp;
+                    if(_folder_exists){
+                        _subDirpath=_subDirpath+pkgExt;
+                        _subpkgTemp=getUd(_subDirpath);
+                    }else{
+                        _subDirpath=_subDirpath+".json";
+                        _subpkgTemp = require(_subDirpath);
+                    }
+
+
+                    this.pkgdir.push(_subDirpath);
+                    _pkg = addObj(_pkg, _subpkgTemp);
+                }
+                return _pkg;
+            },
+            /**
              * 获取配置参数
              * @param {Object} _pkg 当前项目配置文件的JSON对象
              */
-            getCfg: function (_pkg) {
+            setCfg: function (_pkg) {
                 var _folder_exists = fs.existsSync("./webAppConfig"+pkgExt),
                     subpkgtempq;
                 if(_folder_exists){
@@ -2781,16 +2812,17 @@
                         }
                         //                        i+=1;
                         i = k;
-                        var revCollectorSrc;
+                        var revCollectorSrc,myReporter;
                         if (cfg.srcRev === true) {
                             revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + "**/*.json");
                         } else {
                             revCollectorSrc = PY.gulp.src("");
                         }
-                        console.log(cfg.srcPath);
+                        // myReporter = new PY.mapstream(_this.options.gb.myReporter);
                         return PY.streamqueue({ objectMode: true }, PY.gulp.src(cfg.srcPath)
                             
                             .pipe(PY.gulpif(cfg.ifUnEncrypt=== true,PY.gulpencrypt(cfg.unEncryptConfig||{})))//解密
+                            // .pipe(myReporter)
                             .pipe(PY.gulpcompass(cfg.compassConfig))
                             .pipe(PY.gulp.dest(cfg.compassConfig.css))
                             .on('error', function (err) {
@@ -3066,7 +3098,7 @@
                         } else {
                             revCollectorSrc = PY.gulp.src("");
                         }
-                        console.log(cfg.srcPath);
+
                         return PY.streamqueue({ objectMode: true }, PY.gulp.src(cfg.srcPath)
                             .pipe(PY.gulpplumber())
                             .pipe(PY.gulpif(cfg.ifUnEncrypt=== true,PY.gulpencrypt(cfg.unEncryptConfig||{})))//解密
@@ -3206,145 +3238,211 @@
                 var _this = this,
                     option=_this.options,
                     _pkg = option.pkg;
-                PY.gulp.watch(option.copyPath.gSrc, function (event) {
-                    if (event.type == "changed") {
-                        PY.gulp.run(option.uid + '_copy');
-                    }
-                });
-                PY.gulp.watch(option.jsonPath.gSrc, function (event) {
-                    if (event.type == "changed") {
-                        PY.gulp.run(option.uid + '_json');
-                    }
-                });
-                PY.gulp.watch(option.imgPath.gSrc, function (event) {
-                    if (event.type == "changed") {
-                        PY.gulp.run(option.uid + '_img');
-                    }
-                });
-                PY.gulp.watch(option.jsDirConcatPath.gSrc, function (event) {
-                    if (event.type == "changed") {
-                        PY.gulp.run(option.uid + '_jsDir');
-                        PY.gulp.run(option.uid + '_jsDoc');
-                    }
-                });
-
-                PY.gulp.watch(option.concatJsPath.gSrc, function (event) {
-                    if (event.type == "changed") {
-                        PY.gulp.run(option.uid + '_concatJs');
-                        PY.gulp.run(option.uid + '_jsDoc');
-                        PY.gulp.run(option.uid + '_html');
-                    }
-                });
-
-                PY.gulp.watch(option.tsPath.gSrc, function (event) {
-                    if (event.type == "changed") {
-                        PY.gulp.run(option.uid + '_ts');
-                        PY.gulp.run(option.uid + '_jsDoc');
-                        PY.gulp.run(option.uid + '_html');
-                    }
-                });
-
-                var jsWatch=PY.gulp.watch(option.jsPath.gSrc,[option.uid + '_js',option.uid + '_jsDoc',option.uid + '_html']);
-                jsWatch.on("change",function (event) {
-                    if(event.type=="deleted"){
-                        if (event.type === 'deleted') {
-                            var src = path.relative(path.resolve('src'), event.path);
-                            console.log(src);
-                            //src = src.replace(/.es6$/, '.js');
-                            ///var dest = path.resolve(buildDir, src);
-                            //del.sync(dest);
+                if(_pkg.taskWatch){//taskWatch为真的时候不监控文件变化
+                    return false;
+                }else{
+                    PY.gulp.watch(option.copyPath.gSrc, function (event) {
+                        if(_pkg.taskWatch){//taskWatch为真的时候不监控文件变化
+                            return false;
                         }
-                    }
-                });
-
-                //var jsDocSrc = option.jsDirConcatPath.gSrc.concat(option.jsDirConcatPath.gSrc);
-                //jsDocSrc = jsDocSrc.concat(option.jsPath.gSrc);
-                //if (this.options.jsDocPath.cfgArr.length > 0) {
-                //    var cfg = this.options.jsDocPath.cfgArr[0];
-                //    jsDocSrc = jsDocSrc.concat(cfg.srcPath);
-                //    PY.gulp.watch(jsDocSrc, function (event) {
-                //        if (event.type == "changed") {
-                //            PY.gulp.run(option.uid + '_jsDoc');
-                //        }
-                //    });
-                //}
-                if (this.options.jsDocPath.cfgArr.length > 0) {
-                    var cfg = this.options.jsDocPath.cfgArr[0];
-                    PY.gulp.watch(cfg.srcPath, function (event) {
                         if (event.type == "changed") {
+                            PY.gulp.run(option.uid + '_copy');
+                        }
+                    });
+                    PY.gulp.watch(option.jsonPath.gSrc, function (event) {
+                        if(_pkg.taskWatch){//taskWatch为真的时候不监控文件变化
+                            return false;
+                        }
+                        if (event.type == "changed") {
+                            PY.gulp.run(option.uid + '_json');
+                        }
+                    });
+                    PY.gulp.watch(option.imgPath.gSrc, function (event) {
+                        if(_pkg.taskWatch){//taskWatch为真的时候不监控文件变化
+                            return false;
+                        }
+                        if (event.type == "changed") {
+                            PY.gulp.run(option.uid + '_img');
+                        }
+                    });
+                    PY.gulp.watch(option.jsDirConcatPath.gSrc, function (event) {
+                        if(_pkg.taskWatch){//taskWatch为真的时候不监控文件变化
+                            return false;
+                        }
+                        if (event.type == "changed") {
+                            PY.gulp.run(option.uid + '_jsDir');
                             PY.gulp.run(option.uid + '_jsDoc');
+                        }
+                    });
+
+                    PY.gulp.watch(option.concatJsPath.gSrc, function (event) {
+                        if(_pkg.taskWatch){//taskWatch为真的时候不监控文件变化
+                            return false;
+                        }
+                        if (event.type == "changed") {
+                            PY.gulp.run(option.uid + '_concatJs');
+                            PY.gulp.run(option.uid + '_jsDoc');
+                            PY.gulp.run(option.uid + '_html');
+                        }
+                    });
+
+                    PY.gulp.watch(option.tsPath.gSrc, function (event) {
+                        if(_pkg.taskWatch){//taskWatch为真的时候不监控文件变化
+                            return false;
+                        }
+                        if (event.type == "changed") {
+                            PY.gulp.run(option.uid + '_ts');
+                            PY.gulp.run(option.uid + '_jsDoc');
+                            PY.gulp.run(option.uid + '_html');
+                        }
+                    });
+
+                    var jsWatch=PY.gulp.watch(option.jsPath.gSrc,[option.uid + '_js',option.uid + '_jsDoc',option.uid + '_html']);
+                    jsWatch.on("change",function (event) {
+                        if(_pkg.taskWatch){//taskWatch为真的时候不监控文件变化
+                            return false;
+                        }
+                        if(event.type=="deleted"){
+                            if (event.type === 'deleted') {
+                                var src = path.relative(path.resolve('src'), event.path);
+                                console.log(src);
+                                //src = src.replace(/.es6$/, '.js');
+                                ///var dest = path.resolve(buildDir, src);
+                                //del.sync(dest);
+                            }
+                        }
+                    });
+
+                    //var jsDocSrc = option.jsDirConcatPath.gSrc.concat(option.jsDirConcatPath.gSrc);
+                    //jsDocSrc = jsDocSrc.concat(option.jsPath.gSrc);
+                    //if (this.options.jsDocPath.cfgArr.length > 0) {
+                    //    var cfg = this.options.jsDocPath.cfgArr[0];
+                    //    jsDocSrc = jsDocSrc.concat(cfg.srcPath);
+                    //    PY.gulp.watch(jsDocSrc, function (event) {
+                    //        if (event.type == "changed") {
+                    //            PY.gulp.run(option.uid + '_jsDoc');
+                    //        }
+                    //    });
+                    //}
+                    if (this.options.jsDocPath.cfgArr.length > 0) {
+                        var cfg = this.options.jsDocPath.cfgArr[0];
+                        PY.gulp.watch(cfg.srcPath, function (event) {
+                        if(_pkg.taskWatch){//taskWatch为真的时候不监控文件变化
+                            return false;
+                        }
+                            if (event.type == "changed") {
+                                PY.gulp.run(option.uid + '_jsDoc');
+                            }
+                        });
+                    }
+
+                    PY.gulp.watch(option.sassPath.gSrc, function (event) {
+                        if(_pkg.taskWatch){//taskWatch为真的时候不监控文件变化
+                            return false;
+                        }
+                        if (event.type == "changed") {
+                            PY.gulp.run(option.uid + '_sass');
+                            PY.gulp.run(option.uid + '_html');
+                        }
+                    });
+
+                    PY.gulp.watch(option.compassPath.gSrc, function (event) {
+                        if(_pkg.taskWatch){//taskWatch为真的时候不监控文件变化
+                            return false;
+                        }
+                        if (event.type == "changed") {
+                            PY.gulp.run(option.uid + '_compass');
+                            PY.gulp.run(option.uid + '_html');
+                        }
+                    });
+
+                    PY.gulp.watch(option.concatCssPath.gSrc, function (event) {
+                        if(_pkg.taskWatch){//taskWatch为真的时候不监控文件变化
+                            return false;
+                        }
+                        if (event.type == "changed") {
+                            PY.gulp.run(option.uid + '_concatCss');
+                            PY.gulp.run(option.uid + '_html');
+                        }
+                    });
+
+                    PY.gulp.watch(option.cssPath.gSrc, function (event) {
+                        if(_pkg.taskWatch){//taskWatch为真的时候不监控文件变化
+                            return false;
+                        }
+                        if (event.type == "changed") {
+                            PY.gulp.run(option.uid + '_css');
+                            PY.gulp.run(option.uid + '_html');
+                        }
+                    });
+
+
+                    PY.gulp.watch(option.templatePath.gSrc, function (event) {
+                        if(_pkg.taskWatch){//taskWatch为真的时候不监控文件变化
+                            return false;
+                        }
+                        if (event.type == "changed") {
+                            PY.gulp.run(option.uid + '_template');
+                        }
+                    });
+
+                    PY.gulp.watch(option.ngTplsPath.gSrc, function (event) {
+                        if(_pkg.taskWatch){//taskWatch为真的时候不监控文件变化
+                            return false;
+                        }
+                        if (event.type == "changed") {
+                            PY.gulp.run(option.uid + '_ngTpls');
+                        }
+                    });
+
+                    option.htmlPath.gSrc.push(_pkg.srcPath + 'pkg/inject.json');
+                    PY.gulp.watch(option.htmlPath.gSrc, function (event) {
+                        if(_pkg.taskWatch){//taskWatch为真的时候不监控文件变化
+                            return false;
+                        }
+                        if (event.type == "changed") {
+                            PY.gulp.run(option.uid + '_html');
+                        }
+                    });
+
+                    option.jsonPagePath.gSrc.push(_pkg.srcPath + 'pkg/inject.json');
+                    PY.gulp.watch(option.jsonPagePath.gSrc, function (event) {
+                        if(_pkg.taskWatch){//taskWatch为真的时候不监控文件变化
+                            return false;
+                        }
+                        if (event.type == "changed") {
+                            PY.gulp.run(option.uid + '_jsonPage');
+                        }
+                    });
+
+                    // PY.gulp.watch(_this.pkgdir, function (event) {
+                    //     if (event.type == "changed") {
+                    //         var _extname=path.extname(_this.pkgdir),
+                    //             _pkg = {};
+                    //         if(_extname && _extname.toLowerCase()==pkgExt){
+                    //             _pkg=getUd(_this.pkgdir);
+                    //         }else{
+                    //             _pkg=getJson(_this.pkgdir);
+                    //         }
+                    //         _this.setCfg(_pkg);
+                    //         PY.gulp.run(_this.uid + "_taskImgArr");
+                    //     }
+                    // });
+
+                    PY.gulp.watch(_this.pkgdir, function (event) {
+                        if(_pkg.taskWatch){//taskWatch为真的时候不监控文件变化
+                            return false;
+                        }
+                        if (event.type == "changed") {
+                            var _subpkg = {};
+                            _subpkg = _this.getPkgObject(_this.uid);
+                            _this.setCfg(_subpkg);
+                            PY.gulp.run(_this.uid + "_taskImgArr");
                         }
                     });
                 }
 
-                PY.gulp.watch(option.sassPath.gSrc, function (event) {
-                    if (event.type == "changed") {
-                        PY.gulp.run(option.uid + '_sass');
-                        PY.gulp.run(option.uid + '_html');
-                    }
-                });
-
-                PY.gulp.watch(option.compassPath.gSrc, function (event) {
-                    if (event.type == "changed") {
-                        PY.gulp.run(option.uid + '_compass');
-                        PY.gulp.run(option.uid + '_html');
-                    }
-                });
-
-                PY.gulp.watch(option.concatCssPath.gSrc, function (event) {
-                    if (event.type == "changed") {
-                        PY.gulp.run(option.uid + '_concatCss');
-                        PY.gulp.run(option.uid + '_html');
-                    }
-                });
-
-                PY.gulp.watch(option.cssPath.gSrc, function (event) {
-                    if (event.type == "changed") {
-                        PY.gulp.run(option.uid + '_css');
-                        PY.gulp.run(option.uid + '_html');
-                    }
-                });
-
-
-                PY.gulp.watch(option.templatePath.gSrc, function (event) {
-                    if (event.type == "changed") {
-                        PY.gulp.run(option.uid + '_template');
-                    }
-                });
-
-                PY.gulp.watch(option.ngTplsPath.gSrc, function (event) {
-                    if (event.type == "changed") {
-                        PY.gulp.run(option.uid + '_ngTpls');
-                    }
-                });
-
-                option.htmlPath.gSrc.push(_pkg.srcPath + 'pkg/inject.json');
-                PY.gulp.watch(option.htmlPath.gSrc, function (event) {
-                    if (event.type == "changed") {
-                        PY.gulp.run(option.uid + '_html');
-                    }
-                });
-
-                option.jsonPagePath.gSrc.push(_pkg.srcPath + 'pkg/inject.json');
-                PY.gulp.watch(option.jsonPagePath.gSrc, function (event) {
-                    if (event.type == "changed") {
-                        PY.gulp.run(option.uid + '_jsonPage');
-                    }
-                });
-
-                PY.gulp.watch(_this.pkgdir, function (event) {
-                    if (event.type == "changed") {
-                        var _extname=path.extname(_this.pkgdir),
-                            _pkg = {};
-                        if(_extname && _extname.toLowerCase()==pkgExt){
-                            _pkg=getUd(_this.pkgdir);
-                        }else{
-                            _pkg=getJson(_this.pkgdir);
-                        }
-                        _this.getCfg(_pkg);
-                        PY.gulp.run(_this.uid + "_taskImgArr");
-                    }
-                });
+                
 
             }
         };
@@ -3427,8 +3525,10 @@
                                     sub[taskName].testArr.push(taskName + "_" + arr[1]);
                                     break;
                                 case "watch":
-                                    taskWatchArr.push(taskName + "_" + arr[1]);
-                                    sub[taskName].taskWatchArr.push(taskName + "_" + arr[1]);
+                                    if(!parts.options.pkg.taskWatch){
+                                        taskWatchArr.push(taskName + "_" + arr[1]);
+                                        sub[taskName].taskWatchArr.push(taskName + "_" + arr[1]);
+                                    }
                                     break;
                                 default:
                                     taskArr.push(taskName + "_" + arr[1]);
@@ -3448,7 +3548,7 @@
                 root: [sub[taskName].parts.options.pkg.serverPath],
                 browser: sub[taskName].parts.options.pkg.browser || ""
             };
-            if(gpkg.connectStart!==true){
+            if(sub[taskName].parts.options.pkg.connectStart!==true){
                 PY.gulp.task(taskName + '_connect', new PY.gulpconnectmulti.server({ //gulp-connect-multi
                     //host:'127.0.0.1',
                     port: sub[taskName].connectcfg.port,
@@ -3466,7 +3566,7 @@
 
 
             //启动服务器
-            if(gpkg.connectStart!==true){
+            if(sub[taskName].parts.options.pkg.connectStart!==true){
                 PY.gulp.task(taskName + "_connectarr", [taskName + '_connect'], function () {
                     // 现在任务 "taskClsArr" 清除已经完成了
                     PY.gulp.start(taskName + "_taskBakArr");

@@ -29,6 +29,8 @@
   ],
   "items": [
       "build",
+      "build.sit",
+      "build.uat",
       "copysvn"
     ],
   "postcssBak":[
@@ -80,6 +82,8 @@
   "bakDstDir": "{#bakDest#}{#bakDateDir#}",
   "ifmin": false,
   "ifEval":false,
+  "taskWatch":false,
+  "connectStart": false,
   "evalConfig":{},
   "ifEncrypt":false,
   "encryptConfig":{},

@@ -3,7 +3,7 @@
     "name": "instconfig",
     "userName": "penyu",
     "version": "1.0.0",
-    "ifmin": false,
+    "ifmin": true,
     "ifEval":false,
     "ifminhtml": false,
     "gzipIf": false,
@@ -17,6 +17,7 @@
     "subroot_svn":"E:/tnzz/devwebappSvn/",
     "subDevelop":"{#subroot#}src/",
     "subPublic":"{#subDevelop#}public/",
+    "githubsrc":"github/",
     "pExtName":"uud",
     "destRoot": "",
     "destPath": "",
@@ -33,7 +34,10 @@
     "ifJsDoc":true,
 
     "browser": "",
-    "copyFile": [],
+    "copyFile": [{
+        "src":"{#githubsrc#}fonteditor/save/KidMadeTo/KidMadeTo.*",
+        "dest":"{#subDevelop#}/sass/fonts/KidMadeTo/"
+    }],
     "copyDstDir": "",
     "jsonFile": [{
         "ifmin":true,

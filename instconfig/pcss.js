@@ -1,7 +1,8 @@
 module.exports={
 	//加前缀
 	autoprefixer:{ 
-		browsers: ["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 5", "ie_mob >= 6", "ios_saf >= 6", "opera >= 5","safari >= 6"],
+		browsers: ["last 5 versions","> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 5", "ie_mob >= 6", "ios_saf>=4", "ios 6", "opera >= 5","safari >= 4"],
+		browserslist: ["last 5 versions","> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 5", "ie_mob >= 6", "ios_saf>=4", "ios 6", "opera >= 5","safari >= 4"],
 		cascade: false
 	},
 
@@ -14,9 +15,9 @@ module.exports={
 	//     warnForDuplicates:false
 	// },
 	postcsscssnext:{
-		browsers:["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 5", "ie_mob >= 6", "ios_saf >= 6", "opera >= 5","safari >= 6"],
+		browsers:["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 5", "ie_mob >= 6", "ios_saf >= 4", "opera >= 5","safari >= 4"],
 		autoprefixer: {
-			browsers: ["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 5", "ie_mob >= 6", "ios_saf >= 6", "opera >= 5","safari >= 6"],
+			browsers: ["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 5", "ie_mob >= 6", "ios_saf >= 4", "opera >= 5","safari >= 4"],
 			cascade: false
 		},
 		features: {
