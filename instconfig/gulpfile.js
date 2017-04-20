@@ -95,7 +95,20 @@
 
         PY.karmaServer=PY.karma.Server;
         PY.gulpconnectmulti=PY.gulpconnectmulti();
-        var PyPostCssOption=getUdJs("./pcss"+pkgExt);
+        function getPostcss(pcssDir){
+            var _PyPostCssOption=getUdJs(pcssDir+pkgExt);
+            if(!_PyPostCssOption){
+                var _pcssDir=pcssDir+".js",
+                    pcss_exists = fs.existsSync(_pcssDir);
+                
+            
+                if(pcss_exists){
+                    var _PyPostCssOption=require(_pcssDir);
+                }
+            }
+            return _PyPostCssOption||{};
+        }
+        var PyPostCssOption=getPostcss("./pcss");
 
 
         /**
@@ -492,7 +505,7 @@
     */
     function getUdJs(dir) {//ud文件对象
         var folder_exists = fs.existsSync(dir);
-        var _pkg = {};
+        var _pkg = "";
         if (folder_exists) {
             var data = fs.readFileSync(dir, 'utf-8'),
                 a="3q+iesGZAoTHueBH",
