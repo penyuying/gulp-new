@@ -2,8 +2,8 @@ module.exports={
 	//加前缀
 	autoprefixer:{ 
 		browsers: ["last 5 versions","> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 5", "ie_mob >= 6", "ios_saf>=4", "ios 6", "opera >= 5","safari >= 4"],
-		browserslist: ["last 5 versions","> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 5", "ie_mob >= 6", "ios_saf>=4", "ios 6", "opera >= 5","safari >= 4"],
-		cascade: false
+		// cascade: false,
+        flexbox:"no-2009"//处理兼容老浏览器的flex只用display: -webkit-flex;不用display: -webkit-box;2012则两个一起用
 	},
 
 	// postcss-cssnext:用下一代CSS书写方式兼容现在浏览器

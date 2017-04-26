@@ -53,7 +53,8 @@
       {"postcssadvancedvariables":"postcssadvancedvariables"},
       {"postcssconditionals":"postcssconditionals"},
       {"postcsssimplevars":"postcsssimplevars"},
-      {"postcssnested":"postcssnested"}
+      {"postcssnested":"postcssnested"},
+      {"autoprefixer":"autoprefixer"}
   ],
   "isTest":false,
   "testConfig":"",

@@ -1,0 +1,14 @@
+{
+  "name": "webapp",
+  "userName": "penyu",
+  "version": "1.0.0",
+  "devDependencies": {
+ 
+  },
+  "scripts": {
+    "dev": "gulp --gulpfile gulp/gulpfile.js build",
+    "sit": "gulp --gulpfile gulp/gulpfile.js build.sit",
+    "uat": "gulp --gulpfile gulp/gulpfile.js build.uat",
+    "svn": "gulp --gulpfile gulp/gulpfile.js copysvn"
+  }
+}

@@ -45,6 +45,16 @@
         "dest":"{#gulpRoot#}"
     },{
         "ifmin":true,
+        "src":["{#installSrc#}package1"],
+        "dest":"{#subroot#}",
+        "newFileName":"package.json"
+    },{
+        "ifmin":true,
+        "src":["{#installSrc#}package1"],
+        "dest":"{#subroot_svn#}",
+        "newFileName":"package.json"
+    },{
+        "ifmin":true,
         "src":["{#installSrc#}webAppConfig"],
         "dest":"{#gulpRoot#}"
     },{
@@ -77,8 +87,7 @@
     },{
         "ifEval":false,
         "ifmin":true,
-        "src":"{#installSrc#}pcss",
-        "dest":"{#gulpRoot_svn#}"
+        "src":"{#installSrc#}pcss"
     },{
         "src":"{#installSrc#}gulpfile",
         "dest":"{#gulpRoot_svn#}"
