@@ -1,5 +1,5 @@
 {
-	"ifmin": false,
+	"ifmin": true,
 	"mapIf": false,
 	"bannerIf": false,
 	"connectStart": true,

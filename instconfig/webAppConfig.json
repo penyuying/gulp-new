@@ -31,7 +31,8 @@
       "build",
       "build.sit",
       "build.uat",
-      "copysvn"
+      "copysvn",
+      "html"
     ],
   "postcssBak":[
       {"postcsssprites":"postcsssprites"},

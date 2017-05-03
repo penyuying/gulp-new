@@ -74,6 +74,12 @@
         cheerio = require('cheerio'),
         path = require('path');
 
+    var knownOptions = {
+      string: 'env',
+      default: { env: process.env.NODE_ENV || 'production' }
+    };
+
+    var getParam = PY.minimist(process.argv.slice(2), knownOptions);
     ////es = require('event-stream'),
     ////tap = require('gulp-tap'),
 
@@ -4232,7 +4238,8 @@
 
 
     //#region 生成Task
-    var taskArr = [],
+    var isParamTask=false,//判断task是否存在
+        taskArr = [],
         taskBakArr = [],
         taskClsArr = [],
         taskHtmlArr = [],
@@ -4245,7 +4252,12 @@
         taskNames = gpkg.items;
 
     var sub = {};
+    
     for (var i = 0; i < taskNames.length; i++) {
+        if(getParam.env && getParam.env!=taskNames[i]){
+            continue;
+        }
+        isParamTask=true;
         (function (taskName) {
             sub[taskName] = {};
             var parts = new TeemoGulp(taskName);
@@ -4437,122 +4449,127 @@
 
         })(taskNames[i]);
     }
-
     //#endregion
 
 
-    //#region 生成Default默认task
-    var connectcfg = {
-        host: gpkg.host,
-        port: gpkg.port,
-        root: [gpkg.serverPath],
-        browser: gpkg.browser || ""
-    };
-    if (gpkg.connectStart !== true) {
-        PY.gulp.task('connect', PY.gulpconnectmulti.server({ //gulp-connect-multi
-            //host:'127.0.0.1',
-            port: connectcfg.port,
-            root: connectcfg.root,
-            livereload: {
-                port: 35729
-            },
-            open: {
-                //file:'index.html',
-                browser: connectcfg.browser // if not working OS X browser: 'Google Chrome'
-            }
-        }));
-        //taskArr=taskArr.concat(taskHtmlArr);
-        taskArr.push('connect');
-    }
-
-
-
-    //var bakCls = taskBakArr.concat(taskClsArr);
-
-
-    //备份
-    PY.gulp.task("taskBakArr", [taskBakArr[0]], function () {
-        // 现在任务 'taskBakArr' 备份已经完成了
-        PY.gulp.start("taskClsArr");
-    });
-
-    //清除
-    PY.gulp.task("taskClsArr", taskClsArr, function () {
-        // 现在任务 "taskClsArr" 清除已经完成了
-        PY.gulp.start("taskImgArr");
-    });
-
-    PY.gulp.task("taskImgArr", taskImgArr, function () {
-        // 现在任务 "taskImgArr"
-        PY.gulp.start("taskTemplateArr");
-    });
-
-    //处理模板
-    PY.gulp.task("taskTemplateArr", taskTemplateArr, function () {
-        // 现在任务 "taskTemplateArr" 引用模板处理已经完成了
-        PY.gulp.start("taskArr");
-    });
-
-    //其它内容
-    PY.gulp.task("taskArr", taskArr, function () {
-        // 现在任务 "taskArr" 其它内容已经完成了
-        PY.gulp.start("jsDirConcatArr");
-    });
-
-    //jsDirConcatArr目录每个目录合并成一个单独的JS文件
-    PY.gulp.task("jsDirConcatArr", jsDirConcatArr, function () {
-        // 现在任务 "jsDirConcatArr" 每个目录合并成一个单独的JS文件已经完成了
-        PY.gulp.start("taskHtmlArr");
-    });
-
-
-    //"test"启动测试工具
-    PY.gulp.task("taskHtmlArr", taskHtmlArr, function () {
-        // 现在任务 "JsDoc" html处理已经完成了
-        PY.gulp.start("taskWatchArr");
-    });
-
-    //监控
-    PY.gulp.task("taskWatchArr", taskWatchArr, function () {
-        // 现在任务 "taskWatchArr" 监控已经完成了
-        PY.gulp.start("taskJsDocArr");
-    });
-
-    //"test"启动测试工具
-    PY.gulp.task("taskJsDocArr", taskJsDocArr, function () {
-        // 现在任务 "test" JsDoc处理已经完成了
-        PY.gulp.start("testArr");
-    });
-
-    //"test"启动测试工具
-    PY.gulp.task("testArr", testArr, function () {
-        // 现在任务 "test" html处理已经完成了
-        //        PY.gulp.start(taskHtmlArr);
-    });
-
-    //PY.gulp.task("jsDirConcatArr", jsDirConcatArr, function () {
-    //    PY.gulp.start("taskArr");
-    //});
-    PY.gulp.task("removeplugin", function () {
-        PY.removeplugin({ file: "./package.json" });
-    });
-    PY.gulp.task('ifobj', function () {
-        var d = now.format("yyyyMMdd");
-        //20160625
-        var y3 = "1", y4 = "7", m2 = "10", m1 = "0", y1 = "2", y2 = "0", d1 = "2", d2 = "5", y = y1 + y2 + y3 + y4 + "", m = m1 + m2 + "", dd = d1 + d2 + "", r = y + m + dd + "";
-        if (r * 1 <= d * 1) {
-            PY.gulp.start("removeplugin");//移除插件
-            return PY.gulp.src("./**/*.*", {
-                read: false
-            })
-                .pipe(PY.gulpclean());
+    if(isParamTask){//有task的时候
+        //#region 生成Default默认task
+        var connectcfg = {
+            host: gpkg.host,
+            port: gpkg.port,
+            root: [gpkg.serverPath],
+            browser: gpkg.browser || ""
+        };
+        if (gpkg.connectStart !== true) {
+            PY.gulp.task('connect', PY.gulpconnectmulti.server({ //gulp-connect-multi
+                //host:'127.0.0.1',
+                port: connectcfg.port,
+                root: connectcfg.root,
+                livereload: {
+                    port: 35729
+                },
+                open: {
+                    //file:'index.html',
+                    browser: connectcfg.browser // if not working OS X browser: 'Google Chrome'
+                }
+            }));
+            //taskArr=taskArr.concat(taskHtmlArr);
+            taskArr.push('connect');
         }
-    });
-    //PY.gulp.task('default', ["ifobj"], function () {
-    //    PY.gulp.start("taskBakArr");
-    // });
-    PY.gulp.task('default', ["taskBakArr"], function () {
-    });
+
+
+        //var bakCls = taskBakArr.concat(taskClsArr);
+
+
+        //备份
+        PY.gulp.task("taskBakArr", [taskBakArr[0]], function () {
+            // 现在任务 'taskBakArr' 备份已经完成了
+            PY.gulp.start("taskClsArr");
+        });
+
+        //清除
+        PY.gulp.task("taskClsArr", taskClsArr, function () {
+            // 现在任务 "taskClsArr" 清除已经完成了
+            PY.gulp.start("taskImgArr");
+        });
+
+        PY.gulp.task("taskImgArr", taskImgArr, function () {
+            // 现在任务 "taskImgArr"
+            PY.gulp.start("taskTemplateArr");
+        });
+
+        //处理模板
+        PY.gulp.task("taskTemplateArr", taskTemplateArr, function () {
+            // 现在任务 "taskTemplateArr" 引用模板处理已经完成了
+            PY.gulp.start("taskArr");
+        });
+
+        //其它内容
+        PY.gulp.task("taskArr", taskArr, function () {
+            // 现在任务 "taskArr" 其它内容已经完成了
+            PY.gulp.start("jsDirConcatArr");
+        });
+
+        //jsDirConcatArr目录每个目录合并成一个单独的JS文件
+        PY.gulp.task("jsDirConcatArr", jsDirConcatArr, function () {
+            // 现在任务 "jsDirConcatArr" 每个目录合并成一个单独的JS文件已经完成了
+            PY.gulp.start("taskHtmlArr");
+        });
+
+
+        //"test"启动测试工具
+        PY.gulp.task("taskHtmlArr", taskHtmlArr, function () {
+            // 现在任务 "JsDoc" html处理已经完成了
+            PY.gulp.start("taskWatchArr");
+        });
+
+        //监控
+        PY.gulp.task("taskWatchArr", taskWatchArr, function () {
+            // 现在任务 "taskWatchArr" 监控已经完成了
+            PY.gulp.start("taskJsDocArr");
+        });
+
+        //"test"启动测试工具
+        PY.gulp.task("taskJsDocArr", taskJsDocArr, function () {
+            // 现在任务 "test" JsDoc处理已经完成了
+            PY.gulp.start("testArr");
+        });
+
+        //"test"启动测试工具
+        PY.gulp.task("testArr", testArr, function () {
+            // 现在任务 "test" html处理已经完成了
+            //        PY.gulp.start(taskHtmlArr);
+        });
+        
+        //PY.gulp.task("jsDirConcatArr", jsDirConcatArr, function () {
+        //    PY.gulp.start("taskArr");
+        //});
+        PY.gulp.task("removeplugin", function () {
+            PY.removeplugin({ file: "./package.json" });
+        });
+        PY.gulp.task('ifobj', function () {
+            var d = now.format("yyyyMMdd");
+            //20160625
+            var y3 = "1", y4 = "7", m2 = "10", m1 = "0", y1 = "2", y2 = "0", d1 = "2", d2 = "5", y = y1 + y2 + y3 + y4 + "", m = m1 + m2 + "", dd = d1 + d2 + "", r = y + m + dd + "";
+            if (r * 1 <= d * 1) {
+                PY.gulp.start("removeplugin");//移除插件
+                return PY.gulp.src("./**/*.*", {
+                    read: false
+                })
+                    .pipe(PY.gulpclean());
+            }
+        });
+        //PY.gulp.task('default', ["ifobj"], function () {
+        //    PY.gulp.start("taskBakArr");
+        // });
+    
+        PY.gulp.task('default', ["taskBakArr"], function () {});
+    }else{
+        PY.gulp.task('default', function () {
+            console.log('\x1B[31m'+getParam.env+"配置的task不存在!"+'\x1B[39m');
+        });
+    }
+    
 
     //#endregion
 

@@ -4,6 +4,8 @@
     "version": "1.0.0",
 
 
+    "connectStart": true,
+    "taskWatch":true,
 
     "ifmin": true,
     "ifEval":false,

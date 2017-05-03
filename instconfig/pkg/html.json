@@ -1,0 +1,148 @@
+{
+    "name": "html",
+    "userName": "",
+    "version": "v2.3.0",
+
+
+
+    "ifmin": true,
+    "ifEval":false,
+    "ifJsDoc":false,
+    "gzipIf": false,
+    "srcRev": false,
+    "suffix": "",
+	"injectIf":true,
+	"bannerIf":true,
+	"changIf":false,
+	"jsAnonymous":false,
+    "mapIf": true,
+
+    "srcPath": "{#webappDir#}html/",
+    "destPath": "{#webPath#}html/",
+    "destRoot":"",
+    "destTest": "{#webPath#}test/",
+    "revDestPath":"{#tempPath#}/rev/html/",
+
+    "jsDocType":"angular",
+    "jsDocLink":"/api",
+    "jsDoc3Temp":"{#tempPath#}jsDoc/html/",
+    "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
+    "isTest":false,
+	"testConfig":"",
+
+    "host": "127.0.0.1",
+    "port": "8092",
+    "serverPath": "{#webPath#}/html/",
+    "browser": "chrome",
+	"anonymous":true,
+
+    "copyFile": [{
+        "src":"images/**/*.ico",
+        "dest":"images/"
+    },{
+        "src":"fonts/**/*.*",
+        "dest":"fonts/"
+    },{
+        "src":"sass/fonts/**/*.*",
+        "dest":"css/fonts/"
+    },{
+        "src":"../lib/css/mui/**/*",
+        "dest":"css/"
+    },{
+        "src":"../lib/css/swiper/**/*",
+        "dest":"css/"
+    }],
+    "copyDstDir": "",
+
+
+    "jsonFile": "",
+    "jsonDstDir": "json/",
+
+    "imgFile": [{
+        "src": "images/**/*"
+	}],
+    "imgDstDir": "images/",
+
+    "dirConcatJs": "",
+
+    "concatJs":"",
+    "concatDstJsFileName":"",
+
+    "jsFile": [{
+        "src": "js/**/*",
+        "dest": "js/",
+        "debar": "{js/_subDir/,js/_subDir/**/*.*}"
+	},{
+        "src":"../lib/js/encrypt/md5",
+        "dest":"js/"
+    }],
+    "jsDstDir": "js/",
+
+    "ngTplsFile":"",
+    "ngTplsConf":{},
+    "ngTplsDstDir":"js/",
+
+    "sassFile":"",
+
+    "compassFile": [{
+        "src":"sass/**/*",
+        "dest":"css/"
+    }],
+    "compassTemp":"{#tempPath#}sass/{#name#}/",
+    "compassConfig": {
+        "project": "{#srcPath#}",
+        "css":"{#compassTemp#}/css/",
+        "config_file": "./config.rb",
+        "sass": "sass/",
+        "image": "sass/img/",
+        "relative":true,
+        "sourcemap":true,
+        "generated_images_path":"{#compassTemp#}css/img/",
+        "http_path":"./",
+        "import_path":""
+    },
+
+    "concatCss":"",
+    "concatDstCssFileName":"concatCss.css",
+
+    "cssFile":"",
+    "cssDstDir": "css/",
+
+	"ifminhtml": true,
+	"ifminhtmlObj":{
+        "removeComments": true,
+        "collapseWhitespace": true,
+        "conservativeCollapse": true,
+        "preserveLineBreaks": false,
+        "removeAttributeQuotes":false,
+        "removeEmptyAttributes": false,
+        "removeEmptyElements": false,
+        "removeScriptTypeAttributes": false,
+        "collapseBooleanAttributes": false,
+        "collapsewhitespace":false,
+        "removeStyleLinkTypeAttributes": false,
+        "keepClosingSlash": true,
+        "minifyJS": true,
+        "minifyCSS":true
+    },
+
+    "templateFile":[{
+        "changIf":true,
+        "injectIf":false,
+        "src":"pages/**/*",
+        "tpls":"_tpls/",
+        "dest":"pages/"
+    }],
+    "templateDstDir":"pages/",
+
+    "htmlFile": [{
+		"changIf":true,
+        "src":"index",
+		"destRoot":"",
+        "tpls":"_tpls/"
+    }],
+
+    "tplsHtmlFile": "_tpls/",
+    "htmlDstDir":"",
+    "injectPath":""
+}

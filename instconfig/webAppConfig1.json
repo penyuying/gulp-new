@@ -15,22 +15,12 @@
   "fileTime":"mtime",
   "fileTimeName":"filetime",
   "isBak":false,
-  "itemsbak":[
-      "companyInfo_m",
-      "react",
-      "bms",
-      "bmss",
-      "javaBMS",
-      "shequ",
-      "ngdemo",
-      "ngrequire",
-      "collectAll",
-      "ss"
-  ],
+  "itemsbak":[],
   "items": [
       "build",
       "build.sit",
-      "build.uat"
+      "build.uat",
+      "html"
     ],
   "postcssBak":[
       {"postcsssprites":"postcsssprites"},

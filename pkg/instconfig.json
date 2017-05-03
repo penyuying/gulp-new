@@ -16,6 +16,7 @@
     "subroot":"E:/tnzz/webappDev/",
     "subroot_svn":"E:/tnzz/devwebappSvn/",
     "subDevelop":"{#subroot#}src/",
+    "htmlDevelop":"{#subroot#}html/",
     "subPublic":"{#subDevelop#}public/",
     "githubsrc":"github/",
     "pExtName":"uud",
@@ -37,6 +38,9 @@
     "copyFile": [{
         "src":"{#githubsrc#}fonteditor/save/KidMadeTo/KidMadeTo.*",
         "dest":"{#subDevelop#}/sass/fonts/KidMadeTo/"
+    },{
+        "src":"{#githubsrc#}fonteditor/save/KidMadeTo3.0/KidMadeTo.*",
+        "dest":"{#htmlDevelop#}/sass/fonts/KidMadeTo/"
     }],
     "copyDstDir": "",
     "jsonFile": [{
