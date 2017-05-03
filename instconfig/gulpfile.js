@@ -101,7 +101,7 @@
 
     PY.karmaServer = PY.karma.Server;
     PY.gulpconnectmulti = PY.gulpconnectmulti();
-
+    PY.browsersync=PY.browsersync.create();
     /**
     *获取postcss配置参数
     *@param {string} pcssDir 配置文件路径
@@ -2312,7 +2312,8 @@
      * @returns {gulpPipe} 返回管道
      */
     function publicPipeFooter_sub(pipe, cfg) {
-        return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
+        //return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
+        return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.browsersync.stream()));
     }
     //#endregion
 
@@ -4340,6 +4341,7 @@
                 browser: sub[taskName].parts.options.pkg.browser || ""
             };
             if (sub[taskName].parts.options.pkg.connectStart !== true) {
+                /*
                 PY.gulp.task(taskName + '_connect', new PY.gulpconnectmulti.server({ //gulp-connect-multi
                     //host:'127.0.0.1',
                     port: sub[taskName].connectcfg.port,
@@ -4352,6 +4354,32 @@
                         browser: sub[taskName].connectcfg.browser // if not working OS X browser: 'Google Chrome'
                     }
                 }));
+                */
+                
+                PY.gulp.task(taskName + '_connect',function(){
+
+                    var _rootpath=sub[taskName].connectcfg.root[0],
+                        _dir=path.normalize(_rootpath).replace(/\\/g, "/");
+
+                    PY.browsersync.init({
+                        port: sub[taskName].connectcfg.port,
+                        server: {
+                            baseDir: [_dir]
+                        },
+                        files: [
+                            "**/*.js",
+                            "**/*.css",
+                            "**/*.html",
+                            "**/*.png",
+                            "**/*.jpg",
+                            "**/*.gif",
+                            "**/*.ttf",
+                            "**/*.woff",
+                            "**/*.eot",
+                            "**/*.svg"
+                        ]
+                    });
+                });
             }
 
 
@@ -4461,6 +4489,7 @@
             browser: gpkg.browser || ""
         };
         if (gpkg.connectStart !== true) {
+            /*
             PY.gulp.task('connect', PY.gulpconnectmulti.server({ //gulp-connect-multi
                 //host:'127.0.0.1',
                 port: connectcfg.port,
@@ -4473,7 +4502,31 @@
                     browser: connectcfg.browser // if not working OS X browser: 'Google Chrome'
                 }
             }));
+            */
             //taskArr=taskArr.concat(taskHtmlArr);
+            PY.gulp.task('connect',function(){
+            var _rootpath=connectcfg.root[0],
+                _dir=path.normalize(_rootpath).replace(/\\/g, "/");
+
+                PY.browsersync.init({
+                    port: connectcfg.port,
+                    server: {
+                        baseDir: [_dir]
+                    },
+                    files: [
+                        "**/*.js",
+                        "**/*.css",
+                        "**/*.html",
+                        "**/*.png",
+                        "**/*.jpg",
+                        "**/*.gif",
+                        "**/*.ttf",
+                        "**/*.woff",
+                        "**/*.eot",
+                        "**/*.svg"
+                    ]
+                });
+            });
             taskArr.push('connect');
         }
 
