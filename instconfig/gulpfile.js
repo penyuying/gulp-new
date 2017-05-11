@@ -588,7 +588,7 @@
             return res;
         }
         if (!path.isAbsolute(dir)) {//相对路径转绝对路径
-            res = path.normalize(path.join(__dirname, dir)).replace(/\\/g, "/");
+            res = path.normalize(path.join(process.cwd(), dir)).replace(/\\/g, "/");
         } else {
             res = path.normalize(dir).replace(/\\/g, "/");
         }

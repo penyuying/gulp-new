@@ -133,13 +133,7 @@
         "minifyCSS":true
     },
 
-    "templateFile":[{
-        "changIf":true,
-        "injectIf":false,
-        "src":"pages/**/*",
-        "tpls":"_tpls/",
-        "dest":"pages/"
-    }],
+    "templateFile":"",
     "templateDstDir":"pages/",
 
     "htmlFile": [{
@@ -147,6 +141,12 @@
         "src":"index",
 		"destRoot":"",
         "tpls":"_tpls/"
+    },{
+        "changIf":true,
+        "injectIf":false,
+        "src":"pages/**/*",
+        "tpls":"_tpls/",
+        "dest":"pages/"
     }],
 
     "tplsHtmlFile": "_tpls/",
