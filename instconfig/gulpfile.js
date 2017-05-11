@@ -2462,7 +2462,7 @@
     * @param {Function} callback 用匿名函数包裹前的回调函数
     * @param {Array|String} newSrc 用匿名函数包裹前的回调函数
     */
-    function jsBodyBuild(_this,pipe, cfg, key, callback) {
+    function jsBodyBuild(_this,pipe, cfg, key, callback,isMap) {
         var myReporter = new PY.mapstream(_this.options.gb.myReporter);
         var i = key;
 
@@ -2483,7 +2483,7 @@
                 })
             });
         }, function (pipe) {
-            return publicPipeReplaceSrcAndReload(pipe, cfg, i);
+            return publicPipeReplaceSrcAndReload(pipe, cfg, i,false,isMap);
         });
     }
 
@@ -2501,7 +2501,7 @@
         _pipe = htmlFactory1(_pipe, cfg)
                 .pipe(PY.gulpngtemplate(cfg.ngTplsConf || {}));
 
-        return jsBodyBuild(_this, _pipe, cfg, key, callback);
+        return jsBodyBuild(_this, _pipe, cfg, key, callback,true);
     }
 
     /**
@@ -2556,7 +2556,7 @@
             _tsData.noImplicitAny = false;
             _pipe = _pipe.pipe(PY.gulptypescript(_tsData));
         }
-        
+
         return jsBodyBuild(_this, _pipe, cfg, key, callback);
     }
 
