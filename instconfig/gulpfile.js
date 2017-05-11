@@ -2314,17 +2314,16 @@
      * @param {Object} cfg 配置参数对象
      * @param {Number} i 当前循环的key
      * @param {String} _path 存放路径的JSON文件名
-     * @param {Function} callback 处理完后的回调
-     * @param {String} _isMap true为不生成map文件
+     * @param {Function} callback 处理完后的回调函数
+     * @param {Boolean} _isMap 是否生成.map文件
      * @returns {gulpPipe} 返回管道
      */
     function publicPipeReplaceSrc(pipe, cfg, i, _path, callback,_isMap) {
         return publicPipeReplaceSrc_sub(pipe, cfg,  function (_pipe) {
-            _pipe = publicPipeFooter(_pipe, cfg, i, _path);
             if(!_isMap){
                 _pipe=_pipe.pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj)));
             }
-
+            _pipe = publicPipeFooter(_pipe, cfg, i, _path);
             if (callback && callback instanceof Function) {
                 var _tempPipe = callback(_pipe);
                 _pipe = _tempPipe || _pipe;
@@ -2361,6 +2360,7 @@
      * @param {Object} cfg 配置参数对象
      * @param {Number} i 当前循环的key
      * @param {String} _path 存放路径的JSON文件名
+     * @param {Boolean} _isMap 是否生成.map文件
      * @returns {gulpPipe} 返回管道
      */
     function publicPipeReplaceSrcAndReload(pipe, cfg, i, _path,_isMap) {
@@ -2462,7 +2462,7 @@
     * @param {Function} callback 用匿名函数包裹前的回调函数
     * @param {Array|String} newSrc 用匿名函数包裹前的回调函数
     */
-    function jsBodyBuild(_this,pipe, cfg, key, callback,_isMap) {
+    function jsBodyBuild(_this,pipe, cfg, key, callback) {
         var myReporter = new PY.mapstream(_this.options.gb.myReporter);
         var i = key;
 
@@ -2483,7 +2483,7 @@
                 })
             });
         }, function (pipe) {
-            return publicPipeReplaceSrcAndReload(pipe, cfg, i,false,_isMap);
+            return publicPipeReplaceSrcAndReload(pipe, cfg, i);
         });
     }
 
@@ -2501,7 +2501,7 @@
         _pipe = htmlFactory1(_pipe, cfg)
                 .pipe(PY.gulpngtemplate(cfg.ngTplsConf || {}));
 
-        return jsBodyBuild(_this, _pipe, cfg, key, callback,true);
+        return jsBodyBuild(_this, _pipe, cfg, key, callback);
     }
 
     /**
