@@ -1993,7 +1993,7 @@
                     var subMerge = new PY.mergestream();
                     subMerge.add(this.options.jsonPath.cfgArr.map(function (cfg) {
                         return PY.gulp.src(cfg.srcPath)
-                            .pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath)))
+                            // .pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath)))
                             .pipe(PY.gulpplumber())
                             .pipe(PY.gulpif(cfg.ifUnEncrypt=== true,PY.gulpencrypt(cfg.unEncryptConfig||{})))//解密
                             .pipe(PY.gulpjsonlint())

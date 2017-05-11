@@ -6,10 +6,13 @@
  
   },
   "scripts": {
-    "dev": "gulp --gulpfile gulp/gulpfile.js build",
-    "sit": "gulp --gulpfile gulp/gulpfile.js build.sit",
-    "uat": "gulp --gulpfile gulp/gulpfile.js build.uat",
-    "svn": "gulp --gulpfile gulp/gulpfile.js copysvn",
-    "html": "gulp --gulpfile gulp/gulpfile.js html"
+    "dev": "gulp --gulpfile gulp/gulpfile.js build --c build",
+    "devx": "gulp --gulpfile gulp/gulpfile.js build --c build --s sync",
+    "sit": "gulp --gulpfile gulp/gulpfile.js build.sit --c build.sit",
+    "uat": "gulp --gulpfile gulp/gulpfile.js build.uat --c build.uat",
+    "svn": "gulp --gulpfile gulp/gulpfile.js copysvn --c copysvn",
+    "html": "gulp --gulpfile gulp/gulpfile.js html --c html",
+    "htmlsvn": "gulp --gulpfile gulp/gulpfile.js htmlsvn --c htmlsvn",
+    "htmlx": "gulp --gulpfile gulp/gulpfile.js html --c html --s sync"
   }
 }

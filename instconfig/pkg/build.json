@@ -9,7 +9,7 @@
     "ifEval":false,
     "ifJsDoc":false,
     "gzipIf": false,
-    "srcRev": false,
+    "srcRev": true,
     "suffix": "",
 	"injectIf":true,
 	"bannerIf":true,

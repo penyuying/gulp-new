@@ -1,0 +1,111 @@
+{
+    "name": "build",
+    "userName": "penyu",
+    "version": "1.0.0",
+
+
+    "connectStart": true,
+    "taskWatch":true,
+
+    "ifmin": true,
+    "ifEval":false,
+    "ifJsDoc":false,
+    "gzipIf": false,
+    "srcRev": false,
+    "suffix": "",
+	"injectIf":true,
+	"bannerIf":true,
+	"changIf":false,
+	"jsAnonymous":false,
+    "mapIf": false,
+
+    "srcPath": "{#webappDir#}",
+    "destPath": "{#webPath#}../../htmlv3.0.0/",
+    "destRoot":"",
+    "destTest": "",
+    "revDestPath":"",
+
+    "jsDocType":"",
+    "jsDocLink":"",
+    "jsDoc3Temp":"",
+    "jsDoc3Dir":"",
+    "isTest":false,
+	"testConfig":"",
+
+    "host": "127.0.0.1",
+    "port": "8092",
+    "serverPath": "{#webPath#}/build/",
+    "browser": "chrome",
+	"anonymous":true,
+
+    "copyFile": [{
+        "src":"lib/**/*.*",
+        "dest":"lib/"
+    },{
+        "src":"public/**/*.*",
+        "dest":"public/"
+    },{
+        "src":"html/**/*.*",
+        "dest":"html/",
+        "debar":["**/.vscode","**/.sass-cache"]
+    }],
+    "copyDstDir": "",
+
+
+    "jsonFile": "",
+    "jsonDstDir": "json/",
+
+    "imgFile": [],
+    "imgDstDir": "images/",
+
+    "dirConcatJs": "",
+
+    "concatJs":"",
+    "concatDstJsFileName":"",
+
+    "jsFile": "",
+    "jsDstDir": "js/",
+
+    "ngTplsFile":"",
+    "ngTplsConf":{},
+    "ngTplsDstDir":"js/",
+
+    "sassFile":"",
+
+    "compassFile":"",
+    "compassTemp":"",
+    "compassConfig": "",
+
+    "concatCss":"",
+    "concatDstCssFileName":"concatCss.css",
+
+    "cssFile":"",
+    "cssDstDir": "css/",
+
+	"ifminhtml": false,
+	"ifminhtmlObj":{
+        "removeComments": true,
+        "collapseWhitespace": true,
+        "conservativeCollapse": true,
+        "preserveLineBreaks": false,
+        "removeAttributeQuotes":false,
+        "removeEmptyAttributes": false,
+        "removeEmptyElements": false,
+        "removeScriptTypeAttributes": false,
+        "collapseBooleanAttributes": false,
+        "collapsewhitespace":false,
+        "removeStyleLinkTypeAttributes": false,
+        "keepClosingSlash": true,
+        "minifyJS": true,
+        "minifyCSS":true
+    },
+
+    "templateFile":"",
+    "templateDstDir":"pages/",
+
+    "htmlFile": "",
+
+    "tplsHtmlFile": "_tpls/",
+    "htmlDstDir":"",
+    "injectPath":""
+}

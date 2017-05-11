@@ -74,12 +74,20 @@
         cheerio = require('cheerio'),
         path = require('path');
 
-    var knownOptions = {
+    var taskOptions = {
       string: 'env',
-      default: { env: process.env.NODE_ENV || '' }
+      default: { c: process.env.NODE_ENV || '',config: process.env.NODE_ENV || '',s: process.env.NODE_ENV || 'multi',server: process.env.NODE_ENV || '' }
     };
 
-    var getParam = PY.minimist(process.argv.slice(2), knownOptions);
+    var getParam = PY.minimist(process.argv.slice(2), taskOptions);
+
+    if(!getParam.config && getParam.c){
+        getParam.config=getParam.c;
+    }
+    if(!getParam.server && getParam.s){
+        getParam.server=getParam.s;
+    }
+    // console.log(getParam.server,getParam.config)
     ////es = require('event-stream'),
     ////tap = require('gulp-tap'),
 
@@ -1385,8 +1393,8 @@
                                 }
                             }
                             if (dirName == "compassFile") {
-                                if (obj.compassTemp && !path.isAbsolute(obj.compassTemp)) {//相对路径转绝对路径
-                                    obj.compassTemp = path.normalize(path.join(__dirname, obj.compassTemp)).replace(/\\/g, "/");
+                                if (obj.compassTemp) {//相对路径转绝对路径
+                                    obj.compassTemp = absPath(obj.compassTemp);
                                 }
 
                                 var compassTempPath = _this.getJsDoc3Temp(pkg, obj, subDst, subRevDst, "compassTemp");//获取compass存放临时文件的目录
@@ -1481,7 +1489,7 @@
                                 jsDoc3Temp: jsDocTempPath,//JSDoc临时文件存放的路径
                                 ifJsDoc: returnObj(obj, 'ifJsDoc', returnObj(pkg, 'ifJsDoc', false)),//JSDoc是否生成文档
                                 revDestPath: revDestPath,//存放rev生成的JSON文件
-                                revCollectorSrcPath: returnObj(obj, 'revDestPath', returnObj(pkg, 'revDestPath', "")),//存放rev生成的主目录
+                                revCollectorSrcPath: absPath(returnObj(obj, 'revDestPath', returnObj(pkg, 'revDestPath', "")))||"",//存放rev生成的主目录
                                 revType: returnObj(obj, 'revType', pkg.revType),//rev生成文件名的类型
                                 //                                revCollectorType:returnObj(obj, 'revCollectorType',pkg.revCollectorType),//revCollector替换文件的类型
                                 mapIf: returnObj(obj, 'mapIf', pkg.mapIf),//是否生成map文件（true为是，false为否）
@@ -1609,7 +1617,7 @@
                         jsDoc3Temp: jsDocTempPath,//JSDoc临时文件存放的路径
                         ifJsDoc: returnObj(pkg, 'ifJsDoc', false),//JSDoc是否生成文档
                         revDestPath: revDestPath || "",//存放rev生成的JSON文件
-                        revCollectorSrcPath: pkg.revDestPath,//存放rev生成的主目录
+                        revCollectorSrcPath: absPath(pkg.revDestPath),//存放rev生成的主目录
                         revType: returnObj(pkg, 'revType', ""),//rev生成文件名的类型
                         //                        revCollectorType:returnObj(pkg, 'revCollectorType',""),//revCollector替换文件的类型
                         mapIf: pkg.mapIf,
@@ -2079,6 +2087,93 @@
         return pipe.pipe(PY.gulpjshint()); //检查语法;
     }
 
+
+
+    /**
+     * 公共处理JS
+     * @param {gulpPipe} pipe 上一个管道
+     * @param {Object} cfg 配置参数对象
+     * @returns {gulpPipe} 返回管道
+     */
+    function ngdocFactory(pipe, cfg) {
+        var options = options || function () {
+                if (cfg.jsDocType === "angular") {
+                    return {
+                        //                        scripts: ['../app.min.js'],
+                        //                        html5Mode: true,
+                        //                        startPage: '/api',
+                        //                                    startPage: cfg.jsDocLink + "" || "",
+                        title: cfg.name + " angular Api"
+                        //                        image: "path/to/my/image.png",
+                        //                        imageLink: "http://my-domain.com",
+                        //                        titleLink: "/api"
+                        //                                    titleLink: cfg.jsDocLink + "" || ""
+                    };
+                }
+
+            }();
+
+        return pipe.pipe(PY.gulpif(cfg.ifJsDoc === true && cfg.jsDocType === "angular", PY.gulpngdocs.process(options)))
+                .pipe(PY.gulpif(cfg.ifJsDoc === true && cfg.jsDocType === "angular", PY.gulp.dest(cfg.jsDoc3Dir + cfg.jsDocType + "/")));
+    }
+
+
+    /**
+     * 公共处理JSdoc
+     * @param {gulpPipe} pipe 上一个管道
+     * @param {Object} cfg 配置参数对象
+     * @param {Object} cb task的cb
+     * @param {Function} callback jsdoc处理完后执行的回调
+     * @returns {gulpPipe} 返回管道
+     */
+    function jsDocFactory(pipe,cfg,cb,callback) {
+        pipe=pipe.pipe(PY.gulpif(cfg.ifJsDoc === true, PY.gulpjsdoc3({
+             "tags": {
+                 "allowUnknownTags": true
+             },
+             "source": {
+                 "excludePattern": "(^|\\/|\\\\)_"
+             },
+             "opts": {
+                 "destination": cfg.jsDoc3Dir//"./docs/gen"
+             },
+             "plugins": [
+               "plugins/markdown"
+             ],
+             "templates": {
+                 "cleverLinks": false,
+                 "monospaceLinks": false,
+                 "default": {
+                     "outputSourceFiles": true
+                 },
+                 "path": "ink-docstrap",
+                 "theme": "cerulean",
+                 "navType": "vertical",
+                 "linenums": true,
+                 "dateFormat": "MMMM Do YYYY, h:mm:ss a"
+             }
+         }, cb)));
+
+        if(callback && callback instanceof Function){
+            var _tempPipe=callback(pipe);
+            if(_tempPipe){
+                pipe=_tempPipe;
+            }
+        }
+        return pipe;
+    }
+
+    /**
+     * 生成JSdoc
+     * @param {Object} cfg 配置参数对象
+     * @param {Object} cb task的cb
+     */
+    function buildJsDoc(cfg,cb){
+        var pipe=jsDocFactory(startGulpNoMapAndChange(cfg),cfg,cb,function(_pipe){
+            return ngdocFactory(_pipe, cfg);
+        });
+        return publicPipeFooter_sub(pipe, cfg);
+    }
     /**
      * 公共处理CSS
      * @param {gulpPipe} pipe 上一个管道
@@ -2126,7 +2221,6 @@
                 return "\n";
             })));
         });
-            
     }
 
     /**
@@ -2178,8 +2272,8 @@
      */
     function pipeHeader(pipe, cfg) {
         return pipeBanner(pipe, cfg)
-            .pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
-            .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj)));
+            .pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")));//改文件名
+            // .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj)));
     }
 
 
@@ -2220,11 +2314,17 @@
      * @param {Object} cfg 配置参数对象
      * @param {Number} i 当前循环的key
      * @param {String} _path 存放路径的JSON文件名
+     * @param {Function} callback 处理完后的回调
+     * @param {String} _isMap true为不生成map文件
      * @returns {gulpPipe} 返回管道
      */
-    function publicPipeReplaceSrc(pipe, cfg, i, _path, callback) {
+    function publicPipeReplaceSrc(pipe, cfg, i, _path, callback,_isMap) {
         return publicPipeReplaceSrc_sub(pipe, cfg,  function (_pipe) {
             _pipe = publicPipeFooter(_pipe, cfg, i, _path);
+            if(!_isMap){
+                _pipe=_pipe.pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj)));
+            }
+
             if (callback && callback instanceof Function) {
                 var _tempPipe = callback(_pipe);
                 _pipe = _tempPipe || _pipe;
@@ -2263,10 +2363,10 @@
      * @param {String} _path 存放路径的JSON文件名
      * @returns {gulpPipe} 返回管道
      */
-    function publicPipeReplaceSrcAndReload(pipe, cfg, i, _path) {
+    function publicPipeReplaceSrcAndReload(pipe, cfg, i, _path,_isMap) {
         return publicPipeReplaceSrc(pipe, cfg, i, _path, function (_pipe) {
             return publicPipeFooter_sub(_pipe, cfg);
-        });
+        },_isMap);
     }
 
     /**
@@ -2285,17 +2385,27 @@
     }
 
     /**
+     *加密文件
+     * @param {gulpPipe} pipe 上一个管道
+     * @param {Object} cfg 配置参数对象
+     * @returns {gulpPipe} 返回管道
+    */
+    function encrypt(pipe, cfg){
+        return pipe.pipe(PY.gulpif(cfg.ifEncrypt === true, PY.gulpencrypt(cfg.encryptConfig || {})));
+    }
+
+    /**
      * 加文件前后缀+文件加密+gzip压缩
      * @param {gulpPipe} pipe 上一个管道
      * @param {Object} cfg 配置参数对象
      * @returns {gulpPipe} 返回管道
      */
     function publicPipeFixEncryptGzip(pipe,cfg) {
-        return pipe.pipe(PY.gulpif(cfg.suffix !== false, PY.gulprename({
-            prefix: cfg.prefix,//文件前缀
-            suffix: cfg.suffix
-        }))) //加后缀
-            .pipe(PY.gulpif(cfg.ifEncrypt === true, PY.gulpencrypt(cfg.encryptConfig || {})))
+        return encrypt(pipe.pipe(PY.gulpif(cfg.suffix !== false, PY.gulprename({
+                    prefix: cfg.prefix,//文件前缀
+                    suffix: cfg.suffix
+                }))) //加后缀
+            , cfg)
             .pipe(PY.gulp.dest(cfg.destPath))
             .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulpgzip({
                 append: true
@@ -2312,8 +2422,14 @@
      * @returns {gulpPipe} 返回管道
      */
     function publicPipeFooter_sub(pipe, cfg) {
-        //return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
-        return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.browsersync.stream()));
+        if(getParam.server.toLowerCase()=="sync"){
+            return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.browsersync.stream()));
+            // return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.browsersync.reload({stream:true})));
+
+            // return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.browsersync.reload({stream:false})));
+        }else{
+            return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
+        }
     }
     //#endregion
 
@@ -2346,7 +2462,7 @@
     * @param {Function} callback 用匿名函数包裹前的回调函数
     * @param {Array|String} newSrc 用匿名函数包裹前的回调函数
     */
-    function jsBodyBuild(_this,pipe, cfg, key, callback) {
+    function jsBodyBuild(_this,pipe, cfg, key, callback,_isMap) {
         var myReporter = new PY.mapstream(_this.options.gb.myReporter);
         var i = key;
 
@@ -2367,7 +2483,7 @@
                 })
             });
         }, function (pipe) {
-            return publicPipeReplaceSrcAndReload(pipe, cfg, i);
+            return publicPipeReplaceSrcAndReload(pipe, cfg, i,false,_isMap);
         });
     }
 
@@ -2385,7 +2501,7 @@
         _pipe = htmlFactory1(_pipe, cfg)
                 .pipe(PY.gulpngtemplate(cfg.ngTplsConf || {}));
 
-        return jsBodyBuild(_this, _pipe, cfg, key, callback);
+        return jsBodyBuild(_this, _pipe, cfg, key, callback,true);
     }
 
     /**
@@ -2555,7 +2671,7 @@
             });
         });
 
-        return publicPipeReplaceSrcAndReload(_pipe, cfg, key);
+        return publicPipeReplaceSrcAndReload(_pipe, cfg, key,false,true);
 
     }
 
@@ -3769,9 +3885,15 @@
              * 生成文档JS的API文档的Task
              */
             task_jsDoc: function (cb) {//生成文档
-                if (this.options.jsDocPath.cfgArr.length > 0) {
+                var _this=this,
+                    _options=_this.options,
+                    _jsDocPath=_options && _options.jsDocPath,
+                    _cfgArr=_jsDocPath && _jsDocPath.cfgArr;
+                if (_cfgArr && _cfgArr.length > 0) {
                     var subMerge = new PY.mergestream();
-                    subMerge.add(this.options.jsDocPath.cfgArr.map(function (cfg) {
+                    subMerge.add(_cfgArr.map(function (cfg) {
+                        return buildJsDoc(cfg,cb);
+                        /*
                         var options = options || function () {
                             if (cfg.jsDocType === "angular") {
                                 return {
@@ -3843,7 +3965,7 @@
                                 .pipe(PY.gulpif(cfg.ifJsDoc === true && cfg.jsDocType === "angular", PY.gulp.dest(cfg.jsDoc3Dir + cfg.jsDocType + "/")))
                                 .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
 
-
+                                */
                     }));
                     return subMerge;
                 }
@@ -4255,7 +4377,7 @@
     var sub = {};
     
     for (var i = 0; i < taskNames.length; i++) {
-        if(getParam.env && getParam.env!=taskNames[i]){
+        if(getParam.config && getParam.config!=taskNames[i]){
             continue;
         }
         isParamTask=true;
@@ -4341,45 +4463,45 @@
                 browser: sub[taskName].parts.options.pkg.browser || ""
             };
             if (sub[taskName].parts.options.pkg.connectStart !== true) {
-                /*
-                PY.gulp.task(taskName + '_connect', new PY.gulpconnectmulti.server({ //gulp-connect-multi
-                    //host:'127.0.0.1',
-                    port: sub[taskName].connectcfg.port,
-                    root: sub[taskName].connectcfg.root,
-                    livereload: {
-                        port: 35728
-                    },
-                    open: {
-                        //file:'index.html',
-                        browser: sub[taskName].connectcfg.browser // if not working OS X browser: 'Google Chrome'
-                    }
-                }));
-                */
-                
-                PY.gulp.task(taskName + '_connect',function(){
+                if(getParam.server.toLowerCase()=="sync"){
+                    PY.gulp.task(taskName + '_connect',function(){
 
-                    var _rootpath=sub[taskName].connectcfg.root[0],
-                        _dir=path.normalize(_rootpath).replace(/\\/g, "/");
+                        var _rootpath=sub[taskName].connectcfg.root[0],
+                            _dir=path.normalize(_rootpath).replace(/\\/g, "/");
 
-                    PY.browsersync.init({
-                        port: sub[taskName].connectcfg.port,
-                        server: {
-                            baseDir: [_dir]
-                        },
-                        files: [
-                            "**/*.js",
-                            "**/*.css",
-                            "**/*.html",
-                            "**/*.png",
-                            "**/*.jpg",
-                            "**/*.gif",
-                            "**/*.ttf",
-                            "**/*.woff",
-                            "**/*.eot",
-                            "**/*.svg"
-                        ]
+                        PY.browsersync.init({
+                            port: sub[taskName].connectcfg.port,
+                            server: {
+                                baseDir: [_dir]
+                            },
+                            files: [
+                                "**/*.js",
+                                "**/*.css",
+                                "**/*.html",
+                                "**/*.png",
+                                "**/*.jpg",
+                                "**/*.gif",
+                                "**/*.ttf",
+                                "**/*.woff",
+                                "**/*.eot",
+                                "**/*.svg"
+                            ]
+                        });
                     });
-                });
+                }else{
+                    PY.gulp.task(taskName + '_connect', new PY.gulpconnectmulti.server({ //gulp-connect-multi
+                        //host:'127.0.0.1',
+                        port: sub[taskName].connectcfg.port,
+                        root: sub[taskName].connectcfg.root,
+                        livereload: {
+                            port: 35728
+                        },
+                        open: {
+                            //file:'index.html',
+                            browser: sub[taskName].connectcfg.browser // if not working OS X browser: 'Google Chrome'
+                        }
+                    }));
+                }
             }
 
 
@@ -4489,44 +4611,46 @@
             browser: gpkg.browser || ""
         };
         if (gpkg.connectStart !== true) {
-            /*
-            PY.gulp.task('connect', PY.gulpconnectmulti.server({ //gulp-connect-multi
-                //host:'127.0.0.1',
-                port: connectcfg.port,
-                root: connectcfg.root,
-                livereload: {
-                    port: 35729
-                },
-                open: {
-                    //file:'index.html',
-                    browser: connectcfg.browser // if not working OS X browser: 'Google Chrome'
-                }
-            }));
-            */
-            //taskArr=taskArr.concat(taskHtmlArr);
-            PY.gulp.task('connect',function(){
-            var _rootpath=connectcfg.root[0],
-                _dir=path.normalize(_rootpath).replace(/\\/g, "/");
+            if(getParam.server.toLowerCase()=="sync"){
+                PY.gulp.task('connect',function(){
+                    var _rootpath=connectcfg.root[0],
+                        _dir=path.normalize(_rootpath).replace(/\\/g, "/");
 
-                PY.browsersync.init({
-                    port: connectcfg.port,
-                    server: {
-                        baseDir: [_dir]
-                    },
-                    files: [
-                        "**/*.js",
-                        "**/*.css",
-                        "**/*.html",
-                        "**/*.png",
-                        "**/*.jpg",
-                        "**/*.gif",
-                        "**/*.ttf",
-                        "**/*.woff",
-                        "**/*.eot",
-                        "**/*.svg"
-                    ]
+                    PY.browsersync.init({
+                        port: connectcfg.port,
+                        server: {
+                            baseDir: [_dir]
+                        },
+                        files: [
+                            "**/*.js",
+                            "**/*.css",
+                            "**/*.html",
+                            "**/*.png",
+                            "**/*.jpg",
+                            "**/*.gif",
+                            "**/*.ttf",
+                            "**/*.woff",
+                            "**/*.eot",
+                            "**/*.svg"
+                        ]
+                    });
                 });
-            });
+            }else{
+                PY.gulp.task('connect', PY.gulpconnectmulti.server({ //gulp-connect-multi
+                    //host:'127.0.0.1',
+                    port: connectcfg.port,
+                    root: connectcfg.root,
+                    livereload: {
+                        port: 35729
+                    },
+                    open: {
+                        //file:'index.html',
+                        browser: connectcfg.browser // if not working OS X browser: 'Google Chrome'
+                    }
+                }));
+            }
+
+            //taskArr=taskArr.concat(taskHtmlArr);
             taskArr.push('connect');
         }
 
@@ -4619,7 +4743,7 @@
         PY.gulp.task('default', ["taskBakArr"], function () {});
     }else{
         PY.gulp.task('default', function () {
-            console.log('\x1B[31m'+getParam.env+"配置的task不存在!"+'\x1B[39m');
+            console.log('\x1B[31m'+getParam.config+"配置的task不存在!"+'\x1B[39m');
         });
     }
     

@@ -15,6 +15,7 @@
     "publicPath": "{#srcPath#}publicTool/public/",
     "subroot":"E:/tnzz/webappDev/",
     "subroot_svn":"E:/tnzz/devwebappSvn/",
+    "htmlSubroot_svn":"E:/tnzz/htmlv3.0.0/",
     "subDevelop":"{#subroot#}src/",
     "htmlDevelop":"{#subroot#}html/",
     "subPublic":"{#subDevelop#}public/",
@@ -28,6 +29,7 @@
     "bakPath": "",
     "gulpRoot":"{#subroot#}gulp/",
     "gulpRoot_svn":"{#subroot_svn#}gulp/",
+    "htmlGulpRoot_svn":"{#htmlSubroot_svn#}gulp/",
     "serverPath": "",
 
     "jsDoc3Temp":"./temp/jsDoc/instconfig/",
@@ -54,11 +56,6 @@
         "newFileName":"package.json"
     },{
         "ifmin":true,
-        "src":["{#installSrc#}package1"],
-        "dest":"{#subroot_svn#}",
-        "newFileName":"package.json"
-    },{
-        "ifmin":true,
         "src":["{#installSrc#}webAppConfig"],
         "dest":"{#gulpRoot#}"
     },{
@@ -78,6 +75,29 @@
         "ifmin":true,
         "src":["{#installSrc#}pkg/*","!{#installSrc#}pkg/copysvn.*"],
         "dest":"{#subroot_svn#}pkg/"
+    },{
+        "ifmin":true,
+        "src":["{#installSrc#}package1"],
+        "dest":"{#subroot_svn#}",
+        "newFileName":"package.json"
+    },{
+        "ifmin":true,
+        "src":["{#installSrc#}package"],
+        "dest":"{#htmlGulpRoot_svn#}"
+    },{
+        "ifmin":true,
+        "src":["{#installSrc#}webAppConfig1"],
+        "dest":"{#htmlGulpRoot_svn#}",
+        "newFileName":"webAppConfig.json"
+    },{
+        "ifmin":true,
+        "src":["{#installSrc#}pkg/*","!{#installSrc#}pkg/copysvn.*"],
+        "dest":"{#htmlSubroot_svn#}pkg/"
+    },{
+        "ifmin":true,
+        "src":["{#installSrc#}package1"],
+        "dest":"{#htmlSubroot_svn#}",
+        "newFileName":"package.json"
     }],
     "evalConfig":{},
     "jsonDstDir": "",
@@ -100,6 +120,14 @@
         "ifmin":true,
         "src":"{#installSrc#}pcss",
         "dest":"{#gulpRoot_svn#}"
+    },{
+        "src":"{#installSrc#}gulpfile",
+        "dest":"{#htmlGulpRoot_svn#}"
+    },{
+        "ifEval":false,
+        "ifmin":true,
+        "src":"{#installSrc#}pcss",
+        "dest":"{#htmlGulpRoot_svn#}"
     }],
     "jsDstDir": "{#gulpRoot#}",
     "sassFile": "",
