@@ -159,5 +159,16 @@
 
     "tplsHtmlFile": "_tpls/",
     "htmlDstDir":"",
+
+
+
+    "jsonPageFile":[{
+        "changIf":true,
+        "destRoot":"",
+        "src":"pagesJson/*"
+    }],
+    "jsonPageDstDir":"",
+
+
     "injectPath":""
 }
