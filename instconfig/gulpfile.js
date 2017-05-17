@@ -1502,6 +1502,8 @@
                                 prefix: returnObj(obj, "prefix", returnObj(pkg, 'prefix', false)),//是否给文件加前缀（有内空时为加，没有内容时为不加）
                                 suffix: returnObj(obj, "suffix", returnObj(pkg, 'suffix', false)),//是否给文件加后缀（有内空时为加，没有内容时为不加）
                                 ifmin: returnObj(obj, "ifmin", returnObj(pkg, 'ifmin', false)),//是否压缩JS、CSS（true为否，false为是）
+                                ifbabel: returnObj(obj, "ifbabel", returnObj(pkg, 'ifbabel', false)),//是否启用babel（true为是，false为否）
+                                babelEnvConfig:returnObj(obj, "babelEnvConfig", returnObj(pkg, 'babelEnvConfig', {})),//babelEnv配置参数
                                 ifEval: returnObj(obj, "ifEval", returnObj(pkg, 'ifEval', false)),//js是否eval加密文件
                                 evalConfig: returnObj(obj, "evalConfig", returnObj(pkg, 'evalConfig', {})),//js eval加密文件配置参数
                                 ifUnEncrypt: returnObj(obj, "ifUnEncrypt", returnObj(pkg, 'ifUnEncrypt', false)),//是否解密文件
@@ -1629,6 +1631,8 @@
                         prefix: returnObj(pkg, 'prefix', false),//是否给文件前后缀（有内空时为加，没有内容时为不加）
                         suffix: returnObj(pkg, 'suffix', false),//是否给文件加后缀（有内空时为加，没有内容时为不加）
                         ifmin: returnObj(pkg, 'ifmin', false),
+                        ifbabel: returnObj(pkg, 'ifbabel', false),
+                        babelEnvConfig:returnObj(pkg, 'babelEnvConfig', false),//babelEnv配置参数
                         ifEval: returnObj(pkg, 'ifEval', false),//js是否eval加密文件
                         evalConfig: returnObj(pkg, 'evalConfig', {}),//js eval加密文件配置参数
                         ifEncrypt: returnObj(pkg, 'ifEncrypt', false),//是否加密文件
@@ -2295,6 +2299,7 @@
      * @returns {gulpPipe} 返回管道
      */
     function jsWrapUglify(pipe, cfg) {
+        var _env=[PY.babelpresetenv,cfg.babelEnvConfig];
         return pipe.pipe(PY.gulpif(cfg.jsAnonymous == true, PY.gulpheaderfooter({//文件前后增加内容
             header: cfg.jsHeader,
             footer: cfg.jsFooter,
@@ -2302,7 +2307,10 @@
                 return true;
             }
         })))
-            .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpuglify())) //压缩JS
+        .pipe(PY.gulpif(cfg.ifbabel === true, PY.gulpbabel({
+          "presets": [_env]//PY.babelpresetes2015
+        })))
+        .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpuglify())) //压缩JS
         //              .pipe(obfuscate())//JS代码混淆
         //              .on('error', gutil.log)
         //                .pipe(PY.gulpif(cfg.ifEval === true, PY.gulpjsencrypt(cfg.evalConfig || {})))//加密JS;

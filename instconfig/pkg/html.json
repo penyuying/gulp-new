@@ -5,6 +5,7 @@
 
 
 
+    "ifbabel":true,
     "ifmin": true,
     "ifEval":false,
     "ifJsDoc":false,
