@@ -1,9 +1,12 @@
 {
-  "bowersrc":"../lib/bower/",
-  "githubsrc":"../lib/",
+  "rem": "/*处理过后的json的文件和目录存放的目录*/",
+
+
+  "bowersrc":"../../../bower/app/",
+  "githubsrc":"../../../github/",
   "webappDir":"../",
   "webappDstDir":"../",
-  "bakDest": "../bak/",
+  "bakDest": "d:/webapp/bak/",
   "tempPath": "{#webappDir#}temp/",
 
   "name": "webapp",
@@ -12,15 +15,26 @@
   "fileTime":"mtime",
   "fileTimeName":"filetime",
   "isBak":false,
+  "itemsbak":[],
   "items": [
-    "icip",
-    "ms",
-    "collect",
-    "collectMobile",
-    "carPay",
-    "official",
-    "rongyun",
-    "IST"
+      "build",
+      "build.sit",
+      "build.uat",
+      "html"
+    ],
+  "postcssBak":[
+      {"postcsssprites":"postcsssprites"},
+      {"postcsscustomproperties":"postcsscustomproperties"},
+      {"postcsssassextend":"postcsssassextend"},
+      "postcssfor",
+      {"postcssadvancedvariables":"postcssadvancedvariables"},
+      {"postcssconditionals":"postcssconditionals"},
+      {"postcsssimplevars":"postcsssimplevars"},
+      "postcssnestedprops",
+      {"postcssnested":"postcssnested"},
+      {"autoprefixer":"autoprefixer"},
+      {"postcsscssnext":"postcsscssnext"},
+      "cssgrace"
   ],
   "postcss":[
       {"postcsscustomproperties":"postcsscustomproperties"},
@@ -41,13 +55,45 @@
   "ifJsDoc":false,
   "subJsonPath": "{#webappDstDir#}pkg/",
   "bakDateDir":"",
-  "bakFile":"",
+  "bakFile": [{
+      "src":["**/*"],
+      "dest":"{#bakDateDir#}src/",
+      "destPath":"{#bakDest#}",
+      "srcPath":"{#srcPath#}",
+      "debarPath":"{node_modules/**/*,/**/node_modules/**/*,bower_components/**/*,/**/bower_components/**/*}"
+  },{
+      "src":"**/*",
+      "dest":"{#bakDateDir#}pkg/",
+      "destPath":"{#bakDest#}",
+      "srcPath":"{#subJsonPath#}",
+      "debarPath":"{node_modules/**/*,/**/node_modules/**/*,bower_components/**/*,/**/bower_components/**/*}"
+  }],
   "bakDstDir": "{#bakDest#}{#bakDateDir#}",
   "ifmin": false,
+  "ifbabel":false,
+  "babelEnvConfig":{
+      "targets": {
+        "browsers": ["last 5 versions","> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 5", "ie_mob >= 6", "ios_saf>=4", "ios 6", "opera >= 5","safari >= 4"]
+      },
+      "spec":false,
+      "loose":true,
+      "modules":false,
+      "useBuiltIns": true,
+      "debug": false
+  },
+  "taskWatch":false,
+  "connectStart": false,
   "ifEval":false,
   "evalConfig":{},
   "ifEncrypt":false,
   "encryptConfig":{},
+  "ifUnEncrypt":true,
+  "unEncryptConfig":{
+      "unType":"uud",
+      "type":"ununicode2,undes",
+      "extname":"",
+      "password":"miMaHenJianDan"
+  },
   "ifminimg": false,
   "imgquality":80,
   "ifminhtml": false,
@@ -73,10 +119,10 @@
   "suffix": ".min",
   "injectIf":true,
   "bannerIf":false,
-  "srcPath": "{#webappDir#}code/",
-  "publicPath": "{#webappDir#}code/public/",
+  "srcPath": "{#webappDir#}src/",
+  "publicPath": "{#webappDir#}public/",
   "destRoot": "",
-  "destPath": "{#webappDstDir#}web/",
+  "destPath": "{#webappDstDir#}dist/",
   "destTest": "{#webPath#}test/",
   "revDestPath":"{#tempPath#}/",
   "revType":"part",
@@ -85,7 +131,7 @@
   "debarPath": "{*废弃*/**/*.*,/**/废弃*.*,/**/*废弃*/*.*,/**/*废弃*/**/*.*,*备份*/**/*.*,/**/备份*.*,/**/*备份*/*.*,/**/*备份*/**/*.*}",
   "host": "127.0.0.1",
   "port": "8020",
-  "webPath": "{#webappDstDir#}web/",
+  "webPath": "{#webappDstDir#}dist/",
   "webTestPath": "{#webappDstDir#}webTest/",
   "serverPath": "{#webPath#}",
   "browser": "",
@@ -93,7 +139,17 @@
   "copyDstDir": "",
   "jsonFile": "",
   "jsonDstDir": "json/",
-  "imgFile": "",
+  "imgFile": [
+    {
+      "src": "{img/,img/**/*}"
+    },
+    {
+      "src": "{css/,css/**/*}",
+      "dest": "css/",
+      "debar": "css/{废弃/**/*.*,**/废弃.*}"
+    }
+  ],
+  "!autoprefixerBrowsers":["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 5", "ie_mob >= 6", "ios_saf >= 6", "opera >= 5","safari >= 6"],
   "imgDstDir": "img/",
   "dirConcatJs": "",
   "concatJs": "",

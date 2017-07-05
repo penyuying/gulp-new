@@ -1,0 +1,184 @@
+{
+    "name": "icip",
+    "userName": "penyu",
+    "version": "1.0.0",
+
+    "ifmin": false,
+    "ifEval":true,
+    "ifJsDoc":true,
+    "gzipIf": false,
+    "srcRev": false,
+    "suffix": "",
+	"injectIf":true,
+	"changIf":true,
+
+    "srcPath": "{#webappDir#}develop/icip/html/",
+    "destPath": "{#webPath#}/BMS1/",
+    "revDestPath":"{#tempPath#}rev/BMS1/",
+
+    "jsDoc3Temp":"{#tempPath#}jsDoc/BMS1/",
+    "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
+
+    "host": "127.0.0.1",
+    "port": "8093",
+    "serverPath": "{#webPath#}/BMS1/",
+    "browser": "chrome",
+    "copyFile":[{
+            "psrc":"fonts/Pyicipicon/Penyu/Pyicipicon.*",
+            "dest": "css/fonts/icipicon/"
+        },{
+            "psrc": "js/jquery/jquery-1.11.3.min.js",
+            "dest":"js/"
+		},{
+            "changIf":false,
+            "psrc": "sass/ListBox/listBox.scss",
+            "dsrc":"sass/",
+			"newFileName":"_listBox.scss"
+		}],
+    "copyDstDir": "",
+
+    "jsonFile": [{"src":"json/plot"}],
+    "jsonDstDir": "json/",
+
+    "imgFile": [{
+        "src": "img/**/*"
+	}, {
+        "src": "css/**/*",
+        "dest": "css/"
+	},{
+        "src": "sass/**/*",
+        "dest": "css/"
+	},{
+        "psrc": "sass/ListBox/img/*",
+        "dsrc": "sass/img/"
+	}],
+    "imgDstDir": "img/",
+
+    "dirConcatJs": [{
+        "src": "",
+        "psrc":"",
+        "dest": "js/"
+	}],
+
+
+    "concatJs":[{
+        "ifmin": false,
+        "ifEval":false,
+        "jsAnonymous":true,
+        "psrc":"js/sub_js/initial/initial_jq",
+        "fileName":"initial.js",
+        "dest": "js/"
+	},{
+        "ifmin": false,
+        "ifEval":false,
+        "jsAnonymous":true,
+		"jsGlobalObj":"window,YW,$",
+        "psrc":"js/sub_js/treeSelectBox/{AddListBox,ListBox}",
+        "fileName":"listBox.js",
+        "dest": "js/"
+	},{
+        "ifmin": false,
+        "ifEval":false,
+        "jsAnonymous":true,
+        "psrc":"js/sub_js/switch/{Tab,Accordion,Align,Popup,Widescreen,Floatfixed}",
+        "fileName":"switch.js",
+        "dest": "js/"
+	},{
+        "ifmin": false,
+        "ifEval":false,
+        "jsAnonymous":true,
+        "psrc":"js/sub_js/controls/{Checkbox,CheckboxAll,Radio,Button,Adjustment}",
+        "fileName":"controls.js",
+        "dest": "js/"
+	}],
+    "concatDstJsFileName":"",
+
+
+    "jsFile": [{
+        "ifmin": false,
+        "ifEval":false,
+        "src":"QRcode/AraleQRCode/dist/arale-qrcode/3.0.5/index",
+        "dest":"js/",
+        "newFileName":"AraleQRCode.js",
+        "srcPath":"{#githubsrc#}"
+    },{
+        "ifmin": false,
+        "ifEval":false,
+        "src":"BarCode/JsBarcode/dist/JsBarcode.all.min",
+        "dest":"js/",
+        "srcPath":"{#githubsrc#}"
+    },{
+        "src": "js/*",
+        "dest": "js/",
+        "debar": "{_subDir/,_subDir/**/*.*}"
+	}, {
+        "ifmin": false,
+        "ifEval":false,
+        "jsAnonymous":true,
+        "jsGlobalObj":"window",
+        "psrc": "js/sub_js/switch/mobileAndPc_slide",
+        "newFileName":"slide.js",
+        "dest": "js/"
+    }, {
+        "ifmin": false,
+        "ifEval":false,
+        "jsAnonymous":true,
+        "jsGlobalObj":"window",
+        "psrc": "js/public-obj",
+        "dest": "js/"
+	}],
+    "jsDstDir": "js/",
+
+
+    "sassFile": [{
+        "src":"sass/**/*",
+        "dest":"css/"
+    }],
+
+    "concatCss":"",
+    "concatDstCssFileName":"concatCss.css",
+
+    "cssFile":[{
+		"src":"css/**/*"
+	},{
+		"psrc":"css/control"
+	}],
+    "cssDstDir": "css/",
+
+	"ifminhtml": true,
+	"ifminhtmlObj":{
+        "removeComments": true,
+        "collapseWhitespace": true,
+        "conservativeCollapse": true,
+        "preserveLineBreaks": false,
+        "removeAttributeQuotes":false,
+        "removeEmptyAttributes": false,
+        "removeEmptyElements": false,
+        "removeScriptTypeAttributes": false,
+        "collapseBooleanAttributes": false,
+        "removeStyleLinkTypeAttributes": false,
+        "keepClosingSlash": true,
+        "minifyJS": false,
+        "minifyCSS":false
+    },
+
+
+    "htmlFile":[{
+		"changIf":true,
+        "destRoot":"",
+        "src":"*"
+    }],
+
+    "tplsHtmlFile": "tpls/",
+    "htmlDstDir":"",
+
+
+    "jsonPageFile":[{
+		"changIf":true,
+        "destRoot":"",
+        "src":"jsonpage/*"
+    }],
+	"jsonPageDstDir":"",
+
+    "injectPath":false
+}

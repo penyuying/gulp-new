@@ -1,0 +1,203 @@
+{
+    "name": "build",
+    "userName": "",
+    "version": "v2.3.0",
+
+
+    "ifbabel":false,
+    "babelEnvConfig":{
+        "targets": {
+            "browsers": ["last 5 versions","> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 5", "ie_mob >= 6", "ios_saf>=4", "ios 6", "opera >= 5","safari >= 4"]
+        },
+        "spec":false,
+        "loose":true,
+        "modules":false,
+        "useBuiltIns": true,
+        "debug": false
+    },
+    "ifmin": true,
+    "ifEval":false,
+    "ifJsDoc":false,
+    "gzipIf": false,
+    "srcRev": true,
+    "suffix": "",
+	"injectIf":true,
+	"bannerIf":true,
+	"changIf":false,
+	"jsAnonymous":false,
+    "mapIf": true,
+
+    "srcPath": "{#webappDir#}src/",
+    "destPath": "{#webPath#}build/",
+    "destRoot":"",
+    "destTest": "{#webPath#}test/",
+    "revDestPath":"{#tempPath#}/rev/build/",
+
+    "jsDocType":"angular",
+    "jsDocLink":"/api",
+    "jsDoc3Temp":"{#tempPath#}jsDoc/build/",
+    "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
+    "isTest":false,
+	"testConfig":{
+        "srcPath":[
+			"../test/**/*.js",
+			"*.js"
+        ],
+        "testConfigFile":"{#destTest#}sf/test/config/karma.conf.js",
+        "singleRun":false
+    },
+
+    "host": "127.0.0.1",
+    "port": "8091",
+    "serverPath": "{#webPath#}/build/",
+    "browser": "chrome",
+	"anonymous":true,
+
+    "copyFile": [{
+        "src":"images/**/*.ico",
+        "dest":"images/"
+    },{
+        "src":"data/**/*",
+        "dest":"data/"
+    },{
+        "src":"fonts/**/*.*",
+        "dest":"fonts/"
+    },{
+        "src":"sass/fonts/**/*.*",
+        "dest":"css/fonts/"
+    },{
+        "src":"../lib/css/mui/**/*",
+        "dest":"css/"
+    },{
+        "src":"../lib/css/swiper/**/*",
+        "dest":"css/"
+    },{
+        "src":"../lib/js/video-js/video-js.swf",
+        "dest":"js/lib/video/"
+    },{
+        "src":"../lib/js/video-js/font/**/*",
+        "dest":"js/lib/video/font/"
+    }],
+    "copyDstDir": "",
+
+
+    "jsonFile": "",
+    "jsonDstDir": "json/",
+
+    "imgFile": [{
+        "src": "images/**/*"
+    },{
+        "src": "sass/img/**/*",
+        "dest": "css/img/"
+    }],
+    "imgDstDir": "images/",
+
+    "dirConcatJs": "",
+
+    "concatJs":[{
+        "src":"../lib/js/zepto/src/{zepto,data,event,touch}",
+        "fileName":"zepto.js",
+        "dest": "js/lib/"
+    }],
+    "concatDstJsFileName":"",
+
+    "jsFile": [{
+        "src":"../lib/js/Swiper/dist/js/swiper",
+        "dest":"js/",
+        "newFileName":"swiper.min.js"
+    },{
+        "src":"../lib/js/video-js/video",
+        "dest":"js/lib/video/",
+        "newFileName":"video.js"
+    },{
+        "src":"../lib/js/video-js/ie8/videojs-ie8",
+        "dest":"js/lib/video/ie8/"
+    },{
+        "src": "js/**/*",
+        "dest": "js/",
+        "debar": "{js/_subDir/,js/_subDir/**/*.*}"
+	},{
+        "src":"../lib/js/encrypt/md5",
+        "dest":"js/"
+    },{
+        "src":"../lib/js/better-scroll/dist/bscroll",
+        "dest":"js/lib/",
+        "newFileName":"iscroll.js"
+    },{
+        "src":"../lib/js/H5FileUpload/src/FileUpload",
+        "dest":"js/lib/",
+        "newFileName":"FileUpload.js"
+    }],
+    "jsDstDir": "js/",
+
+    "ngTplsFile":"",
+    "ngTplsConf":{},
+    "ngTplsDstDir":"js/",
+
+    "sassFile":"",
+
+    "compassFile": [{
+        "src":"sass/**/*",
+        "dest":"css/"
+    }],
+    "compassTemp":"{#tempPath#}sass/{#name#}/",
+    "compassConfig": {
+        "project": "{#srcPath#}",
+        "css":"{#compassTemp#}/css/",
+        "config_file": "./config.rb",
+        "sass": "sass/",
+        "image": "sass/img/",
+        "relative":true,
+        "sourcemap":true,
+        "generated_images_path":"{#compassTemp#}css/img/",
+        "http_path":"./",
+        "import_path":""
+    },
+
+    "concatCss":"",
+    "concatDstCssFileName":"concatCss.css",
+
+    "cssFile":[{
+        "src":"../lib/js/video-js/video-js",
+        "dest":"js/lib/video/"
+    }],
+    "cssDstDir": "css/",
+
+	"ifminhtml": true,
+	"ifminhtmlObj":{
+        "removeComments": true,
+        "collapseWhitespace": true,
+        "conservativeCollapse": true,
+        "preserveLineBreaks": false,
+        "removeAttributeQuotes":false,
+        "removeEmptyAttributes": false,
+        "removeEmptyElements": false,
+        "removeScriptTypeAttributes": false,
+        "collapseBooleanAttributes": false,
+        "collapsewhitespace":false,
+        "removeStyleLinkTypeAttributes": false,
+        "keepClosingSlash": true,
+        "minifyJS": true,
+        "minifyCSS":true
+    },
+
+    "templateFile":"",
+    "templateDstDir":"pages/",
+
+    "htmlFile": [{
+		"changIf":true,
+        "src":"{index,index1}",
+		"destRoot":"",
+        "tpls":"_tpls/"
+    },{
+        "changIf":true,
+        "injectIf":false,
+        "src":"pages/**/*",
+        "tpls":"_tpls/",
+        "dest":"pages/"
+    }],
+
+    "tplsHtmlFile": "_tpls/",
+    "htmlDstDir":"",
+    "injectPath":""
+}

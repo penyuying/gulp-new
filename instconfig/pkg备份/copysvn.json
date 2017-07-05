@@ -1,0 +1,138 @@
+{
+    "name": "copysvn",
+    "userName": "penyu",
+    "version": "1.0.0",
+
+    "ifmin": false,
+    "ifEval":true,
+    "ifJsDoc":true,
+    "gzipIf": false,
+    "srcRev": false,
+    "suffix": "",
+	"injectIf":true,
+	"changIf":true,
+    "webappDir":"E:/webapp/",
+    "webPath":"E:/webapp/svn/collectSrc/",
+    "srcPath": "{#webappDir#}develop/",
+    "destPath": "{#webPath#}/current/",
+    "debarPath": "{废弃/,废弃*.*,废弃.*,*废弃.*,*废弃*/**/*.*,/**/废弃*.*,/**/*废弃*/*.*,/**/*废弃*/**/*.*,备份/,*备份*/**/*.*,/**/备份*.*,/**/*备份*/*.*,/**/*备份*/**/*.*}",
+
+    "host": "127.0.0.1",
+    "port": "8093",
+    "serverPath": "{#webPath#}/current/",
+    "browser": "chrome",
+    "copyFile":[{
+        "src":"../../github/{QRcode/AraleQRCode,ionic,BarCode/JsBarcode,ocLazyLoad}/**/*.*",
+        "dest": "lib/"
+    },{
+        "src":"carPay/html/**/*.*",
+        "dest": "code/carPay/html/"
+    },{
+        "src":"collect/html/{_tpls,css,img,ng_tpls,pkg,sass,tpls}/**/*.*",
+        "dest": "code/collect/html/"
+    },{
+        "src":"collect/html/js/**/*.*",
+        "dest": "code/collect/html/js/"
+    },{
+        "src":"collect/html/index.html",
+        "dest": "code/collect/html/"
+    },{
+        "src":"collect/html/json/QueryChargeResponse.json",
+        "dest": "code/collect/html/json/"
+    },{
+        "src":"collectMobile/html/{js,pkg,sass,tpls}/**/*.*",
+        "dest": "code/collectMobile/html/"
+    },{
+        "src":"collectMobile/html/html/index.html",
+        "dest": "code/collectMobile/html/html/"
+    },{
+        "src":"icip/html/**/*.*",
+        "dest": "code/icip/html/"
+    },{
+        "src":"IST/html/{_tpls,compass,html,images,lib,pkg,sass,ts}/**/*.*",
+        "dest": "code/IST/html/"
+    },{
+        "src":"IST/html/config.rb",
+        "dest": "code/IST/html/"
+    },{
+        "src":"IST/typings/**/*.*",
+        "dest": "code/IST/typings/"
+    },{
+        "src":"IST/{tsconfig,tsd}.json",
+        "dest": "code/IST/"
+    },{
+        "src":"official/html/{css,html,img,js,json,pkg,sass}/**/*.*",
+        "dest": "code/official/html/"
+    },{
+        "src":"official/html/index.html",
+        "dest": "code/official/html/"
+    },{
+        "src":"rongyun/html/**/*.*",
+        "dest": "code/rongyun/html/"
+    },{
+        "src":"rongyun/script/**/*.*",
+        "dest": "code/rongyun/script/"
+    },{
+        "src":"rongyun/typings/**/*.*",
+        "dest": "code/rongyun/typings/"
+    },{
+        "src":"rongyun/vendor/**/*.*",
+        "dest": "code/rongyun/vendor/"
+    },{
+        "src":"rongyun/{bower,tsconfig,tsd}.json",
+        "dest": "code/rongyun/"
+    },{
+        "src":"wybb/html/**/*.*",
+        "dest": "code/wybb/html/"
+    },{
+        "src":"客户端api接口.docx",
+        "dest": "../current/"
+    },{
+        "src":"../web/Doc/**/*.*",
+        "dest": "../docs/"
+    },{
+        "src":"../webStock/Doc/**/*.*",
+        "dest": "../docs/"
+    }],
+    "copyDstDir": "",
+
+    "jsonFile":"",
+    "jsonDstDir": "json/",
+
+    "imgFile": "",
+    "imgDstDir": "img/",
+
+    "dirConcatJs":"",
+
+
+    "concatJs":"",
+    "concatDstJsFileName":"",
+
+
+    "jsFile": "",
+    "jsDstDir": "",
+
+
+    "sassFile":"",
+
+    "concatCss":"",
+    "concatDstCssFileName":"concatCss.css",
+
+    "cssFile":"",
+    "cssDstDir": "css/",
+
+	"ifminhtml": true,
+	"ifminhtmlObj":"",
+
+
+    "htmlFile":"",
+
+    "tplsHtmlFile": "tpls/",
+    "htmlDstDir":"",
+
+
+    "jsonPageFile":"",
+	"jsonPageDstDir":"",
+
+    "injectPath":false
+}

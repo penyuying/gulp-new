@@ -1,0 +1,201 @@
+{
+    "name": "html",
+    "userName": "",
+    "version": "v2.3.0",
+
+
+
+    "ifbabel":true,
+    "ifmin": true,
+    "ifEval":false,
+    "ifJsDoc":false,
+    "gzipIf": false,
+    "srcRev": true,
+    "suffix": "",
+	"injectIf":true,
+	"bannerIf":true,
+	"changIf":false,
+	"jsAnonymous":false,
+    "mapIf": true,
+    "mapObj":{
+        "includeContent": true,
+        "sourceRoot":""
+    },
+
+    "srcPath": "{#webappDir#}html/",
+    "destPath": "{#webPath#}html/",
+    "destRoot":"",
+    "destTest": "{#webPath#}test/",
+    "revDestPath":"{#tempPath#}rev/html/",
+
+    "jsDocType":"angular",
+    "jsDocLink":"/api",
+    "jsDoc3Temp":"{#tempPath#}jsDoc/html/",
+    "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
+    "isTest":false,
+	"testConfig":"",
+
+    "host": "127.0.0.1",
+    "port": "8092",
+    "serverPath": "{#webPath#}/html/",
+    "browser": "chrome",
+	"anonymous":true,
+
+    "copyFile": [{
+        "src":"images/**/*.ico",
+        "dest":"images/"
+    },{
+        "src":"fonts/**/*.*",
+        "dest":"fonts/"
+    },{
+        "src":"../lib/js/iscroll/build/iscroll-probe.js",
+        "dest":"js/lib/",
+        "newFileName":"iscroll.js"
+    },{
+        "src":"sass/fonts/**/*.*",
+        "dest":"css/fonts/"
+    },{
+        "src":"!../lib/css/mui/**/*",
+        "dest":"css/"
+    },{
+        "src":"!../lib/css/swiper/**/*",
+        "dest":"css/"
+    },{
+        "src":"../lib/js/video-js/video-js.swf",
+        "dest":"js/lib/video/"
+    },{
+        "src":"../lib/js/video-js/font/**/*",
+        "dest":"js/lib/video/font/"
+    }],
+    "copyDstDir": "",
+
+
+    "jsonFile": "",
+    "jsonDstDir": "json/",
+
+    "imgFile": [{
+        "src": "images/**/*"
+    },{
+        "src": "sass/img/**/*",
+        "dest":"css/img/"
+    },{
+        "src": "css/img/**/*",
+        "dest":"css/img/"
+    }],
+    "imgDstDir": "images/",
+
+    "dirConcatJs": "",
+
+    "concatJs":[{
+        "src":"../lib/js/zepto/src/{zepto,data,event,touch}",
+        "fileName":"zepto.js",
+        "dest": "js/lib/"
+    }],
+    "concatDstJsFileName":"",
+
+    "jsFile": [{
+        "src":"../lib/js/Swiper/dist/js/swiper",
+        "dest":"js/lib/",
+        "newFileName":"swiper.js"
+    },{
+        "src":"../lib/js/video-js/video",
+        "dest":"js/lib/video/",
+        "newFileName":"video.js"
+    },{
+        "src":"../lib/js/video-js/ie8/videojs-ie8",
+        "dest":"js/lib/video/ie8/"
+    },{
+        "src": "js/**/*",
+        "dest": "js/",
+        "debar": "{js/_subDir/,js/_subDir/**/*.*}"
+	},{
+        "src":"../lib/js/encrypt/md5",
+        "dest":"js/lib/"
+    }],
+    "jsDstDir": "js/",
+
+    "ngTplsFile":"",
+    "ngTplsConf":{},
+    "ngTplsDstDir":"js/",
+
+    "sassFile":[{
+        "src":"sass/**/*",
+        "dest":"css/"
+    }],
+
+    "compassFile": [{
+        "src":"!compass/**/*",
+        "dest":"css/"
+    }],
+    "compassTemp":"{#tempPath#}compass/{#name#}/",
+    "compassConfig": {
+        "project": "{#srcPath#}",
+        "css":"{#compassTemp#}/css/",
+        "config_file": "./config.rb",
+        "sass": "compass/",
+        "image": "compass/img/",
+        "relative":true,
+        "sourcemap":true,
+        "generated_images_path":"{#compassTemp#}css/img/",
+        "http_path":"./",
+        "import_path":""
+    },
+
+    "concatCss":"",
+    "concatDstCssFileName":"concatCss.css",
+
+    "cssFile":[{
+        "src":"../lib/js/video-js/video-js",
+        "dest":"js/lib/video/"
+    }],
+    "cssDstDir": "css/",
+
+	"ifminhtml": true,
+	"ifminhtmlObj":{
+        "removeComments": true,
+        "collapseWhitespace": true,
+        "conservativeCollapse": true,
+        "preserveLineBreaks": false,
+        "removeAttributeQuotes":false,
+        "removeEmptyAttributes": false,
+        "removeEmptyElements": false,
+        "removeScriptTypeAttributes": false,
+        "collapseBooleanAttributes": false,
+        "collapsewhitespace":false,
+        "removeStyleLinkTypeAttributes": false,
+        "keepClosingSlash": true,
+        "minifyJS": true,
+        "minifyCSS":true
+    },
+
+    "templateFile":[{
+        "changIf":true,
+        "injectIf":false,
+        "src":"pages/**/*",
+        "tpls":"_tpls/",
+        "dest":"pages/"
+    }],
+    "templateDstDir":"pages/",
+
+    "htmlFile": [{
+		"changIf":true,
+        "src":"pageshtml/**/*",
+		"destRoot":"",
+        "tpls":"_tpls/"
+    }],
+
+    "tplsHtmlFile": "_tpls/",
+    "htmlDstDir":"",
+
+
+
+    "jsonPageFile":[{
+        "changIf":true,
+        "destRoot":"",
+        "src":"pagesJson/*"
+    }],
+    "jsonPageDstDir":"",
+
+
+    "injectPath":""
+}

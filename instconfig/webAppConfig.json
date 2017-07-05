@@ -2,10 +2,10 @@
   "rem": "/*处理过后的json的文件和目录存放的目录*/",
 
 
-  "bowersrc":"E:/bower/app/",
-  "githubsrc":"e:/github/",
-  "webappDir":"e:/webapp/",
-  "webappDstDir":"e:/webapp/",
+  "bowersrc":"../../../bower/app/",
+  "githubsrc":"../../../github/",
+  "webappDir":"../",
+  "webappDstDir":"../",
   "bakDest": "d:/webapp/bak/",
   "tempPath": "{#webappDir#}temp/",
 
@@ -28,18 +28,13 @@
       "ss"
   ],
   "items": [
-    "icip",
-    "ms",
-    "collect",
-    "collectMobile",
-    "carPay",
-    "official",
-    "laohuji",
-    "rongyun",
-    "IST",
-    "copysvn",
-    "practice"
-  ],
+      "build",
+      "build.sit",
+      "build.uat",
+      "copysvn",
+      "html",
+      "htmlsvn"
+    ],
   "postcssBak":[
       {"postcsssprites":"postcsssprites"},
       {"postcsscustomproperties":"postcsscustomproperties"},
@@ -75,7 +70,7 @@
   "bakDateDir":"",
   "bakFile": [{
       "src":["**/*"],
-      "dest":"{#bakDateDir#}develop/",
+      "dest":"{#bakDateDir#}src/",
       "destPath":"{#bakDest#}",
       "srcPath":"{#srcPath#}",
       "debarPath":"{node_modules/**/*,/**/node_modules/**/*,bower_components/**/*,/**/bower_components/**/*}"
@@ -89,6 +84,8 @@
   "bakDstDir": "{#bakDest#}{#bakDateDir#}",
   "ifmin": false,
   "ifEval":false,
+  "taskWatch":false,
+  "connectStart": false,
   "evalConfig":{},
   "ifEncrypt":false,
   "encryptConfig":{},
@@ -100,6 +97,17 @@
       "password":"miMaHenJianDan"
   },
   "ifminimg": false,
+  "ifbabel":false,
+  "babelEnvConfig":{
+      "targets": {
+        "browsers": ["last 5 versions","> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 5", "ie_mob >= 6", "ios_saf>=4", "ios 6", "opera >= 5","safari >= 4"]
+      },
+      "spec":false,
+      "loose":true,
+      "modules":false,
+      "useBuiltIns": true,
+      "debug": false
+  },
   "imgquality":80,
   "ifminhtml": false,
   "ifminhtmlObj":{
@@ -124,10 +132,10 @@
   "suffix": ".min",
   "injectIf":true,
   "bannerIf":false,
-  "srcPath": "{#webappDir#}develop/",
-  "publicPath": "{#webappDir#}develop/public/",
+  "srcPath": "{#webappDir#}src/",
+  "publicPath": "{#webappDir#}public/",
   "destRoot": "",
-  "destPath": "{#webappDstDir#}web/",
+  "destPath": "{#webappDstDir#}dist/",
   "destTest": "{#webPath#}test/",
   "revDestPath":"{#tempPath#}/",
   "revType":"part",
@@ -136,7 +144,7 @@
   "debarPath": "{*废弃*/**/*.*,/**/废弃*.*,/**/*废弃*/*.*,/**/*废弃*/**/*.*,*备份*/**/*.*,/**/备份*.*,/**/*备份*/*.*,/**/*备份*/**/*.*}",
   "host": "127.0.0.1",
   "port": "8020",
-  "webPath": "{#webappDstDir#}web/",
+  "webPath": "{#webappDstDir#}dist/",
   "webTestPath": "{#webappDstDir#}webTest/",
   "serverPath": "{#webPath#}",
   "browser": "",

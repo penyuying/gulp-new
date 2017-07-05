@@ -1,0 +1,96 @@
+{
+	"name": "react",
+    "userName": "penyu",
+    "version": "1.0.0",
+
+    "ifmin": false,
+    "ifEval":true,
+    "ifJsDoc":false,
+    "gzipIf": false,
+    "srcRev": false,
+    "suffix": "",
+	"injectIf":true,
+	"changIf":true,
+    "srcPath": "{#webappDir#}develop/react/src/",
+    "destPath": "{#webPath#}react/",
+    "revDestPath":"{#tempPath#}rev/react/",
+    "destRoot":"",
+
+    "jsDoc3Temp":"{#tempPath#}jsDoc/react/",
+    "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
+
+    "host": "127.0.0.1",
+    "port": "8098",
+    "serverPath": "{#webPath#}react/",
+    "browser": "chrome",
+
+
+    "copyFile": [{
+            "src": "jsx/**/*.*",
+            "dest":"jsx/"
+		},{
+			"psrc":"js/react/react-15.0.2/build/browser.min.js",
+			"dest":"js/react/"
+		},{
+			"psrc":"js/react/react-15.0.2/build/{react,react-dom,react-with-addons}.js",
+			"suffix":".min",
+			"dest":"js/react/"
+		}],
+    "copyDstDir": "",
+
+    "jsonFile": [],
+    "jsonDstDir": "json/",
+
+	"imgFile": [{
+        "src": "img/**/*",
+		"dest": "img/"
+	}, {
+        "src": "css/**/*",
+        "dest": "css/"
+	}, {
+        "src": "sass/**/*",
+        "dest": "css/"
+	}],
+    "imgDstDir": "img/",
+	"concatJs":[],
+	"concatDstJsFileName":"",
+
+	"jsFile": [],
+    "jsDstDir": "js/",
+
+	"sassFile": [{
+        "src":"sass/**/*",
+        "dest":"css/"
+    }],
+
+	"cssFile":"css/**/*",
+    "cssDstDir": "css/",
+
+
+	"ifminhtml": false,
+	"ifminhtmlObj":{
+        "removeComments": true,
+        "collapseWhitespace": true,
+        "conservativeCollapse": true,
+        "preserveLineBreaks": false,
+        "removeAttributeQuotes":false,
+        "removeEmptyAttributes": false,
+        "removeEmptyElements": false,
+        "removeScriptTypeAttributes": false,
+        "collapseBooleanAttributes": false,
+        "removeStyleLinkTypeAttributes": false,
+        "keepClosingSlash": true,
+        "minifyJS": true,
+        "minifyCSS":true
+    },
+	"htmlFile": [{
+        "src":"html/**/*",
+        "debar": "tpls/**/*.*",
+        "tpls":"html/tpls/"
+    }],
+
+    "tplsHtmlFile": "html/tpls/",
+    "htmlDstDir":"",
+
+	"injectPath":""
+}

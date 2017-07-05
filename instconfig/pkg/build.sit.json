@@ -1,0 +1,30 @@
+{
+    "ifbabel":true,
+    "babelEnvConfig":{
+        "targets": {
+            "browsers": ["last 5 versions","> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 5", "ie_mob >= 6", "ios_saf>=4", "ios 6", "opera >= 5","safari >= 4"]
+        },
+        "spec":false,
+        "loose":true,
+        "modules":false,
+        "useBuiltIns": true,
+        "debug": false
+    },
+	"ifmin": true,
+	"mapIf": false,
+	"bannerIf": false,
+	"connectStart": true,
+    "taskWatch":true,
+    "compassConfig": {
+        "project": "{#srcPath#}",
+        "css":"{#compassTemp#}/css/",
+        "config_file": "./config.rb",
+        "sass": "sass/",
+        "image": "sass/img/",
+        "relative":true,
+        "sourcemap":false,
+        "generated_images_path":"{#compassTemp#}css/img/",
+        "http_path":"./",
+        "import_path":""
+    }
+}
