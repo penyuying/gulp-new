@@ -3,8 +3,8 @@
     "name": "instconfig",
     "userName": "penyu",
     "version": "1.0.0",
-    "ifmin": false,
-    "ifEval":true,
+    "ifmin": true,
+    "ifEval":false,
     "ifminhtml": false,
     "gzipIf": false,
     "changIf": false,
@@ -42,7 +42,10 @@
         "dest":"{#subDevelop#}/sass/fonts/KidMadeTo/"
     },{
         "src":"{#githubsrc#}fonteditor/save/KidMadeTo3.0/KidMadeTo.*",
-        "dest":"{#htmlDevelop#}/sass/fonts/KidMadeTo/"
+        "dest":"{#subDevelop#}/sass/fonts/KidMadeTo3.0/"
+    },{
+        "src":"{#githubsrc#}fonteditor/save/KidMadeTo3.0/KidMadeTo.*",
+        "dest":"{#htmlDevelop#}/sass/fonts/KidMadeTo3.0/"
     }],
     "copyDstDir": "",
     "jsonFile": [{

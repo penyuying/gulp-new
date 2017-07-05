@@ -104,7 +104,9 @@
       },
       "spec":false,
       "loose":true,
-      "modules":false
+      "modules":false,
+      "useBuiltIns": true,
+      "debug": false
   },
   "imgquality":80,
   "ifminhtml": false,

@@ -1,4 +1,5 @@
 {
+    "ifbabel":true,
 	"ifmin": false,
 	"mapIf": false,
 	"bannerIf": false,

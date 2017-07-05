@@ -55,11 +55,17 @@
         "src":"sass/fonts/**/*.*",
         "dest":"css/fonts/"
     },{
-        "src":"../lib/css/mui/**/*",
+        "src":"!../lib/css/mui/**/*",
         "dest":"css/"
     },{
-        "src":"../lib/css/swiper/**/*",
+        "src":"!../lib/css/swiper/**/*",
         "dest":"css/"
+    },{
+        "src":"../lib/js/video-js/video-js.swf",
+        "dest":"js/lib/video/"
+    },{
+        "src":"../lib/js/video-js/font/**/*",
+        "dest":"js/lib/video/font/"
     }],
     "copyDstDir": "",
 
@@ -69,7 +75,13 @@
 
     "imgFile": [{
         "src": "images/**/*"
-	}],
+    },{
+        "src": "sass/img/**/*",
+        "dest":"css/img/"
+    },{
+        "src": "css/img/**/*",
+        "dest":"css/img/"
+    }],
     "imgDstDir": "images/",
 
     "dirConcatJs": "",
@@ -82,12 +94,23 @@
     "concatDstJsFileName":"",
 
     "jsFile": [{
+        "src":"../lib/js/Swiper/dist/js/swiper",
+        "dest":"js/lib/",
+        "newFileName":"swiper.js"
+    },{
+        "src":"../lib/js/video-js/video",
+        "dest":"js/lib/video/",
+        "newFileName":"video.js"
+    },{
+        "src":"../lib/js/video-js/ie8/videojs-ie8",
+        "dest":"js/lib/video/ie8/"
+    },{
         "src": "js/**/*",
         "dest": "js/",
         "debar": "{js/_subDir/,js/_subDir/**/*.*}"
 	},{
         "src":"../lib/js/encrypt/md5",
-        "dest":"js/"
+        "dest":"js/lib/"
     }],
     "jsDstDir": "js/",
 
@@ -101,7 +124,7 @@
     }],
 
     "compassFile": [{
-        "src":"compass/**/*",
+        "src":"!compass/**/*",
         "dest":"css/"
     }],
     "compassTemp":"{#tempPath#}compass/{#name#}/",
@@ -121,7 +144,10 @@
     "concatCss":"",
     "concatDstCssFileName":"concatCss.css",
 
-    "cssFile":"",
+    "cssFile":[{
+        "src":"../lib/js/video-js/video-js",
+        "dest":"js/lib/video/"
+    }],
     "cssDstDir": "css/",
 
 	"ifminhtml": true,

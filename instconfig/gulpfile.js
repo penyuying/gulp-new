@@ -2299,6 +2299,7 @@
      * @returns {gulpPipe} 返回管道
      */
     function jsWrapUglify(pipe, cfg) {
+        cfg.babelEnvConfig.decodeEntities=false
         var _env=[PY.babelpresetenv,cfg.babelEnvConfig];
         return pipe.pipe(PY.gulpif(cfg.jsAnonymous == true, PY.gulpheaderfooter({//文件前后增加内容
             header: cfg.jsHeader,
