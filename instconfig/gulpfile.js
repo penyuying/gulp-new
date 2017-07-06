@@ -72,6 +72,7 @@
     var pkgExt = ".ud";
     var fs = require('fs'),
         cheerio = require('cheerio'),
+        glob = require('glob'),
         path = require('path');
 
     var taskOptions = {
@@ -1494,6 +1495,9 @@
                                 //                                revCollectorType:returnObj(obj, 'revCollectorType',pkg.revCollectorType),//revCollector替换文件的类型
                                 mapIf: returnObj(obj, 'mapIf', pkg.mapIf),//是否生成map文件（true为是，false为否）
                                 mapsPath: returnObj(obj, 'mapsPath', pkg.mapsPath),//obj.mapsPath || pkg.mapsPath,
+                                
+                                webpackConfig: returnObj(obj, 'webpackConfig', returnObj(pkg, 'webpackConfig', "")),
+                                webpackHtmlTpls: returnObj(obj, 'webpackHtmlTpls', returnObj(pkg, 'webpackHtmlTpls', "")),
                                 compassConfig: compassConfig,//obj.compassConfig || pkg.compassConfig,
                                 ifminimg: returnObj(obj, 'ifminimg', pkg.ifminimg),//obj.ifmin || pkg.ifminimg,//是否压缩图片（true为是，false为否）
                                 imgquality: returnObj(obj, 'imgquality', pkg.imgquality) || 100,//图片质量
@@ -1624,6 +1628,8 @@
                         //                        revCollectorType:returnObj(pkg, 'revCollectorType',""),//revCollector替换文件的类型
                         mapIf: pkg.mapIf,
                         mapsPath: pkg.mapsPath,
+                        webpackConfig: returnObj(pkg, 'webpackConfig', ""),
+                        webpackHtmlTpls: returnObj(pkg, 'webpackHtmlTpls', ""),
                         compassConfig: compassConfig,//obj.compassConfig || pkg.compassConfig,
                         ifminimg: pkg.ifminimg,//是否压缩图片（true为是，false为否）
                         ngTplsConf: returnObj(pkg, 'ngTplsConf', {}),//obj.conf || pkg.ngTplsConf设置生成ng模板配置参数
@@ -1741,6 +1747,15 @@
                 return obj;
             },
 
+            /**
+             * 获取Webpac处理参数配置
+             * @returns {Object} 返回cfgObj配置参数对象
+             */
+            getWebpackPath:function(){
+                var _ext = _extname && '.{' + _extname + ',js}' || '.js';
+                var obj = this.setObj("webpackFile", "webpackDstDir", "webpackFile");
+                return obj;
+            },
             /**
              * 获取Json处理参数配置
              * @returns {Object} 返回cfgObj配置参数对象
@@ -2863,6 +2878,7 @@
                     testConfig: pkgObj.testConfig,
                     bakPath: gb.getBakPath(),
                     clsPath: gb.getClearPath(),
+                    webpackPath: gb.getWebpackPath(),
                     jsonPath: gb.getJsonPath(),
                     copyPath: gb.getCopyPath(),
                     imgPath: gb.getImgPath(),
@@ -2941,7 +2957,34 @@
                     return subMerge;
                 }
             },
+            task_webpack:function(){
+                var pathOptions=this.options.webpackPath,
+                    cfgArr=pathOptions && pathOptions.cfgArr;
 
+
+
+                // console.log(cfgArr);
+                // console.log(_merge(require('./webpack.config.js'),{
+                //          publicPath: '/dist/fff/'
+                //     }));
+
+                if (cfgArr && cfgArr.length > 0) {
+                    cfgArr.forEach(function(cfg){
+
+
+                        // console.log(require('./webpack.config.js')(cfg));
+                        PY.webpack(require('./webpack.config.js')(cfg)).watch(200, function(err, stats) {
+                            var compilation=stats && stats.compilation;
+
+                            if(compilation.errors && compilation.errors.length>0){
+                                console.log(compilation.errors);
+                            }
+                        });
+                    });
+                }
+
+
+            },
             /**
              * 处理JSON文件的Task
              */
@@ -3554,6 +3597,7 @@
                                     taskImgArr.push(taskName + "_" + arr[1]);
                                     sub[taskName].taskImgArr.push(taskName + "_" + arr[1]);
                                     break;
+                                case "webpack":
                                 case "template":
                                 case "ngTpls":
                                 case "json":

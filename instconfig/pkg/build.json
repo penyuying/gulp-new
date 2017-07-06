@@ -130,6 +130,21 @@
     }],
     "jsDstDir": "js/",
 
+    "webpackFile":[{
+        "src":"wjs/*.js",
+        "webpackHtmlTpls":[{
+            "template":"../src/tpls/video-detail1.html",
+            "filename":"../pages/video-detail1.html",
+            "inject":true,
+            "hash":true,
+            "chunks": ["/main"]
+        }],
+        "dest":"js/"
+    }],
+    "webpackHtmlTpls":"",
+    "webpackDstDir":"js/",
+    "webpackConfig":"",
+
     "ngTplsFile":"",
     "ngTplsConf":{},
     "ngTplsDstDir":"js/",

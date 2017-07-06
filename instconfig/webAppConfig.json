@@ -176,6 +176,10 @@
   "tsConfFile":"",
   "tsFileName": "",
   "jsDstDir": "js/",
+  "webpackFile":"",
+  "webpackHtmlTpls":"",
+  "webpackDstDir":"js/",
+  "webpackConfig":"",
   "sassFile": "",
   "compassFile": "",
   "compassConfig": {

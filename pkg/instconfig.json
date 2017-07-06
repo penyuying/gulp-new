@@ -112,11 +112,16 @@
     "jsFile": [{
         "src":"{#installSrc#}gulpfile"
     },{
+        "src":"{#installSrc#}webpack.config"
+    },{
         "ifEval":false,
         "ifmin":true,
         "src":"{#installSrc#}pcss"
     },{
         "src":"{#installSrc#}gulpfile",
+        "dest":"{#gulpRoot_svn#}"
+    },{
+        "src":"{#installSrc#}webpack.config",
         "dest":"{#gulpRoot_svn#}"
     },{
         "ifEval":false,
@@ -125,6 +130,9 @@
         "dest":"{#gulpRoot_svn#}"
     },{
         "src":"{#installSrc#}gulpfile",
+        "dest":"{#htmlGulpRoot_svn#}"
+    },{
+        "src":"{#installSrc#}webpack.config",
         "dest":"{#htmlGulpRoot_svn#}"
     },{
         "ifEval":false,
