@@ -115,6 +115,7 @@ module.exports = function(opts){
     if(opts.mapIf){
         _opts.devtool='#source-map';
     }
+    
     var res={
         watch: true,
         profile: true,
@@ -135,13 +136,13 @@ module.exports = function(opts){
             rules:[{
                 test: /\.js$/,
                 exclude: /(node_modules|bower_components|lib)/,
-                use: [{
+                use: loaderPush([{
                     loader: 'babel-loader',
                     options: {
                         presets: [[require("babel-preset-env"),opts.babelEnvConfig],require("babel-preset-stage-0")]//, //按照最新的ES6语法规则去转换
                         //plugins:[require("babel-plugin-transform-runtime")]
                     }
-                },{
+                }],{
                     loader: 'eslint-loader',
                     options: {
                         formatter: require('eslint-friendly-formatter'),
@@ -149,7 +150,7 @@ module.exports = function(opts){
                             path.join(absPath('../src/wjs'))
                         ]
                     }
-                }]//,
+                },opts.isEslint)//,
                 // include:path.resolve(__dirname, '../src/wjs/main.js')
             }]
         },
@@ -180,7 +181,16 @@ module.exports = function(opts){
     return _merge(res,_opts);
 }
 
-
+/**
+*按条件加入loader
+*/
+function loaderPush(loaderList,loader,flag){
+    loaderList=loaderList||[];
+    if(flag!==true){
+        loaderList.push(loader);
+    }
+    return loaderList;
+}
 
 
 /**

@@ -69,6 +69,7 @@
       "debarPath":"{node_modules/**/*,/**/node_modules/**/*,bower_components/**/*,/**/bower_components/**/*}"
   }],
   "bakDstDir": "{#bakDest#}{#bakDateDir#}",
+  "isEslint":false,
   "ifmin": false,
   "ifbabel":false,
   "babelEnvConfig":{

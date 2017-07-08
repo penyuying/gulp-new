@@ -38,6 +38,7 @@
     "gulp-concat": "~2.6.0",
     "gulp-connect-multi": "git+https://github.com/penyuying/gulp-connect-multi.git",
     "gulp-encrypt": "git+https://github.com/penyuying/gulp-encrypt.git",
+    "gulp-eslint": "^4.0.0",
     "gulp-fileTime": "git+https://github.com/penyuying/gulp-fileTime.git",
     "gulp-gzip": "~1.2.0",
     "gulp-header-footer": "0.0.3",

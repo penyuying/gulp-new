@@ -15,6 +15,8 @@
         "useBuiltIns": true,
         "debug": false
     },
+
+    "isEslint":true,
     "ifmin": true,
     "ifEval":false,
     "ifJsDoc":false,
@@ -108,7 +110,8 @@
     },{
         "src": "js/**/*",
         "dest": "js/",
-        "debar": "{js/_subDir/,js/_subDir/**/*.*}"
+        "debar": "{js/_subDir/,js/_subDir/**/*.*}",
+        "isEslint":false
 	},{
         "src":"../lib/js/encrypt/md5",
         "dest":"js/"
@@ -132,6 +135,8 @@
             "hash":true,
             "chunks": ["video-detail"]
         }],
+
+        "isEslint":false,
         "dest":"js/"
     }],
     "webpackHtmlTpls":"",

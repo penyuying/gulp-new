@@ -1495,7 +1495,7 @@
                                 //                                revCollectorType:returnObj(obj, 'revCollectorType',pkg.revCollectorType),//revCollector替换文件的类型
                                 mapIf: returnObj(obj, 'mapIf', pkg.mapIf),//是否生成map文件（true为是，false为否）
                                 mapsPath: returnObj(obj, 'mapsPath', pkg.mapsPath),//obj.mapsPath || pkg.mapsPath,
-                                
+
                                 NODE_ENV:returnObj(obj, 'NODE_ENV', returnObj(pkg, 'NODE_ENV', "")),//webpack开发模式或生产模式
                                 webpackConfig: returnObj(obj, 'webpackConfig', returnObj(pkg, 'webpackConfig', "")),
                                 webpackHtmlTpls: returnObj(obj, 'webpackHtmlTpls', returnObj(pkg, 'webpackHtmlTpls', "")),
@@ -1506,6 +1506,7 @@
                                 newFileName: returnObj(obj, 'newFileName', ""),//处理完后的文件的新名称
                                 prefix: returnObj(obj, "prefix", returnObj(pkg, 'prefix', false)),//是否给文件加前缀（有内空时为加，没有内容时为不加）
                                 suffix: returnObj(obj, "suffix", returnObj(pkg, 'suffix', false)),//是否给文件加后缀（有内空时为加，没有内容时为不加）
+                                isEslint: returnObj(obj, 'isEslint', returnObj(pkg, 'isEslint', false)),//eslint检查风格
                                 ifmin: returnObj(obj, "ifmin", returnObj(pkg, 'ifmin', false)),//是否压缩JS、CSS（true为否，false为是）
                                 ifbabel: returnObj(obj, "ifbabel", returnObj(pkg, 'ifbabel', false)),//是否启用babel（true为是，false为否）
                                 babelEnvConfig:returnObj(obj, "babelEnvConfig", returnObj(pkg, 'babelEnvConfig', {})),//babelEnv配置参数
@@ -1638,7 +1639,8 @@
                         newFileName: "",//处理完后的文件的新名称
                         prefix: returnObj(pkg, 'prefix', false),//是否给文件前后缀（有内空时为加，没有内容时为不加）
                         suffix: returnObj(pkg, 'suffix', false),//是否给文件加后缀（有内空时为加，没有内容时为不加）
-                        ifmin: returnObj(pkg, 'ifmin', false),
+                        isEslint: returnObj(pkg, 'isEslint', false),//eslint检查风格
+                        ifmin: returnObj(pkg, 'ifmin', false),//压缩代码
                         ifbabel: returnObj(pkg, 'ifbabel', false),
                         babelEnvConfig:returnObj(pkg, 'babelEnvConfig', false),//babelEnv配置参数
                         ifEval: returnObj(pkg, 'ifEval', false),//js是否eval加密文件
@@ -2105,6 +2107,10 @@
      * @returns {gulpPipe} 返回管道
      */
     function jsFactory_sub(pipe, cfg) {
+        if(cfg.isEslint!==true){//启用Eslint
+            pipe=pipe.pipe(PY.gulpeslint({configFle:".eslintrc"}))
+                .pipe(PY.gulpeslint.format(PY.eslintfriendlyformatter));
+        }
         return pipe.pipe(PY.gulpjshint()); //检查语法;
     }
 
