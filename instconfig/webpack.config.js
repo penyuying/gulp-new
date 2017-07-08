@@ -11,6 +11,9 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 // 别名配置
 var getAlias = function() {
     return {
+        "src":path.join(absPath('../src')),
+        "lib":path.join(absPath('../lib')),
+        "wjs":path.join(absPath('../src/wjs')),
         // 特殊
         'jquery': path.resolve(__dirname, '../src/vendor/jquery2/jquery.js'),
 
@@ -91,8 +94,8 @@ module.exports = function(opts){
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: [[require("babel-preset-env"),opts.babelEnvConfig],require("babel-preset-stage-0")], //按照最新的ES6语法规则去转换
-                        plugins:[require("babel-plugin-transform-runtime")]
+                        presets: [[require("babel-preset-env"),opts.babelEnvConfig],require("babel-preset-stage-0")]//, //按照最新的ES6语法规则去转换
+                        //plugins:[require("babel-plugin-transform-runtime")]
                     }
                 }//,
                 // include:path.resolve(__dirname, '../src/wjs/main.js')
@@ -202,8 +205,8 @@ function _formatRegText(regText) {
 function getSrcPath(globPath,entriesDir) {
     var files = glob.sync(globPath);
     var entries =entriesDir || {},
-        _reDir=globPath.replace(/\**\/*\*+\.*[js]*$/,""),
-        _regDir=_reDir && new RegExp("^\s*"+_formatRegText(_reDir)),
+        _reDir=globPath.replace(/\/*\**\/*\*+\.*[js]*$/,""),
+        _regDir=_reDir && new RegExp("^\s*"+_formatRegText(_reDir)+"\/*"),
         entry,
         dirname,
         basename;

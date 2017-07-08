@@ -106,13 +106,6 @@
         "dest":"js/",
         "newFileName":"swiper.min.js"
     },{
-        "src":"../lib/js/video-js/video",
-        "dest":"js/lib/video/",
-        "newFileName":"video.js"
-    },{
-        "src":"../lib/js/video-js/ie8/videojs-ie8",
-        "dest":"js/lib/video/ie8/"
-    },{
         "src": "js/**/*",
         "dest": "js/",
         "debar": "{js/_subDir/,js/_subDir/**/*.*}"
@@ -133,11 +126,11 @@
     "webpackFile":[{
         "src":"wjs/*.js",
         "webpackHtmlTpls":[{
-            "template":"../src/tpls/video-detail1.html",
-            "filename":"../pages/video-detail1.html",
+            "template":"../src/tpls/video-detail.html",
+            "filename":"../pages/video-detail.html",
             "inject":true,
             "hash":true,
-            "chunks": ["/main"]
+            "chunks": ["video-detail"]
         }],
         "dest":"js/"
     }],

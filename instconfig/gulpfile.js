@@ -2490,7 +2490,7 @@
         var myReporter = new PY.mapstream(_this.options.gb.myReporter);
         var i = key;
 
-        
+
         return splitPipe(function () {
             return getStreamqueueParamList(cfg, function () {
                 return splitPipe(function () {
@@ -2971,11 +2971,19 @@
                 if (cfgArr && cfgArr.length > 0) {
                     cfgArr.forEach(function(cfg){
 
-
                         // console.log(require('./webpack.config.js')(cfg));
                         PY.webpack(require('./webpack.config.js')(cfg)).watch(200, function(err, stats) {
                             var compilation=stats && stats.compilation;
+                            if(cfg.connectStart !== true){
+                                if(getParam.server.toLowerCase()=="sync"){
+                                    PY.browsersync.stream();
+                                    // return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.browsersync.reload({stream:true})));
 
+                                    // return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.browsersync.reload({stream:false})));
+                                }else{
+                                    PY.gulpconnectmulti.reload();
+                                }
+                            }
                             if(compilation.errors && compilation.errors.length>0){
                                 console.log(compilation.errors);
                             }
