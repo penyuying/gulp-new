@@ -2958,10 +2958,12 @@
                 }
             },
             task_webpack:function(){
-                var pathOptions=this.options.webpackPath,
-                    cfgArr=pathOptions && pathOptions.cfgArr;
 
-
+                    var _this = this,
+                        option = _this.options,
+                        pathOptions=_this.options.webpackPath,
+                        cfgArr=pathOptions && pathOptions.cfgArr
+                        _pkg = option.pkg;
 
                 // console.log(cfgArr);
                 // console.log(_merge(require('./webpack.config.js'),{
@@ -2972,25 +2974,36 @@
                     cfgArr.forEach(function(cfg){
 
                         // console.log(require('./webpack.config.js')(cfg));
-                        PY.webpack(require('./webpack.config.js')(cfg)).watch(200, function(err, stats) {
-                            var compilation=stats && stats.compilation;
-                            if(cfg.connectStart !== true){
-                                if(getParam.server.toLowerCase()=="sync"){
-                                    PY.browsersync.stream();
-                                    // return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.browsersync.reload({stream:true})));
+                        // PY.webpack(require('./webpack.config.js')(cfg)).watch(200, function(err, stats) {
+                        var _wpack=PY.webpack(require('./webpack.config.js')(cfg));
+                        if (_pkg.taskWatch) {//taskWatch为真的时候不监控文件变化
+                            _wpack.run(function(err, stats){
+                                _webpackLog(err, stats,cfg);
+                            });
+                        }else{
+                            _wpack.watch(200,function(err, stats){
+                                _webpackLog(err, stats,cfg);
+                            });
+                        }
 
-                                    // return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.browsersync.reload({stream:false})));
-                                }else{
-                                    PY.gulpconnectmulti.reload();
-                                }
-                            }
-                            if(compilation.errors && compilation.errors.length>0){
-                                console.log(compilation.errors);
-                            }
-                        });
                     });
                 }
+                function _webpackLog(err, stats,cfg) {
+                    var compilation=stats && stats.compilation;
+                    if(cfg.connectStart !== true){
+                        if(getParam.server.toLowerCase()=="sync"){
+                            PY.browsersync.stream();
+                            // return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.browsersync.reload({stream:true})));
 
+                            // return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.browsersync.reload({stream:false})));
+                        }else{
+                            PY.gulpconnectmulti.reload();
+                        }
+                    }
+                    if(compilation.errors && compilation.errors.length>0){
+                        console.log(compilation.errors);
+                    }
+                }
 
             },
             /**
