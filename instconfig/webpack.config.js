@@ -28,10 +28,49 @@ function getPlugins(cfg){//webpackHtmlTpls//
     var res=[];
 
 
+    // res.push(new webpack.SourceMapDevToolPlugin({
+    //   // Match assets like for loaders. This is
+    //   // convenient if you want to match against multiple
+    //   // file types.
+    //   test: test, // string | RegExp | Array,
+    //   include: include, // string | RegExp | Array,
+
+    //   // `exclude` matches file names, not package names!
+    //   // exclude: string | RegExp | Array,
+
+    //   // If filename is set, output to this file.
+    //   // See `sourceMapFileName`.
+    //   // filename: string,
+
+    //   // This line is appended to the original asset processed.
+    //   // For instance '[url]' would get replaced with an url
+    //   // to the source map.
+    //   // append: false | string,
+
+    //   // See `devtoolModuleFilenameTemplate` for specifics.
+    //   // moduleFilenameTemplate: string,
+    //   // fallbackModuleFilenameTemplate: string,
+
+    //   // If false, separate source maps aren't generated.
+    //   module: separateSourceMaps,
+
+    //   // If false, column mappings are ignored.
+    //   columns: columnMappings,
+
+    //   // Use plain line to line mappings for the matched modules.
+    //   // lineToLine: bool | {test, include, exclude},
+
+    //   // Remove source content from source maps. This is handy
+    //   // especially if your source maps are big (over 10 MB)
+    //   // as browsers can struggle with those.
+    //   // See https://github.com/webpack/webpack/issues/2669.
+    //   // noSources: bool,
+    // }));
+
     res.push(new webpack.DefinePlugin({
         'process.env': {
             // 'NODE_ENV': '"production"'
-            'NODE_ENV': '"development"'
+            'NODE_ENV': cfg.NODE_ENV
         }
     }));
 
@@ -73,10 +112,15 @@ module.exports = function(opts){
             publicPath: "../js"
         }
     };
+    if(opts.mapIf){
+        _opts.devtool='#source-map';
+    }
     var res={
         watch: true,
         profile: true,
         cache: false,
+        // progress:true,
+        // colors:true,
         entry: {
             //app: path.join(__dirname,"../src/wjs/main.js")
         },
@@ -90,17 +134,28 @@ module.exports = function(opts){
         module: {
             rules:[{
                 test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
-                use: {
+                exclude: /(node_modules|bower_components|lib)/,
+                use: [{
                     loader: 'babel-loader',
                     options: {
                         presets: [[require("babel-preset-env"),opts.babelEnvConfig],require("babel-preset-stage-0")]//, //按照最新的ES6语法规则去转换
                         //plugins:[require("babel-plugin-transform-runtime")]
                     }
-                }//,
+                },{
+                    loader: 'eslint-loader',
+                    options: {
+                        formatter: require('eslint-friendly-formatter'),
+                        include: [
+                            path.join(absPath('../src/wjs'))
+                        ]
+                    }
+                }]//,
                 // include:path.resolve(__dirname, '../src/wjs/main.js')
             }]
         },
+        // eslint: {
+        //     formatter: require('eslint-friendly-formatter')
+        // },
         plugins:getPlugins(opts)//[//
             // new webpack.DefinePlugin({
             //     'process.env': {

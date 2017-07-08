@@ -122,7 +122,7 @@
         "newFileName":"FileUpload.js"
     }],
     "jsDstDir": "js/",
-
+    "NODE_ENV":"development",
     "webpackFile":[{
         "src":"wjs/*.js",
         "webpackHtmlTpls":[{

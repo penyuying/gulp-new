@@ -1496,6 +1496,7 @@
                                 mapIf: returnObj(obj, 'mapIf', pkg.mapIf),//是否生成map文件（true为是，false为否）
                                 mapsPath: returnObj(obj, 'mapsPath', pkg.mapsPath),//obj.mapsPath || pkg.mapsPath,
                                 
+                                NODE_ENV:returnObj(obj, 'NODE_ENV', returnObj(pkg, 'NODE_ENV', "")),//webpack开发模式或生产模式
                                 webpackConfig: returnObj(obj, 'webpackConfig', returnObj(pkg, 'webpackConfig', "")),
                                 webpackHtmlTpls: returnObj(obj, 'webpackHtmlTpls', returnObj(pkg, 'webpackHtmlTpls', "")),
                                 compassConfig: compassConfig,//obj.compassConfig || pkg.compassConfig,
@@ -1628,6 +1629,7 @@
                         //                        revCollectorType:returnObj(pkg, 'revCollectorType',""),//revCollector替换文件的类型
                         mapIf: pkg.mapIf,
                         mapsPath: pkg.mapsPath,
+                        NODE_ENV:returnObj(pkg, 'NODE_ENV', ""),//webpack开发模式或生产模式
                         webpackConfig: returnObj(pkg, 'webpackConfig', ""),
                         webpackHtmlTpls: returnObj(pkg, 'webpackHtmlTpls', ""),
                         compassConfig: compassConfig,//obj.compassConfig || pkg.compassConfig,
@@ -2990,19 +2992,25 @@
                 }
                 function _webpackLog(err, stats,cfg) {
                     var compilation=stats && stats.compilation;
-                    if(cfg.connectStart !== true){
-                        if(getParam.server.toLowerCase()=="sync"){
-                            PY.browsersync.stream();
-                            // return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.browsersync.reload({stream:true})));
 
-                            // return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.browsersync.reload({stream:false})));
-                        }else{
-                            PY.gulpconnectmulti.reload();
+                    stats && console.log(stats.toString({//打印日志
+                        chunks: false, // Makes the build much quieter
+                        colors: true
+                    }));
+
+                    if(!stats.hasErrors()){
+                        if(cfg.connectStart !== true){//刷新页面
+                            if(getParam.server.toLowerCase()=="sync"){
+                                PY.browsersync.reload();
+                                // return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.browsersync.reload({stream:true})));
+
+                                // return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.browsersync.reload({stream:false})));
+                            }else{
+                                PY.gulp.src(cfg.srcPath)
+                                    .pipe(PY.gulpconnectmulti.reload());
+                            }
                         }
-                    }
-                    if(compilation.errors && compilation.errors.length>0){
-                        console.log(compilation.errors);
-                    }
+                    };
                 }
 
             },

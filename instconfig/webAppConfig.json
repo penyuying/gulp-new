@@ -182,6 +182,7 @@
   "webpackConfig":"",
   "sassFile": "",
   "compassFile": "",
+  "NODE_ENV":"development",
   "compassConfig": {
         "config_file": "./config.rb",
         "css": "css",

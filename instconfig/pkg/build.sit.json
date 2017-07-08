@@ -26,5 +26,6 @@
         "generated_images_path":"{#compassTemp#}css/img/",
         "http_path":"./",
         "import_path":""
-    }
+    },
+    "NODE_ENV":"production"
 }
