@@ -3,6 +3,7 @@ var glob = require('glob');
 var _merge = require('webpack-merge');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CleanWebpackPlugin = require('clean-webpack-plugin');
 //var projectRoot = path.resolve(__dirname, '../')
 
     // check env & config/index.js to decide whether to enable CSS source maps for the
@@ -14,6 +15,7 @@ var getAlias = function() {
         "src":path.join(absPath('../src')),
         "lib":path.join(absPath('../lib')),
         "wjs":path.join(absPath('../src/wjs')),
+        "core-js":path.join(absPath('./node_modules/core-js')),
         // 特殊
         'jquery': path.resolve(__dirname, '../src/vendor/jquery2/jquery.js'),
 
@@ -85,20 +87,37 @@ function getPlugins(cfg){//webpackHtmlTpls//
            }
         }));
     }
-
+    var fileList=[];
     if(cfg.webpackHtmlTpls){
         if(cfg.webpackHtmlTpls instanceof Array && cfg.webpackHtmlTpls.length>0){
             cfg.webpackHtmlTpls.forEach(function(tplsCfg){
+                fileList=fileList.concat(tplsCfg.chunks||[]);
+
                 tplsCfg.template=path.join(absPath(tplsCfg.template));
                 tplsCfg.minify=cfg.ifminhtml!==true ? cfg.ifminhtmlObj||false:false;
                 res.push(new HtmlWebpackPlugin(tplsCfg));
             });
         }else{
+            fileList=fileList.concat(cfg.webpackHtmlTpls.chunks||[])
+
+            cfg.webpackHtmlTpls.minify=cfg.ifminhtml!==true ? cfg.ifminhtmlObj||false:false;
             res.push(new HtmlWebpackPlugin(cfg.webpackHtmlTpls));
         }
     }
 
-    res.push(new webpack.NoErrorsPlugin());
+    // res.push(new webpack.NoErrorsPlugin());弃用，使用NoEmitOnErrorsPlugin代替
+    res.push(new webpack.NoEmitOnErrorsPlugin());
+    clearFileList=fileList.map(function(item){
+        return item+"????????????????????.*";
+    })
+    res.push(new CleanWebpackPlugin(clearFileList,//匹配删除的文件
+            {
+                root: path.join(absPath(cfg.destPath)),//根目录
+                verbose:false,//开启在控制台输出信息
+                dry:false,//启用删除目录
+                watch: true//监控文件变化
+            }
+    ));
     return res;
 }
 
@@ -134,6 +153,14 @@ module.exports = function(opts){
         },
         module: {
             rules:[{
+                test: /\.html$/,
+                use: [ {
+                  loader: 'html-loader',
+                  options: {
+                    minimize: true
+                  }
+                }]
+            },{
                 test: /\.js$/,
                 exclude: /(node_modules|bower_components|lib)/,
                 use: loaderPush([{

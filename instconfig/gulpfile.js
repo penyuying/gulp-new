@@ -2332,7 +2332,7 @@
             }
         })))
         .pipe(PY.gulpif(cfg.ifbabel === true, PY.gulpbabel({
-          "presets": [_env]//PY.babelpresetes2015
+          "presets": [_env,PY.babelpresetstage0]//PY.babelpresetes2015
         })))
         .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpuglify())) //压缩JS
         //              .pipe(obfuscate())//JS代码混淆
@@ -3001,7 +3001,14 @@
 
                     stats && console.log(stats.toString({//打印日志
                         chunks: false, // Makes the build much quieter
-                        colors: true
+                        colors: true,
+                        // assets:true,//显示处理导出的文件信息
+                        children:false,//显示插件处理信息
+                        chunks:false,//这个少一些日志
+                        // chunkModules:false,
+                        // chunkOrigins:false,
+                        modules:false,//引用的模块信息
+                        version:false//webpack版本信息
                     }));
 
                     if(!stats.hasErrors()){
