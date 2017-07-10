@@ -2234,7 +2234,7 @@
      * @returns {gulpPipe} 返回管道
      */
     function htmlFactory1(pipe, cfg,callback) {
-
+        // console.log(cfg.tplsPath);
         return splitPipe(function(){
             return pipe.pipe(PY.gulptpls({ tplsPath: cfg.tplsPath }));
         }, function (_pipe) {

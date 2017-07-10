@@ -111,7 +111,7 @@
         "src": "js/**/*",
         "dest": "js/",
         "debar": "{js/_subDir/,js/_subDir/**/*.*}",
-        "isEslint":false
+        "isEslint":true
 	},{
         "src":"../lib/js/encrypt/md5",
         "dest":"js/"
@@ -134,8 +134,12 @@
             "inject":true,
             "hash":true,
             "chunks": ["video-detail"]
+        },{
+            "template":"../src/ms/subject.html",
+            "filename":"../ms/subject.html",
+            "inject":false
         }],
-
+        "tpls":"_tpls/",
         "isEslint":false,
         "dest":"js/"
     }],

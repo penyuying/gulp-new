@@ -3,7 +3,9 @@ var glob = require('glob');
 var _merge = require('webpack-merge');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+// var TplsWebpackPlugin = require('tpls-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 //var projectRoot = path.resolve(__dirname, '../')
 
     // check env & config/index.js to decide whether to enable CSS source maps for the
@@ -15,6 +17,7 @@ var getAlias = function() {
         "src":path.join(absPath('../src')),
         "lib":path.join(absPath('../lib')),
         "wjs":path.join(absPath('../src/wjs')),
+        "sass":path.join(absPath('../src/sass')),
         "core-js":path.join(absPath('./node_modules/core-js')),
         // 特殊
         'jquery': path.resolve(__dirname, '../src/vendor/jquery2/jquery.js'),
@@ -69,12 +72,27 @@ function getPlugins(cfg){//webpackHtmlTpls//
     //   // noSources: bool,
     // }));
 
+    // res.push(new TplsWebpackPlugin({
+    //     'process.env': {
+    //         // 'NODE_ENV': '"production"'
+    //         'NODE_ENV': cfg.NODE_ENV
+    //     },
+    //     "adsfdasf":false
+    // }));
     res.push(new webpack.DefinePlugin({
         'process.env': {
             // 'NODE_ENV': '"production"'
             'NODE_ENV': cfg.NODE_ENV
         }
     }));
+    res.push(new ExtractTextPlugin('../css/build/[name][hash].css'));
+
+    // {
+    //     filename:  function (getPath){
+    //         return getPath('../css/build/[name][hash].css').replace('../js/', '');
+    //     },
+    //     allChunks: true
+    // }
 
     if(cfg.ifmin!==true){
         res.push(new webpack.optimize.UglifyJsPlugin({
@@ -127,8 +145,8 @@ module.exports = function(opts){
     var _opts={
         entry:filterSrcPath(getSrcPaths(_srcPaths._check),getSrcPaths(_srcPaths._notCheck)),
         output: {
-            path: path.join(absPath(opts.destPath)),
-            publicPath: "../js"
+            path: path.join(absPath(opts.destPath))//,
+            // publicPath: "../js"
         }
     };
     if(opts.mapIf){
@@ -153,11 +171,74 @@ module.exports = function(opts){
         },
         module: {
             rules:[{
+                test: /\.(png|jpg|gif)$/,
+                use: [
+                  {
+                    loader: 'url-loader',
+                    options: {
+                        limit: 8192,
+                        name:'../images/build/[name][hash].[ext]'
+                    }
+                  }
+                ]
+            },{
+                test: /\.(svg|woff|woff2|eot|ttf)$/,
+                use: [
+                  {
+                    loader: 'url-loader',
+                    options: {
+                        limit: 8192,
+                        name:'../fonts/build/[name][hash].[ext]'
+                    }
+                  }
+                ]
+            },{
+                test: /\.css$/,
+                use:ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: [{
+                        loader:'css-loader',
+                        options:{
+                            sourceMap: opts.mapIf||false,
+                        }
+                    },{
+                        loader:'postcss-loader',
+                        options:{
+                            sourceMap: opts.mapIf||false,
+                            plugins:opts.postcss
+                        }
+                    }]
+                })
+            },{
+                test: /\.(scss|sass)$/,
+                use:ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: [{
+                        loader:'css-loader',
+                        options:{
+                            sourceMap: opts.mapIf||false,
+                        }
+                    },{
+                        loader:'postcss-loader',
+                        options:{
+                            sourceMap: opts.mapIf||false,
+                            plugins:opts.postcss
+                        }
+                    },{
+                        loader:'sass-loader'
+                    }]
+                })
+            },{
                 test: /\.html$/,
                 use: [ {
                   loader: 'html-loader',
                   options: {
                     minimize: true
+                  }
+                },{
+                  loader: 'tpls-loader',
+                  options: {
+                    tplsPath: opts.tplsPath
                   }
                 }]
             },{

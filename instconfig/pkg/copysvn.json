@@ -48,6 +48,9 @@
         "src":"src/**/*.*",
         "dest":"src/",
         "debar":["**/.vscode","**/.sass-cache"]
+    },{
+        "src":"src/.eslintrc.js",
+        "dest":"src/"
     }],
     "copyDstDir": "",
 
