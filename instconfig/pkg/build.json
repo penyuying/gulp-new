@@ -68,6 +68,9 @@
         "src":"sass/fonts/**/*.*",
         "dest":"css/fonts/"
     },{
+        "src":"../lib/js/jweixin-1.0.0.js",
+        "dest":"js/"
+    },{
         "src":"../lib/css/mui/**/*",
         "dest":"css/"
     },{
@@ -111,7 +114,7 @@
         "src": "js/**/*",
         "dest": "js/",
         "debar": "{js/_subDir/,js/_subDir/**/*.*}",
-        "isEslint":true
+        "isEslint":false
 	},{
         "src":"../lib/js/encrypt/md5",
         "dest":"js/"
