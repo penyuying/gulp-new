@@ -302,9 +302,9 @@
      *    },
      *    b:"{#a.c#}  这里第二个"
      * }
-     * 
+     *
      * replaceItem(obj1["b"], obj1, /\{\#([^}]+)\#\}/ig);
-     * 
+     *
      * //返回:
      * {
      *    a:{
@@ -2061,7 +2061,7 @@
      * @param {Array|string} newSrcPath 替换cfg.srcPath
      * @param {Function} callback 在changed前对管道执行的操作
      * @param {Boolean} isChanged 是否检查变化true为否
-     * 
+     *
      * @returns {gulpPipe} 返回管道
      */
     function startGulpNoMapAndChange(cfg, newSrcPath,callback,isChanged) {
@@ -2546,9 +2546,9 @@
     * @param {Boolean} isChanged 是否检查变化true为否
     */
     function jsBuild(_this, cfg, key, callback, newSrc,isChanged) {
-        return jsBodyBuild(_this, 
+        return jsBodyBuild(_this,
             startGulpMapAndChange(cfg, newSrc,isChanged),
-            cfg, 
+            cfg,
         key, callback);
     }
 
@@ -3591,7 +3591,7 @@
         taskNames = gpkg.items;
 
     var sub = {};
-    
+
     for (var i = 0; i < taskNames.length; i++) {
         if(getParam.config && getParam.config!=taskNames[i]){
             continue;
@@ -3687,9 +3687,22 @@
                             _dir=path.normalize(_rootpath).replace(/\\/g, "/");
 
                         PY.browsersync.init({
+                            rewriteRules: [//每次刷新时显示的内容
+                                {
+                                    match: /browserSync/g,
+                                    fn: function (match) {
+                                        return '正在刷新页面。。。';
+                                    }
+                                }
+                            ],
+                            notify: false,//false不显示任何通知
+                            codeSync: true,//不发送任何改变事件给浏览器
+                            // startPath:'index3_1.html',
+                            browser: ["chrome", "firefox"],//启动时打开的浏览器
                             port: sub[taskName].connectcfg.port,
                             server: {
-                                baseDir: [_dir]
+                                baseDir: [_dir],
+                                directory: true
                             },
                             files: [
                                 "**/*.js",
@@ -3834,9 +3847,14 @@
                         _dir=path.normalize(_rootpath).replace(/\\/g, "/");
 
                     PY.browsersync.init({
+                        notify: false,//false不显示任何通知
+                        codeSync: true,//不发送任何改变事件给浏览器
+                        // startPath:'index3_1.html',
+                        browser: ["chrome", "firefox"],//启动时打开的浏览器
                         port: connectcfg.port,
                         server: {
-                            baseDir: [_dir]
+                            baseDir: [_dir],
+                            directory: true
                         },
                         files: [
                             "**/*.js",
@@ -3934,7 +3952,7 @@
             // 现在任务 "test" html处理已经完成了
             //        PY.gulp.start(taskHtmlArr);
         });
-        
+
         //PY.gulp.task("jsDirConcatArr", jsDirConcatArr, function () {
         //    PY.gulp.start("taskArr");
         //});
@@ -3956,14 +3974,14 @@
         //PY.gulp.task('default', ["ifobj"], function () {
         //    PY.gulp.start("taskBakArr");
         // });
-    
+
         PY.gulp.task('default', ["taskBakArr"], function () {});
     }else{
         PY.gulp.task('default', function () {
             console.log('\x1B[31m'+getParam.config+"配置的task不存在!"+'\x1B[39m');
         });
     }
-    
+
 
     //#endregion
 

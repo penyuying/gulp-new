@@ -90,6 +90,9 @@
     "jsonDstDir": "json/",
 
     "imgFile": [{
+        "src":"ms/images/**/*",
+        "dest":"ms/images/"
+    },{
         "src": "images/**/*"
     },{
         "src": "sass/img/**/*",
@@ -130,7 +133,7 @@
     "jsDstDir": "js/",
     "NODE_ENV":"development",
     "webpackFile":[{
-        "src":"wjs/*.js",
+        "src":["wjs/*.js","wjs/ms/*.js"],
         "webpackHtmlTpls":[{
             "template":"../src/tpls/video-detail.html",
             "filename":"../pages/video-detail.html",
@@ -141,6 +144,16 @@
             "template":"../src/ms/subject.html",
             "filename":"../ms/subject.html",
             "inject":false
+        },{
+            "template":"../src/ms/sales.html",
+            "filename":"../ms/sales.html",
+            "inject":true,
+            "chunks": ["sales"]
+        },{
+            "template":"../src/ms/salesnew.html",
+            "filename":"../ms/salesnew.html",
+            "inject":true,
+            "chunks": ["sales"]
         }],
         "tpls":"_tpls/",
         "isEslint":false,

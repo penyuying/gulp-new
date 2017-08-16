@@ -6,6 +6,7 @@
 
 
     "ifbabel":true,
+    "isEslint":true,
     "ifmin": true,
     "ifEval":false,
     "ifJsDoc":false,
@@ -16,7 +17,7 @@
 	"bannerIf":true,
 	"changIf":false,
 	"jsAnonymous":false,
-    "mapIf": true,
+    "mapIf": false,
     "mapObj":{
         "includeContent": true,
         "sourceRoot":""

@@ -24,7 +24,7 @@
     "gulp-if": "~2.0.0",
     "gulp-inject": "~3.0.0",
     "gulp-jsdoc3": "~0.2.1",
-    "gulp-jsencrypt": "git+https://github.com/penyuying/gulp-jsencrypt.git",
+    "gulp-jsEncrypt": "git+https://github.com/penyuying/gulp-jsEncrypt.git",
     "gulp-jshint": "^2.0.4",
     "gulp-jsonlint": "~1.1.2",
     "gulp-jsontpls": "git+https://github.com/penyuying/gulp-jsontpls.git",
