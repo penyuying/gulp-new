@@ -27,7 +27,7 @@
 	"bannerIf":true,
 	"changIf":false,
 	"jsAnonymous":false,
-    "mapIf": true,
+    "mapIf": false,
 
     "srcPath": "{#webappDir#}src/",
     "destPath": "{#webPath#}build/",
@@ -154,6 +154,16 @@
             "filename":"../ms/salesnew.html",
             "inject":true,
             "chunks": ["sales"]
+        },{
+            "template":"../src/ms/schoolopens.html",
+            "filename":"../ms/schoolopens.html",
+            "inject":true,
+            "chunks": ["schoolopens"]
+        },{
+            "template":"../src/ms/schoolnursery.html",
+            "filename":"../ms/schoolnursery.html",
+            "inject":true,
+            "chunks": ["schoolnursery"]
         }],
         "tpls":"_tpls/",
         "isEslint":false,
@@ -181,7 +191,7 @@
         "sass": "sass/",
         "image": "sass/img/",
         "relative":true,
-        "sourcemap":true,
+        "sourcemap":false,
         "generated_images_path":"{#compassTemp#}css/img/",
         "http_path":"./",
         "import_path":""

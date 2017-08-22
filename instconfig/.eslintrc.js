@@ -30,6 +30,8 @@ module.exports = {
     ],
     // add your custom rules here
     'rules': {
+        "no-extend-native":0,
+        "spaced-comment":0,
         "new-cap":0,
         "no-eval":0,
         "camelcase":0,
