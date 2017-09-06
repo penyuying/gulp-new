@@ -121,6 +121,8 @@
     "devx": "gulp build --c build --s sync",
     "sit": "gulp build.sit --c build.sit",
     "uat": "gulp build.uat --c build.uat",
+    "testsit": "gulp build.testsit --s sync --c build.testsit",
+    "testuat": "gulp build.testuat --s sync --c build.testuat",
     "svn": "gulp copysvn --c copysvn",
     "html": "gulp html --c html",
     "htmlx": "gulp html --c html --s sync",

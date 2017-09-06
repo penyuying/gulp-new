@@ -10,6 +10,8 @@
     "devx": "gulp --gulpfile gulp/gulpfile.js build --c build --s sync",
     "sit": "gulp --gulpfile gulp/gulpfile.js build.sit --c build.sit",
     "uat": "gulp --gulpfile gulp/gulpfile.js build.uat --c build.uat",
+    "testsit": "gulp --gulpfile gulp/gulpfile.js build.testsit --c build.testsit --s sync",
+    "testuat": "gulp --gulpfile gulp/gulpfile.js build.testuat --c build.testuat --s sync",
     "svn": "gulp --gulpfile gulp/gulpfile.js copysvn --c copysvn",
     "html": "gulp --gulpfile gulp/gulpfile.js html --c html",
     "htmlsvn": "gulp --gulpfile gulp/gulpfile.js htmlsvn --c htmlsvn",

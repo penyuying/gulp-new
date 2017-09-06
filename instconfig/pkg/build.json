@@ -23,10 +23,10 @@
     "gzipIf": false,
     "srcRev": true,
     "suffix": "",
-	"injectIf":true,
-	"bannerIf":true,
-	"changIf":false,
-	"jsAnonymous":false,
+    "injectIf":true,
+    "bannerIf":true,
+    "changIf":false,
+    "jsAnonymous":false,
     "mapIf": false,
 
     "srcPath": "{#webappDir#}src/",
@@ -40,10 +40,10 @@
     "jsDoc3Temp":"{#tempPath#}jsDoc/build/",
     "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
     "isTest":false,
-	"testConfig":{
+    "testConfig":{
         "srcPath":[
-			"../test/**/*.js",
-			"*.js"
+            "../test/**/*.js",
+            "*.js"
         ],
         "testConfigFile":"{#destTest#}sf/test/config/karma.conf.js",
         "singleRun":false
@@ -52,8 +52,9 @@
     "host": "127.0.0.1",
     "port": "8091",
     "serverPath": "{#webPath#}/build/",
+    "browserbak": "chrome,firefox",
     "browser": "chrome",
-	"anonymous":true,
+    "anonymous":true,
 
     "copyFile": [{
         "src":"images/**/*.ico",
@@ -118,7 +119,7 @@
         "dest": "js/",
         "debar": "{js/_subDir/,js/_subDir/**/*.*}",
         "isEslint":false
-	},{
+    },{
         "src":"../lib/js/encrypt/md5",
         "dest":"js/"
     },{
@@ -140,6 +141,12 @@
             "inject":true,
             "hash":true,
             "chunks": ["video-detail"]
+        },{
+            "template":"../src/tpls/settle-account.html",
+            "filename":"../pages/settle-account.html",
+            "inject":true,
+            "hash":true,
+            "chunks": ["settle-account"]
         },{
             "template":"../src/ms/subject.html",
             "filename":"../ms/subject.html",
@@ -164,6 +171,16 @@
             "filename":"../ms/schoolnursery.html",
             "inject":true,
             "chunks": ["schoolnursery"]
+        },{
+            "template":"../src/ms/printer.html",
+            "filename":"../ms/printer.html",
+            "inject":true,
+            "chunks": ["printerPro"]
+        },{
+            "template":"../src/ms/dinosaur.html",
+            "filename":"../ms/dinosaur.html",
+            "inject":true,
+            "chunks": ["dinosaur"]
         }],
         "tpls":"_tpls/",
         "isEslint":false,
@@ -206,8 +223,8 @@
     }],
     "cssDstDir": "css/",
 
-	"ifminhtml": true,
-	"ifminhtmlObj":{
+    "ifminhtml": true,
+    "ifminhtmlObj":{
         "removeComments": true,
         "collapseWhitespace": true,
         "conservativeCollapse": true,
@@ -228,9 +245,9 @@
     "templateDstDir":"pages/",
 
     "htmlFile": [{
-		"changIf":true,
+        "changIf":true,
         "src":"{index,index1}",
-		"destRoot":"",
+        "destRoot":"",
         "tpls":"_tpls/"
     },{
         "changIf":true,

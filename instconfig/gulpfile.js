@@ -1993,7 +1993,9 @@
                         'W041': true, //错误码W041:(!=)
                         'W069': true, //错误码W069:(用这种方式设置对象属性xx["xxx"])
                         'W083': true, //错误码W083:(函数未命名)
-                        'W030': true //错误码W030：(函数不在if内直接用&&或||判断)
+                        'W030': true, //错误码W030：(函数不在if内直接用&&或||判断)
+                        'W033': true, //错误码W033：(结尾封号不打印日志)
+                        'W119': true //错误码W119：(es6的语法不打印日志)
                     };
                     file.jshint.results.forEach(function (err) {
                         if (err && err.error) {
@@ -3244,7 +3246,7 @@
                     var subMerge = new PY.mergestream(); //, myReporter;
 
                     subMerge.add(this.options.jsPath.cfgArr.map(function (cfg, k) {
-                        return jsBuild(_this, cfg, k, '', '', true);
+                        return jsBuild(_this, cfg, k, '', '', false);
                     }));
                     return subMerge;
                 }
@@ -3734,7 +3736,7 @@
                         var _rootpath = sub[taskName].connectcfg.root[0],
                             _dir = path.normalize(_rootpath).replace(/\\/g, '/');
 
-                        PY.browsersync.init({
+                            var _connOptions={
                             rewriteRules: [ //每次刷新时显示的内容
                                 {
                                     match: /browserSync/g,
@@ -3746,7 +3748,7 @@
                             notify: false, //false不显示任何通知
                             codeSync: true, //不发送任何改变事件给浏览器
                             // startPath:'index3_1.html',
-                            browser: ['chrome', 'firefox'], //启动时打开的浏览器
+                            // browser: ['chrome'], //, 'firefox'启动时打开的浏览器
                             port: sub[taskName].connectcfg.port,
                             server: {
                                 baseDir: [_dir],
@@ -3764,7 +3766,17 @@
                                 '**/*.eot',
                                 '**/*.svg'
                             ]
-                        });
+                        };
+
+
+                        if(sub[taskName].connectcfg.browser && typeof sub[taskName].connectcfg.browser=='string'){
+                            _connOptions.browser=sub[taskName].connectcfg.browser.split(',');
+                        }else if(sub[taskName].connectcfg.browser instanceof Array){
+                            _connOptions.browser=sub[taskName].connectcfg.browser;
+                        }
+
+
+                        PY.browsersync.init(_connOptions);
                     });
                 } else {
                     PY.gulp.task(taskName + '_connect', new PY.gulpconnectmulti.server({ //gulp-connect-multi
@@ -3881,12 +3893,11 @@
                 PY.gulp.task('connect', function () {
                     var _rootpath = connectcfg.root[0],
                         _dir = path.normalize(_rootpath).replace(/\\/g, '/');
-
-                    PY.browsersync.init({
+                    var _connOptions={
                         notify: false, //false不显示任何通知
                         codeSync: true, //不发送任何改变事件给浏览器
                         // startPath:'index3_1.html',
-                        browser: ['chrome', 'firefox'], //启动时打开的浏览器
+                        // browser: ['chrome', 'firefox'], //启动时打开的浏览器
                         port: connectcfg.port,
                         server: {
                             baseDir: [_dir],
@@ -3904,7 +3915,13 @@
                             '**/*.eot',
                             '**/*.svg'
                         ]
-                    });
+                    };
+                    if(connectcfg.browser && typeof connectcfg.browser=='string'){
+                        _connOptions.browser=connectcfg.browser.split(',');
+                    }else if(connectcfg.browser instanceof Array){
+                        _connOptions.browser=connectcfg.browser;
+                    }
+                    PY.browsersync.init(_connOptions);
                 });
             } else {
                 PY.gulp.task('connect', PY.gulpconnectmulti.server({ //gulp-connect-multi

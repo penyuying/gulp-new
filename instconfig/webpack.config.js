@@ -17,6 +17,8 @@ var getAlias = function() {
         "src":path.join(absPath('../src')),
         "lib":path.join(absPath('../lib')),
         "wjs":path.join(absPath('../src/wjs')),
+        "../images":path.join(absPath('../src/wimages')),
+        "images":path.join(absPath('../src/wimages')),
         "sass":path.join(absPath('../src/sass')),
         "core-js":path.join(absPath('./node_modules/core-js')),
         // 特殊

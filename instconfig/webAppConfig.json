@@ -31,6 +31,8 @@
       "build",
       "build.sit",
       "build.uat",
+      "build.testsit",
+      "build.testuat",
       "copysvn",
       "html",
       "htmlsvn"
@@ -149,7 +151,7 @@
   "webPath": "{#webappDstDir#}dist/",
   "webTestPath": "{#webappDstDir#}webTest/",
   "serverPath": "{#webPath#}",
-  "browser": "",
+  "browser": "chrome",
   "copyFile": "",
   "copyDstDir": "",
   "jsonFile": "",
