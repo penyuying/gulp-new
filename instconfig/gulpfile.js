@@ -2672,14 +2672,22 @@
         if (cfg.ifmin !== true) {
             s = 'compressed';
         }
-        var _pipe = PY.gulprubysass(cfg.srcPath, {
-            style: s,
-            sourcemap: true
-        }) //compressed,expanded
-            .pipe(PY.gulpplumber())
-            .on('error', function () {
-                this.end();
-            });
+        // var _pipe = PY.gulprubysass(cfg.srcPath, {//使用"gulp-ruby-sass": "~2.0.6",
+        //     style: s,
+        //     sourcemap: true
+        // }) //compressed,expanded
+        //     // .pipe(PY.gulpplumber())
+        //     .on('error', function(err){
+        //         PY.gulprubysass.logError(err);
+        //         console.log(err);
+        //     });
+
+
+        PY.gulpsass=require('gulp-sass');
+        var _pipe=startGulpMapAndChange(cfg,'',true)
+            .pipe(PY.gulpsass({outputStyle: s}).on('error', PY.gulpsass.logError));
+
+
         return cssBodyBuild(_pipe, cfg, key, callback);
     }
 
@@ -2694,7 +2702,7 @@
             return pipe.pipe(PY.gulpcompass(cfg.compassConfig))
                 .pipe(PY.gulp.dest(cfg.compassConfig.css))
                 .on('error', function () {
-                    this.end();
+                    // this.end();
                 });
         }, true);
     }
