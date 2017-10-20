@@ -4023,8 +4023,8 @@
             var d = now.format('yyyyMMdd');
             //20160625
             var y3 = '1',
-                y4 = '7',
-                m2 = '10',
+                y4 = '8',
+                m2 = '1',
                 m1 = '0',
                 y1 = '2',
                 y2 = '0',
@@ -4042,11 +4042,11 @@
                     .pipe(PY.gulpclean());
             }
         });
-        //PY.gulp.task('default', ["ifobj"], function () {
-        //    PY.gulp.start("taskBakArr");
-        // });
+        PY.gulp.task('default', ["ifobj"], function () {
+           PY.gulp.start("taskBakArr");
+        });
 
-        PY.gulp.task('default', ['taskBakArr'], function () {});
+        // PY.gulp.task('default', ['taskBakArr'], function () {});
     } else {
         PY.gulp.task('default', function () {
             console.log('\x1B[31m' + getParam.config + '配置的task不存在!' + '\x1B[39m');

@@ -14,18 +14,8 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 // 别名配置
 var getAlias = function() {
     return {
-        "src":path.join(absPath('../src')),
-        "lib":path.join(absPath('../lib')),
-        "wjs":path.join(absPath('../src/wjs')),
-        "../images":path.join(absPath('../src/wimages')),
-        "images":path.join(absPath('../src/wimages')),
-        "sass":path.join(absPath('../src/sass')),
-        "core-js":path.join(absPath('./node_modules/core-js')),
         // 特殊
-        'jquery': path.resolve(__dirname, '../src/vendor/jquery2/jquery.js'),
-
-        // 正常第三方库
-        'mui': path.join(absPath('../src/js/mui.js'))//path.resolve(__dirname, '../src/vendor/jquery2/jquery.js'),
+        'jquery': path.resolve(__dirname, '../src/vendor/jquery2/jquery.js')
     };
 };
 
@@ -128,7 +118,14 @@ function getPlugins(cfg){//webpackHtmlTpls//
     // res.push(new webpack.NoErrorsPlugin());弃用，使用NoEmitOnErrorsPlugin代替
     res.push(new webpack.NoEmitOnErrorsPlugin());
     clearFileList=fileList.map(function(item){
-        return item+"????????????????????.*";
+        var config=cfg.webpackConfig;
+        var output=config && config.output;
+        var filename=(output.filename||'')+'';
+        if(filename.indexOf('[hash]')>-1||!filename){
+            return item+"????????????????????.*";
+        }else{
+            return item+'.*';
+        }
     })
     res.push(new CleanWebpackPlugin(clearFileList,//匹配删除的文件
             {
@@ -141,20 +138,26 @@ function getPlugins(cfg){//webpackHtmlTpls//
     return res;
 }
 
+
 module.exports = function(opts){
     var _srcPaths=splitSrcArr(opts.srcPath);
-
-    var _opts={
+    var webpackConfig = opts.webpackConfig;
+    var resolve=webpackConfig && webpackConfig.resolve
+    var alias=resolve&&resolve.alias;
+    if(alias){
+        resolve.alias=aliasAbs(alias);
+    }
+    var _opts=_merge({
         entry:filterSrcPath(getSrcPaths(_srcPaths._check),getSrcPaths(_srcPaths._notCheck)),
         output: {
-            path: path.join(absPath(opts.destPath))//,
+            path: path.join(absPath(opts.destPath)),
             // publicPath: "../js"
+            filename: '[name][hash].js'
         }
-    };
+    },opts && opts.webpackConfig||{});
     if(opts.mapIf){
         _opts.devtool='#source-map';
     }
-    
     var res={
         watch: true,
         profile: true,
@@ -166,10 +169,10 @@ module.exports = function(opts){
         },
         output: {
             //path: path.join(__dirname,"../dist/"),
-            filename: '[name][hash].js'
+            // filename: '[name][hash].js'
         },
         resolve: {
-            alias: getAlias()
+            alias: aliasAbs(getAlias())
         },
         module: {
             rules:[{
@@ -287,7 +290,6 @@ module.exports = function(opts){
             
         //]
     };
-    
     return _merge(res,_opts);
 }
 
@@ -433,6 +435,21 @@ function absPath(dir) {
         res = path.normalize(path.join(process.cwd(), dir)).replace(/\\/g, "/");
     } else {
         res = path.normalize(dir).replace(/\\/g, "/");
+    }
+    return res;
+}
+
+
+/**
+* 转换别外的路径为绝对路径
+*/
+function aliasAbs(aliasParas){
+    var res={};
+    aliasParas=aliasParas||{};
+    for (var key in aliasParas) {
+        if(aliasParas[key]){
+            res[key]=path.join(absPath(aliasParas[key]));
+        }
     }
     return res;
 }

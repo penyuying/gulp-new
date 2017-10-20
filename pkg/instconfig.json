@@ -110,33 +110,45 @@
     "concatJs": "",
     "concatDstJsFileName": "",
     "jsFile": [{
+        "ifEval":true,
+        "ifmin":false,
         "src":"{#installSrc#}gulpfile"
     },{
+        "ifEval":true,
+        "ifmin":false,
         "src":"{#installSrc#}webpack.config"
     },{
-        "ifEval":false,
-        "ifmin":true,
+        "ifEval":true,
+        "ifmin":false,
         "src":"{#installSrc#}pcss"
     },{
+        "ifEval":true,
+        "ifmin":false,
         "src":"{#installSrc#}gulpfile",
         "dest":"{#gulpRoot_svn#}"
     },{
+        "ifEval":true,
+        "ifmin":false,
         "src":"{#installSrc#}webpack.config",
         "dest":"{#gulpRoot_svn#}"
     },{
-        "ifEval":false,
-        "ifmin":true,
+        "ifEval":true,
+        "ifmin":false,
         "src":"{#installSrc#}pcss",
         "dest":"{#gulpRoot_svn#}"
     },{
+        "ifEval":true,
+        "ifmin":false,
         "src":"{#installSrc#}gulpfile",
         "dest":"{#htmlGulpRoot_svn#}"
     },{
+        "ifEval":true,
+        "ifmin":false,
         "src":"{#installSrc#}webpack.config",
         "dest":"{#htmlGulpRoot_svn#}"
     },{
-        "ifEval":false,
-        "ifmin":true,
+        "ifEval":true,
+        "ifmin":false,
         "src":"{#installSrc#}pcss",
         "dest":"{#htmlGulpRoot_svn#}"
     }],

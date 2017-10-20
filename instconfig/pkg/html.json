@@ -17,7 +17,7 @@
 	"bannerIf":true,
 	"changIf":false,
 	"jsAnonymous":false,
-    "mapIf": false,
+    "mapIf": true,
     "mapObj":{
         "includeContent": true,
         "sourceRoot":""

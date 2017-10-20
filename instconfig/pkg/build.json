@@ -134,7 +134,47 @@
     "jsDstDir": "js/",
     "NODE_ENV":"development",
     "webpackFile":[{
+        "src":["oldwjs/*.js"],
+        "webpackConfig":{
+            "output":{
+                "filename":"[name].js"
+            },
+            "resolve": {
+                "alias": {
+                    "src":"../src",
+                    "lib":"../lib",
+                    "wjs":"../src/wjs",
+                    "../images":"../src/wimages",
+                    "images":"../src/wimages",
+                    "sass":"../src/sass",
+                    "core-js":"./node_modules/core-js",
+                    "mui": "../src/js/mui.js",
+                    "oldwjs":"../src/oldwjs"
+                }
+            }
+        },
+        "tpls":"_tpls/",
+        "isEslint":false,
+        "dest":"js/"
+    },{
         "src":["wjs/*.js","wjs/ms/*.js"],
+        "webpackConfig":{
+            "output":{
+                "filename":"[name][hash].js"
+            },
+            "resolve": {
+                "alias": {
+                    "src":"../src",
+                    "lib":"../lib",
+                    "wjs":"../src/wjs",
+                    "../images":"../src/wimages",
+                    "images":"../src/wimages",
+                    "sass":"../src/sass",
+                    "core-js":"./node_modules/core-js",
+                    "mui": "../src/js/mui.js"
+                }
+            }
+        },
         "webpackHtmlTpls":[{
             "template":"../src/tpls/video-detail.html",
             "filename":"../pages/video-detail.html",
@@ -142,11 +182,23 @@
             "hash":true,
             "chunks": ["video-detail"]
         },{
+            "template":"../src/tpls/article-detail.html",
+            "filename":"../pages/article-detail.html",
+            "inject":true,
+            "hash":true,
+            "chunks": ["article-detail"]
+        },{
             "template":"../src/tpls/settle-account.html",
             "filename":"../pages/settle-account.html",
             "inject":true,
             "hash":true,
             "chunks": ["settle-account"]
+        },{
+            "template":"../src/tpls/groupshoping.html",
+            "filename":"../pages/groupshoping.html",
+            "inject":true,
+            "hash":true,
+            "chunks": ["groupshoping"]
         },{
             "template":"../src/ms/subject.html",
             "filename":"../ms/subject.html",
@@ -181,6 +233,16 @@
             "filename":"../ms/dinosaur.html",
             "inject":true,
             "chunks": ["dinosaur"]
+        },{
+            "template":"../src/ms/montessori.html",
+            "filename":"../ms/montessori.html",
+            "inject":true,
+            "chunks": ["montessori"]
+        },{
+            "template":"../src/ms/welfare.html",
+            "filename":"../ms/welfare.html",
+            "inject":true,
+            "chunks": ["welfare"]
         }],
         "tpls":"_tpls/",
         "isEslint":false,
