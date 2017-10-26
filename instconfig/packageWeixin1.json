@@ -1,0 +1,9 @@
+{
+  "name": "webapp",
+  "userName": "penyu",
+  "version": "1.0.0",
+  "devDependencies": {},
+  "scripts": {
+    "dev": "gulp --gulpfile gulp/gulpfile.js weixin --c weixin"
+  }
+}

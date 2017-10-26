@@ -13,6 +13,9 @@
     "srcPath": "../",
     "installSrc":"gulpInst/instconfig/",
     "publicPath": "{#srcPath#}publicTool/public/",
+
+    "subroot_weixin":"E:/demo/weixin/",
+
     "subroot":"E:/tnzz/webappDev/",
     "subroot_svn":"E:/tnzz/devwebappSvn/",
     "htmlSubroot_svn":"E:/tnzz/htmlv3.0.0/",
@@ -27,6 +30,9 @@
     "mapsPath": "maps",
     "mapIf": false,
     "bakPath": "",
+
+    "gulpRoot_weixin":"{#subroot_weixin#}gulp/",
+
     "gulpRoot":"{#subroot#}gulp/",
     "gulpRoot_svn":"{#subroot_svn#}gulp/",
     "htmlGulpRoot_svn":"{#htmlSubroot_svn#}gulp/",
@@ -101,6 +107,25 @@
         "src":["{#installSrc#}package1"],
         "dest":"{#htmlSubroot_svn#}",
         "newFileName":"package.json"
+    },{
+        "ifmin":true,
+        "src":["{#installSrc#}packageWeixin"],
+        "dest":"{#gulpRoot_weixin#}",
+        "newFileName":"package.json"
+    },{
+        "ifmin":true,
+        "src":["{#installSrc#}packageWeixin1"],
+        "dest":"{#subroot_weixin#}",
+        "newFileName":"package.json"
+    },{
+        "ifmin":true,
+        "src":["{#installSrc#}webAppConfigWeixin"],
+        "newFileName":"webAppConfig.json",
+        "dest":"{#gulpRoot_weixin#}"
+    },{
+        "ifmin":true,
+        "src":"{#installSrc#}pkg/weixin*",
+        "dest":"{#subroot_weixin#}pkg/"
     }],
     "evalConfig":{},
     "jsonDstDir": "",
@@ -151,6 +176,22 @@
         "ifmin":false,
         "src":"{#installSrc#}pcss",
         "dest":"{#htmlGulpRoot_svn#}"
+    },{
+        "ifEval":true,
+        "ifmin":false,
+        "src":"{#installSrc#}gulpfile",
+        "dest":"{#gulpRoot_weixin#}"
+    },{
+        "ifEval":true,
+        "ifmin":false,
+        "src":"{#installSrc#}webpack.config",
+        "dest":"{#gulpRoot_weixin#}"
+    },{
+        "ifEval":true,
+        "ifmin":false,
+        "src":"{#installSrc#}pcssWeixin",
+        "dest":"{#gulpRoot_weixin#}",
+        "newFileName":"pcss.js"
     }],
     "jsDstDir": "{#gulpRoot#}",
     "sassFile": "",

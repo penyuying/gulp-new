@@ -1470,8 +1470,10 @@
                              * @property {Number} [imgquality=100] 图片质量，最小不能小于60(ifminimg=true时才有效)
                              * @property {Object} [ngTplsConf={}] 设置生成ng模板配置参数(obj.conf || pkg.ngTplsConf)
                              * @property {String} newFileName 处理完后的文件的新名称
+                             * @property {String} [basename=""] 修改文件名，不含扩展名和目录
                              * @property {String} [prefix=""] 是否给文件加前缀（有内空时为加，没有内容时为不加）
                              * @property {String} [suffix=""] 是否给文件加后缀（有内空时为加，没有内容时为不加）
+                             * @property {String} [extname=""] 是否修改扩文件展名
                              * @property {Boolean} [ifmin=false] 是否压缩JS、CSS（true为否，false为是）
                              * @property {Array} [autoprefixerBrowsers=["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5"]] 加前缀要兼容的浏览器版本例：["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5", "ie >= 6", "ie_mob >= 6", "ios_saf >= 6", "opera >= 5","safari >= 6"]
                              * @property {Boolean} [ifminhtml=false] 是否压缩html（true为否，false为是）
@@ -1526,8 +1528,10 @@
                                 imgquality: returnObj(obj, 'imgquality', pkg.imgquality) || 100, //图片质量
                                 ngTplsConf: returnObj(obj, 'conf', returnObj(pkg, 'ngTplsConf', {})), //obj.conf || pkg.ngTplsConf设置生成ng模板配置参数
                                 newFileName: returnObj(obj, 'newFileName', ''), //处理完后的文件的新名称
+                                basename: returnObj(obj, 'basename', returnObj(pkg, 'basename', false)), //是否修改文件名（有内空时为加，没有内容时为不加）
                                 prefix: returnObj(obj, 'prefix', returnObj(pkg, 'prefix', false)), //是否给文件加前缀（有内空时为加，没有内容时为不加）
                                 suffix: returnObj(obj, 'suffix', returnObj(pkg, 'suffix', false)), //是否给文件加后缀（有内空时为加，没有内容时为不加）
+                                extname: returnObj(obj, 'extname', returnObj(pkg, 'extname', false)), //是否修改文件扩展名（有内空时为加，没有内容时为不加）
                                 isEslint: returnObj(obj, 'isEslint', returnObj(pkg, 'isEslint', false)), //eslint检查风格
                                 ifmin: returnObj(obj, 'ifmin', returnObj(pkg, 'ifmin', false)), //是否压缩JS、CSS（true为否，false为是）
                                 ifbabel: returnObj(obj, 'ifbabel', returnObj(pkg, 'ifbabel', false)), //是否启用babel（true为是，false为否）
@@ -1658,8 +1662,10 @@
                         ifminimg: pkg.ifminimg, //是否压缩图片（true为是，false为否）
                         ngTplsConf: returnObj(pkg, 'ngTplsConf', {}), //obj.conf || pkg.ngTplsConf设置生成ng模板配置参数
                         newFileName: '', //处理完后的文件的新名称
-                        prefix: returnObj(pkg, 'prefix', false), //是否给文件前后缀（有内空时为加，没有内容时为不加）
-                        suffix: returnObj(pkg, 'suffix', false), //是否给文件加后缀（有内空时为加，没有内容时为不加）
+                        basename: returnObj(pkg, 'basename', false), //修改文件名：不含扩展名（有内容时为加，没有内容时为不加）
+                        prefix: returnObj(pkg, 'prefix', false), //是否给文件前后缀（有内容时为加，没有内容时为不加）
+                        suffix: returnObj(pkg, 'suffix', false), //是否给文件加后缀（有内容时为加，没有内容时为不加）
+                        extname: returnObj(pkg, 'extname', false), //是否修改文件扩展名（有内容时为加，没有内容时为不加）
                         isEslint: returnObj(pkg, 'isEslint', false), //eslint检查风格
                         ifmin: returnObj(pkg, 'ifmin', false), //压缩代码
                         ifbabel: returnObj(pkg, 'ifbabel', false),
@@ -1951,7 +1957,7 @@
              * @returns {Object} 返回cfgObj配置参数对象
              */
             getHtmlPath: function () {
-                var _ext = (_extname && '.{' + _extname + ',html}') || '.html';
+                var _ext = (_extname && '.{' + _extname + ',html,wxml}') || '.html,wxml';
                 var obj = this.setObj('htmlFile', 'htmlDstDir', 'htmlFile', _ext, false, '', 'tplsHtmlFile', 'html');
                 return obj;
             },
@@ -1971,7 +1977,7 @@
              * @returns {Object} 返回cfgObj配置参数对象
              */
             templatePath: function () {
-                var _ext = (_extname && '.{' + _extname + ',html}') || '.html';
+                var _ext = (_extname && '.{' + _extname + ',html,wxml}') || '.html,wxml';
                 var obj = this.setObj('templateFile', 'templateDstDir', 'templateFile', _ext, false, '', 'tplsHtmlFile', 'html');
                 return obj;
             },
@@ -2466,10 +2472,25 @@
      * @returns {gulpPipe} 返回管道
      */
     function publicPipeFixEncryptGzip(pipe, cfg) {
-        return encrypt(pipe.pipe(PY.gulpif(cfg.suffix !== false, PY.gulprename({
-            prefix: cfg.prefix, //文件前缀
-            suffix: cfg.suffix
-        }))) //加后缀
+        var editName=false;
+        var renameOption={};
+        if(cfg.basename){
+            editName=true;
+            renameOption.basename=cfg.basename;
+        }
+        if(cfg.prefix){
+            editName=true;
+            renameOption.prefix=cfg.prefix;
+        }
+        if(cfg.suffix){
+            editName=true;
+            renameOption.prefix=cfg.suffix;
+        }
+        if(cfg.extname){
+            editName=true;
+            renameOption.extname=cfg.extname;
+        }
+        return encrypt(pipe.pipe(PY.gulpif(editName === true, PY.gulprename(renameOption))) //加后缀
             , cfg)
             .pipe(PY.gulp.dest(cfg.destPath))
             .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulpgzip({

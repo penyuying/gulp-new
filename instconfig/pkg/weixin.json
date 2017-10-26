@@ -1,0 +1,164 @@
+{
+    "name": "微信小程序",
+    "userName": "kid",
+    "version": "v0.0.1",
+
+
+    "connectStart": true,
+
+    "ifbabel":false,
+    "babelEnvConfig":{
+        "targets": {
+            "browsers": ["last 5 versions"]
+        },
+        "spec":false,
+        "loose":true,
+        "modules":false,
+        "useBuiltIns": true,
+        "debug": false
+    },
+
+    "isEslint":true,
+    "ifmin": true,
+    "ifEval":false,
+    "ifJsDoc":false,
+    "gzipIf": false,
+    "srcRev": false,
+    "suffix": "",
+    "injectIf":true,
+    "bannerIf":true,
+    "changIf":false,
+    "jsAnonymous":false,
+    "mapIf": false,
+
+    "srcPath": "{#webappDir#}src/",
+    "destPath": "{#webPath#}build/",
+    "destRoot":"",
+    "destTest": "{#webPath#}test/",
+    "revDestPath":"{#tempPath#}/rev/build/",
+
+    "jsDocType":"angular",
+    "jsDocLink":"/api",
+    "jsDoc3Temp":"{#tempPath#}jsDoc/build/",
+    "jsDoc3Dir":"{#webPath#}Doc/{#name#}/",
+    "isTest":false,
+    "testConfig":{
+        "srcPath":[
+            "../test/**/*.js",
+            "*.js"
+        ],
+        "testConfigFile":"{#destTest#}sf/test/config/karma.conf.js",
+        "singleRun":false
+    },
+
+    "host": "127.0.0.1",
+    "port": "8091",
+    "serverPath": "{#webPath#}/build/",
+    "browserbak": "chrome,firefox",
+    "browser": "chrome",
+    "anonymous":true,
+
+    "copyFile": [{
+        "src":"**/*.wxss",
+        "dest":""
+    },{
+        "src":"**/*.wxs",
+        "dest":""
+    },{
+        "src":"**/*.{wxml,html}",
+        "extname":".wxml",
+        "dest":""
+    }],
+    "copyDstDir": "",
+
+
+    "jsonFile": [{
+        "src":"**/*",
+        "dest":""
+    }],
+    "jsonDstDir": "",
+
+    "imgFile": [{
+        "src":"**/*",
+        "dest":""
+    }],
+    "imgDstDir": "",
+
+    "dirConcatJs": "",
+
+    "concatJs":[],
+    "concatDstJsFileName":"",
+
+    "tsFile":[{
+        "bannerIf":true,
+        "ifEval":false,
+        "src":["../gulp/node_modules/typed-we-app/**/*","**/*"],
+        "dest":""
+    }],
+
+    "tsConfFile":"../tsconfig.json",
+
+    "jsFile": [{
+        "src":"**/*",
+        "dest":""
+    }],
+    "jsDstDir": "",
+    "NODE_ENV":"development",
+    "webpackFile":"",
+    "webpackHtmlTpls":"",
+    "webpackDstDir":"",
+    "webpackConfig":"",
+
+    "ngTplsFile":"",
+    "ngTplsConf":{},
+    "ngTplsDstDir":"",
+
+    "sassFile":[{
+        "src":"**/*",
+        "extname":".wxss",
+        "dest":""
+    }],
+
+
+    "compassFile": "",
+    "compassTemp":"",
+    "compassConfig": "",
+
+
+    "concatCss":"",
+    "concatDstCssFileName":"concatCss.css",
+
+    "cssFile":[{
+        "src":"**/*",
+        "extname":".wxss",
+        "dest":""
+    }],
+    "cssDstDir": "",
+
+    "ifminhtml": false,
+    "ifminhtmlObj":{
+        "removeComments": false,
+        "collapseWhitespace": false,
+        "conservativeCollapse": false,
+        "preserveLineBreaks": false,
+        "removeAttributeQuotes":false,
+        "removeEmptyAttributes": false,
+        "removeEmptyElements": false,
+        "removeScriptTypeAttributes": false,
+        "collapseBooleanAttributes": false,
+        "collapsewhitespace":false,
+        "removeStyleLinkTypeAttributes": false,
+        "keepClosingSlash": false,
+        "minifyJS": true,
+        "minifyCSS":true
+    },
+
+    "templateFile":[],
+    "templateDstDir":"",
+
+    "htmlFile": "",
+
+    "tplsHtmlFile": "_tpls/",
+    "htmlDstDir":"",
+    "injectPath":""
+}
