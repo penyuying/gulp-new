@@ -96,6 +96,7 @@
         "dest":""
     }],
 
+    "isTslint":true,
     "tsConfFile":"../tsconfig.json",
 
     "jsFile": [{

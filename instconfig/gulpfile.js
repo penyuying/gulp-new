@@ -116,6 +116,7 @@
     PY.gulpconnectmulti = PY.gulpconnectmulti();
     PY.browsersync = PY.browsersync.create();
 
+    PY.gulptslint = require("gulp-tslint");
     /**
      *获取postcss配置参数
      * @param {String} pcssDir 配置文件路径
@@ -1533,6 +1534,8 @@
                                 suffix: returnObj(obj, 'suffix', returnObj(pkg, 'suffix', false)), //是否给文件加后缀（有内空时为加，没有内容时为不加）
                                 extname: returnObj(obj, 'extname', returnObj(pkg, 'extname', false)), //是否修改文件扩展名（有内空时为加，没有内容时为不加）
                                 isEslint: returnObj(obj, 'isEslint', returnObj(pkg, 'isEslint', false)), //eslint检查风格
+                                isTslint: returnObj(obj, 'isTslint', returnObj(pkg, 'isTslint', false)), //tslint检查风格
+                                tslintConfFile: returnObj(obj, 'tslintConfFile', returnObj(pkg, 'tslintConfFile', false)), //tslint检查风格文件
                                 ifmin: returnObj(obj, 'ifmin', returnObj(pkg, 'ifmin', false)), //是否压缩JS、CSS（true为否，false为是）
                                 ifbabel: returnObj(obj, 'ifbabel', returnObj(pkg, 'ifbabel', false)), //是否启用babel（true为是，false为否）
                                 babelEnvConfig: returnObj(obj, 'babelEnvConfig', returnObj(pkg, 'babelEnvConfig', {})), //babelEnv配置参数
@@ -1667,6 +1670,8 @@
                         suffix: returnObj(pkg, 'suffix', false), //是否给文件加后缀（有内容时为加，没有内容时为不加）
                         extname: returnObj(pkg, 'extname', false), //是否修改文件扩展名（有内容时为加，没有内容时为不加）
                         isEslint: returnObj(pkg, 'isEslint', false), //eslint检查风格
+                        isTslint: returnObj(pkg, 'isTslint', false), //tslint检查风格
+                        tslintConfFile: returnObj(pkg, 'tslintConfFile', false), //tslint检查风格
                         ifmin: returnObj(pkg, 'ifmin', false), //压缩代码
                         ifbabel: returnObj(pkg, 'ifbabel', false),
                         babelEnvConfig: returnObj(pkg, 'babelEnvConfig', false), //babelEnv配置参数
@@ -2642,6 +2647,20 @@
         }
 
         var _pipe = startGulpMapAndChange(cfg, '', true);
+        var _tslintFileBase=cfg.tslintConfFile||'../tslint.json';
+        var _tslintFile=absPath(_tslintFileBase);
+        var _isTslintFile = fs.existsSync(_tslintFile);
+        if(_isTslintFile && cfg.isTslint!==true){
+            _pipe = _pipe.pipe(PY.gulptslint({
+                configuration: _tslintFileBase
+            }))
+            .pipe(PY.gulptslint.report({
+                emitError: true,
+                reportLimit: 2,
+                allowWarnings: true,
+                summarizeFailureOutput: true
+            }));
+        }
 
         if (cfg.tsConfFile) {
             _pipe = _pipe.pipe(PY.gulptypescript.createProject(cfg.tsConfFile, _tsData)()).js;
@@ -2652,6 +2671,8 @@
 
         return jsBodyBuild(_this, _pipe, cfg, key, callback);
     }
+
+
 
     /**
      * css内容处理

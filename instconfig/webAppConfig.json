@@ -180,6 +180,8 @@
   "jsFile": "js/**/*",
   "tsFile": "",
   "tsConfFile":"",
+  "isTslint":true,
+  "tslintConfFile":"../tslint.json",
   "tsFileName": "",
   "jsDstDir": "js/",
   "webpackFile":"",

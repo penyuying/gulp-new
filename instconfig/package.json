@@ -131,7 +131,8 @@
     "start": "webpack --config webpack.config.js"
   },
   "dependencies": {
-    "karma": "~0.13.22"
+    "karma": "~0.13.22",
+    "tslint": "^5.8.0"
   },
   "userPlugin": {}
 }

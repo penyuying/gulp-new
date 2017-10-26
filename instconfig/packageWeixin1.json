@@ -2,7 +2,12 @@
   "name": "webapp",
   "userName": "penyu",
   "version": "1.0.0",
-  "devDependencies": {},
+  "devDependencies": {
+    "ts-node": "^3.3.0",
+    "tslint": "^5.8.0",
+    "tslint-eslint-rules": "^4.1.1",
+    "typescript": "^2.5.3"
+  },
   "scripts": {
     "dev": "gulp --gulpfile gulp/gulpfile.js weixin --c weixin"
   }

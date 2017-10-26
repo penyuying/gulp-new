@@ -111,18 +111,19 @@
     "style-loader": "^0.18.2",
     "through2": "~2.0.0",
     "tpls-loader": "git+https://github.com/penyuying/tpls-loader.git",
+    "tslint-eslint-rules": "^4.1.1",
     "typed-we-app": "^1.6.0-update.1",
     "typescript": "^2.0.10",
     "url-loader": "^0.5.9",
     "webpack": "^3.0.0",
     "webpack-merge": "^4.1.0"
   },
-
   "scripts": {
     "dev": "gulp weixin --c weixin"
   },
   "dependencies": {
-    "karma": "~0.13.22"
+    "karma": "~0.13.22",
+    "tslint": "^5.8.0"
   },
   "userPlugin": {}
 }
