@@ -80,7 +80,9 @@
             c: process.env.NODE_ENV || '',
             config: process.env.NODE_ENV || '',
             s: process.env.NODE_ENV || 'multi',
-            server: process.env.NODE_ENV || ''
+            server: process.env.NODE_ENV || '',
+            rd: process.env.NODE_ENV || '', // 把文件放内存盘
+            ramdisk: process.env.NODE_ENV || ''// 把文件放内存盘
         }
     };
 
@@ -91,6 +93,9 @@
     }
     if (!getParam.server && getParam.s) {
         getParam.server = getParam.s;
+    }
+    if (!getParam.ramdisk && getParam.rd) {
+        getParam.ramdisk = getParam.rd;
     }
     // console.log(getParam.server,getParam.config)
     ////es = require('event-stream'),
@@ -117,6 +122,14 @@
     PY.browsersync = PY.browsersync.create();
 
     PY.gulptslint = require('gulp-tslint');
+    var express;
+    var app;
+    if(getParam.ramdisk) {
+        express = require('express');
+        app = express();
+        PY.gulpdevmiddleware = PY.gulpdevmiddleware({});
+        app.use(PY.gulpdevmiddleware);
+    }
     /**
      *获取postcss配置参数
      * @param {String} pcssDir 配置文件路径
@@ -2196,8 +2209,12 @@
      * @returns {gulpPipe} 返回管道
      */
     function jsFactory(pipe, cfg) {
-        return jsFactory_sub(pipe, cfg) //检查语法
-            .pipe(PY.gulpif(cfg.ifJsDoc === true, PY.gulp.dest(cfg.jsDoc3Temp)));
+        pipe = jsFactory_sub(pipe, cfg); //检查语法
+        // .pipe(PY.gulpif(cfg.ifJsDoc === true, PY.gulp.dest(cfg.jsDoc3Temp)));
+        if (cfg.ifJsDoc === true) {
+            pipe = setDestFn(pipe, cfg.jsDoc3Temp, true);
+        }
+        return pipe;
     }
 
     /**
@@ -2370,7 +2387,7 @@
             tmphtmlInject = _options && _options.gb.htmlInject(_pkg);
 
         return htmlFactory1(pipe, cfg, function (_pipe) {
-            return _pipe.pipe(PY.gulp.dest(cfg.destPath))
+            return setDestFn(_pipe, cfg.destPath, true)
                 .pipe(PY.gulpif(cfg.injectIf == true, tmphtmlInject()));
         });
     }
@@ -2518,13 +2535,18 @@
         pipe = pipe.pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({
             type: cfg.revType
         })));
-        return publicPipeFixEncryptGzip(pipe, cfg)
-            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({
+        pipe = publicPipeFixEncryptGzip(pipe, cfg);
+        if (cfg.srcRev === true) {
+            pipe = pipe.pipe(PY.gulprev.manifest({
                 path: _path || 'rev-manifest' + i + '.json',
                 dest: cfg.revDestPath,
                 merge: true
-            })))
-            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)));
+            }));
+            // .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)));
+            pipe = setDestFn(pipe, cfg.revDestPath, true);
+        }
+
+        return pipe;
     }
 
     /**
@@ -2563,14 +2585,42 @@
             renameOption.extname = cfg.extname;
         }
 
-        return encrypt(pipe.pipe(PY.gulpif(editName === true, PY.gulprename(renameOption))) //加后缀
+        pipe = encrypt(pipe.pipe(PY.gulpif(editName === true, PY.gulprename(renameOption))) //加后缀
             , cfg)
-            .pipe(PY.gulpimportcsstowxss())
-            .pipe(PY.gulp.dest(cfg.destPath))
-            .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulpgzip({
+            .pipe(PY.gulpimportcsstowxss());
+
+        pipe = setDestFn(pipe, cfg.destPath, true);
+        // .pipe(PY.gulpdevmiddleware.dest(cfg.destPath, {}))
+        // .pipe(PY.gulp.dest(cfg.destPath))
+        if (cfg.gzipIf === true) {
+            pipe = pipe.pipe(PY.gulpgzip({
                 append: true
-            })))
-            .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulp.dest(cfg.destPath)));
+            }));
+            pipe = setDestFn(pipe, cfg.destPath, true);
+        }
+
+        // .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulpgzip({
+        //     append: true
+        // })))
+        // .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulp.dest(cfg.destPath)));
+
+        return pipe;
+    }
+    /**
+     * 设置文件的存储位置
+     *
+     * @param {gulpPipe} _pipe  上一个管道
+     * @param {String} destPath 储存路径
+     * @param {Boolean} isRd 是否放内存盘
+     * @returns {gulpPipe} 返回管道
+     */
+    function setDestFn(_pipe, destPath, isRd) {
+        if (getParam.ramdisk && getParam.server.toLowerCase() == 'sync' && isRd) {
+            _pipe = _pipe.pipe(PY.gulpdevmiddleware.dest(destPath, {}));
+        } else {
+            _pipe = _pipe.pipe(PY.gulp.dest(destPath));
+        }
+        return _pipe;
     }
 
     /**
@@ -2847,8 +2897,7 @@
      */
     function compassBuild(cfg, key) {
         return cssBuild(cfg, key, function (pipe) {
-            return pipe.pipe(PY.gulpcompass(cfg.compassConfig))
-                .pipe(PY.gulp.dest(cfg.compassConfig.css))
+            return setDestFn(pipe.pipe(PY.gulpcompass(cfg.compassConfig)), cfg.compassConfig.css, true)
                 .on('error', function () {
                     // this.end();
                 });
@@ -3888,49 +3937,59 @@
             };
             if (sub[taskName].parts.options.pkg.connectStart !== true) {
                 if (getParam.server.toLowerCase() == 'sync') {
+                    // PY.gulpdevmiddleware.setOutputPath();
+
+                    // console.log(PY.gulpdevmiddleware);
+
+                    // app.use(PY.gulpdevmiddleware);
+
                     PY.gulp.task(taskName + '_connect', function () {
-                        var _rootpath = sub[taskName].connectcfg.root[0],
-                            _dir = path.normalize(_rootpath).replace(/\\/g, '/');
+                        initBrowsersync(sub[taskName].connectcfg);
+                        // var _rootpath = sub[taskName].connectcfg.root[0],
+                        //     _dir = path.normalize(_rootpath).replace(/\\/g, '/');
+                        // var _connOptions = {
+                        //     rewriteRules: [ //每次刷新时显示的内容
+                        //         {
+                        //             match: /browserSync/g,
+                        //             fn: function (match) {
+                        //                 return '正在刷新页面。。。';
+                        //             }
+                        //         }
+                        //     ],
+                        //     notify: false, //false不显示任何通知
+                        //     codeSync: true, //不发送任何改变事件给浏览器
+                        //     // startPath:'index3_1.html',
+                        //     // browser: ['chrome'], //, 'firefox'启动时打开的浏览器
+                        //     port: sub[taskName].connectcfg.port,
+                        //     // server: {
+                        //     //     baseDir: [_dir],
+                        //     //     directory: true
+                        //     // },
+                        //     // files: [
+                        //     //     '**/*.js',
+                        //     //     '**/*.css',
+                        //     //     '**/*.html',
+                        //     //     '**/*.png',
+                        //     //     '**/*.jpg',
+                        //     //     '**/*.gif',
+                        //     //     '**/*.ttf',
+                        //     //     '**/*.woff',
+                        //     //     '**/*.eot',
+                        //     //     '**/*.svg'
+                        //     // ]
+                        // };
 
-                        var _connOptions = {
-                            rewriteRules: [ //每次刷新时显示的内容
-                                {
-                                    match: /browserSync/g,
-                                    fn: function (match) {
-                                        return '正在刷新页面。。。';
-                                    }
-                                }
-                            ],
-                            notify: false, //false不显示任何通知
-                            codeSync: true, //不发送任何改变事件给浏览器
-                            // startPath:'index3_1.html',
-                            // browser: ['chrome'], //, 'firefox'启动时打开的浏览器
-                            port: sub[taskName].connectcfg.port,
-                            server: {
-                                baseDir: [_dir],
-                                directory: true
-                            },
-                            files: [
-                                '**/*.js',
-                                '**/*.css',
-                                '**/*.html',
-                                '**/*.png',
-                                '**/*.jpg',
-                                '**/*.gif',
-                                '**/*.ttf',
-                                '**/*.woff',
-                                '**/*.eot',
-                                '**/*.svg'
-                            ]
-                        };
+                        // _connOptions.proxy = 'localhost:15536';
 
-                        if (sub[taskName].connectcfg.browser && typeof sub[taskName].connectcfg.browser == 'string') {
-                            _connOptions.browser = sub[taskName].connectcfg.browser.split(',');
-                        } else if (sub[taskName].connectcfg.browser instanceof Array) {
-                            _connOptions.browser = sub[taskName].connectcfg.browser;
-                        }
+                        // PY.gulpdevmiddleware.setOutputPath(_rootpath);
+                        // app.listen('15536');
 
-                        PY.browsersync.init(_connOptions);
+                        // if (sub[taskName].connectcfg.browser && typeof sub[taskName].connectcfg.browser == 'string') {
+                        //     _connOptions.browser = sub[taskName].connectcfg.browser.split(',');
+                        // } else if (sub[taskName].connectcfg.browser instanceof Array) {
+                        //     _connOptions.browser = sub[taskName].connectcfg.browser;
+                        // }
+                        // PY.browsersync.init(_connOptions);
                     });
                 } else {
                     PY.gulp.task(taskName + '_connect', new PY.gulpconnectmulti.server({ //gulp-connect-multi
@@ -4033,7 +4092,60 @@
         })(taskNames[i]);
     }
     //#endregion
+    /**
+     * 初始化Browsersync
+     *
+     * @param {Object} connectcfg 服务链接配置
+     */
+    function initBrowsersync(connectcfg) {
+        var _rootpath = connectcfg.root[0],
+            _dir = path.normalize(_rootpath).replace(/\\/g, '/');
+        var _connOptions = {
+            rewriteRules: [ //每次刷新时显示的内容
+                {
+                    match: /browserSync/g,
+                    fn: function (match) {
+                        return '正在刷新页面。。。';
+                    }
+                }
+            ],
+            notify: false, //false不显示任何通知
+            codeSync: true, //不发送任何改变事件给浏览器
+            // startPath:'index3_1.html',
+            // browser: ['chrome', 'firefox'], //启动时打开的浏览器
+            port: connectcfg.port
+        };
+        if (getParam.ramdisk) { // 使用内存盘走代理形式
+            PY.gulpdevmiddleware.setOutputPath(_rootpath);
+            _connOptions.proxy = 'localhost:15536';
+            app.listen('15536');
+        } else {
+            _connOptions.server = {
+                baseDir: [_dir],
+                directory: true
+            };
+            _connOptions.files = [
+                '**/*.js',
+                '**/*.css',
+                '**/*.html',
+                '**/*.png',
+                '**/*.jpg',
+                '**/*.gif',
+                '**/*.ttf',
+                '**/*.woff',
+                '**/*.eot',
+                '**/*.svg'
+            ];
+        }
 
+        if (connectcfg.browser && typeof connectcfg.browser == 'string') {
+            _connOptions.browser = connectcfg.browser.split(',');
+        } else if (connectcfg.browser instanceof Array) {
+            _connOptions.browser = connectcfg.browser;
+        }
+
+        PY.browsersync.init(_connOptions);
+    }
     if (isParamTask) { //有task的时候
         //#region 生成Default默认task
         var connectcfg = {
@@ -4045,37 +4157,40 @@
         if (gpkg.connectStart !== true) {
             if (getParam.server.toLowerCase() == 'sync') {
                 PY.gulp.task('connect', function () {
-                    var _rootpath = connectcfg.root[0],
-                        _dir = path.normalize(_rootpath).replace(/\\/g, '/');
-                    var _connOptions = {
-                        notify: false, //false不显示任何通知
-                        codeSync: true, //不发送任何改变事件给浏览器
-                        // startPath:'index3_1.html',
-                        // browser: ['chrome', 'firefox'], //启动时打开的浏览器
-                        port: connectcfg.port,
-                        server: {
-                            baseDir: [_dir],
-                            directory: true
-                        },
-                        files: [
-                            '**/*.js',
-                            '**/*.css',
-                            '**/*.html',
-                            '**/*.png',
-                            '**/*.jpg',
-                            '**/*.gif',
-                            '**/*.ttf',
-                            '**/*.woff',
-                            '**/*.eot',
-                            '**/*.svg'
-                        ]
-                    };
-                    if (connectcfg.browser && typeof connectcfg.browser == 'string') {
-                        _connOptions.browser = connectcfg.browser.split(',');
-                    } else if (connectcfg.browser instanceof Array) {
-                        _connOptions.browser = connectcfg.browser;
-                    }
-                    PY.browsersync.init(_connOptions);
+                    initBrowsersync(connectcfg);
+                    // var _rootpath = connectcfg.root[0],
+                    //     _dir = path.normalize(_rootpath).replace(/\\/g, '/');
+                    // var _connOptions = {
+                    //     notify: false, //false不显示任何通知
+                    //     codeSync: true, //不发送任何改变事件给浏览器
+                    //     // startPath:'index3_1.html',
+                    //     // browser: ['chrome', 'firefox'], //启动时打开的浏览器
+                    //     port: connectcfg.port
+                    //     // server: {
+                    //     //     baseDir: [_dir],
+                    //     //     directory: true
+                    //     // },
+                    //     // files: [
+                    //     //     '**/*.js',
+                    //     //     '**/*.css',
+                    //     //     '**/*.html',
+                    //     //     '**/*.png',
+                    //     //     '**/*.jpg',
+                    //     //     '**/*.gif',
+                    //     //     '**/*.ttf',
+                    //     //     '**/*.woff',
+                    //     //     '**/*.eot',
+                    //     //     '**/*.svg'
+                    //     // ]
+                    // };
+                    // _connOptions.proxy = 'localhost:800091';
+                    // if (connectcfg.browser && typeof connectcfg.browser == 'string') {
+                    //     _connOptions.browser = connectcfg.browser.split(',');
+                    // } else if (connectcfg.browser instanceof Array) {
+                    //     _connOptions.browser = connectcfg.browser;
+                    // }
+                    // app.listen('800091');
+                    // PY.browsersync.init(_connOptions);
                 });
             } else {
                 PY.gulp.task('connect', PY.gulpconnectmulti.server({ //gulp-connect-multi

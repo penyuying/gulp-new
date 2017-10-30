@@ -3,11 +3,11 @@
   "userName": "penyu",
   "version": "1.0.0",
   "devDependencies": {
- 
+
   },
   "scripts": {
     "dev": "gulp --gulpfile gulp/gulpfile.js build --c build",
-    "devx": "gulp --gulpfile gulp/gulpfile.js build --c build --s sync",
+    "devx": "gulp --gulpfile gulp/gulpfile.js build --c build --s sync --rd ramdisk",
     "sit": "gulp --gulpfile gulp/gulpfile.js build.sit --c build.sit",
     "uat": "gulp --gulpfile gulp/gulpfile.js build.uat --c build.uat",
     "testsit": "gulp --gulpfile gulp/gulpfile.js build.testsit --c build.testsit --s sync",

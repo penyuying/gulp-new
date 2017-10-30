@@ -8,8 +8,8 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 //var projectRoot = path.resolve(__dirname, '../')
 
-    // check env & config/index.js to decide whether to enable CSS source maps for the
-    // various preprocessor loaders added to vue-loader at the end of this file
+// check env & config/index.js to decide whether to enable CSS source maps for the
+// various preprocessor loaders added to vue-loader at the end of this file
 
 // 别名配置
 var getAlias = function() {
@@ -19,11 +19,14 @@ var getAlias = function() {
     };
 };
 
-
-
-function getPlugins(cfg){//webpackHtmlTpls//
-    var res=[];
-
+/**
+ * 获取插件
+ *
+ * @param {any} cfg 配置参数
+ * @returns {Array}
+ */
+function getPlugins(cfg) { //webpackHtmlTpls//
+    var res = [];
 
     // res.push(new webpack.SourceMapDevToolPlugin({
     //   // Match assets like for loaders. This is
@@ -86,79 +89,78 @@ function getPlugins(cfg){//webpackHtmlTpls//
     //     allChunks: true
     // }
 
-    if(cfg.ifmin!==true){
+    if (cfg.ifmin !== true) {
         res.push(new webpack.optimize.UglifyJsPlugin({
-           compress: {
-               warnings: false
-           },
-           sourceMap: true,//这里的soucemap 不能少，可以在线上生成soucemap文件，便于调试
-           mangle: {
-               except: ['$', 'jQuery']
-           }
+            compress: {
+                warnings: false
+            },
+            sourceMap: true, //这里的soucemap 不能少，可以在线上生成soucemap文件，便于调试
+            mangle: {
+                except: ['$', 'jQuery']
+            }
         }));
     }
-    var fileList=[];
-    if(cfg.webpackHtmlTpls){
-        if(cfg.webpackHtmlTpls instanceof Array && cfg.webpackHtmlTpls.length>0){
-            cfg.webpackHtmlTpls.forEach(function(tplsCfg){
-                fileList=fileList.concat(tplsCfg.chunks||[]);
+    var fileList = [];
+    if (cfg.webpackHtmlTpls) {
+        if (cfg.webpackHtmlTpls instanceof Array && cfg.webpackHtmlTpls.length > 0) {
+            cfg.webpackHtmlTpls.forEach(function(tplsCfg) {
+                fileList = fileList.concat(tplsCfg.chunks || []);
 
-                tplsCfg.template=path.join(absPath(tplsCfg.template));
-                tplsCfg.minify=cfg.ifminhtml!==true ? cfg.ifminhtmlObj||false:false;
+                tplsCfg.template = path.join(absPath(tplsCfg.template));
+                tplsCfg.minify = cfg.ifminhtml !== true ? cfg.ifminhtmlObj || false : false;
                 res.push(new HtmlWebpackPlugin(tplsCfg));
             });
-        }else{
-            fileList=fileList.concat(cfg.webpackHtmlTpls.chunks||[])
+        } else {
+            fileList = fileList.concat(cfg.webpackHtmlTpls.chunks || []);
 
-            cfg.webpackHtmlTpls.minify=cfg.ifminhtml!==true ? cfg.ifminhtmlObj||false:false;
+            cfg.webpackHtmlTpls.minify = cfg.ifminhtml !== true ? cfg.ifminhtmlObj || false : false;
             res.push(new HtmlWebpackPlugin(cfg.webpackHtmlTpls));
         }
     }
 
     // res.push(new webpack.NoErrorsPlugin());弃用，使用NoEmitOnErrorsPlugin代替
     res.push(new webpack.NoEmitOnErrorsPlugin());
-    clearFileList=fileList.map(function(item){
-        var config=cfg.webpackConfig;
-        var output=config && config.output;
-        var filename=(output.filename||'')+'';
-        if(filename.indexOf('[hash]')>-1||!filename){
-            return item+"????????????????????.*";
-        }else{
-            return item+'.*';
+    clearFileList = fileList.map(function(item) {
+        var config = cfg.webpackConfig;
+        var output = config && config.output;
+        var filename = (output.filename || '') + '';
+        if (filename.indexOf('[hash]') > -1 || !filename) {
+            return item + '????????????????????.*';
+        } else {
+            return item + '.*';
         }
-    })
-    res.push(new CleanWebpackPlugin(clearFileList,//匹配删除的文件
-            {
-                root: path.join(absPath(cfg.destPath)),//根目录
-                verbose:false,//开启在控制台输出信息
-                dry:false,//启用删除目录
-                watch: true//监控文件变化
-            }
+    });
+    res.push(new CleanWebpackPlugin(clearFileList, //匹配删除的文件
+        {
+            root: path.join(absPath(cfg.destPath)), //根目录
+            verbose: false, //开启在控制台输出信息
+            dry: false, //启用删除目录
+            watch: true//监控文件变化
+        }
     ));
     return res;
 }
 
-
-module.exports = function(opts){
-    var _srcPaths=splitSrcArr(opts.srcPath);
+module.exports = function(opts) {
+    var _srcPaths = splitSrcArr(opts.srcPath);
     var webpackConfig = opts.webpackConfig;
-    var resolve=webpackConfig && webpackConfig.resolve
-    var alias=resolve&&resolve.alias;
-    if(alias){
-        resolve.alias=aliasAbs(alias);
+    var resolve = webpackConfig && webpackConfig.resolve;
+    var alias = resolve && resolve.alias;
+    if (alias) {
+        resolve.alias = aliasAbs(alias);
     }
-    var _opts=_merge({
-        entry:filterSrcPath(getSrcPaths(_srcPaths._check),getSrcPaths(_srcPaths._notCheck)),
+    var _opts = _merge({
+        entry: filterSrcPath(getSrcPaths(_srcPaths._check), getSrcPaths(_srcPaths._notCheck)),
         output: {
             path: path.join(absPath(opts.destPath)),
             // publicPath: "../js"
             filename: '[name][hash].js'
         }
-    },opts && opts.webpackConfig||{});
-    if(opts.mapIf){
-        _opts.devtool='#source-map';
+    }, (opts && opts.webpackConfig) || {});
+    if (opts.mapIf) {
+        _opts.devtool = '#source-map';
     }
-    var res={
+    var res = {
         watch: true,
         profile: true,
         cache: false,
@@ -175,87 +177,87 @@ module.exports = function(opts){
             alias: aliasAbs(getAlias())
         },
         module: {
-            rules:[{
+            rules: [{
                 test: /\.(png|jpg|gif)$/,
                 use: [
-                  {
-                    loader: 'url-loader',
-                    options: {
-                        limit: 8192,
-                        name:'../images/build/[name][hash].[ext]'
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192,
+                            name: '../images/build/[name][hash].[ext]'
+                        }
                     }
-                  }
                 ]
-            },{
+            }, {
                 test: /\.(svg|woff|woff2|eot|ttf)$/,
                 use: [
-                  {
-                    loader: 'url-loader',
-                    options: {
-                        limit: 8192,
-                        name:'../fonts/build/[name][hash].[ext]'
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192,
+                            name: '../fonts/build/[name][hash].[ext]'
+                        }
                     }
-                  }
                 ]
-            },{
+            }, {
                 test: /\.css$/,
-                use:ExtractTextPlugin.extract({
-                    fallback: "style-loader",
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
                     use: [{
-                        loader:'css-loader',
-                        options:{
-                            sourceMap: opts.mapIf||false,
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: opts.mapIf || false
                         }
-                    },{
-                        loader:'postcss-loader',
-                        options:{
-                            sourceMap: opts.mapIf||false,
-                            plugins:opts.postcss
+                    }, {
+                        loader: 'postcss-loader',
+                        options: {
+                            sourceMap: opts.mapIf || false,
+                            plugins: opts.postcss
                         }
                     }]
                 })
-            },{
+            }, {
                 test: /\.(scss|sass)$/,
-                use:ExtractTextPlugin.extract({
-                    fallback: "style-loader",
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
                     use: [{
-                        loader:'css-loader',
-                        options:{
-                            sourceMap: opts.mapIf||false,
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: opts.mapIf || false
                         }
-                    },{
-                        loader:'postcss-loader',
-                        options:{
-                            sourceMap: opts.mapIf||false,
-                            plugins:opts.postcss
+                    }, {
+                        loader: 'postcss-loader',
+                        options: {
+                            sourceMap: opts.mapIf || false,
+                            plugins: opts.postcss
                         }
-                    },{
-                        loader:'sass-loader'
+                    }, {
+                        loader: 'sass-loader'
                     }]
                 })
-            },{
+            }, {
                 test: /\.html$/,
                 use: [ {
-                  loader: 'html-loader',
-                  options: {
-                    minimize: true
-                  }
-                },{
-                  loader: 'tpls-loader',
-                  options: {
-                    tplsPath: opts.tplsPath
-                  }
+                    loader: 'html-loader',
+                    options: {
+                        minimize: true
+                    }
+                }, {
+                    loader: 'tpls-loader',
+                    options: {
+                        tplsPath: opts.tplsPath
+                    }
                 }]
-            },{
+            }, {
                 test: /\.js$/,
                 exclude: /(node_modules|bower_components|lib)/,
                 use: loaderPush([{
                     loader: 'babel-loader',
                     options: {
-                        presets: [[require("babel-preset-env"),opts.babelEnvConfig],require("babel-preset-stage-0")]//, //按照最新的ES6语法规则去转换
+                        presets: [[require('babel-preset-env'), opts.babelEnvConfig], require('babel-preset-stage-0')]//, //按照最新的ES6语法规则去转换
                         //plugins:[require("babel-plugin-transform-runtime")]
                     }
-                }],{
+                }], {
                     loader: 'eslint-loader',
                     options: {
                         formatter: require('eslint-friendly-formatter'),
@@ -263,78 +265,77 @@ module.exports = function(opts){
                             path.join(absPath('../src/wjs'))
                         ]
                     }
-                },opts.isEslint)//,
+                }, opts.isEslint)//,
                 // include:path.resolve(__dirname, '../src/wjs/main.js')
             }]
         },
         // eslint: {
         //     formatter: require('eslint-friendly-formatter')
         // },
-        plugins:getPlugins(opts)//[//
-            // new webpack.DefinePlugin({
-            //     'process.env': {
-            //         // 'NODE_ENV': '"production"'
-            //         'NODE_ENV': '"development"'
-            //     }
-            // })//,
-            // new webpack.NoErrorsPlugin()
-            //new webpack.optimize.UglifyJsPlugin({
-            //    compress: {
-            //        warnings: false
-             //   },
-            //    sourceMap: true,//这里的soucemap 不能少，可以在线上生成soucemap文件，便于调试
-            //    mangle: {
-            //        except: ['$', 'jQuery']
-             //   }
-            //}),
-            
+        plugins: getPlugins(opts)//[//
+        // new webpack.DefinePlugin({
+        //     'process.env': {
+        //         // 'NODE_ENV': '"production"'
+        //         'NODE_ENV': '"development"'
+        //     }
+        // })//,
+        // new webpack.NoErrorsPlugin()
+        //new webpack.optimize.UglifyJsPlugin({
+        //    compress: {
+        //        warnings: false
+        //   },
+        //    sourceMap: true,//这里的soucemap 不能少，可以在线上生成soucemap文件，便于调试
+        //    mangle: {
+        //        except: ['$', 'jQuery']
+        //   }
+        //}),
+
         //]
     };
-    return _merge(res,_opts);
-}
+    return _merge(res, _opts);
+};
 
 /**
 *按条件加入loader
 */
-function loaderPush(loaderList,loader,flag){
-    loaderList=loaderList||[];
-    if(flag!==true){
+function loaderPush(loaderList, loader, flag) {
+    loaderList = loaderList || [];
+    if (flag !== true) {
         loaderList.push(loader);
     }
     return loaderList;
 }
 
-
 /**
  * 拆分需要选和不选的路径
- * 
+ *
  * @param {String|Array} arr 路径
  * @returns 返回拆分好后的数组
  */
-function splitSrcArr(arr){
-    var arrObj={
-        _check:[],
-        _notCheck:[]
+function splitSrcArr(arr) {
+    var arrObj = {
+        _check: [],
+        _notCheck: []
     };
-    if(!arr){
+    if (!arr) {
         return arrObj;
     }
 
-    if(arr instanceof Array){
-        arr.forEach(function(dir){
-            if(dir){
-                if(isNotCheckDir(dir)){
-                    arrObj._notCheck.push(dir.replace(/^\s*\!/,""));
-                }else{
+    if (arr instanceof Array) {
+        arr.forEach(function(dir) {
+            if (dir) {
+                if (isNotCheckDir(dir)) {
+                    arrObj._notCheck.push(dir.replace(/^\s*\!/, ''));
+                } else {
                     arrObj._check.push(dir);
                 }
             }
         });
-    }else{
-        if(arr){
-            if(isNotCheckDir(arr)){
-                arrObj._notCheck.push(arr.replace(/^\s*\!/,""));
-            }else{
+    } else {
+        if (arr) {
+            if (isNotCheckDir(arr)) {
+                arrObj._notCheck.push(arr.replace(/^\s*\!/, ''));
+            } else {
                 arrObj._check.push(arr);
             }
         }
@@ -343,25 +344,25 @@ function splitSrcArr(arr){
     return arrObj;
 }
 
-function isNotCheckDir(dir){//判断是否不检查
-    return dir && /^\s*\!/.test(dir)||false;
+function isNotCheckDir(dir) { //判断是否不检查
+    return dir && /^\s*\!/.test(dir) || false;
 }
 
-function getSrcPaths(Arr){//获取文件路径集
-    var _entriesDir={};
-    if(Arr instanceof Array){
-        Arr.forEach(function(dir){
-            _entriesDir=getSrcPath(dir,_entriesDir);
+function getSrcPaths(Arr) { //获取文件路径集
+    var _entriesDir = {};
+    if (Arr instanceof Array) {
+        Arr.forEach(function(dir) {
+            _entriesDir = getSrcPath(dir, _entriesDir);
         });
-    }else if(typeof arr=="string"){
-        _entriesDir=getSrcPath(Arr,_entriesDir);
+    } else if (typeof arr == 'string') {
+        _entriesDir = getSrcPath(Arr, _entriesDir);
     }
     return _entriesDir;
 }
 
 /**
  * 格式化正则表达式
- * 
+ *
  * @param {String} regText 表达式文本
  * @returns 返回格式化好后的文本
  */
@@ -369,21 +370,21 @@ function _formatRegText(regText) {
     if (!regText) {
         return regText;
     }
-    return regText.replace(/[\-\[\]\{\}\(\)\*\+\?\.\^\$\|\/\\]/g, "\\$&");
+    return regText.replace(/[\-\[\]\{\}\(\)\*\+\?\.\^\$\|\/\\]/g, '\\$&');
 }
 
 /**
  * 获取文件路径
- * 
+ *
  * @param {String} globPath 目录
  * @param {Object} entriesDir 已选中的路径
  * @returns 返回查找到的路径
  */
-function getSrcPath(globPath,entriesDir) {
+function getSrcPath(globPath, entriesDir) {
     var files = glob.sync(globPath);
-    var entries =entriesDir || {},
-        _reDir=globPath.replace(/\/*\**\/*\*+\.*[js]*$/,""),
-        _regDir=_reDir && new RegExp("^\s*"+_formatRegText(_reDir)+"\/*"),
+    var entries = entriesDir || {},
+        _reDir = globPath.replace(/\/*\**\/*\*+\.*[js]*$/, ''),
+        _regDir = _reDir && new RegExp('^\s*' + _formatRegText(_reDir) + '\/*'),
         entry,
         dirname,
         basename;
@@ -392,12 +393,12 @@ function getSrcPath(globPath,entriesDir) {
         entry = files[i];
         dirname = path.dirname(entry);
         basename = path.basename(entry, '.js');
-        var _name=path.join(dirname, basename).replace(/\\/g, "/");
+        var _name = path.join(dirname, basename).replace(/\\/g, '/');
 
-        if(_regDir){
-            _name=_name.replace(_regDir,"");
+        if (_regDir) {
+            _name = _name.replace(_regDir, '');
         }
-        entries[_name] =path.join(absPath(entry));
+        entries[_name] = path.join(absPath(entry));
     }
 
     return entries;
@@ -405,13 +406,13 @@ function getSrcPath(globPath,entriesDir) {
 
 /**
  * 过滤文件路径
- * 
+ *
  * @param {any} _checkObj 已选中的路径
  * @param {any} _notCheckObj 不选的路径
  * @returns 返回过滤完的路径
  */
-function filterSrcPath(_checkObj,_notCheckObj){
-    if(!_checkObj || !_notCheckObj){
+function filterSrcPath(_checkObj, _notCheckObj) {
+    if (!_checkObj || !_notCheckObj) {
         return _checkObj;
     }
     for (var key in _notCheckObj) {
@@ -431,24 +432,23 @@ function absPath(dir) {
     if (!dir) {
         return res;
     }
-    if (!path.isAbsolute(dir)) {//相对路径转绝对路径
-        res = path.normalize(path.join(process.cwd(), dir)).replace(/\\/g, "/");
+    if (!path.isAbsolute(dir)) { //相对路径转绝对路径
+        res = path.normalize(path.join(process.cwd(), dir)).replace(/\\/g, '/');
     } else {
-        res = path.normalize(dir).replace(/\\/g, "/");
+        res = path.normalize(dir).replace(/\\/g, '/');
     }
     return res;
 }
 
-
 /**
 * 转换别外的路径为绝对路径
 */
-function aliasAbs(aliasParas){
-    var res={};
-    aliasParas=aliasParas||{};
+function aliasAbs(aliasParas) {
+    var res = {};
+    aliasParas = aliasParas || {};
     for (var key in aliasParas) {
-        if(aliasParas[key]){
-            res[key]=path.join(absPath(aliasParas[key]));
+        if (aliasParas[key]) {
+            res[key] = path.join(absPath(aliasParas[key]));
         }
     }
     return res;

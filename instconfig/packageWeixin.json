@@ -30,6 +30,7 @@
     "eslint-plugin-node": "^5.1.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
+    "express": "^4.16.2",
     "extract-text-webpack-plugin": "^3.0.0-beta.3",
     "file-loader": "^0.11.2",
     "glob": "^7.1.2",
@@ -119,7 +120,8 @@
     "typescript": "^2.5.3",
     "url-loader": "^0.5.9",
     "webpack": "^3.0.0",
-    "webpack-merge": "^4.1.0"
+    "webpack-merge": "^4.1.0",
+    "gulp-dev-middleware":"github:penyuying/gulp-dev-middleware"
   },
   "scripts": {
     "dev": "gulp weixin --c weixin"

@@ -155,7 +155,7 @@
         },
         "tpls":"_tpls/",
         "isEslint":false,
-        "dest":"js/"
+        "dest":""
     },{
         "src":["wjs/*.js","wjs/ms/*.js"],
         "webpackConfig":{
@@ -246,7 +246,7 @@
         }],
         "tpls":"_tpls/",
         "isEslint":false,
-        "dest":"js/"
+        "dest":""
     }],
     "webpackHtmlTpls":"",
     "webpackDstDir":"js/",
