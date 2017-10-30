@@ -114,7 +114,11 @@
     "typescript": "^2.0.10",
     "url-loader": "^0.5.9",
     "webpack": "^3.0.0",
-    "webpack-merge": "^4.1.0"
+    "webpack-merge": "^4.1.0",
+    "ts-node": "^3.3.0",
+    "tslint-eslint-rules": "^4.1.1",
+    "tslint": "^5.8.0",
+    "gulp-importCssToWxss":"1.0.0"
   },
 
   "scripts": {
@@ -131,8 +135,7 @@
     "start": "webpack --config webpack.config.js"
   },
   "dependencies": {
-    "karma": "~0.13.22",
-    "tslint": "^5.8.0"
+    "karma": "~0.13.22"
   },
   "userPlugin": {}
 }

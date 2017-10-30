@@ -116,7 +116,7 @@
     PY.gulpconnectmulti = PY.gulpconnectmulti();
     PY.browsersync = PY.browsersync.create();
 
-    PY.gulptslint = require("gulp-tslint");
+    PY.gulptslint = require('gulp-tslint');
     /**
      *获取postcss配置参数
      * @param {String} pcssDir 配置文件路径
@@ -571,7 +571,7 @@
 
         /**
          * 创建目录
-         * 
+         *
          * @param {Array<String>} _dirArr 目录名称数组
          * @param {String} _path 当前路径
          */
@@ -597,7 +597,7 @@
 
     /**
      * 相对路径转成绝对路径
-     * 
+     *
      * @param {String} dir 需要转换的路径
      * @returns {String} 已转换好的路径
      */
@@ -1533,8 +1533,10 @@
                                 prefix: returnObj(obj, 'prefix', returnObj(pkg, 'prefix', false)), //是否给文件加前缀（有内空时为加，没有内容时为不加）
                                 suffix: returnObj(obj, 'suffix', returnObj(pkg, 'suffix', false)), //是否给文件加后缀（有内空时为加，没有内容时为不加）
                                 extname: returnObj(obj, 'extname', returnObj(pkg, 'extname', false)), //是否修改文件扩展名（有内空时为加，没有内容时为不加）
+                                isJshint: returnObj(obj, 'isJshint', returnObj(pkg, 'isJshint', false)), //jshint检查风格
                                 isEslint: returnObj(obj, 'isEslint', returnObj(pkg, 'isEslint', false)), //eslint检查风格
                                 isTslint: returnObj(obj, 'isTslint', returnObj(pkg, 'isTslint', false)), //tslint检查风格
+                                tslintFile: (returnObj(obj, 'tslintFile', returnObj(pkg, 'tslintFile', false)) && tempSrcPath + returnObj(obj, 'tslintFile', returnObj(pkg, 'tslintFile', false))) || '', //tslint检查风格的文件
                                 tslintConfFile: returnObj(obj, 'tslintConfFile', returnObj(pkg, 'tslintConfFile', false)), //tslint检查风格文件
                                 ifmin: returnObj(obj, 'ifmin', returnObj(pkg, 'ifmin', false)), //是否压缩JS、CSS（true为否，false为是）
                                 ifbabel: returnObj(obj, 'ifbabel', returnObj(pkg, 'ifbabel', false)), //是否启用babel（true为是，false为否）
@@ -1669,8 +1671,10 @@
                         prefix: returnObj(pkg, 'prefix', false), //是否给文件前后缀（有内容时为加，没有内容时为不加）
                         suffix: returnObj(pkg, 'suffix', false), //是否给文件加后缀（有内容时为加，没有内容时为不加）
                         extname: returnObj(pkg, 'extname', false), //是否修改文件扩展名（有内容时为加，没有内容时为不加）
+                        isJshint: returnObj(pkg, 'isJshint', false), //jshint检查风格
                         isEslint: returnObj(pkg, 'isEslint', false), //eslint检查风格
                         isTslint: returnObj(pkg, 'isTslint', false), //tslint检查风格
+                        tslintFile: returnObj(pkg, 'tslintFile', false) && srcTxt + returnObj(pkg, 'tslintFile', false), //tslint检查风格的文件
                         tslintConfFile: returnObj(pkg, 'tslintConfFile', false), //tslint检查风格
                         ifmin: returnObj(pkg, 'ifmin', false), //压缩代码
                         ifbabel: returnObj(pkg, 'ifbabel', false),
@@ -2080,17 +2084,52 @@
     }
 
     /**
+     * 获取文件
+     *
+     * @param {any} cfg 配置参数对象
+     * @param {any} newSrcPath 新文件路径
+     * @returns {gulpPipe} 返回管道
+     */
+    function getSrc(cfg, newSrcPath) { //获取文件
+        return PY.gulp.src(newSrcPath || cfg.srcPath);
+    }
+
+    /**
+     * 设置出错后继续执行;
+     *
+     * @param {gulpPipe} _pipe 上一个管道
+     * @param {any} cfg 配置参数对象
+     * @returns {gulpPipe} 返回管道
+     */
+    function setGulpplumber(_pipe, cfg) {
+        return _pipe.pipe(PY.gulpplumber()) //出错后继续执行;
+            .pipe(PY.gulpif(cfg.ifUnEncrypt === true, PY.gulpencrypt(cfg.unEncryptConfig || {}))); //解密
+    }
+
+    /**
      * 开始gulp
      * @param {Object} cfg 配置参数对象
      * @param {String} newSrcPath 替换cfg.srcPath的路径
      * @returns {gulpPipe} 返回管道
      */
     function getSrcPlumberUnE(cfg, newSrcPath) {
-        return PY.gulp.src(newSrcPath || cfg.srcPath) //获取文件
-            .pipe(PY.gulpplumber()) //出错后继续执行;
-            .pipe(PY.gulpif(cfg.ifUnEncrypt === true, PY.gulpencrypt(cfg.unEncryptConfig || {}))); //解密
+        return setGulpplumber(getSrc(cfg, newSrcPath), cfg);
     }
 
+    /**
+     * 设置检查文件是否改变
+     *
+     * @param {gulpPipe} _pipe 上一个管道
+     * @param {Object} cfg 配置参数对象
+     * @param {Boolean} isChanged 是否检查变化true为否
+     * @returns {gulpPipe} 返回管道
+     */
+    function setGulpchanged(_pipe, cfg, isChanged) {
+        if (!isChanged) {
+            _pipe = _pipe.pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath))); //检查文件是否改变
+        }
+        return _pipe;
+    }
     /**
      * 获取文件解密+错误后继续执行+changed
      * @param {Object} cfg 配置参数对象
@@ -2100,15 +2139,41 @@
      * @returns {gulpPipe} 返回管道
      */
     function startGulpNoMapAndChange(cfg, newSrcPath, callback, isChanged) {
-        var _pipe = getSrcPlumberUnE(cfg, newSrcPath);
+        var _pipe = GulpMapAndChange(getSrc(cfg, newSrcPath), cfg, callback, isChanged);
+        return _pipe;
+    }
+
+    /**
+     *设置map文件和changed
+     *
+     * @param {gulpPipe} _pipe 上一个管道
+     * @param {Object} cfg 配置参数对象
+     * @param {Function} callback 在changed前对管道执行的操作
+     * @param {Boolean} isChanged 是否检查变化true为否
+     * @returns {gulpPipe} 返回管道
+     */
+    function GulpMapAndChange(_pipe, cfg, callback, isChanged) {
+        _pipe = setGulpplumber(_pipe, cfg);
         if (callback && callback instanceof Function) {
             var _tempPipe = callback(_pipe);
             _pipe = _tempPipe || _pipe;
         }
-        if (!isChanged) {
-            _pipe = _pipe.pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath))); //检查文件是否改变
-        }
+        _pipe = setGulpchanged(_pipe, cfg, isChanged);
         return _pipe;
+    }
+
+    /**
+     * 初始化增加map文件
+     *
+     * @param {gulpPipe} _pipe 上一个管道
+     * @param {Object} cfg 配置参数对象
+     * @returns {gulpPipe} 返回管道
+     */
+    function initSourcemaps(_pipe, cfg) { //初始化增加map文件
+        return _pipe.pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.init({
+            loadMaps: true,
+            debug: true
+        })));
     }
 
     /**
@@ -2120,10 +2185,7 @@
      */
     function startGulpMapAndChange(cfg, newSrcPath, isChanged) {
         return startGulpNoMapAndChange(cfg, newSrcPath, function (pipe) {
-            return pipe.pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.init({
-                loadMaps: true,
-                debug: true
-            }))); //增加map文件
+            return initSourcemaps(pipe, cfg);
         }, isChanged);
     }
 
@@ -2242,14 +2304,19 @@
      * 公共处理CSS
      * @param {gulpPipe} pipe 上一个管道
      * @param {Object} cfg 配置参数对象
+     * @param {Boolean} isMin 是否压缩
      * @returns {gulpPipe} 返回管道
      */
-    function cssFactory(pipe, cfg) {
-        return pipe.pipe(PY.gulppostcss(cfg.postcss))
-            .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpcleancss({
+    function cssFactory(pipe, cfg, isMin) {
+        pipe = pipe.pipe(PY.gulppostcss(cfg.postcss));
+        if (!isMin) {
+            pipe = pipe.pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpcleancss({
                 compatibility: 'ie8',
                 keepSpecialComments: '*'
             })));
+        }
+
+        return pipe;
     }
 
     /**
@@ -2477,26 +2544,28 @@
      * @returns {gulpPipe} 返回管道
      */
     function publicPipeFixEncryptGzip(pipe, cfg) {
-        var editName=false;
-        var renameOption={};
-        if(cfg.basename){
-            editName=true;
-            renameOption.basename=cfg.basename;
+        var editName = false;
+        var renameOption = {};
+        if (cfg.basename) {
+            editName = true;
+            renameOption.basename = cfg.basename;
         }
-        if(cfg.prefix){
-            editName=true;
-            renameOption.prefix=cfg.prefix;
+        if (cfg.prefix) {
+            editName = true;
+            renameOption.prefix = cfg.prefix;
         }
-        if(cfg.suffix){
-            editName=true;
-            renameOption.prefix=cfg.suffix;
+        if (cfg.suffix) {
+            editName = true;
+            renameOption.prefix = cfg.suffix;
         }
-        if(cfg.extname){
-            editName=true;
-            renameOption.extname=cfg.extname;
+        if (cfg.extname) {
+            editName = true;
+            renameOption.extname = cfg.extname;
         }
+
         return encrypt(pipe.pipe(PY.gulpif(editName === true, PY.gulprename(renameOption))) //加后缀
             , cfg)
+            .pipe(PY.gulpimportcsstowxss())
             .pipe(PY.gulp.dest(cfg.destPath))
             .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulpgzip({
                 append: true
@@ -2560,13 +2629,18 @@
      * @returns {gulpPipe} 返回管道
      */
     function jsBodyBuild(_this, pipe, cfg, key, callback, isMap) {
-        var myReporter = new PY.mapstream(_this.options.gb.myReporter);
+        var myReporter;
         var i = key;
-
+        if (cfg.isJshint !== true) {
+            myReporter = new PY.mapstream(_this.options.gb.myReporter);
+        }
         return splitPipe(function () {
             return getStreamqueueParamList(cfg, function () {
                 return splitPipe(function () {
-                    var _pipe = jsFactory(pipe, cfg).pipe(myReporter);
+                    var _pipe = jsFactory(pipe, cfg);
+                    if (cfg.isJshint !== true) {
+                        _pipe = _pipe.pipe(myReporter);
+                    }
                     if (callback && callback instanceof Function) {
                         var _tempPipe = callback(_pipe);
                         if (_tempPipe) {
@@ -2642,28 +2716,37 @@
      */
     function tsBuild(_this, cfg, key, callback) {
         var _tsData = {};
+        var tsProject;
+        var _pipe;
+        var tsConfFile;
+        var reg;
+
         if (cfg.concatFileName) {
             _tsData.out = cfg.concatFileName;
         }
 
-        var _pipe = startGulpMapAndChange(cfg, '', true);
-        var _tslintFileBase=cfg.tslintConfFile||'../tslint.json';
-        var _tslintFile=absPath(_tslintFileBase);
-        var _isTslintFile = fs.existsSync(_tslintFile);
-        if(_isTslintFile && cfg.isTslint!==true){
-            _pipe = _pipe.pipe(PY.gulptslint({
-                configuration: _tslintFileBase
-            }))
-            .pipe(PY.gulptslint.report({
-                emitError: true,
-                reportLimit: 2,
-                allowWarnings: true,
-                summarizeFailureOutput: true
-            }));
+        if (cfg.tsConfFile) { //获取配置文件
+            tsProject = PY.gulptypescript.createProject(cfg.tsConfFile, _tsData);
+            tsConfFile = cfg.srcPath && cfg.srcPath[0];
+            reg = new RegExp('^' + cfg.tsConfFile);
+        }
+
+        if (cfg.tsConfFile && tsConfFile && reg && reg.test(tsConfFile)) { //判断文件是不是配置文件
+            _pipe = GulpMapAndChange(tsProject.src(), cfg, function (pipe) {
+                return initSourcemaps(pipe, cfg);
+            });
+        } else {
+            _pipe = startGulpMapAndChange(cfg, '', true);
+        }
+
+        if (cfg.tslintFile) {
+            tsLintFilter(PY.gulp.src(cfg.tslintFile), cfg);
+        } else {
+            _pipe = tsLintFilter(_pipe, cfg);
         }
 
         if (cfg.tsConfFile) {
-            _pipe = _pipe.pipe(PY.gulptypescript.createProject(cfg.tsConfFile, _tsData)()).js;
+            _pipe = _pipe.pipe(tsProject()).js;
         } else {
             _tsData.noImplicitAny = false;
             _pipe = _pipe.pipe(PY.gulptypescript(_tsData));
@@ -2672,7 +2755,31 @@
         return jsBodyBuild(_this, _pipe, cfg, key, callback);
     }
 
-
+    /**
+     * tslint检查ts文件
+     *
+     * @param {Pipe} _pipe 上个执行的管道
+     * @param {Object} cfg 配置参数
+     * @returns {gulpPipe} 返回管道
+     */
+    function tsLintFilter(_pipe, cfg) {
+        var _tslintFileBase = cfg.tslintConfFile || '../tslint.json';
+        var _tslintFile = absPath(_tslintFileBase);
+        var _isTslintFile = fs.existsSync(_tslintFile);
+        if (_isTslintFile && cfg.isTslint !== true) {
+            _pipe = _pipe.pipe(PY.gulptslint({
+                formatter: 'stylish',
+                configuration: _tslintFileBase
+            }))
+                .pipe(PY.gulptslint.report({
+                    emitError: false,
+                    reportLimit: 2,
+                    allowWarnings: true,
+                    summarizeFailureOutput: true
+                }));
+        }
+        return _pipe;
+    }
 
     /**
      * css内容处理
@@ -2680,9 +2787,10 @@
      * @param {Object} cfg 配置参数
      * @param {Number} key 配置参数对应的KEY
      * @param {Function} callback 生成css前的回调函数
+     * @param {Boolean} isMin 是否压缩
      * @returns {gulpPipe} 返回管道
      */
-    function cssBodyBuild(_subPipe, cfg, key, callback) {
+    function cssBodyBuild(_subPipe, cfg, key, callback, isMin) {
         var _pipe = getStreamqueueParamList(cfg, function () {
             return splitPipe(function () {
                 return splitPipe(function () {
@@ -2692,7 +2800,7 @@
                     }
                     return _subPipe;
                 }, function (pipe) {
-                    return cssFactory(pipe, cfg);
+                    return cssFactory(pipe, cfg, isMin);
                 });
             }, function (pipe) {
                 return pipeHeader(pipe, cfg);
@@ -2724,13 +2832,11 @@
         //         console.log(err);
         //     });
 
-
-        PY.gulpsass=require('gulp-sass');
-        var _pipe=startGulpMapAndChange(cfg,'',true)
+        PY.gulpsass = require('gulp-sass');
+        var _pipe = startGulpMapAndChange(cfg, '', true)
             .pipe(PY.gulpsass({outputStyle: s}).on('error', PY.gulpsass.logError));
 
-
-        return cssBodyBuild(_pipe, cfg, key, callback);
+        return cssBodyBuild(_pipe, cfg, key, callback, true);
     }
 
     /**
@@ -3025,7 +3131,7 @@
 
             /**
              * 清理文件的Task
-             * @returns {Boolean} 
+             * @returns {Boolean}
              */
             task_cls: function () {
                 // del(this.options.clsPath.gSrc, cb););
@@ -3087,7 +3193,7 @@
 
                 /**
                  * 打印日志
-                 * 
+                 *
                  * @param {any} err 错误信息
                  * @param {any} stats 状态信息
                  * @param {any} cfg 配置参数
@@ -3211,7 +3317,7 @@
 
             /**
              * 处理ngTpls文件的Tesk
-             * 
+             *
              * @param {Function} cb task的cb回调函数
              * @returns {gulpPipe} 返回管道
              */
@@ -3229,7 +3335,7 @@
 
             /**
              * 按目录合并JS的Tesk
-             * 
+             *
              * @param {Function} cb task的cb回调函数
              * @returns {gulpPipe} 返回管道
              */
@@ -3786,7 +3892,7 @@
                         var _rootpath = sub[taskName].connectcfg.root[0],
                             _dir = path.normalize(_rootpath).replace(/\\/g, '/');
 
-                            var _connOptions={
+                        var _connOptions = {
                             rewriteRules: [ //每次刷新时显示的内容
                                 {
                                     match: /browserSync/g,
@@ -3818,13 +3924,11 @@
                             ]
                         };
 
-
-                        if(sub[taskName].connectcfg.browser && typeof sub[taskName].connectcfg.browser=='string'){
-                            _connOptions.browser=sub[taskName].connectcfg.browser.split(',');
-                        }else if(sub[taskName].connectcfg.browser instanceof Array){
-                            _connOptions.browser=sub[taskName].connectcfg.browser;
+                        if (sub[taskName].connectcfg.browser && typeof sub[taskName].connectcfg.browser == 'string') {
+                            _connOptions.browser = sub[taskName].connectcfg.browser.split(',');
+                        } else if (sub[taskName].connectcfg.browser instanceof Array) {
+                            _connOptions.browser = sub[taskName].connectcfg.browser;
                         }
-
 
                         PY.browsersync.init(_connOptions);
                     });
@@ -3943,7 +4047,7 @@
                 PY.gulp.task('connect', function () {
                     var _rootpath = connectcfg.root[0],
                         _dir = path.normalize(_rootpath).replace(/\\/g, '/');
-                    var _connOptions={
+                    var _connOptions = {
                         notify: false, //false不显示任何通知
                         codeSync: true, //不发送任何改变事件给浏览器
                         // startPath:'index3_1.html',
@@ -3966,10 +4070,10 @@
                             '**/*.svg'
                         ]
                     };
-                    if(connectcfg.browser && typeof connectcfg.browser=='string'){
-                        _connOptions.browser=connectcfg.browser.split(',');
-                    }else if(connectcfg.browser instanceof Array){
-                        _connOptions.browser=connectcfg.browser;
+                    if (connectcfg.browser && typeof connectcfg.browser == 'string') {
+                        _connOptions.browser = connectcfg.browser.split(',');
+                    } else if (connectcfg.browser instanceof Array) {
+                        _connOptions.browser = connectcfg.browser;
                     }
                     PY.browsersync.init(_connOptions);
                 });
@@ -4084,8 +4188,8 @@
                     .pipe(PY.gulpclean());
             }
         });
-        PY.gulp.task('default', ["ifobj"], function () {
-           PY.gulp.start("taskBakArr");
+        PY.gulp.task('default', ['ifobj'], function () {
+            PY.gulp.start('taskBakArr');
         });
 
         // PY.gulp.task('default', ['taskBakArr'], function () {});
@@ -4134,7 +4238,7 @@
  * @property {Boolean} [ifEval=false] js是否eval加密文件
  * @property {Object} [evalConfig={}] js eval加密文件配置参数
  * @property {Boolean} [ifEncrypt=false] 是否加密文件
- * @property {Object} [encryptConfig={}]加密文件时的配置
+ * @property {Object} [encryptConfig={}] 加密文件时的配置
  * @property {Boolean} [ifminimg=false] 是否压缩图片文件（false：为不压缩；true：为压缩）
  * @property {Number} [imgquality=80] 图片压缩的质量，最小不能小于60(ifminimg=true时才有效)
  * @property {Boolean} [ifminhtml= false] 是否压缩html（false：为压缩；true：为不压缩）

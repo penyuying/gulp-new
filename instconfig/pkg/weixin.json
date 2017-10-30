@@ -18,8 +18,10 @@
         "debug": false
     },
 
+    "isJshint":true,
     "isEslint":true,
-    "ifmin": true,
+    "isTslint":false,
+    "ifmin": false,
     "ifEval":false,
     "ifJsDoc":false,
     "gzipIf": false,
@@ -64,10 +66,6 @@
     },{
         "src":"**/*.wxs",
         "dest":""
-    },{
-        "src":"**/*.{wxml,html}",
-        "extname":".wxml",
-        "dest":""
     }],
     "copyDstDir": "",
 
@@ -92,11 +90,10 @@
     "tsFile":[{
         "bannerIf":true,
         "ifEval":false,
-        "src":["../gulp/node_modules/typed-we-app/**/*","**/*"],
+        "src":["../tsconfig.json","**/*"],
         "dest":""
     }],
-
-    "isTslint":true,
+    "tslintFile":"**/*.ts",
     "tsConfFile":"../tsconfig.json",
 
     "jsFile": [{
@@ -138,9 +135,10 @@
 
     "ifminhtml": false,
     "ifminhtmlObj":{
-        "removeComments": false,
-        "collapseWhitespace": false,
-        "conservativeCollapse": false,
+        "caseSensitive":true,
+        "removeComments": true,
+        "collapseWhitespace": true,
+        "conservativeCollapse": true,
         "preserveLineBreaks": false,
         "removeAttributeQuotes":false,
         "removeEmptyAttributes": false,
@@ -149,12 +147,16 @@
         "collapseBooleanAttributes": false,
         "collapsewhitespace":false,
         "removeStyleLinkTypeAttributes": false,
-        "keepClosingSlash": false,
+        "keepClosingSlash": true,
         "minifyJS": true,
         "minifyCSS":true
     },
 
-    "templateFile":[],
+    "templateFile":[{
+        "src":"**/*",
+        "extname":".wxml",
+        "dest":""
+    }],
     "templateDstDir":"",
 
     "htmlFile": "",

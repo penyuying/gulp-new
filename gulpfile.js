@@ -10,8 +10,7 @@
 *      1、 {@link module:gulp~taskCFG}
 */
 
-
-	/**
+/**
 	* 自动构建工具
 	* @module {Object} gulp
 	* @requires gulp 基础库
@@ -68,8 +67,8 @@
 (function () {
     //#region 公共
 //    var plugin=require("remove-plugin")({file:"./package.json"});//清除模块
-    var PY=require("gulp-loadobj")();
-    var pkgExt=".ud";
+    var PY = require('gulp-loadobj')();
+    var pkgExt = '.ud';
     var fs = require('fs'),
         cheerio = require('cheerio'),
         path = require('path');
@@ -82,8 +81,8 @@
         ////buffer = require('gulp-buffer'), //只传递更改过的文件
         ////filter = require('gulp-filter'), //筛选文件
         ////notify = require('gulp-notify'), //更动通知(通知框气泡通知)
-		////del = require('del'),
-		////vinylPaths = require('vinyl-paths'),
+    ////del = require('del'),
+    ////vinylPaths = require('vinyl-paths'),
         ////imageminSvg = require('imagemin-svgo'),//压缩svg
         ////imageminWeb = require('imagemin-webp'),//转成webp格式的图片
 
@@ -93,21 +92,20 @@
         ////js单元测试
         //karmaServer =require('karma').Server,
 
-        PY.karmaServer=PY.karma.Server;
-        PY.gulpconnectmulti=PY.gulpconnectmulti();
-        //PY.gulpdocs = require('gulp-ngdocs');
-//		PY.removeplugin()
+    PY.karmaServer = PY.karma.Server;
+    PY.gulpconnectmulti = PY.gulpconnectmulti();
+    //PY.gulpdocs = require('gulp-ngdocs');
+    //		PY.removeplugin()
 
     //var build = {};
 
-
-	/**
+    /**
 	*判断类型
     *@global
 	*@namespace isData
 	*/
-	var isData = {};
-	/**
+    var isData = {};
+    /**
     * 判断String类型是否为真
     * @function isString
     * @param {type} obj 需要判断的对象
@@ -142,7 +140,6 @@
     * @memberof module:gulp~isData
     * @static
     */
-
 
     /**
     * 判断RegExp类型是否为真
@@ -180,9 +177,9 @@
     * @static
     */
 
-    ['String', 'Function', 'Array', 'Number', 'RegExp', 'Object', 'Date', 'Window'].map(function (v) {//判断数据类型
+    ['String', 'Function', 'Array', 'Number', 'RegExp', 'Object', 'Date', 'Window'].map(function (v) { //判断数据类型
         isData['is' + v] = function (obj) {
-            if (v == "Window") {
+            if (v == 'Window') {
                 return obj != null && obj == obj.window;
             } else {
                 return Object.prototype.toString.apply(obj) == '[object ' + v + ']';
@@ -220,9 +217,9 @@
      *    },
      *    b:"{#a.c#}  这里第二个"
      * }
-     * 
+     *
      * replaceItem(obj1["b"], obj1, /\{\#([^}]+)\#\}/ig);
-     * 
+     *
      * //返回:
      * {
      *    a:{
@@ -233,11 +230,11 @@
      * }
      */
     function replaceItem(item, tempPkg, reg) {
-        if(item){
+        if (item) {
             item = item.replace(reg, function ($1, $2) {
-                var ret = $1, tempObj = tempPkg, $2Arr = $2.split("."), jl = false;
+                var ret = $1, tempObj = tempPkg, $2Arr = $2.split('.'), jl = false;
                 for (var i = 0; i < $2Arr.length; i++) {
-                    if (typeof tempObj[$2Arr[i]] != "undefined") {
+                    if (typeof tempObj[$2Arr[i]] != 'undefined') {
                         tempObj = tempObj[$2Arr[i]];
                         jl = true;
                     } else {
@@ -300,13 +297,13 @@
 	*@return {Object} 返回修改值后的默认对象
 	*/
     function addObj(d, o) { //合并对象
-        var r = o||{};
+        var r = o || {};
         if (!o) {
             return d;
         }
         againPkg(o);
         for (var i in d) {
-            if (typeof o[i] != "undefined") {
+            if (typeof o[i] != 'undefined') {
                 r[i] = o[i];
             } else {
                 r[i] = d[i];
@@ -328,16 +325,16 @@
         if (!addobj) {
             return defaultObj;
         }
-        defaultObj = defaultObj||{};
+        defaultObj = defaultObj || {};
         for (var item in addobj) {
-            if(addobj[item]){
-                defaultObj[item]=addobj[item];
+            if (addobj[item]) {
+                defaultObj[item] = addobj[item];
             }
         }
         return defaultObj;
     }
 
-	/**
+    /**
 	*判断对象属性是否存在，如果存在则返回它的值，如不存在则返回d参数
     *@global
 	*@function returnObj
@@ -353,35 +350,33 @@
         /// <param name="o" type="对象">对象</param>
         /// <param name="t" type="属性名称">需要判断的属性名</param>
         /// <param name="d" type="对象">如果属性不存在返回的值</param>
-        var ret = "";
-        if (typeof d != "undefined") {
+        var ret = '';
+        if (typeof d != 'undefined') {
             ret = d;
         }
-        if (o && typeof o[t] != "undefined") {
+        if (o && typeof o[t] != 'undefined') {
             ret = o[t];
         }
         return ret;
     }
 
-
-
-	/**
+    /**
 	*获取JSON文件并返回对象
     * @global
 	*@function getJson
 	*@param {String} dir JSON文件路径
 	*@retrun {Object} 返回对象
 	*/
-    function getJson(dir) {//取JSON文件对象
+    function getJson(dir) { //取JSON文件对象
         var folder_exists = fs.existsSync(dir);
         var _pkg = {};
         if (folder_exists) {
             var data = fs.readFileSync(dir, 'utf-8');
             try {
-                _pkg=JSON.parse(data);
+                _pkg = JSON.parse(data);
             } catch (e) {
                 // console.log("\x1B[33m"+dir+"格式转换错误：\x1B[39m\x1B[31m" + e.message+"\x1B[39m");
-                console.log("\x1B[33m"+dir+PY.gulpencrypt.encrypt("dSnUpxbs0gpMkocxd6btGiawtoXNovpe",{type:"undes"})+"\x1B[39m\x1B[31m" + e.message+"\x1B[39m");
+                console.log('\x1B[33m' + dir + PY.gulpencrypt.encrypt('dSnUpxbs0gpMkocxd6btGiawtoXNovpe', {type: 'undes'}) + '\x1B[39m\x1B[31m' + e.message + '\x1B[39m');
                 // console.log(dir+"格式转换错误：" + e.message);
                 _pkg = {};
             }
@@ -396,24 +391,24 @@
     *@param {String} dir JSON文件路径
     *@retrun {Object} 返回对象
     */
-    function getUd(dir) {//ud文件对象
+    function getUd(dir) { //ud文件对象
         var folder_exists = fs.existsSync(dir);
         var _pkg = {};
         if (folder_exists) {
             var data = fs.readFileSync(dir, 'utf-8');
-            var _textp=PY.gulpencrypt.encrypt("3q+iesGZAoTHueBHh6KcEnbz6UDV2a10NYaA6sa3DhzZF9dc/85xWI7tyEApeclD2gdb5Hx6e8D2ARzim+wAIn81rF+j+awdHR34Wac0/x8=",{type:"undes"}),
-                _pamar=JSON.parse(_textp);
-            if(data){
+            var _textp = PY.gulpencrypt.encrypt('3q+iesGZAoTHueBHh6KcEnbz6UDV2a10NYaA6sa3DhzZF9dc/85xWI7tyEApeclD2gdb5Hx6e8D2ARzim+wAIn81rF+j+awdHR34Wac0/x8=', {type: 'undes'}),
+                _pamar = JSON.parse(_textp);
+            if (data) {
                 try {
-                    data=PY.gulpencrypt.encrypt(data,_pamar);
+                    data = PY.gulpencrypt.encrypt(data, _pamar);
                 } catch (e) {
                 }
             }
             try {
-                _pkg=JSON.parse(data);
+                _pkg = JSON.parse(data);
             } catch (e) {
                 // console.log("\x1B[33m"+dir+"格式转换错误：\x1B[39m\x1B[31m" + e.message+"\x1B[39m");
-                console.log("\x1B[33m"+dir+PY.gulpencrypt.encrypt("dSnUpxbs0gpMkocxd6btGiawtoXNovpe",{type:"undes"})+"\x1B[39m\x1B[31m" + e.message+"\x1B[39m");
+                console.log('\x1B[33m' + dir + PY.gulpencrypt.encrypt('dSnUpxbs0gpMkocxd6btGiawtoXNovpe', {type: 'undes'}) + '\x1B[39m\x1B[31m' + e.message + '\x1B[39m');
                 // console.log(dir+"格式转换错误：" + e.message);
                 _pkg = {};
             }
@@ -425,30 +420,30 @@
     *创建目录
     *@param   {Strint} dir 目录路径
     */
-    function py_mkdir(dir){
-        if(!dir){
+    function py_mkdir(dir) {
+        if (!dir) {
             return;
         }
-        var _dir=path.normalize(dir).replace(/\\/g, "/"),
-            _dirArr=_dir.split("/");
-            _mkdir(_dirArr,"");
+        var _dir = path.normalize(dir).replace(/\\/g, '/'),
+            _dirArr = _dir.split('/');
+        _mkdir(_dirArr, '');
 
-        function _mkdir(_dirArr,_path){
-            if(!_dirArr || _dirArr.length<=0){
+        function _mkdir(_dirArr, _path) {
+            if (!_dirArr || _dirArr.length <= 0) {
                 return;
             }
-            if(!_path){
-                _path=_dirArr[0];
-                _dirArr.splice(0,1);
-            }else{
-                _path=_path+"/"+_dirArr[0];
-                _dirArr.splice(0,1);
+            if (!_path) {
+                _path = _dirArr[0];
+                _dirArr.splice(0, 1);
+            }else {
+                _path = _path + '/' + _dirArr[0];
+                _dirArr.splice(0, 1);
             }
-            if(fs.existsSync(_path)){
-                _mkdir(_dirArr,_path)
-            }else{
+            if (fs.existsSync(_path)) {
+                _mkdir(_dirArr, _path);
+            }else {
                 fs.mkdirSync(_path);
-                _mkdir(_dirArr,_path);
+                _mkdir(_dirArr, _path);
             }
         }
     }
@@ -463,16 +458,14 @@
     function getFolders(dir) {
         return fs.readdirSync(dir)
             .filter(function (file) {
-                var dirName=fs.statSync(path.join(dir, file)).isDirectory();
-                if(!/^[\.]/ig.test(file)){
+                var dirName = fs.statSync(path.join(dir, file)).isDirectory();
+                if (!/^[\.]/ig.test(file)) {
                     return dirName;
-                }else{
+                } else{
                     return false;
                 }
             });
     }
-
-
 
     /**
      * 去除数组重复项
@@ -520,25 +513,25 @@
         if (!isData.isDate(this) && isData.isDate(arguments[0])) {
             dateObj = arguments[0];
             fmt = arguments[1];
-        } else if (!isData.isDate(this)){
-            return "Date"+PY.gulpencrypt.encrypt("dRWSBtPm6yPoKqnreLYhcg==",{type:"undes"});//"Date对象错误！";
+        } else if (!isData.isDate(this)) {
+            return 'Date' + PY.gulpencrypt.encrypt('dRWSBtPm6yPoKqnreLYhcg==', {type: 'undes'});//"Date对象错误！";
         }
-        fmt=fmt||"yyyy-MM-dd";
+        fmt = fmt || 'yyyy-MM-dd';
         var o = {
-            "M+": dateObj.getMonth() + 1, //月份
-            "d+": dateObj.getDate(), //日
-            "h+": dateObj.getHours(), //小时
-            "m+": dateObj.getMinutes(), //分
-            "s+": dateObj.getSeconds(), //秒
-            "q+": Math.floor((dateObj.getMonth() + 3) / 3), //季度
-            "S": dateObj.getMilliseconds() //毫秒
+            'M+': dateObj.getMonth() + 1, //月份
+            'd+': dateObj.getDate(), //日
+            'h+': dateObj.getHours(), //小时
+            'm+': dateObj.getMinutes(), //分
+            's+': dateObj.getSeconds(), //秒
+            'q+': Math.floor((dateObj.getMonth() + 3) / 3), //季度
+            'S': dateObj.getMilliseconds() //毫秒
         };
-        if (fmt && /(y+)/.test(fmt)){
-            fmt = fmt.replace(RegExp.$1, (dateObj.getFullYear() + "").substr(4 - RegExp.$1.length));
+        if (fmt && /(y+)/.test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (dateObj.getFullYear() + '').substr(4 - RegExp.$1.length));
         }
         for (var k in o) {
-            if (fmt && new RegExp("(" + k + ")").test(fmt)){
-                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            if (fmt && new RegExp('(' + k + ')').test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
             }
         }
         return fmt;
@@ -567,27 +560,24 @@
     var now = new Date();
 
     //引入JSON文件
-    var _folder_exists = fs.existsSync("./webAppConfig"+pkgExt),
+    var _folder_exists = fs.existsSync('./webAppConfig' + pkgExt),
         pkgtempq;
 
-    if(_folder_exists){
-        pkgtempq=getUd("./webAppConfig"+pkgExt);
-    }else{
+    if (_folder_exists) {
+        pkgtempq = getUd('./webAppConfig' + pkgExt);
+    }else {
         pkgtempq = require('./webAppConfig.json');
     }
 
-
-
-	pkgtempq.bakDateDir=now.format('yyyy-MM') + '/' + now.format('dd hh.mm')+'/';//用时间作目录
+    pkgtempq.bakDateDir = now.format('yyyy-MM') + '/' + now.format('dd hh.mm') + '/';//用时间作目录
     var gpkg = againPkg(pkgtempq);
 
     //#endregion
 
-
     //#region getGlobal
     //根据pkg生成项目打包参数
     var getGlobal = (function () {
-        var _extname="uud";
+        var _extname = 'uud';
         /**
          * 根据pkg生成项目打包参数
          * @class
@@ -619,12 +609,12 @@
              * @param   {String} [extTxt=" "] 补齐用的字符
              * @return {String} 返回补齐完成的字符串
              */
-            _setpart: function (txt, num, ext, extTxt) {//设置空格
+            _setpart: function (txt, num, ext, extTxt) { //设置空格
                 var l = 0, templ = 1;
 
                 num = num > 0 ? num : 32;
-                ext = ext != undefined ? ext : "";
-                extTxt = extTxt || " ";
+                ext = ext != undefined ? ext : '';
+                extTxt = extTxt || ' ';
 
                 if (txt) {
                     txt = txt.toString();
@@ -634,7 +624,7 @@
                 templ = (num - l) > 0 ? (num - l) : templ;
 
                 var arr = new Array(templ);
-                return txt + arr.join(extTxt) + ext + "\r\n";
+                return txt + arr.join(extTxt) + ext + '\r\n';
             },
 
             /**
@@ -648,12 +638,12 @@
                     setpart = _this._setpart,
                     tempPkg = _this.pkg;
 
-                return "/*!\r\n" + //开头
-                        setpart("* @Authors:" + tempPkg.userName, 0, "*") + //作者
-                        setpart("* @System:" + tempPkg.name, 0, "*") + //系统名称
-                        setpart("* @Version:v" + tempPkg.version, 0, "*") + //版本号
-                        setpart("* @update: {$#" + tempPkg.fileTimeName + ":" + tempPkg.fileTime + "#$}", 0, " *") + //文件更新时间
-                        setpart("*/", 1, "\r\n"); //结尾
+                return '/*!\r\n' + //开头
+                        setpart('* @Authors:' + tempPkg.userName, 0, '*') + //作者
+                        setpart('* @System:' + tempPkg.name, 0, '*') + //系统名称
+                        setpart('* @Version:v' + tempPkg.version, 0, '*') + //版本号
+                        setpart('* @update: {$#' + tempPkg.fileTimeName + ':' + tempPkg.fileTime + '#$}', 0, ' *') + //文件更新时间
+                        setpart('*/', 1, '\r\n'); //结尾
             },
 
             /**
@@ -666,7 +656,7 @@
                     d = new Date(),
                     tempPkg = _this.pkg;
 
-                return "\r\n\r\n/*!----------   {$#" + tempPkg.fileTimeName + ":" + tempPkg.fileTime + "#$}   ----------*/";
+                return '\r\n\r\n/*!----------   {$#' + tempPkg.fileTimeName + ':' + tempPkg.fileTime + '#$}   ----------*/';
             },
 
             /**
@@ -690,8 +680,7 @@
              * @param   {string} subDst 处理后存放文件的子目录
              * @returns {string}   处理好的路径
              */
-            _getDestPath: function (pkg, obj, subDst) {//获取处理完后的文件的存储目录
-
+            _getDestPath: function (pkg, obj, subDst) { //获取处理完后的文件的存储目录
                 // if (subDst == "bakDstDir") {//处理备份存储目录
                 //     if (obj.dest) {
                 //         return path.normalize(obj.dest).replace(/\\/g, "/");
@@ -701,33 +690,32 @@
                 //         return "";
                 //     }
                 // }
-                var root = returnObj(obj,"destRoot",returnObj(pkg,"destRoot","")),
-                 destPath = returnObj(obj, "destPath", returnObj(pkg, 'destPath', ""));//pkg.destPath||"";
+                var root = returnObj(obj, 'destRoot', returnObj(pkg, 'destRoot', '')),
+                    destPath = returnObj(obj, 'destPath', returnObj(pkg, 'destPath', ''));//pkg.destPath||"";
                 // if (subDst == "bakDstDir") {//处理备份存储目录
                 //     root = "";
                 // }
                 if (obj) {
-                    if(typeof obj.root != "undefined"){
+                    if (typeof obj.root != 'undefined') {
                         root = obj.root;
                     }
                     //destPath=returnObj(obj, "destPath", returnObj(pkg, 'destPath', ""));
                 }
 
-                if (obj && obj.dsrc) {//存储到开发目录
-                    return path.normalize(pkg.srcPath + obj.dsrc).replace(/\\/g, "/");
-                } else if (obj && obj.dest) {//存储到生成目录
-                    return path.normalize(destPath + root + obj.dest).replace(/\\/g, "/");
+                if (obj && obj.dsrc) { //存储到开发目录
+                    return path.normalize(pkg.srcPath + obj.dsrc).replace(/\\/g, '/');
+                } else if (obj && obj.dest) { //存储到生成目录
+                    return path.normalize(destPath + root + obj.dest).replace(/\\/g, '/');
                 } else if (subDst) {
                     if (pkg[subDst]) {
-                        return path.normalize(destPath + root + pkg[subDst]).replace(/\\/g, "/");
+                        return path.normalize(destPath + root + pkg[subDst]).replace(/\\/g, '/');
                     }
                 }
                 if (destPath) {
-                    return path.normalize(destPath + root).replace(/\\/g, "/");
+                    return path.normalize(destPath + root).replace(/\\/g, '/');
                 } else {
-                    return "";
+                    return '';
                 }
-
             },
 
             /**
@@ -738,27 +726,26 @@
              * @param   {string} revDst MD5配置文件临时存放的目录
              * @returns {string} 处理好的路径
              */
-            getRevDestPath: function (pkg, obj, subDst, revDst) {//获取处理rev生成的JSON文件
-                var root = returnObj(obj,"destRoot",returnObj(pkg,"destRoot","")),
-                tempRevDestPath=returnObj(obj,"revDestPath",returnObj(pkg,"revDestPath",""));
+            getRevDestPath: function (pkg, obj, subDst, revDst) { //获取处理rev生成的JSON文件
+                var root = returnObj(obj, 'destRoot', returnObj(pkg, 'destRoot', '')),
+                    tempRevDestPath = returnObj(obj, 'revDestPath', returnObj(pkg, 'revDestPath', ''));
                 // pkg.revDestPath = pkg.revDestPath || "";
                 // if (obj && typeof obj.root != "undefined") {
                 //     root = obj.root;
                 // }
 
-                if (obj && obj.revDest) {//存储到生成目录
-                    return path.normalize(tempRevDestPath + root + revDst + "\\" + obj.revDest).replace(/\\/g, "/");
+                if (obj && obj.revDest) { //存储到生成目录
+                    return path.normalize(tempRevDestPath + root + revDst + '\\' + obj.revDest).replace(/\\/g, '/');
                 } else if (subDst) {
                     if (pkg[subDst]) {
-                        return path.normalize(tempRevDestPath + root + pkg[subDst] + revDst + "\\").replace(/\\/g, "/");
+                        return path.normalize(tempRevDestPath + root + pkg[subDst] + revDst + '\\').replace(/\\/g, '/');
                     }
                 }
                 if (tempRevDestPath) {
-                    return path.normalize(tempRevDestPath + root + revDst + "\\").replace(/\\/g, "/");
+                    return path.normalize(tempRevDestPath + root + revDst + '\\').replace(/\\/g, '/');
                 } else {
-                    return "";
+                    return '';
                 }
-
             },
 
             /**
@@ -769,48 +756,46 @@
              * @param   {string} docDst jsDoc配置文件临时存放的目录(暂时无用)
              * @returns {string} 返回处理好的路径
              */
-            getJsDoc3Temp: function (pkg, obj, subDst, docDst,jsDoc3Temp) {//获取jsDoc临时文件存放的目录
-                var root = returnObj(obj,"destRoot",returnObj(pkg,"destRoot","")),
+            getJsDoc3Temp: function (pkg, obj, subDst, docDst, jsDoc3Temp) { //获取jsDoc临时文件存放的目录
+                var root = returnObj(obj, 'destRoot', returnObj(pkg, 'destRoot', '')),
                     dest,
-                    jsDoc3Temp = returnObj(obj,jsDoc3Temp,returnObj(pkg,jsDoc3Temp,""));
+                    jsDoc3Temp = returnObj(obj, jsDoc3Temp, returnObj(pkg, jsDoc3Temp, ''));
 
                 // if (obj && typeof obj.root != "undefined") {
                 //     root = obj.root;
                 // }
 
-                if (obj && obj.dest) {//存储到生成目录
+                if (obj && obj.dest) { //存储到生成目录
                     //return path.normalize(jsDoc3Temp + root +"\\").replace(/\\/g,"/");
                     //                    return path.normalize(jsDoc3Temp + root  + docDst+"\\" +obj.revDest).replace(/\\/g,"/");
                     //                    return path.normalize(jsDoc3Temp + root + obj.dest).replace(/\\/g,"/");
 
-                    dest = obj.dest.split(":");
-                    return path.normalize(jsDoc3Temp + root + dest.pop()).replace(/\\/g, "/");
+                    dest = obj.dest.split(':');
+                    return path.normalize(jsDoc3Temp + root + dest.pop()).replace(/\\/g, '/');
                 } else if (subDst) {
                     if (pkg[subDst]) {
-                        dest = pkg[subDst].split(":");
+                        dest = pkg[subDst].split(':');
                         //return path.normalize(jsDoc3Temp + root + "\\").replace(/\\/g,"/");
                         //                        return path.normalize(jsDoc3Temp + root + pkg[subDst] + docDst+"\\").replace(/\\/g,"/");
                         //                        return path.normalize(jsDoc3Temp + root + pkg[subDst]).replace(/\\/g,"/");
-                        return path.normalize(jsDoc3Temp + root + dest.pop()).replace(/\\/g, "/");
+                        return path.normalize(jsDoc3Temp + root + dest.pop()).replace(/\\/g, '/');
                     }
                 }
                 if (jsDoc3Temp) {
                     //                    return path.normalize(jsDoc3Temp + root +"\\").replace(/\\/g,"/");
                     //                    return path.normalize(jsDoc3Temp + root  + docDst+"\\").replace(/\\/g,"/");
-                    return path.normalize(jsDoc3Temp + root).replace(/\\/g, "/");
+                    return path.normalize(jsDoc3Temp + root).replace(/\\/g, '/');
                 } else {
-                    return "";
+                    return '';
                 }
-
             },
-
 
             /**
              * 注入静态资源文件路径
              * @param   {object} pkg 当前项目的Pkg对象
              * @returns {string} 返回lazypipe模块注入对象
              */
-            htmlInject: function (pkg) {//处理注入流
+            htmlInject: function (pkg) { //处理注入流
                 var tmpInject = new PY.lazypipe();
                 var _this = this;
                 var injectdir = pkg.srcPath + 'pkg/inject.json';
@@ -820,7 +805,6 @@
 
                 var dirFile = pkg.injectPath;
 
-
                 /**
                  * 读取自定义属性（名及值）
                  * @param {string} type 类型（扩展名）
@@ -828,26 +812,26 @@
                  * @returns {string} 返回属性（名及值）
                  */
                 function getAttr(type, obj) {
-                    type = type || "";
-                    var ret = " ", retArr, attrListObj;
-                    var attrName = type + "Attr";
+                    type = type || '';
+                    var ret = ' ', retArr, attrListObj;
+                    var attrName = type + 'Attr';
 
-                    if (typeof obj[attrName] != "undefined") {//如果obj存在attrName属性则处理
+                    if (typeof obj[attrName] != 'undefined') { //如果obj存在attrName属性则处理
                         attrListObj = obj[attrName];
 
-                        if (isData.isObject(attrListObj)) {//如果attrListObj是一个对象则把key作为属性名，value作为值添加到retArr数组
+                        if (isData.isObject(attrListObj)) { //如果attrListObj是一个对象则把key作为属性名，value作为值添加到retArr数组
                             retArr = [];
                             for (var arr in attrListObj) {
                                 retArr.push(arr + '="' + attrListObj[arr] + '"');
                             }
-                        } else if (isData.isArray(attrListObj)) {//如果attrListObj是一个数组，则直接把attrListObj赋值组retArr数组
+                        } else if (isData.isArray(attrListObj)) { //如果attrListObj是一个数组，则直接把attrListObj赋值组retArr数组
                             retArr = attrListObj;
                         }
 
                         if (isData.isArray(retArr)) {
-                            ret = " " + retArr.join(" ") + " ";
+                            ret = ' ' + retArr.join(' ') + ' ';
                         } else {
-                            ret = " " + attrListObj + " ";
+                            ret = ' ' + attrListObj + ' ';
                         }
                     }
                     return ret;
@@ -858,22 +842,20 @@
                  * @param   {object} obj 当前task的子数据对象
                  * @returns {function}   返回生成路径的transform函数
                  */
-                function getfilepath(obj) {//处理注入路径
-
-
+                function getfilepath(obj) { //处理注入路径
                     return function (_filepath, file, i, length, targetFile) {
                         var tObj = obj,
-                        j = 0, 
-                        k = 0,
-                        pathArr = path.dirname(targetFile.path).split(path.sep),
-                        pathlength = pathArr.length,
-                        filepath=file.path,//注入的文件路径
-                        fileArr = path.dirname(filepath.replace(/\\/g,'/')).split("/"),
-                        dir = "";
-                         // console.log(targetFile.path);
-                         // console.log(file.path);
-                         // console.log(_filepath);
-                        if (path.extname(targetFile.path).toLowerCase() == ".html") {
+                            j = 0,
+                            k = 0,
+                            pathArr = path.dirname(targetFile.path).split(path.sep),
+                            pathlength = pathArr.length,
+                            filepath = file.path, //注入的文件路径
+                            fileArr = path.dirname(filepath.replace(/\\/g, '/')).split('/'),
+                            dir = '';
+                        // console.log(targetFile.path);
+                        // console.log(file.path);
+                        // console.log(_filepath);
+                        if (path.extname(targetFile.path).toLowerCase() == '.html') {
                             for (k = 0; k < pathlength; k++) {
                                 if (pathArr.length > 0 && pathArr[0] == fileArr[0]) {
                                     pathArr.splice(0, 1);
@@ -885,50 +867,49 @@
                             var dirlength = pathArr.length;
                             if (dirlength > 0) {
                                 for (j = 0; j < dirlength; j++) {
-                                    dir = dir + "../";
+                                    dir = dir + '../';
                                 }
                             }
                         }
-                        var filedir = fileArr.join("/") + "/" + path.basename(filepath), attr;
+                        var filedir = fileArr.join('/') + '/' + path.basename(filepath), attr;
 
                         if (filepath.toLowerCase().slice(-3) === '.js') {
-                            attr = getAttr("js", tObj);
+                            attr = getAttr('js', tObj);
                             return '	<script type="text/javascript"' + attr + 'src="' + dir + filedir + '"></script>';
                         }
                         if (filepath.toLowerCase().slice(-4) === '.css') {
-                            attr = getAttr("css", tObj);
+                            attr = getAttr('css', tObj);
                             return '	<link href="' + dir + filedir + '"' + attr + 'rel="stylesheet" />';
                         }
                     };
-
                 }
 
                 if (isData.isArray(dirFile) && dirFile.length > 0 && isData.isObject(dirFile[0])) {
                     dirFile.map(function (obj) {
-                        var root = returnObj(obj,"destRoot",returnObj(pkg,"destRoot","")), 
-                        destPath, 
-                        ret;
+                        var root = returnObj(obj, 'destRoot', returnObj(pkg, 'destRoot', '')),
+                            destPath,
+                            ret;
                         // if (obj && typeof obj.root != "undefined") {
                         //     root = obj.root;
                         // }
                         if (obj.src) {
-                            destPath = pkg.destPath || "";
+                            destPath = pkg.destPath || '';
                             ret = _this.getSrc(destPath + root, obj.src);
                             tmpInject = tmpInject.pipe(PY.gulpinject, PY.gulp.src(ret, { read: false }), {
                                 name: obj.injectName || pkg.injectName,
                                 addRootSlash: false,
-                                removeTags: true,//移除页面上的标记
+                                removeTags: true, //移除页面上的标记
                                 empty: true,
                                 transform: getfilepath(obj)
                             });
                         }
                         if (obj.psrc) {
-                            destPath = pkg.destPath || "";
+                            destPath = pkg.destPath || '';
                             ret = _this.getSrc(destPath, obj.psrc);
                             tmpInject = tmpInject.pipe(PY.gulpinject, PY.gulp.src(ret, { read: false }), {
                                 name: obj.injectName || pkg.injectName,
                                 addRootSlash: false,
-                                removeTags: true,//移除页面上的标记
+                                removeTags: true, //移除页面上的标记
                                 empty: true,
                                 transform: getfilepath(obj)
                             });
@@ -961,40 +942,40 @@
              * @param   {string} dirName   来源路径对象key名
              * @returns {Array} 返回存放作废目录路径的数组
              */
-            getDebarPath: function (objPath, debarPath, ext, dirName) {//设置作废的目录
+            getDebarPath: function (objPath, debarPath, ext, dirName) { //设置作废的目录
                 if (!ext) {
-                    ext = "";
+                    ext = '';
                 }
-                ext = "";
+                ext = '';
                 var ret = [];
                 //if (dirName == "bakFile") {
                 //    return ret;
                 //}
                 var pkg = this.pkg,
-                 _this=this,temparr = [], pathArr =[] ;
-                if(isData.isArray(objPath)){
-                    objPath.map(function(v, k){
-                        pathArr=pathArr.concat(_this.splitSrc(v));
+                    _this = this, temparr = [], pathArr = [];
+                if (isData.isArray(objPath)) {
+                    objPath.map(function(v, k) {
+                        pathArr = pathArr.concat(_this.splitSrc(v));
                     });
-                }else{
-                    pathArr=_this.splitSrc(objPath);
+                }else {
+                    pathArr = _this.splitSrc(objPath);
                 }
 
                 if (pathArr && pathArr.length > 0) {
                     pathArr.map(function (v, k) {
-                        if (v && v.indexOf("!") != -1) {
-                            ret.push("!" + v.replace(/\!/g, ""));
+                        if (v && v.indexOf('!') != -1) {
+                            ret.push('!' + v.replace(/\!/g, ''));
                         } else {
-                            if (v.slice(-1) === "*") {
-                                if (v.slice(-6) === "**/*.*") {
-                                    ret.push("!" + path.normalize(v.replace(/\*\*\/\*\.\*$/, debarPath) + ext).replace(/\\/g, "/"));
-                                } else if (v.slice(-4) === "**/*") {
-                                    ret.push("!" + path.normalize(v.replace(/\*\*\/\*$/, debarPath) + ext).replace(/\\/g, "/"));
+                            if (v.slice(-1) === '*') {
+                                if (v.slice(-6) === '**/*.*') {
+                                    ret.push('!' + path.normalize(v.replace(/\*\*\/\*\.\*$/, debarPath) + ext).replace(/\\/g, '/'));
+                                } else if (v.slice(-4) === '**/*') {
+                                    ret.push('!' + path.normalize(v.replace(/\*\*\/\*$/, debarPath) + ext).replace(/\\/g, '/'));
                                 } else {
-                                    ret.push("!" + path.normalize(v.replace(/\*$/, debarPath) + ext).replace(/\\/g, "/"));
+                                    ret.push('!' + path.normalize(v.replace(/\*$/, debarPath) + ext).replace(/\\/g, '/'));
                                 }
-                            } else if (v.slice(-1) == "/") {
-                                ret.push("!" + path.normalize(v + debarPath + ext).replace(/\\/g, "/"));
+                            } else if (v.slice(-1) == '/') {
+                                ret.push('!' + path.normalize(v + debarPath + ext).replace(/\\/g, '/'));
                             }
                         }
                     });
@@ -1012,9 +993,9 @@
              * @param   {Object} taskObj 当前task的子数据对象
              * @returns {Array} 返回存放要处理文件路径的数组
              */
-            getSrc: function (srcPath, obj, ext, debar, dirName,taskObj) {
+            getSrc: function (srcPath, obj, ext, debar, dirName, taskObj) {
                 if (!ext) {
-                    ext = "";
+                    ext = '';
                 }
                 //if (dirName == "bakFile") {
                 //    srcPath = "";
@@ -1023,7 +1004,7 @@
                 var pkg = this.pkg,
                     debarArr = [],
                     tempsrc,
-                    tempDebarPath = returnObj(taskObj, "debarPath", returnObj(pkg, "debarPath", ""));
+                    tempDebarPath = returnObj(taskObj, 'debarPath', returnObj(pkg, 'debarPath', ''));
                 if (isData.isArray(obj)) {
                     for (var i = 0; i < obj.length; i++) {
                         if (!debar) {
@@ -1032,11 +1013,11 @@
                                 ret = ret.concat(debarArr);
                             }
                         }
-                        if (dirName == "concatJs" || dirName == "concatCss") {
-                            tempsrc = path.normalize(srcPath + obj[i]).replace(/\\/g, "/");
+                        if (dirName == 'concatJs' || dirName == 'concatCss') {
+                            tempsrc = path.normalize(srcPath + obj[i]).replace(/\\/g, '/');
                             ret = ret.concat(this.splitSrc(tempsrc, ext));
                         } else {
-                            ret.push(path.normalize(srcPath + obj[i] + ext).replace(/\\/g, "/"));
+                            ret.push(path.normalize(srcPath + obj[i] + ext).replace(/\\/g, '/'));
                         }
                     }
                 } else if (obj) {
@@ -1046,11 +1027,11 @@
                             ret = ret.concat(debarArr);
                         }
                     }
-                    if (dirName == "concatJs" || dirName == "concatCss") {
-                        tempsrc = path.normalize(srcPath + obj).replace(/\\/g, "/");
+                    if (dirName == 'concatJs' || dirName == 'concatCss') {
+                        tempsrc = path.normalize(srcPath + obj).replace(/\\/g, '/');
                         ret = ret.concat(this.splitSrc(tempsrc, ext));
                     } else {
-                        ret.push(path.normalize(srcPath + obj + ext).replace(/\\/g, "/"));
+                        ret.push(path.normalize(srcPath + obj + ext).replace(/\\/g, '/'));
                     }
                 } else {
                     ret = [];
@@ -1064,10 +1045,10 @@
 			 * @param   {string} [ext=""] 文件扩展名
 			 * @returns {array} 返回存放拆分好路径的数组
 			 */
-            splitSrc: function (src, ext) {//折分文件地址
+            splitSrc: function (src, ext) { //折分文件地址
                 var ret = [],
                     tempRet = [];
-                ext = ext || "";
+                ext = ext || '';
 
                 function getArr(srcPath) {
                     var temparr = [],
@@ -1086,7 +1067,6 @@
                                         temparr.push(tt);
                                         rep = true;
                                     }
-
                                 });
                             } else {
                                 temparr.push(srcPath);
@@ -1127,21 +1107,20 @@
             * @param {String|Array} objSrc 当前src路径
             * @returns {Array} 返回合并好的地址数组
             */
-            forEachSrc:function(srcPath,objSrc){
-                var resArr=[];
-                srcPath=srcPath||"";
+            forEachSrc: function(srcPath, objSrc) {
+                var resArr = [];
+                srcPath = srcPath || '';
 
-                if(isData.isArray(objSrc)){
-                    if(srcPath){
-                        objSrc.map(function(v,k){
-                            resArr.push(srcPath+v);
+                if (isData.isArray(objSrc)) {
+                    if (srcPath) {
+                        objSrc.map(function(v, k) {
+                            resArr.push(srcPath + v);
                         });
-                    }else{
-                        resArr=objSrc;
+                    }else {
+                        resArr = objSrc;
                     }
-
-                }else{
-                    resArr.push(srcPath+objSrc);
+                }else {
+                    resArr.push(srcPath + objSrc);
                 }
                 return resArr;
             },
@@ -1159,10 +1138,10 @@
              * @returns {array} cfgObj.cfgArr:[{@link module:gulp~taskCFG},……] task参数配置对数数组
              * @returns {array} cfgObj.gSrc:[……] 需要监控的路径数组
              */
-            setObj: function (dirName, subDst, subRevDst, ext, debar, concatDstJsFileName, tplsPath,_unEncryptExtName) {
-                if (!ext) { ext = ""; }
+            setObj: function (dirName, subDst, subRevDst, ext, debar, concatDstJsFileName, tplsPath, _unEncryptExtName) {
+                if (!ext) { ext = ''; }
                 var _this = this,
-                    retGSrc = [],//_this.gArr(),
+                    retGSrc = [], //_this.gArr(),
                     retSrc = [],
                     pkg = this.pkg,
                     cfg = {},
@@ -1170,9 +1149,9 @@
                     footbanner = _this._footer(),
                     debarArr = [];
                 if (pkg.mapIf) {
-                    if (dirName === "dirConcatJs" || dirName === "concatJs" || dirName === "jsFile") {
-                        headbanner = "/**/";
-                        footbanner = "\n\n" + _this._banner();
+                    if (dirName === 'dirConcatJs' || dirName === 'concatJs' || dirName === 'jsFile') {
+                        headbanner = '/**/';
+                        footbanner = '\n\n' + _this._banner();
                     }
                 }
 
@@ -1182,8 +1161,8 @@
                         dirFile.map(function (obj) {
                             var src = [],
                                 injectIf = false,
-                                tempSrcPath = returnObj(obj, 'srcPath', returnObj(pkg, 'srcPath', "")),//源文件的根目录
-                                tempPublicPath = returnObj(obj, 'publicPath', returnObj(pkg, 'publicPath', ""));//公共源文件的根目录
+                                tempSrcPath = returnObj(obj, 'srcPath', returnObj(pkg, 'srcPath', '')), //源文件的根目录
+                                tempPublicPath = returnObj(obj, 'publicPath', returnObj(pkg, 'publicPath', ''));//公共源文件的根目录
                             //                            if (!debar) {
                             //                                src = _this.gArr();
                             //                            }
@@ -1192,7 +1171,7 @@
                             }
 
                             if (obj.psrc) {
-                                var psrcTxt = _this.getSrc(tempPublicPath, obj.psrc, ext, debar, dirName,obj);
+                                var psrcTxt = _this.getSrc(tempPublicPath, obj.psrc, ext, debar, dirName, obj);
                                 if (isData.isArray(psrcTxt) && psrcTxt.length > 0) {
                                     src = src.concat(psrcTxt);
                                     retGSrc = retGSrc.concat(psrcTxt);
@@ -1202,7 +1181,7 @@
                                 }
 
                                 if (obj.debar && !debar) {
-                                    debarArr = _this.getDebarPath(_this.forEachSrc(tempPublicPath,obj.psrc), obj.debar, "", dirName);
+                                    debarArr = _this.getDebarPath(_this.forEachSrc(tempPublicPath, obj.psrc), obj.debar, '', dirName);
                                     if (debarArr && debarArr.length > 0) {
                                         src = src.concat(debarArr);
                                     }
@@ -1211,7 +1190,7 @@
                             }
 
                             if (obj.src) {
-                                var srcTxt = _this.getSrc(tempSrcPath, obj.src, ext, debar, dirName,obj);
+                                var srcTxt = _this.getSrc(tempSrcPath, obj.src, ext, debar, dirName, obj);
                                 if (isData.isArray(srcTxt) && srcTxt.length > 0) {
                                     src = src.concat(srcTxt);
                                     retGSrc = retGSrc.concat(srcTxt);
@@ -1220,9 +1199,8 @@
                                     retGSrc.push(srcTxt);
                                 }
 
-
                                 if (obj.debar && !debar) {
-                                    debarArr = _this.getDebarPath(_this.forEachSrc(tempSrcPath,obj.src), obj.debar, "", dirName);
+                                    debarArr = _this.getDebarPath(_this.forEachSrc(tempSrcPath, obj.src), obj.debar, '', dirName);
                                     if (debarArr && debarArr.length > 0) {
                                         src = src.concat(debarArr);
                                     }
@@ -1231,18 +1209,18 @@
                             }
 
                             if (tplsPath && obj.tpls) {
-                                retGSrc.push(tempSrcPath + obj.tpls + "**/*");
+                                retGSrc.push(tempSrcPath + obj.tpls + '**/*');
                             } else if (tplsPath) {
-                                retGSrc.push(tempSrcPath + pkg[tplsPath] + "**/*");
+                                retGSrc.push(tempSrcPath + pkg[tplsPath] + '**/*');
                             }
 
                             var destPath = _this._getDestPath(pkg, obj, subDst);
                             var revDestPath = _this.getRevDestPath(pkg, obj, subDst, subRevDst);
-                            var jsDocTempPath = _this.getJsDoc3Temp(pkg, obj, subDst, subRevDst,"jsDoc3Temp");//获取jsDoc3存放临时文件的目录
-                            var compassConfig=returnObj(obj, 'compassConfig', pkg.compassConfig||{});//获取compass的配置参数
-                            if(dirName=="compassFile"){
-                                var compassTempPath = _this.getJsDoc3Temp(pkg, obj, subDst, subRevDst,"compassTemp");//获取compass存放临时文件的目录
-                                compassConfig.css=compassTempPath||"css";
+                            var jsDocTempPath = _this.getJsDoc3Temp(pkg, obj, subDst, subRevDst, 'jsDoc3Temp');//获取jsDoc3存放临时文件的目录
+                            var compassConfig = returnObj(obj, 'compassConfig', pkg.compassConfig || {});//获取compass的配置参数
+                            if (dirName == 'compassFile') {
+                                var compassTempPath = _this.getJsDoc3Temp(pkg, obj, subDst, subRevDst, 'compassTemp');//获取compass存放临时文件的目录
+                                compassConfig.css = compassTempPath || 'css';
                                 // compassConfig.import_path=compassTempPath||"css";
                                 // compassConfig.generated_images_path=compassTempPath||"css";
                                 py_mkdir(compassConfig.generated_images_path);
@@ -1250,15 +1228,14 @@
                                 //     console.log(compassConfig.generated_images_path);
                                 //     fs.mkdirSync(compassConfig.generated_images_path);
                                 // }
-                                 if(compassConfig.config_file){
-                                    retGSrc.push(path.normalize((compassConfig.project||returnObj(pkg, 'srcPath', "")) + compassConfig.config_file).replace(/\\/g, "/"));
-                                 }
+                                if (compassConfig.config_file) {
+                                    retGSrc.push(path.normalize((compassConfig.project || returnObj(pkg, 'srcPath', '')) + compassConfig.config_file).replace(/\\/g, '/'));
+                                }
                             }
 
+                            var tempJsHeader = returnObj(obj, 'jsHeader', returnObj(pkg, (pkg.jsHeader && 'jsHeader') || '', '(function(' + returnObj(obj, 'jsGlobalObj', pkg.jsGlobalObj) + ') {\n'));
 
-                            var tempJsHeader = returnObj(obj, 'jsHeader', returnObj(pkg, (pkg.jsHeader && 'jsHeader') || "", "(function(" + returnObj(obj, 'jsGlobalObj', pkg.jsGlobalObj) + ") {\n"));
-
-                            var tempJsFooter = returnObj(obj, 'jsFooter', returnObj(pkg, (pkg.jsFooter && 'jsFooter') || "", "\n})(" + returnObj(obj, 'jsGlobalObj', pkg.jsGlobalObj) + ")"));
+                            var tempJsFooter = returnObj(obj, 'jsFooter', returnObj(pkg, (pkg.jsFooter && 'jsFooter') || '', '\n})(' + returnObj(obj, 'jsGlobalObj', pkg.jsGlobalObj) + ')'));
 
                             /**
                              * gulp的task参数配置
@@ -1314,89 +1291,88 @@
 							 * @property {String} mapObj.includeContent map文件是否引入映射内容
 							 * @property {String} mapObj.sourceRoot map文件映射内容到source目录
                              */
-                            var tsConfFile=returnObj(obj, 'confFile', returnObj(pkg, 'tsConfFile', "")),
-                                _tsConfFile=tsConfFile && path.normalize(tempSrcPath + tsConfFile).replace(/\\/g, "/");
-                                if(_tsConfFile){
-                                    retGSrc.push(_tsConfFile);
-                                }
+                            var tsConfFile = returnObj(obj, 'confFile', returnObj(pkg, 'tsConfFile', '')),
+                                _tsConfFile = tsConfFile && path.normalize(tempSrcPath + tsConfFile).replace(/\\/g, '/');
+                            if (_tsConfFile) {
+                                retGSrc.push(_tsConfFile);
+                            }
 
                             cfg = {
-                                name: returnObj(pkg, 'name', ""),//项目名称
-                                concatFileName: returnObj(obj, 'fileName', concatDstJsFileName && returnObj(pkg, concatDstJsFileName, "")),//合并文件后文件的名称
-                                tplsPath: obj.tpls && path.normalize(tempSrcPath + obj.tpls).replace(/\\/g, "/") || tplsPath && pkg[tplsPath] && path.normalize(tempSrcPath + pkg[tplsPath]).replace(/\\/g, "/") || tempSrcPath,//HTML的模板文件目录
-                                tsConfFile:_tsConfFile,// obj.tpls && path.normalize(tempSrcPath + obj.tpls).replace(/\\/g, "/") || tplsPath && pkg[tplsPath] && path.normalize(tempSrcPath + pkg[tplsPath]).replace(/\\/g, "/") || tempSrcPath,//HTML的模板文件目录
-                                destPath: destPath,//处理完后的文件存储目录
-                                jsDocLink: returnObj(pkg, 'jsDocLink', ""),//api文档链接
-                                jsDocType: returnObj(pkg, 'jsDocType', ""),//api文档类型
-                                jsDoc3Dir: returnObj(obj, 'jsDoc3Dir', returnObj(pkg, 'jsDoc3Dir', "")),//JSDoc文档存放的路径
-                                jsDoc3Temp: jsDocTempPath,//JSDoc临时文件存放的路径
-                                ifJsDoc: returnObj(obj, 'ifJsDoc', returnObj(pkg, 'ifJsDoc', false)),//JSDoc是否生成文档
-                                revDestPath: revDestPath,//存放rev生成的JSON文件
-                                revCollectorSrcPath:returnObj(obj, 'revDestPath', returnObj(pkg, 'revDestPath', "")),//存放rev生成的主目录
-                                revType: returnObj(obj, 'revType', pkg.revType),//rev生成文件名的类型
+                                name: returnObj(pkg, 'name', ''), //项目名称
+                                concatFileName: returnObj(obj, 'fileName', concatDstJsFileName && returnObj(pkg, concatDstJsFileName, '')), //合并文件后文件的名称
+                                tplsPath: obj.tpls && path.normalize(tempSrcPath + obj.tpls).replace(/\\/g, '/') || tplsPath && pkg[tplsPath] && path.normalize(tempSrcPath + pkg[tplsPath]).replace(/\\/g, '/') || tempSrcPath, //HTML的模板文件目录
+                                tsConfFile: _tsConfFile, // obj.tpls && path.normalize(tempSrcPath + obj.tpls).replace(/\\/g, "/") || tplsPath && pkg[tplsPath] && path.normalize(tempSrcPath + pkg[tplsPath]).replace(/\\/g, "/") || tempSrcPath,//HTML的模板文件目录
+                                destPath: destPath, //处理完后的文件存储目录
+                                jsDocLink: returnObj(pkg, 'jsDocLink', ''), //api文档链接
+                                jsDocType: returnObj(pkg, 'jsDocType', ''), //api文档类型
+                                jsDoc3Dir: returnObj(obj, 'jsDoc3Dir', returnObj(pkg, 'jsDoc3Dir', '')), //JSDoc文档存放的路径
+                                jsDoc3Temp: jsDocTempPath, //JSDoc临时文件存放的路径
+                                ifJsDoc: returnObj(obj, 'ifJsDoc', returnObj(pkg, 'ifJsDoc', false)), //JSDoc是否生成文档
+                                revDestPath: revDestPath, //存放rev生成的JSON文件
+                                revCollectorSrcPath: returnObj(obj, 'revDestPath', returnObj(pkg, 'revDestPath', '')), //存放rev生成的主目录
+                                revType: returnObj(obj, 'revType', pkg.revType), //rev生成文件名的类型
                                 //                                revCollectorType:returnObj(obj, 'revCollectorType',pkg.revCollectorType),//revCollector替换文件的类型
-                                mapIf: returnObj(obj, 'mapIf', pkg.mapIf),//是否生成map文件（true为是，false为否）
-                                mapsPath: returnObj(obj, 'mapsPath', pkg.mapsPath),//obj.mapsPath || pkg.mapsPath,
-                                compassConfig: compassConfig,//obj.compassConfig || pkg.compassConfig,
-                                ifminimg: returnObj(obj, 'ifminimg', pkg.ifminimg),//obj.ifmin || pkg.ifminimg,//是否压缩图片（true为是，false为否）
-                                imgquality: returnObj(obj, 'imgquality', pkg.imgquality) || 100,//图片质量
-                                ngTplsConf: returnObj(obj, 'conf', returnObj(pkg, 'ngTplsConf', {})),//obj.conf || pkg.ngTplsConf设置生成ng模板配置参数
-                                newFileName: returnObj(obj, 'newFileName', ""),//处理完后的文件的新名称
-                                prefix: returnObj(obj, "prefix", returnObj(pkg, 'prefix', false)),//是否给文件加前缀（有内空时为加，没有内容时为不加）
-                                suffix: returnObj(obj, "suffix", returnObj(pkg, 'suffix', false)),//是否给文件加后缀（有内空时为加，没有内容时为不加）
-                                ifmin: returnObj(obj, "ifmin", returnObj(pkg, 'ifmin', false)),//是否压缩JS、CSS（true为否，false为是）
-                                ifEval:returnObj(obj, "ifEval", returnObj(pkg, 'ifEval', false)),//js是否eval加密文件
-                                evalConfig:returnObj(obj, "evalConfig", returnObj(pkg, 'evalConfig', {})),//js eval加密文件配置参数
-                                ifUnEncrypt:returnObj(obj, "ifUnEncrypt", returnObj(pkg, 'ifUnEncrypt', false)),//是否解密文件
-                                unEncryptConfig:extend({},returnObj(obj, "unEncryptConfig", returnObj(pkg, 'unEncryptConfig', {}))),//解密文件时的配置
-                                ifEncrypt:returnObj(obj, "ifEncrypt", returnObj(pkg, 'ifEncrypt', false)),//是否加密文件
-                                encryptConfig:returnObj(obj, "encryptConfig", returnObj(pkg, 'encryptConfig', {})),//加密文件时的配置
-                                autoprefixerBrowsers: returnObj(obj, "autoprefixerBrowsers", returnObj(pkg, 'autoprefixerBrowsers', ["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5"])),//加前缀要兼容的浏览器版本
-                                ifminhtml: returnObj(obj, 'ifminhtml', returnObj(pkg, 'ifminhtml', false)),//obj.ifminhtml || pkg.ifminhtml,//是否压缩html（true为否，false为是）
-                                injectIf: returnObj(obj, 'injectIf', returnObj(pkg, 'injectIf', false)),//injectIf,//是否注入文件到html（true为是，false为否）
-                                bannerIf: returnObj(obj, 'bannerIf', returnObj(pkg, 'bannerIf', false)),//bannerIf,//是否加banner（true为否，false为是）
-                                gzipIf: returnObj(obj, 'gzipIf', returnObj(pkg, 'gzipIf', false)),//是否把文件压缩成gzip格式（true为是，false为否）
-                                header: headbanner,//banner的头内容
-                                footer: footbanner,//banner的脚内容
-                                srcRev: returnObj(obj, 'srcRev', returnObj(pkg, 'srcRev', false)),//是否给引用文件加后缀如：xxx.x?=xxxx（true为是，false为否）
-                                changIf: returnObj(obj, 'changIf', returnObj(pkg, 'changIf', false)),//是否改变时才更新文件（true为否，false为是）//obj.changIf||pkg.changIf,
-                                jsAnonymous: returnObj(obj, 'jsAnonymous', returnObj(pkg, 'jsAnonymous', false)),//jsAnonymous,//合并js文件时是否用匿名函数包起来（true为是，false为否）
-                                jsHeader: tempJsHeader,//合并JS前面加的代码
-                                jsFooter: tempJsFooter,//"\n})("+returnObj(obj, 'concatJsGlobalObj', pkg.concatJsGlobalObj)+")",//合并JS后面加的代码
-                                srcPath: unique(src),//需要处理的文件
+                                mapIf: returnObj(obj, 'mapIf', pkg.mapIf), //是否生成map文件（true为是，false为否）
+                                mapsPath: returnObj(obj, 'mapsPath', pkg.mapsPath), //obj.mapsPath || pkg.mapsPath,
+                                compassConfig: compassConfig, //obj.compassConfig || pkg.compassConfig,
+                                ifminimg: returnObj(obj, 'ifminimg', pkg.ifminimg), //obj.ifmin || pkg.ifminimg,//是否压缩图片（true为是，false为否）
+                                imgquality: returnObj(obj, 'imgquality', pkg.imgquality) || 100, //图片质量
+                                ngTplsConf: returnObj(obj, 'conf', returnObj(pkg, 'ngTplsConf', {})), //obj.conf || pkg.ngTplsConf设置生成ng模板配置参数
+                                newFileName: returnObj(obj, 'newFileName', ''), //处理完后的文件的新名称
+                                prefix: returnObj(obj, 'prefix', returnObj(pkg, 'prefix', false)), //是否给文件加前缀（有内空时为加，没有内容时为不加）
+                                suffix: returnObj(obj, 'suffix', returnObj(pkg, 'suffix', false)), //是否给文件加后缀（有内空时为加，没有内容时为不加）
+                                ifmin: returnObj(obj, 'ifmin', returnObj(pkg, 'ifmin', false)), //是否压缩JS、CSS（true为否，false为是）
+                                ifEval: returnObj(obj, 'ifEval', returnObj(pkg, 'ifEval', false)), //js是否eval加密文件
+                                evalConfig: returnObj(obj, 'evalConfig', returnObj(pkg, 'evalConfig', {})), //js eval加密文件配置参数
+                                ifUnEncrypt: returnObj(obj, 'ifUnEncrypt', returnObj(pkg, 'ifUnEncrypt', false)), //是否解密文件
+                                unEncryptConfig: extend({}, returnObj(obj, 'unEncryptConfig', returnObj(pkg, 'unEncryptConfig', {}))), //解密文件时的配置
+                                ifEncrypt: returnObj(obj, 'ifEncrypt', returnObj(pkg, 'ifEncrypt', false)), //是否加密文件
+                                encryptConfig: returnObj(obj, 'encryptConfig', returnObj(pkg, 'encryptConfig', {})), //加密文件时的配置
+                                autoprefixerBrowsers: returnObj(obj, 'autoprefixerBrowsers', returnObj(pkg, 'autoprefixerBrowsers', ['> 0.1%', 'android >= 2.6', 'chrome >= 4', 'edge >= 11', 'firefox >= 3.5'])), //加前缀要兼容的浏览器版本
+                                ifminhtml: returnObj(obj, 'ifminhtml', returnObj(pkg, 'ifminhtml', false)), //obj.ifminhtml || pkg.ifminhtml,//是否压缩html（true为否，false为是）
+                                injectIf: returnObj(obj, 'injectIf', returnObj(pkg, 'injectIf', false)), //injectIf,//是否注入文件到html（true为是，false为否）
+                                bannerIf: returnObj(obj, 'bannerIf', returnObj(pkg, 'bannerIf', false)), //bannerIf,//是否加banner（true为否，false为是）
+                                gzipIf: returnObj(obj, 'gzipIf', returnObj(pkg, 'gzipIf', false)), //是否把文件压缩成gzip格式（true为是，false为否）
+                                header: headbanner, //banner的头内容
+                                footer: footbanner, //banner的脚内容
+                                srcRev: returnObj(obj, 'srcRev', returnObj(pkg, 'srcRev', false)), //是否给引用文件加后缀如：xxx.x?=xxxx（true为是，false为否）
+                                changIf: returnObj(obj, 'changIf', returnObj(pkg, 'changIf', false)), //是否改变时才更新文件（true为否，false为是）//obj.changIf||pkg.changIf,
+                                jsAnonymous: returnObj(obj, 'jsAnonymous', returnObj(pkg, 'jsAnonymous', false)), //jsAnonymous,//合并js文件时是否用匿名函数包起来（true为是，false为否）
+                                jsHeader: tempJsHeader, //合并JS前面加的代码
+                                jsFooter: tempJsFooter, //"\n})("+returnObj(obj, 'concatJsGlobalObj', pkg.concatJsGlobalObj)+")",//合并JS后面加的代码
+                                srcPath: unique(src), //需要处理的文件
                                 //concatJsGlobalObj:returnObj(obj, 'concatJsGlobalObj', pkg.concatJsGlobalObj),//合并JS时需用到的全局变量名称
-                                connectStart: pkg.connectStart,//是否启动服务器
-                                fileTime: returnObj(obj, "fileTime", returnObj(pkg, "fileTime", "mtime")),//文件时间类型默认为mtime
-                                fileTimeName: returnObj(obj, "fileTimeName", returnObj(pkg, "fileTimeName", "filetime")),//文件时间使用的别名默认为filetime
-                                mapObj: returnObj(obj, "mapObj", returnObj(pkg, "mapObj", {//map文件生成时的参数
-                                    includeContent: true,//是否引入映射内容
+                                connectStart: pkg.connectStart, //是否启动服务器
+                                fileTime: returnObj(obj, 'fileTime', returnObj(pkg, 'fileTime', 'mtime')), //文件时间类型默认为mtime
+                                fileTimeName: returnObj(obj, 'fileTimeName', returnObj(pkg, 'fileTimeName', 'filetime')), //文件时间使用的别名默认为filetime
+                                mapObj: returnObj(obj, 'mapObj', returnObj(pkg, 'mapObj', {//map文件生成时的参数
+                                    includeContent: true, //是否引入映射内容
                                     sourceRoot: 'source'//映射内容到source目录
                                 }))
                             };
-                            if(cfg.unEncryptConfig){
-                                if(!cfg.unEncryptConfig.extname && _unEncryptExtName){
-                                    cfg.unEncryptConfig.extname=_unEncryptExtName;
-                                }else{
-                                    cfg.unEncryptConfig.extname=cfg.unEncryptConfig.extname||"";
+                            if (cfg.unEncryptConfig) {
+                                if (!cfg.unEncryptConfig.extname && _unEncryptExtName) {
+                                    cfg.unEncryptConfig.extname = _unEncryptExtName;
+                                }else {
+                                    cfg.unEncryptConfig.extname = cfg.unEncryptConfig.extname || '';
                                 }
                             }
-							if (cfg.mapIf) {//生成map文件的时候
-								if (dirName === "dirConcatJs" || dirName === "concatJs" || dirName === "jsFile") {
-									headbanner = "/**/";
-									footbanner = "\n\n" + _this._banner();
-								}
-								cfg.header=headbanner;//文件头
-								cfg.footer=footbanner;//文件尾
-							}
+                            if (cfg.mapIf) { //生成map文件的时候
+                                if (dirName === 'dirConcatJs' || dirName === 'concatJs' || dirName === 'jsFile') {
+                                    headbanner = '/**/';
+                                    footbanner = '\n\n' + _this._banner();
+                                }
+                                cfg.header = headbanner;//文件头
+                                cfg.footer = footbanner;//文件尾
+                            }
                             if (obj.src || obj.psrc) {
-                                if (dirName == "concatJs" || dirName == "concatCss") {
+                                if (dirName == 'concatJs' || dirName == 'concatCss') {
                                     if (cfg.concatFileName) {
                                         retSrc.push(cfg);
                                     }
                                 } else {
                                     retSrc.push(cfg);
                                 }
-
                             }
                         });
                     }
@@ -1416,55 +1392,55 @@
                         src.push(srcTxt);
                         retGSrc.push(srcTxt);
                     }
-                    var destPath = _this._getDestPath(pkg, "", subDst);
-                    var revDestPath = _this.getRevDestPath(pkg, "", subDst, subRevDst);
-                    var jsDocTempPath = _this.getJsDoc3Temp(pkg, "", subDst, subRevDst,"jsDoc3Temp");
-                    var compassConfig=returnObj(pkg, 'compassConfig',{});
-                    if(dirName=="compassFile"){
-                        var compassTempPath = _this.getJsDoc3Temp(pkg, "", subDst, subRevDst,"compassTemp");
+                    var destPath = _this._getDestPath(pkg, '', subDst);
+                    var revDestPath = _this.getRevDestPath(pkg, '', subDst, subRevDst);
+                    var jsDocTempPath = _this.getJsDoc3Temp(pkg, '', subDst, subRevDst, 'jsDoc3Temp');
+                    var compassConfig = returnObj(pkg, 'compassConfig', {});
+                    if (dirName == 'compassFile') {
+                        var compassTempPath = _this.getJsDoc3Temp(pkg, '', subDst, subRevDst, 'compassTemp');
                         py_mkdir(compassConfig.generated_images_path);
-                        compassConfig.css=compassTempPath||"css";
-                        if(compassConfig.config_file){
-                            retGSrc.push(path.normalize((compassConfig.project||returnObj(pkg, 'srcPath', "")) + compassConfig.config_file).replace(/\\/g, "/"));
-                         }
-                    }
-                    var tsConfFile=returnObj(pkg, 'tsConfFile', ""),
-                        _tsConfFile=tsConfFile && path.normalize(pkg.srcPath + tsConfFile).replace(/\\/g, "/");
-                        if(_tsConfFile){
-                            retGSrc.push(_tsConfFile);
+                        compassConfig.css = compassTempPath || 'css';
+                        if (compassConfig.config_file) {
+                            retGSrc.push(path.normalize((compassConfig.project || returnObj(pkg, 'srcPath', '')) + compassConfig.config_file).replace(/\\/g, '/'));
                         }
+                    }
+                    var tsConfFile = returnObj(pkg, 'tsConfFile', ''),
+                        _tsConfFile = tsConfFile && path.normalize(pkg.srcPath + tsConfFile).replace(/\\/g, '/');
+                    if (_tsConfFile) {
+                        retGSrc.push(_tsConfFile);
+                    }
 
                     cfg = {
-                        name: returnObj(pkg, 'name', ""),//项目名称
-                        concatFileName: concatDstJsFileName && returnObj(pkg, concatDstJsFileName, ""),
-                        tplsPath: tplsPath && path.normalize(pkg.srcPath + pkg[tplsPath]).replace(/\\/g, "/") || pkg.srcPath,
-                        tsConfFile:_tsConfFile,
+                        name: returnObj(pkg, 'name', ''), //项目名称
+                        concatFileName: concatDstJsFileName && returnObj(pkg, concatDstJsFileName, ''),
+                        tplsPath: tplsPath && path.normalize(pkg.srcPath + pkg[tplsPath]).replace(/\\/g, '/') || pkg.srcPath,
+                        tsConfFile: _tsConfFile,
                         srcPath: unique(src),
                         destPath: destPath,
-                        jsDocLink: returnObj(pkg, 'jsDocLink', ""),//api文档链接
-                        jsDocType: returnObj(pkg, 'jsDocType', ""),//api文档类型
-                        jsDoc3Dir: returnObj(pkg, 'jsDoc3Dir', ""),//JSDoc文档存放的路径
-                        jsDoc3Temp: jsDocTempPath,//JSDoc临时文件存放的路径
-                        ifJsDoc: returnObj(pkg, 'ifJsDoc', false),//JSDoc是否生成文档
-                        revDestPath: revDestPath || "",//存放rev生成的JSON文件
-                        revCollectorSrcPath: pkg.revDestPath,//存放rev生成的主目录
-                        revType: returnObj(pkg, 'revType', ""),//rev生成文件名的类型
+                        jsDocLink: returnObj(pkg, 'jsDocLink', ''), //api文档链接
+                        jsDocType: returnObj(pkg, 'jsDocType', ''), //api文档类型
+                        jsDoc3Dir: returnObj(pkg, 'jsDoc3Dir', ''), //JSDoc文档存放的路径
+                        jsDoc3Temp: jsDocTempPath, //JSDoc临时文件存放的路径
+                        ifJsDoc: returnObj(pkg, 'ifJsDoc', false), //JSDoc是否生成文档
+                        revDestPath: revDestPath || '', //存放rev生成的JSON文件
+                        revCollectorSrcPath: pkg.revDestPath, //存放rev生成的主目录
+                        revType: returnObj(pkg, 'revType', ''), //rev生成文件名的类型
                         //                        revCollectorType:returnObj(pkg, 'revCollectorType',""),//revCollector替换文件的类型
                         mapIf: pkg.mapIf,
                         mapsPath: pkg.mapsPath,
-                        compassConfig: compassConfig,//obj.compassConfig || pkg.compassConfig,
-                        ifminimg: pkg.ifminimg,//是否压缩图片（true为是，false为否）
-                        ngTplsConf: returnObj(pkg, 'ngTplsConf', {}),//obj.conf || pkg.ngTplsConf设置生成ng模板配置参数
-                        newFileName: "",//处理完后的文件的新名称
-                        prefix: returnObj(pkg, 'prefix', false),//是否给文件前后缀（有内空时为加，没有内容时为不加）
-                        suffix: returnObj(pkg, 'suffix', false),//是否给文件加后缀（有内空时为加，没有内容时为不加）
+                        compassConfig: compassConfig, //obj.compassConfig || pkg.compassConfig,
+                        ifminimg: pkg.ifminimg, //是否压缩图片（true为是，false为否）
+                        ngTplsConf: returnObj(pkg, 'ngTplsConf', {}), //obj.conf || pkg.ngTplsConf设置生成ng模板配置参数
+                        newFileName: '', //处理完后的文件的新名称
+                        prefix: returnObj(pkg, 'prefix', false), //是否给文件前后缀（有内空时为加，没有内容时为不加）
+                        suffix: returnObj(pkg, 'suffix', false), //是否给文件加后缀（有内空时为加，没有内容时为不加）
                         ifmin: returnObj(pkg, 'ifmin', false),
-                        ifEval:returnObj(pkg, 'ifEval', false),//js是否eval加密文件
-                        evalConfig:returnObj(pkg, 'evalConfig', {}),//js eval加密文件配置参数
-                        ifEncrypt:returnObj(pkg, 'ifEncrypt', false),//是否加密文件
-                        encryptConfig:returnObj(pkg, 'encryptConfig', {}),//加密文件时的配置
-                        ifUnEncrypt:returnObj(pkg, 'ifUnEncrypt', false),//是否加密文件
-                        unEncryptConfig:extend({},returnObj(pkg, 'unEncryptConfig', {})),//加密文件时的配置
+                        ifEval: returnObj(pkg, 'ifEval', false), //js是否eval加密文件
+                        evalConfig: returnObj(pkg, 'evalConfig', {}), //js eval加密文件配置参数
+                        ifEncrypt: returnObj(pkg, 'ifEncrypt', false), //是否加密文件
+                        encryptConfig: returnObj(pkg, 'encryptConfig', {}), //加密文件时的配置
+                        ifUnEncrypt: returnObj(pkg, 'ifUnEncrypt', false), //是否加密文件
+                        unEncryptConfig: extend({}, returnObj(pkg, 'unEncryptConfig', {})), //加密文件时的配置
                         autoprefixerBrowsers: pkg.autoprefixerBrowsers,
                         ifminhtml: pkg.ifminhtml,
                         injectIf: pkg.injectIf,
@@ -1476,34 +1452,34 @@
                         changIf: pkg.changIf,
                         //concatJsGlobalObj:pkg.concatJsGlobalObj,//合并JS时需用到的全局变量名称
                         jsAnonymous: pkg.jsAnonymous,
-                        jsHeader: returnObj(pkg, (pkg.jsHeader && 'jsHeader') || "", "(function(" + returnObj(pkg, 'jsGlobalObj', "") + ") {\n"),//JS前面加的代码
-                        jsFooter: returnObj(pkg, (pkg.jsFooter && 'jsFooter') || "", "\n})(" + returnObj(pkg, 'jsGlobalObj', "") + ")"),//"\n})("+returnObj(obj, 'concatJsGlobalObj', pkg.concatJsGlobalObj)+")",//JS后面加的代码
-                        imgquality: pkg.imgquality || 100,//图片质量
-                        connectStart: pkg.connectStart,//是否启动服务器
-                        fileTime: returnObj(pkg, "fileTime", "mtime"),//文件时间类型默认为mtime
-                        fileTimeName: returnObj(pkg, "fileTimeName", "filetime"),//文件时间使用的别名默认为filetime
-                        mapObj: returnObj(pkg, "mapObj", {
+                        jsHeader: returnObj(pkg, (pkg.jsHeader && 'jsHeader') || '', '(function(' + returnObj(pkg, 'jsGlobalObj', '') + ') {\n'), //JS前面加的代码
+                        jsFooter: returnObj(pkg, (pkg.jsFooter && 'jsFooter') || '', '\n})(' + returnObj(pkg, 'jsGlobalObj', '') + ')'), //"\n})("+returnObj(obj, 'concatJsGlobalObj', pkg.concatJsGlobalObj)+")",//JS后面加的代码
+                        imgquality: pkg.imgquality || 100, //图片质量
+                        connectStart: pkg.connectStart, //是否启动服务器
+                        fileTime: returnObj(pkg, 'fileTime', 'mtime'), //文件时间类型默认为mtime
+                        fileTimeName: returnObj(pkg, 'fileTimeName', 'filetime'), //文件时间使用的别名默认为filetime
+                        mapObj: returnObj(pkg, 'mapObj', {
                             includeContent: true,
                             sourceRoot: 'source'
                         })
                     };
-                    if(cfg.unEncryptConfig){
-                        if(!cfg.unEncryptConfig.extname && _unEncryptExtName){
-                            cfg.unEncryptConfig.extname=_unEncryptExtName;
-                        }else{
-                            cfg.unEncryptConfig.extname=cfg.unEncryptConfig.extname||"";
+                    if (cfg.unEncryptConfig) {
+                        if (!cfg.unEncryptConfig.extname && _unEncryptExtName) {
+                            cfg.unEncryptConfig.extname = _unEncryptExtName;
+                        } else{
+                            cfg.unEncryptConfig.extname = cfg.unEncryptConfig.extname || '';
                         }
                     }
-					if (cfg.mapIf) {//生成map文件的时候
-						if (dirName === "dirConcatJs" || dirName === "concatJs" || dirName === "jsFile") {
-							headbanner = "/**/";
-							footbanner = "\n\n" + _this._banner();
-						}
-						cfg.header=headbanner;//文件头
-						cfg.footer=footbanner;//文件尾
-					}
+                    if (cfg.mapIf) { //生成map文件的时候
+                        if (dirName === 'dirConcatJs' || dirName === 'concatJs' || dirName === 'jsFile') {
+                            headbanner = '/**/';
+                            footbanner = '\n\n' + _this._banner();
+                        }
+                        cfg.header = headbanner;//文件头
+                        cfg.footer = footbanner;//文件尾
+                    }
                     if (tplsPath) {
-                        retGSrc.push(pkg.srcPath + pkg[tplsPath] + "**/*" + ext);
+                        retGSrc.push(pkg.srcPath + pkg[tplsPath] + '**/*' + ext);
                     }
 
                     retSrc.push(cfg);
@@ -1522,12 +1498,12 @@
              * @returns {Object} 返回对像不合并为两个属性src和deber,合并后为一个属性src(注：src为不过滤的路径数组)
              */
             splitSrcAndDebar: function (arr, ext, concat) {
-                ext = ext || "";
+                ext = ext || '';
                 var ret = {};
                 var retSrcArr = [], retDeberArr = [];
                 if (arr && isData.isArray(arr) && arr.length > 0) {
                     arr.map(function (v) {
-                        if (v.indexOf("!") == -1) {
+                        if (v.indexOf('!') == -1) {
                             retSrcArr.push(v + ext);
                         } else {
                             retDeberArr.push(v);
@@ -1551,8 +1527,8 @@
 			 * 获取备份处理参数配置
 			 * @returns {Object} 返回cfgObj配置参数对象
 			 */
-            getBakPath: function () {//获取备份处理参数配置
-                var obj = this.setObj("bakFile", "bakDstDir", "bakFile");
+            getBakPath: function () { //获取备份处理参数配置
+                var obj = this.setObj('bakFile', 'bakDstDir', 'bakFile');
                 return obj;
             },
 
@@ -1561,7 +1537,7 @@
 			 * @returns {Object} 返回cfgObj配置参数对象
 			 */
             getCopyPath: function () {
-                var obj = this.setObj("copyFile", "copyDstDir", "copyFile");
+                var obj = this.setObj('copyFile', 'copyDstDir', 'copyFile');
                 return obj;
             },
 
@@ -1570,8 +1546,8 @@
 			 * @returns {Object} 返回cfgObj配置参数对象
 			 */
             getJsonPath: function () {
-                var _ext=_extname && '.{'+_extname+',json}'||'.json',
-                    obj = this.setObj("jsonFile", "jsonDstDir", "jsonFile", _ext,false,"","","json");
+                var _ext = _extname && '.{' + _extname + ',json}' || '.json',
+                    obj = this.setObj('jsonFile', 'jsonDstDir', 'jsonFile', _ext, false, '', '', 'json');
                 return obj;
             },
 
@@ -1580,10 +1556,10 @@
 			 * @returns {Object} 返回cfgObj配置参数对象
 			 */
             getImgPath: function () {
-                var _ext=_extname && ','+_extname||"";
-                var pngobj = this.setObj("imgFile", "imgDstDir", "imgFile", ".{png,PNG"+_ext+"}",false,"","","png");
-                var jpgobj = this.setObj("imgFile", "imgDstDir", "imgFile", ".{jpg,JPG"+_ext+"}",false,"","","jpg");
-                var gifobj = this.setObj("imgFile", "imgDstDir", "imgFile", ".{gif,GIF"+_ext+"}",false,"","","gif");
+                var _ext = _extname && ',' + _extname || '';
+                var pngobj = this.setObj('imgFile', 'imgDstDir', 'imgFile', '.{png,PNG' + _ext + '}', false, '', '', 'png');
+                var jpgobj = this.setObj('imgFile', 'imgDstDir', 'imgFile', '.{jpg,JPG' + _ext + '}', false, '', '', 'jpg');
+                var gifobj = this.setObj('imgFile', 'imgDstDir', 'imgFile', '.{gif,GIF' + _ext + '}', false, '', '', 'gif');
                 var retGSrc = [];
                 if (pngobj.gSrc && pngobj.gSrc.length > 0) {
                     retGSrc = retGSrc.concat(pngobj.gSrc);
@@ -1597,21 +1573,19 @@
                 //var obj = this.setObj("imgFile", "imgDstDir", ".{jpg,png,gif,JPG,PNG,GIF}");
                 return {
                     gSrc: unique(retGSrc),
-                    arrObj: [{ imgtype: "png", cfgArr: pngobj.cfgArr },
-                        { imgtype: "jpg", cfgArr: jpgobj.cfgArr },
-                        { imgtype: "gif", cfgArr: gifobj.cfgArr }]
+                    arrObj: [{ imgtype: 'png', cfgArr: pngobj.cfgArr },
+                        { imgtype: 'jpg', cfgArr: jpgobj.cfgArr },
+                        { imgtype: 'gif', cfgArr: gifobj.cfgArr }]
                 };
             },
-
-
 
             /**
              * 获取ngTpls处理参数配置
              * @returns {Object} 返回cfgObj配置参数对象
              */
             getNgTplsPath: function () {
-                var _ext=_extname && '.{'+_extname+',html}'||'.html';
-                var obj = this.setObj("ngTplsFile", "ngTplsDstDir", "ngTplsFile", _ext, false, "", "tplsHtmlFile","html");
+                var _ext = _extname && '.{' + _extname + ',html}' || '.html';
+                var obj = this.setObj('ngTplsFile', 'ngTplsDstDir', 'ngTplsFile', _ext, false, '', 'tplsHtmlFile', 'html');
                 return obj;
             },
 
@@ -1620,9 +1594,9 @@
 			 * @returns {Object} 返回cfgObj配置参数对象
 			 */
             getJsDirConcatPath: function () {
-                var _ext=_extname && '.{'+_extname+',js}'||'.js';
-                var obj = this.setObj("dirConcatJs", "jsDstDir", "dirConcatJs", "", false, "","","js");
-                var tempobj = this.splitSrcAndDebar(obj.gSrc, "**/*"+_ext);
+                var _ext = _extname && '.{' + _extname + ',js}' || '.js';
+                var obj = this.setObj('dirConcatJs', 'jsDstDir', 'dirConcatJs', '', false, '', '', 'js');
+                var tempobj = this.splitSrcAndDebar(obj.gSrc, '**/*' + _ext);
                 return {
                     gSrc: unique(tempobj.src),
                     cfgArr: obj.cfgArr
@@ -1635,8 +1609,8 @@
 			 * @returns {Object} 返回cfgObj配置参数对象
 			 */
             getConcatJsPath: function () {
-                var _ext=_extname && '.{'+_extname+',js}'||'.js';
-                var obj = this.setObj("concatJs", "jsDstDir", "concatJs", _ext, false, "concatDstJsFileName","","js");
+                var _ext = _extname && '.{' + _extname + ',js}' || '.js';
+                var obj = this.setObj('concatJs', 'jsDstDir', 'concatJs', _ext, false, 'concatDstJsFileName', '', 'js');
                 return obj;
             },
 
@@ -1645,8 +1619,8 @@
              * @returns {Object} 返回cfgObj配置参数对象
              */
             getJsPath: function () {
-                var _ext=_extname && '.{'+_extname+',js}'||'.js';
-                var obj = this.setObj("jsFile", "jsDstDir", "jsFile", _ext,false, "","","js");
+                var _ext = _extname && '.{' + _extname + ',js}' || '.js';
+                var obj = this.setObj('jsFile', 'jsDstDir', 'jsFile', _ext, false, '', '', 'js');
                 return obj;
             },
 
@@ -1655,8 +1629,8 @@
 			 * @returns {Object} 返回cfgObj配置参数对象
 			 */
             getTsPath: function () {
-                var _ext=_extname && '.{'+_extname+',ts}'||'.ts';
-                var obj = this.setObj("tsFile", "jsDstDir", "tsFile", _ext, false, "tsFileName","","ts");
+                var _ext = _extname && '.{' + _extname + ',ts}' || '.ts';
+                var obj = this.setObj('tsFile', 'jsDstDir', 'tsFile', _ext, false, 'tsFileName', '', 'ts');
                 return obj;
             },
 
@@ -1665,8 +1639,8 @@
              * @returns {Object} 返回cfgObj配置参数对象
              */
             getSassPath: function () {
-                var _ext=_extname && '.{'+_extname+',scss,sass}'||'.{scss,sass}';
-                var obj = this.setObj("sassFile", "cssDstDir", "sassFile", _ext, true,"","","scss");
+                var _ext = _extname && '.{' + _extname + ',scss,sass}' || '.{scss,sass}';
+                var obj = this.setObj('sassFile', 'cssDstDir', 'sassFile', _ext, true, '', '', 'scss');
                 return obj;
             },
 
@@ -1675,8 +1649,8 @@
 			 * @returns {Object} 返回cfgObj配置参数对象
 			 */
             getCompassPath: function () {
-                var _ext=_extname && '.{'+_extname+',scss,sass}'||'.{scss,sass}';
-                var obj = this.setObj("compassFile", "cssDstDir", "compassFile", _ext, true,"","","scss");
+                var _ext = _extname && '.{' + _extname + ',scss,sass}' || '.{scss,sass}';
+                var obj = this.setObj('compassFile', 'cssDstDir', 'compassFile', _ext, true, '', '', 'scss');
                 return obj;
             },
 
@@ -1685,8 +1659,8 @@
 			 * @returns {Object} 返回cfgObj配置参数对象
 			 */
             getConcatCssPath: function () {
-                var _ext=_extname && '.{'+_extname+',css}'||'.css';
-                var obj = this.setObj("concatCss", "cssDstDir", "concatCss", _ext, false, "concatDstCssFileName","","css");
+                var _ext = _extname && '.{' + _extname + ',css}' || '.css';
+                var obj = this.setObj('concatCss', 'cssDstDir', 'concatCss', _ext, false, 'concatDstCssFileName', '', 'css');
                 return obj;
             },
 
@@ -1695,8 +1669,8 @@
 			 * @returns {Object} 返回cfgObj配置参数对象
 			 */
             getCssPath: function () {
-                var _ext=_extname && '.{'+_extname+',css}'||'.css';
-                var obj = this.setObj("cssFile", "cssDstDir", "cssFile", _ext, false, "","","css");
+                var _ext = _extname && '.{' + _extname + ',css}' || '.css';
+                var obj = this.setObj('cssFile', 'cssDstDir', 'cssFile', _ext, false, '', '', 'css');
                 return obj;
             },
 
@@ -1706,18 +1680,17 @@
 			 */
             getJsDocPath: function () {
                 var pkg = this.pkg,
-                    obj = this.setObj("jsDoc3Temp", "jsDoc3Dir", "jsDoc3Temp"),
+                    obj = this.setObj('jsDoc3Temp', 'jsDoc3Dir', 'jsDoc3Temp'),
                     tempArr = [];
                 if (pkg.jsDoc3Temp) {
                     if (obj && obj.cfgArr && obj.cfgArr.length > 0) {
                         obj.cfgArr.map(function (cfg) {
-                            cfg.srcPath = [pkg.jsDoc3Temp, pkg.jsDoc3Temp + "**/*.*"];
+                            cfg.srcPath = [pkg.jsDoc3Temp, pkg.jsDoc3Temp + '**/*.*'];
                             tempArr.push(cfg);
                         });
                     }
                     obj.cfgArr = tempArr;
                 }
-
 
                 return obj;
             },
@@ -1727,8 +1700,8 @@
 			 * @returns {Object} 返回cfgObj配置参数对象
 			 */
             getHtmlPath: function () {
-                var _ext=_extname && '.{'+_extname+',html}'||'.html';
-                var obj = this.setObj("htmlFile", "htmlDstDir", "htmlFile",_ext, false, "", "tplsHtmlFile","html");
+                var _ext = _extname && '.{' + _extname + ',html}' || '.html';
+                var obj = this.setObj('htmlFile', 'htmlDstDir', 'htmlFile', _ext, false, '', 'tplsHtmlFile', 'html');
                 return obj;
             },
 
@@ -1737,8 +1710,8 @@
 			 * @returns {Object} 返回cfgObj配置参数对象
 			 */
             getJsonPagePath: function () {
-                var _ext=_extname && '.{'+_extname+',json}'||'.json';
-                var obj = this.setObj("jsonPageFile", "jsonPageDstDir", "jsonPageFile", _ext, false, "", "tplsHtmlFile","json");
+                var _ext = _extname && '.{' + _extname + ',json}' || '.json';
+                var obj = this.setObj('jsonPageFile', 'jsonPageDstDir', 'jsonPageFile', _ext, false, '', 'tplsHtmlFile', 'json');
                 return obj;
             },
 
@@ -1747,8 +1720,8 @@
              * @returns {Object} 返回cfgObj配置参数对象
              */
             templatePath: function () {
-                var _ext=_extname && '.{'+_extname+',html}'||'.html';
-                var obj = this.setObj("templateFile", "templateDstDir", "templateFile",_ext, false, "", "tplsHtmlFile","html");
+                var _ext = _extname && '.{' + _extname + ',html}' || '.html';
+                var obj = this.setObj('templateFile', 'templateDstDir', 'templateFile', _ext, false, '', 'tplsHtmlFile', 'html');
                 return obj;
             },
 
@@ -1756,47 +1729,44 @@
 			 * 输出jshint检查语法错误信息
 			 */
             myReporter: function (file, cb) {
-                var errArr=[];
+                var errArr = [];
                 console.log('   JSHINT file in：' + file.path);
                 if (file.jshint.data && file.jshint.data[0] && file.jshint.data[0].globals) {
-                    console.log("   globals Object in： " + file.jshint.data[0].globals);
+                    console.log('   globals Object in： ' + file.jshint.data[0].globals);
                 }
                 if (!file.jshint.success) {
-
                     //不显示的错误信息
                     var errorObj = {
-                        "W041": true, //错误码W041:(!=)
-                        "W069": true, //错误码W069:(用这种方式设置对象属性xx["xxx"])
-                        "W083": true, //错误码W083:(函数未命名)
-                        "W030": true //错误码W030：(函数不在if内直接用&&或||判断)
+                        'W041': true, //错误码W041:(!=)
+                        'W069': true, //错误码W069:(用这种方式设置对象属性xx["xxx"])
+                        'W083': true, //错误码W083:(函数未命名)
+                        'W030': true //错误码W030：(函数不在if内直接用&&或||判断)
                     };
                     file.jshint.results.forEach(function (err) {
                         if (err && err.error) {
                             //错误码W041:(!=)
                             //错误码W083:(函数未命名)
                             if (!errorObj[err.error.code]) {
-                                errArr.push(PY.gulpencrypt.encrypt("Or3ckRSL0EF7YpCrWDSnxw==",{type:"undes"}) + err.error.line + PY.gulpencrypt.encrypt("iUp8o7pvYFk=",{type:"undes"}) + err.error.character + ', code ' + err.error.code + ', ' + err.error.reason);
+                                errArr.push(PY.gulpencrypt.encrypt('Or3ckRSL0EF7YpCrWDSnxw==', {type: 'undes'}) + err.error.line + PY.gulpencrypt.encrypt('iUp8o7pvYFk=', {type: 'undes'}) + err.error.character + ', code ' + err.error.code + ', ' + err.error.reason);
                             }
                         }
                     });
-                    if(errArr.length>0){
+                    if (errArr.length > 0) {
                         console.log('   error info：');
-                        errArr.forEach(function(err){
+                        errArr.forEach(function(err) {
                             console.log(err);
                         });
-                        console.log("");
-                    }else{
+                        console.log('');
+                    }else {
                         console.log('   success');
-                        console.log("");
+                        console.log('');
                     }
-
                 } else {
                     console.log('   success');
-                    console.log("");
+                    console.log('');
                 }
                 cb(null, file);
             }
-
 
         };
         return getTaskOption;
@@ -1804,13 +1774,10 @@
 
     //#endregion
 
-
-
-//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //#region task定义
     var TeemoGulp = (function () {
-
         /**
          * 定义Task对象集
          * @class
@@ -1824,16 +1791,16 @@
             /**
             *项目对应该的JSON配置文件路径
             */
-            var _dirpath=gpkg.subJsonPath + id,
-                _folder_exists = fs.existsSync(_dirpath+pkgExt),
+            var _dirpath = gpkg.subJsonPath + id,
+                _folder_exists = fs.existsSync(_dirpath + pkgExt),
                 pkgTemp;
 
-            if(_folder_exists){
-                pkgTemp=getUd(_dirpath+pkgExt);
-                _dirpath=_dirpath+pkgExt;
-            }else{
-                pkgTemp = require(_dirpath+".json");
-                _dirpath=_dirpath+".json";
+            if (_folder_exists) {
+                pkgTemp = getUd(_dirpath + pkgExt);
+                _dirpath = _dirpath + pkgExt;
+            } else{
+                pkgTemp = require(_dirpath + '.json');
+                _dirpath = _dirpath + '.json';
             }
 
             this.pkgdir = _dirpath;
@@ -1848,17 +1815,16 @@
              * @param {Object} _pkg 当前项目配置文件的JSON对象
              */
             getCfg: function (_pkg) {
-                var _folder_exists = fs.existsSync("./webAppConfig"+pkgExt),
+                var _folder_exists = fs.existsSync('./webAppConfig' + pkgExt),
                     subpkgtempq;
-                if(_folder_exists){
-                    subpkgtempq=getUd("./webAppConfig"+pkgExt);
-                }else{
+                if (_folder_exists) {
+                    subpkgtempq = getUd('./webAppConfig' + pkgExt);
+                }else {
                     subpkgtempq = require('./webAppConfig.json');
                 }
                 var pkgObj = againPkg(addObj(subpkgtempq, _pkg)),
                     gb = new getGlobal(), //读取全局,
                     id = this.uid;
-
 
                 gb.setPkg(pkgObj);
 
@@ -1890,8 +1856,8 @@
                     gb: gb,
                     uid: id,
                     pkg: pkgObj,
-                    isTest:pkgObj.isTest,
-					isBak:pkgObj.isBak||false,//是否备份
+                    isTest: pkgObj.isTest,
+                    isBak: pkgObj.isBak || false, //是否备份
                     testConfig: pkgObj.testConfig,
                     bakPath: gb.getBakPath(),
                     clsPath: gb.getClearPath(),
@@ -1910,7 +1876,7 @@
                     jsDocPath: gb.getJsDocPath(),
                     htmlPath: gb.getHtmlPath(),
                     jsonPagePath: gb.getJsonPagePath(),
-                    templatePath:gb.templatePath()
+                    templatePath: gb.templatePath()
                 };
             },
 
@@ -1933,7 +1899,7 @@
 						return subMerge;
 					}
 				}else{
-					return;
+					
 				}
                 //if(cfg.destPath){//bakPath
                 //	return PY.gulp.src(cfg.srcPath)
@@ -1965,21 +1931,21 @@
                         //						i+=1;
                         i = k;
                         return PY.gulp.src(cfg.srcPath)
-							.pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath)))
+                            .pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath)))
                             .pipe(PY.gulpplumber())
-                            .pipe(PY.gulpif(cfg.ifUnEncrypt=== true,PY.gulpencrypt(cfg.unEncryptConfig||{})))//解密
-							.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))
-							// .pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath)))
+                            .pipe(PY.gulpif(cfg.ifUnEncrypt === true, PY.gulpencrypt(cfg.unEncryptConfig || {})))//解密
+                            .pipe(PY.gulpif(cfg.newFileName !== '', PY.gulprename(cfg.newFileName + '')))
+                        // .pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath)))
                             //.pipe(PY.gulp.dest(cfg.destPath));
-							.pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
-							.pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
-							    prefix: cfg.prefix,//文件前缀
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
+                            .pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
+							    prefix: cfg.prefix, //文件前缀
 							    suffix: cfg.suffix
-							}))) //加后缀
-                            .pipe(PY.gulpif(cfg.ifEncrypt=== true,PY.gulpencrypt(cfg.encryptConfig||{})))
-							.pipe(PY.gulp.dest(cfg.destPath))
-							.pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
-							.pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)));
+                            }))) //加后缀
+                            .pipe(PY.gulpif(cfg.ifEncrypt === true, PY.gulpencrypt(cfg.encryptConfig || {})))
+                            .pipe(PY.gulp.dest(cfg.destPath))
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: 'rev-manifest' + i + '.json', dest: cfg.revDestPath, merge: true })))
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)));
                     }));
                     return subMerge;
                 }
@@ -1995,23 +1961,23 @@
                         return PY.gulp.src(cfg.srcPath)
                             // .pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath)))
                             .pipe(PY.gulpplumber())
-                            .pipe(PY.gulpif(cfg.ifUnEncrypt=== true,PY.gulpencrypt(cfg.unEncryptConfig||{})))//解密
+                            .pipe(PY.gulpif(cfg.ifUnEncrypt === true, PY.gulpencrypt(cfg.unEncryptConfig || {})))//解密
                             .pipe(PY.gulpjsonlint())
                             .pipe(PY.gulpjsonlint.failOnError())
                             .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpreplace(/(\s*\n+\s*)/g, function ($1) {
-                                return "";
+                                return '';
                             })))
                             //.pipe(PY.gulp.dest(cfg.destPath));
-							.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
-							.pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
-							.pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
-							    prefix: cfg.prefix,//文件前缀
+                            .pipe(PY.gulpif(cfg.newFileName !== '', PY.gulprename(cfg.newFileName + '')))//改文件名
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
+                            .pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
+							    prefix: cfg.prefix, //文件前缀
 							    suffix: cfg.suffix
-							}))) //加后缀
-                            .pipe(PY.gulpif(cfg.ifEncrypt=== true,PY.gulpencrypt(cfg.encryptConfig||{})))//加密
-							.pipe(PY.gulp.dest(cfg.destPath))
-							.pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
-							.pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)));
+                            }))) //加后缀
+                            .pipe(PY.gulpif(cfg.ifEncrypt === true, PY.gulpencrypt(cfg.encryptConfig || {})))//加密
+                            .pipe(PY.gulp.dest(cfg.destPath))
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: 'rev-manifest' + i + '.json', dest: cfg.revDestPath, merge: true })))
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)));
                     }));
                     return subMerge;
                 }
@@ -2033,55 +1999,55 @@
                                     //                                    i+=1;
                                     //                                    i=0;
 
-                                    subMerge.add(arrObj[j].cfgArr.map(function (cfg,k) {
+                                    subMerge.add(arrObj[j].cfgArr.map(function (cfg, k) {
                                         return PY.gulp.src(cfg.srcPath)
                                             .pipe(PY.gulpchanged(cfg.destPath))
                                             .pipe(PY.gulpif(cfg.ifminimg === true, PY.imageminpngquant({ quality: '60-' + cfg.imgquality })()))//.pipe(imageminPng({ quality: '65-80', speed: 4 })())
-    //                                        .pipe(PY.gulprev({type:cfg.revType}))
-											.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
+                                        //                                        .pipe(PY.gulprev({type:cfg.revType}))
+                                            .pipe(PY.gulpif(cfg.newFileName !== '', PY.gulprename(cfg.newFileName + '')))//改文件名
                                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
                                             .pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
-                                                prefix: cfg.prefix,//文件前缀
+                                                prefix: cfg.prefix, //文件前缀
                                                 suffix: cfg.suffix
                                             }))) //加后缀
                                             .pipe(PY.gulp.dest(cfg.destPath))
-                                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest-png" + k + ".json", dest: cfg.revDestPath, merge: true })))
+                                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: 'rev-manifest-png' + k + '.json', dest: cfg.revDestPath, merge: true })))
                                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)));
                                     }));
                                     break;
                                 case 'jpg':
                                     //                                    i+=1;
                                     //                                    i=1;
-                                    subMerge.add(arrObj[j].cfgArr.map(function (cfg,k) {
+                                    subMerge.add(arrObj[j].cfgArr.map(function (cfg, k) {
                                         return PY.gulp.src(cfg.srcPath)
                                             .pipe(PY.gulpchanged(cfg.destPath))
                                             .pipe(PY.gulpif(cfg.ifminimg === true, PY.imageminmozjpeg({ quality: cfg.imgquality * 1 })()))
-											.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
+                                            .pipe(PY.gulpif(cfg.newFileName !== '', PY.gulprename(cfg.newFileName + '')))//改文件名
                                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
                                             .pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
-                                                prefix: cfg.prefix,//文件前缀
+                                                prefix: cfg.prefix, //文件前缀
                                                 suffix: cfg.suffix
                                             }))) //加后缀
                                             .pipe(PY.gulp.dest(cfg.destPath))
-                                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest-jpg" + k + ".json", dest: cfg.revDestPath, merge: true })))
+                                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: 'rev-manifest-jpg' + k + '.json', dest: cfg.revDestPath, merge: true })))
                                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)));
                                     }));
                                     break;
                                 case 'gif':
                                     //                                    i+=1;
                                     //                                    i=2;
-                                    subMerge.add(arrObj[j].cfgArr.map(function (cfg,k) {
+                                    subMerge.add(arrObj[j].cfgArr.map(function (cfg, k) {
                                         return PY.gulp.src(cfg.srcPath)
                                             .pipe(PY.gulpchanged(cfg.destPath))
                                             .pipe(PY.gulpif(cfg.ifminimg === true, PY.imagemingifsicle({ interlaced: false })()))
-											.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
+                                            .pipe(PY.gulpif(cfg.newFileName !== '', PY.gulprename(cfg.newFileName + '')))//改文件名
                                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
                                             .pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
-                                                prefix: cfg.prefix,//文件前缀
+                                                prefix: cfg.prefix, //文件前缀
                                                 suffix: cfg.suffix
                                             }))) //加后缀
                                             .pipe(PY.gulp.dest(cfg.destPath))
-                                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest-gif" + k + ".json", dest: cfg.revDestPath, merge: true })))
+                                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: 'rev-manifest-gif' + k + '.json', dest: cfg.revDestPath, merge: true })))
                                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)));
                                     }));
                                     break;
@@ -2109,19 +2075,19 @@
 
                         var revCollectorSrc;
                         if (cfg.srcRev === true) {
-                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + "**/*.json");
+                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + '**/*.json');
                         } else {
-                            revCollectorSrc = PY.gulp.src("");
+                            revCollectorSrc = PY.gulp.src('');
                         }
 
                         myReporter = new PY.mapstream(_this.options.gb.myReporter);
                         //console.log(cfg.srcPath)
                         return PY.streamqueue({ objectMode: true }, PY.gulp.src(cfg.srcPath)
                             .pipe(PY.gulpplumber())
-                            .pipe(PY.gulpif(cfg.ifUnEncrypt=== true,PY.gulpencrypt(cfg.unEncryptConfig||{})))//解密
+                            .pipe(PY.gulpif(cfg.ifUnEncrypt === true, PY.gulpencrypt(cfg.unEncryptConfig || {})))//解密
                             .pipe(PY.gulptpls({ tplsPath: cfg.tplsPath }))
                             .pipe(PY.gulpif(cfg.ifminhtml !== true, PY.gulphtmlmin(pkg.ifminhtmlObj)))
-                            .pipe(PY.gulpngtemplate(cfg.ngTplsConf|| {}))
+                            .pipe(PY.gulpngtemplate(cfg.ngTplsConf || {}))
                             //.pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath)))
                             .pipe(PY.gulpjshint()) //检查语法
 
@@ -2134,7 +2100,7 @@
                                 }
                             })))
                             .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpuglify()))
-                            .pipe(PY.gulpif(cfg.ifEval=== true,PY.gulpjsencrypt(cfg.evalConfig||{})))//加密JS,
+                            .pipe(PY.gulpif(cfg.ifEval === true, PY.gulpjsencrypt(cfg.evalConfig || {})))//加密JS,
                             .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpheaderfooter({
                                 header: cfg.header,
                                 footer: cfg.footer,
@@ -2143,31 +2109,30 @@
                                 }
                             })))
                             .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpfiletime({
-                                fileTimeName: cfg.fileTimeName,//默认为filetime
-                                timeType: cfg.timeType,//默认为mtime
+                                fileTimeName: cfg.fileTimeName, //默认为filetime
+                                timeType: cfg.timeType, //默认为mtime
                                 callback: function (data) { }
-                            }))),revCollectorSrc)
+                            }))), revCollectorSrc)
 
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprevcollector({ type: cfg.revType, file: cfg.revCollectorSrcPath })))
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
-                            .pipe(PY.gulpif(cfg.ifEval=== true,PY.gulpjsencrypt(cfg.evalConfig||{})))//加密JS
+                            .pipe(PY.gulpif(cfg.ifEval === true, PY.gulpjsencrypt(cfg.evalConfig || {})))//加密JS
                             .pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
-                                prefix: cfg.prefix,//文件前缀
+                                prefix: cfg.prefix, //文件前缀
                                 suffix: cfg.suffix
                             }))) //加后缀
-                            .pipe(PY.gulpif(cfg.ifEncrypt=== true,PY.gulpencrypt(cfg.encryptConfig||{})))
+                            .pipe(PY.gulpif(cfg.ifEncrypt === true, PY.gulpencrypt(cfg.encryptConfig || {})))
                             .pipe(PY.gulp.dest(cfg.destPath)) //保存更改后的文件
                             .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulpgzip({
                                 append: true
                             })))
                             .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulp.dest(cfg.destPath)))
-                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: 'rev-manifest' + i + '.json', dest: cfg.revDestPath, merge: true })))
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)));
                     }));
                     return subMerge;
                 }
             },
-
 
             /**
              * 按目录合并JS的Tesk
@@ -2182,7 +2147,7 @@
                         if (cfg.srcPath.length > 0) {
                             cfg.srcPath.map(function (srcPath) {
                                 var folder_exists;
-                                if (srcPath && srcPath.indexOf("!") == -1) {
+                                if (srcPath && srcPath.indexOf('!') == -1) {
                                     folder_exists = fs.existsSync(srcPath);
                                 }
                                 if (folder_exists) {
@@ -2193,9 +2158,9 @@
                                         subMerge.add(folders.map(function (folder, k1) {
                                             var revCollectorSrc;
                                             if (cfg.srcRev === true) {
-                                                revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + "**/*.json");
+                                                revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + '**/*.json');
                                             } else {
-                                                revCollectorSrc = PY.gulp.src("");
+                                                revCollectorSrc = PY.gulp.src('');
                                             }
 
                                             myReporter = new PY.mapstream(_this.options.gb.myReporter);
@@ -2205,17 +2170,17 @@
                                             // 重命名为 folder.min.js
                                             // 再一次写入输出
                                             //                                            i+=1;
-                                            i = k + "-" + k1;
+                                            i = k + '-' + k1;
                                             return PY.streamqueue({ objectMode: true }, PY.gulp.src(path.join(srcPath, folder, '/**/*.js'))
                                                 .pipe(PY.gulpplumber())
-                                                .pipe(PY.gulpif(cfg.ifUnEncrypt=== true,PY.gulpencrypt(cfg.unEncryptConfig||{})))//解密
+                                                .pipe(PY.gulpif(cfg.ifUnEncrypt === true, PY.gulpencrypt(cfg.unEncryptConfig || {})))//解密
                                                 //.pipe(changed(cfg.destPath))
                                                 .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.init()))
                                                 .pipe(PY.gulpjshint()) //检查语法
                                                 .pipe(PY.gulpif(cfg.ifJsDoc === true, PY.gulp.dest(cfg.jsDoc3Temp)))
                                                 .pipe(myReporter)
                                                 .pipe(PY.gulpconcat(folder + '.js'))
-//                                                .pipe(PY.gulp.dest(cfg.destPath))
+                                                //                                                .pipe(PY.gulp.dest(cfg.destPath))
                                                 .pipe(PY.gulpif(cfg.jsAnonymous == true, PY.gulpheaderfooter({//文件前后增加内容
                                                     header: cfg.jsHeader,
                                                     footer: cfg.jsFooter,
@@ -2224,8 +2189,8 @@
                                                     }
                                                 })))
                                                 .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpuglify()))
-//                                                .pipe(PY.gulpif(cfg.suffix !== false, PY.gulprename(folder + cfg.suffix + '.js')))
-                                                .pipe(PY.gulpif(cfg.ifEval=== true,PY.gulpjsencrypt(cfg.evalConfig||{})))//加密JS
+                                                //                                                .pipe(PY.gulpif(cfg.suffix !== false, PY.gulprename(folder + cfg.suffix + '.js')))
+                                                .pipe(PY.gulpif(cfg.ifEval === true, PY.gulpjsencrypt(cfg.evalConfig || {})))//加密JS
                                                 .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpheaderfooter({
                                                     header: cfg.header,
                                                     footer: cfg.footer,
@@ -2234,31 +2199,30 @@
                                                     }
                                                 })))
 
-												.pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpfiletime({
-												    fileTimeName: cfg.fileTimeName,//默认为filetime
-												    timeType: cfg.timeType,//默认为mtime
+                                                .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpfiletime({
+												    fileTimeName: cfg.fileTimeName, //默认为filetime
+												    timeType: cfg.timeType, //默认为mtime
 												    callback: function (data) { }
-												})))
-												.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
-                                                .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))),revCollectorSrc)
+                                                })))
+                                                .pipe(PY.gulpif(cfg.newFileName !== '', PY.gulprename(cfg.newFileName + '')))//改文件名
+                                                .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))), revCollectorSrc)
                                                 .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprevcollector({ type: cfg.revType, file: cfg.revCollectorSrcPath })))
                                                 .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
                                                 .pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
-                                                    prefix: cfg.prefix,//文件前缀
+                                                    prefix: cfg.prefix, //文件前缀
                                                     suffix: cfg.suffix
                                                 }))) //加后缀
-                                                .pipe(PY.gulpif(cfg.ifEncrypt=== true,PY.gulpencrypt(cfg.encryptConfig||{})))
+                                                .pipe(PY.gulpif(cfg.ifEncrypt === true, PY.gulpencrypt(cfg.encryptConfig || {})))
                                                 .pipe(PY.gulp.dest(cfg.destPath))
                                                 .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulpgzip({
                                                     append: true
                                                 })))
                                                 .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulp.dest(cfg.destPath)))
-                                                .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
+                                                .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: 'rev-manifest' + i + '.json', dest: cfg.revDestPath, merge: true })))
                                                 .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
                                                 .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
                                         }));
                                     }
-
                                 }
                             });
                         }
@@ -2268,7 +2232,6 @@
                 if (ret) {
                     return subMerge;
                 }
-
             },
 
             /**
@@ -2283,9 +2246,9 @@
                     subMerge.add(this.options.concatJsPath.cfgArr.map(function (cfg, k) {
                         var revCollectorSrc;
                         if (cfg.srcRev === true) {
-                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + "**/*.json");
+                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + '**/*.json');
                         } else {
-                            revCollectorSrc = PY.gulp.src("");
+                            revCollectorSrc = PY.gulp.src('');
                         }
 
                         myReporter = new PY.mapstream(_this.options.gb.myReporter);
@@ -2295,7 +2258,7 @@
                             i = k;
                             return PY.streamqueue({ objectMode: true }, PY.gulp.src(cfg.srcPath)
                                 .pipe(PY.gulpplumber())
-                                .pipe(PY.gulpif(cfg.ifUnEncrypt=== true,PY.gulpencrypt(cfg.unEncryptConfig||{})))//解密
+                                .pipe(PY.gulpif(cfg.ifUnEncrypt === true, PY.gulpencrypt(cfg.unEncryptConfig || {})))//解密
                                 //.pipe(changed(cfg.destPath))
                                 .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.init()))
                                 .pipe(PY.gulpjshint()) //检查语法
@@ -2303,17 +2266,17 @@
                                 .pipe(PY.gulpif(cfg.ifJsDoc === true, PY.gulp.dest(cfg.jsDoc3Temp)))
                                 .pipe(myReporter)
                                 .pipe(PY.gulpconcat(cfg.concatFileName)) //合并文件合并后的文件名为xxx.js
-								.pipe(PY.gulpif(cfg.jsAnonymous == true, PY.gulpheaderfooter({//文件前后增加内容
+                                .pipe(PY.gulpif(cfg.jsAnonymous == true, PY.gulpheaderfooter({//文件前后增加内容
 								    header: cfg.jsHeader,
 								    footer: cfg.jsFooter,
 								    filter: function (file) {
 								        return true;
 								    }
-								})))
+                                })))
                                 //.pipe(PY.gulp.dest(cfg.destPath))
                                 .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpuglify())) //压缩JS
                                 //.pipe(livereload(server))
-                                .pipe(PY.gulpif(cfg.ifEval=== true,PY.gulpjsencrypt(cfg.evalConfig||{})))//加密JS
+                                .pipe(PY.gulpif(cfg.ifEval === true, PY.gulpjsencrypt(cfg.evalConfig || {})))//加密JS
                                 .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpheaderfooter({
                                     header: cfg.header,
                                     footer: cfg.footer,
@@ -2321,33 +2284,32 @@
                                         return true;
                                     }
                                 })))
-								.pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpfiletime({
-								    fileTimeName: cfg.fileTimeName,//默认为filetime
-								    timeType: cfg.timeType,//默认为mtime
+                                .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpfiletime({
+								    fileTimeName: cfg.fileTimeName, //默认为filetime
+								    timeType: cfg.timeType, //默认为mtime
 								    callback: function (data) { }
-								})))
-								.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
+                                })))
+                                .pipe(PY.gulpif(cfg.newFileName !== '', PY.gulprename(cfg.newFileName + '')))//改文件名
                                 .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))), revCollectorSrc)
                                 .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprevcollector({ type: cfg.revType, file: cfg.revCollectorSrcPath })))
                                 .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
                                 .pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
-                                    prefix: cfg.prefix,//文件前缀
+                                    prefix: cfg.prefix, //文件前缀
                                     suffix: cfg.suffix
                                 }))) //加后缀
-                                .pipe(PY.gulpif(cfg.ifEncrypt=== true,PY.gulpencrypt(cfg.encryptConfig||{})))
+                                .pipe(PY.gulpif(cfg.ifEncrypt === true, PY.gulpencrypt(cfg.encryptConfig || {})))
                                 .pipe(PY.gulp.dest(cfg.destPath)) //保存更改后的文件
                                 .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulpgzip({
                                     append: true
                                 })))
                                 .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulp.dest(cfg.destPath)))
-                                .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
+                                .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: 'rev-manifest' + i + '.json', dest: cfg.revDestPath, merge: true })))
                                 .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
                                 .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
                         }
                     }));
                     return subMerge;
                 }
-
             },
 
             /**
@@ -2364,9 +2326,9 @@
 
                         var revCollectorSrc;
                         if (cfg.srcRev === true) {
-                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + "**/*.json");
+                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + '**/*.json');
                         } else {
-                            revCollectorSrc = PY.gulp.src("");
+                            revCollectorSrc = PY.gulp.src('');
                         }
 
                         myReporter = new PY.mapstream(_this.options.gb.myReporter);
@@ -2374,7 +2336,7 @@
                         return PY.streamqueue({ objectMode: true }, PY.gulp.src(cfg.srcPath)
                             .pipe(PY.gulpsourcemaps.init({ loadMaps: true, debug: true }))
                             .pipe(PY.gulpplumber())
-                            .pipe(PY.gulpif(cfg.ifUnEncrypt=== true,PY.gulpencrypt(cfg.unEncryptConfig||{})))//解密
+                            .pipe(PY.gulpif(cfg.ifUnEncrypt === true, PY.gulpencrypt(cfg.unEncryptConfig || {})))//解密
                             //.pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath)))
                             .pipe(PY.gulpjshint()) //检查语法
 
@@ -2388,9 +2350,9 @@
                                 }
                             })))
                             .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpuglify())) //压缩JS
-//                            .pipe(obfuscate())//JS代码混淆
-//                            .on('error', gutil.log)
-                            .pipe(PY.gulpif(cfg.ifEval=== true,PY.gulpjsencrypt(cfg.evalConfig||{})))//加密JS
+                            //                            .pipe(obfuscate())//JS代码混淆
+                            //                            .on('error', gutil.log)
+                            .pipe(PY.gulpif(cfg.ifEval === true, PY.gulpjsencrypt(cfg.evalConfig || {})))//加密JS
                             .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpheaderfooter({
                                 header: cfg.header,
                                 footer: cfg.footer,
@@ -2399,29 +2361,29 @@
                                 }
                             })))
                             .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpfiletime({
-                                fileTimeName: cfg.fileTimeName,//默认为filetime
-                                timeType: cfg.timeType,//默认为mtime
+                                fileTimeName: cfg.fileTimeName, //默认为filetime
+                                timeType: cfg.timeType, //默认为mtime
                                 callback: function (data) { }
                             })))
-                            .pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
-                            .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))),revCollectorSrc)
+                            .pipe(PY.gulpif(cfg.newFileName !== '', PY.gulprename(cfg.newFileName + '')))//改文件名
+                            .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))), revCollectorSrc)
                             //   {
-                           //     includeContent: false //是否把原文件缓存到浏览器
+                        //     includeContent: false //是否把原文件缓存到浏览器
                             //}
 
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprevcollector({ type: cfg.revType, file: cfg.revCollectorSrcPath })))
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
                             .pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
-                                prefix: cfg.prefix,//文件前缀
+                                prefix: cfg.prefix, //文件前缀
                                 suffix: cfg.suffix
                             }))) //加后缀
-                            .pipe(PY.gulpif(cfg.ifEncrypt=== true,PY.gulpencrypt(cfg.encryptConfig||{})))
+                            .pipe(PY.gulpif(cfg.ifEncrypt === true, PY.gulpencrypt(cfg.encryptConfig || {})))
                             .pipe(PY.gulp.dest(cfg.destPath)) //保存更改后的文件
                             .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulpgzip({
                                 append: true
                             })))
                             .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulp.dest(cfg.destPath)))
-                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: 'rev-manifest' + i + '.json', dest: cfg.revDestPath, merge: true })))
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
                             .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
                     }));
@@ -2443,46 +2405,44 @@
 
                         var revCollectorSrc;
                         if (cfg.srcRev === true) {
-                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + "**/*.json");
+                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + '**/*.json');
                         } else {
-                            revCollectorSrc = PY.gulp.src("");
+                            revCollectorSrc = PY.gulp.src('');
                         }
 
                         myReporter = new PY.mapstream(_this.options.gb.myReporter);
 
-
-
                         var tsProject,
                             tsResult,
-                            _tsData={};
+                            _tsData = {};
 
-                        if(cfg.tsConfFile){
-                            if(cfg.concatFileName){
-                                _tsData.out=cfg.concatFileName;
+                        if (cfg.tsConfFile) {
+                            if (cfg.concatFileName) {
+                                _tsData.out = cfg.concatFileName;
                             }
 
-                            tsProject= PY.gulptypescript.createProject(cfg.tsConfFile,_tsData);
+                            tsProject = PY.gulptypescript.createProject(cfg.tsConfFile, _tsData);
 
                             tsResult = PY.gulp.src(cfg.srcPath) // or tsProject.src()
-                                            .pipe(PY.gulpsourcemaps.init({ loadMaps: true, debug: true }))
-                                            .pipe(PY.gulpplumber())
-                                            .pipe(tsProject()).js;
-                        }else{
-                            _tsData={
+                                .pipe(PY.gulpsourcemaps.init({ loadMaps: true, debug: true }))
+                                .pipe(PY.gulpplumber())
+                                .pipe(tsProject()).js;
+                        } else{
+                            _tsData = {
                                 noImplicitAny: false
                             };
-                            if(cfg.concatFileName){
-                                _tsData.out=cfg.concatFileName;
+                            if (cfg.concatFileName) {
+                                _tsData.out = cfg.concatFileName;
                             }
                             tsResult = PY.gulp.src(cfg.srcPath)
-                                        .pipe(PY.gulpsourcemaps.init({ loadMaps: true, debug: true }))
-                                        .pipe(PY.gulpplumber())
-                                        .pipe(PY.gulptypescript(_tsData));
+                                .pipe(PY.gulpsourcemaps.init({ loadMaps: true, debug: true }))
+                                .pipe(PY.gulpplumber())
+                                .pipe(PY.gulptypescript(_tsData));
                         }
 
-                        return PY.streamqueue({ objectMode: true },tsResult
+                        return PY.streamqueue({ objectMode: true }, tsResult
                             .pipe(PY.gulpplumber())
-                            .pipe(PY.gulpif(cfg.ifUnEncrypt=== true,PY.gulpencrypt(cfg.unEncryptConfig||{})))//解密
+                            .pipe(PY.gulpif(cfg.ifUnEncrypt === true, PY.gulpencrypt(cfg.unEncryptConfig || {})))//解密
                             //.pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath)))
                             .pipe(PY.gulpjshint()) //检查语法
 
@@ -2496,9 +2456,9 @@
                                 }
                             })))
                             .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpuglify())) //压缩JS
-//                            .pipe(obfuscate())//JS代码混淆
-//                            .on('error', gutil.log)
-                            .pipe(PY.gulpif(cfg.ifEval=== true,PY.gulpjsencrypt(cfg.evalConfig||{})))//加密JS
+                            //                            .pipe(obfuscate())//JS代码混淆
+                            //                            .on('error', gutil.log)
+                            .pipe(PY.gulpif(cfg.ifEval === true, PY.gulpjsencrypt(cfg.evalConfig || {})))//加密JS
                             .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpheaderfooter({
                                 header: cfg.header,
                                 footer: cfg.footer,
@@ -2506,30 +2466,30 @@
                                     return true;
                                 }
                             })))
-							.pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpfiletime({
-							    fileTimeName: cfg.fileTimeName,//默认为filetime
-							    timeType: cfg.timeType,//默认为mtime
+                            .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpfiletime({
+							    fileTimeName: cfg.fileTimeName, //默认为filetime
+							    timeType: cfg.timeType, //默认为mtime
 							    callback: function (data) { }
-							})))
-							.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
-                            .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))),revCollectorSrc)
-							//	 {
-                           //     includeContent: false //是否把原文件缓存到浏览器
+                            })))
+                            .pipe(PY.gulpif(cfg.newFileName !== '', PY.gulprename(cfg.newFileName + '')))//改文件名
+                            .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))), revCollectorSrc)
+                        //	 {
+                        //     includeContent: false //是否把原文件缓存到浏览器
                             //}
 
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprevcollector({ type: cfg.revType, file: cfg.revCollectorSrcPath })))
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
                             .pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
-                                prefix: cfg.prefix,//文件前缀
+                                prefix: cfg.prefix, //文件前缀
                                 suffix: cfg.suffix
                             }))) //加后缀
-                            .pipe(PY.gulpif(cfg.ifEncrypt=== true,PY.gulpencrypt(cfg.encryptConfig||{})))
+                            .pipe(PY.gulpif(cfg.ifEncrypt === true, PY.gulpencrypt(cfg.encryptConfig || {})))
                             .pipe(PY.gulp.dest(cfg.destPath)) //保存更改后的文件
                             .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulpgzip({
                                 append: true
                             })))
                             .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulp.dest(cfg.destPath)))
-                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: 'rev-manifest' + i + '.json', dest: cfg.revDestPath, merge: true })))
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
                             .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
                     }));
@@ -2541,14 +2501,13 @@
              * 处理单元测试的Tesk
              */
             task_test: function (done) {
-                if (this.options.isTest===true && this.options.testConfig && this.options.testConfig.testConfigFile) {
+                if (this.options.isTest === true && this.options.testConfig && this.options.testConfig.testConfigFile) {
                     var testConfig = this.options.testConfig;
                     new PY.karmaServer({
-                        configFile: testConfig.testConfigFile && path.normalize(testConfig.testConfigFile).replace(/\\/g, "/"),
+                        configFile: testConfig.testConfigFile && path.normalize(testConfig.testConfigFile).replace(/\\/g, '/'),
                         singleRun: testConfig.singleRun
                     }, done).start();
                 }
-
             },
 
             /**
@@ -2561,15 +2520,15 @@
                     subMerge.add(this.options.sassPath.cfgArr.map(function (cfg, k) {
                         var s = 'expanded';
                         if (cfg.ifmin !== true) {
-                            s = "compressed";
+                            s = 'compressed';
                         }
                         //                        i+=1;
                         i = k;
                         var revCollectorSrc;
                         if (cfg.srcRev === true) {
-                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + "**/*.json");
+                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + '**/*.json');
                         } else {
-                            revCollectorSrc = PY.gulp.src("");
+                            revCollectorSrc = PY.gulp.src('');
                         }
                         return PY.streamqueue({ objectMode: true }, PY.gulprubysass(cfg.srcPath, {
                             style: s,
@@ -2584,7 +2543,7 @@
                             .pipe(PY.gulpautoprefixer({ browsers: cfg.autoprefixerBrowsers, cascade: false }))
                             // gulp-minify-css设置（{compatibility: 'ie7',keepSpecialComments: '*'}）
                             // gulp-clean-css设置（{compatibility: 'ie8',keepSpecialComments: '*'}）
-                            .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpcleancss({compatibility: 'ie8',keepSpecialComments: '*'})))
+                            .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpcleancss({compatibility: 'ie8', keepSpecialComments: '*'})))
                             .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpheaderfooter({
                                 header: cfg.header,
                                 footer: cfg.footer,
@@ -2593,32 +2552,30 @@
                                 }
                             })))
                             .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpfiletime({
-                                fileTimeName: cfg.fileTimeName,//默认为filetime
-                                timeType: cfg.timeType,//默认为mtime
+                                fileTimeName: cfg.fileTimeName, //默认为filetime
+                                timeType: cfg.timeType, //默认为mtime
                                 callback: function (data) { }
                             })))
-                            .pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
-                            .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))),revCollectorSrc)
+                            .pipe(PY.gulpif(cfg.newFileName !== '', PY.gulprename(cfg.newFileName + '')))//改文件名
+                            .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))), revCollectorSrc)
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprevcollector({ type: cfg.revType, file: cfg.revCollectorSrcPath })))
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
                             .pipe(PY.gulpif(cfg.suffix !== false, PY.gulprename({
-                                prefix: cfg.prefix,//文件前缀
+                                prefix: cfg.prefix, //文件前缀
                                 suffix: cfg.suffix
                             }))) //加后缀
-                            .pipe(PY.gulpif(cfg.ifEncrypt=== true,PY.gulpencrypt(cfg.encryptConfig||{})))
+                            .pipe(PY.gulpif(cfg.ifEncrypt === true, PY.gulpencrypt(cfg.encryptConfig || {})))
                             .pipe(PY.gulp.dest(cfg.destPath))
                             .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulpgzip({
                                 append: true
                             })))
                             .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulp.dest(cfg.destPath)))
-                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: 'rev-manifest' + i + '.json', dest: cfg.revDestPath, merge: true })))
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
                             .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
                     }));
                     return subMerge;
                 }
-
-
             },
 
             /**
@@ -2631,24 +2588,24 @@
                     subMerge.add(this.options.compassPath.cfgArr.map(function (cfg, k) {
                         var s = 'expanded';
                         if (cfg.ifmin !== true) {
-                            s = "compressed";
+                            s = 'compressed';
                         }
                         //                        i+=1;
                         i = k;
                         var revCollectorSrc;
                         if (cfg.srcRev === true) {
-                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + "**/*.json");
+                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + '**/*.json');
                         } else {
-                            revCollectorSrc = PY.gulp.src("");
+                            revCollectorSrc = PY.gulp.src('');
                         }
 
                         return PY.streamqueue({ objectMode: true }, PY.gulp.src(cfg.srcPath)
                             .pipe(PY.gulpplumber({
-                              errorHandler: function (error) {
-                                console.log(error.message);
-                                this.emit('end');
-                            }}))
-                            .pipe(PY.gulpif(cfg.ifUnEncrypt=== true,PY.gulpencrypt(cfg.unEncryptConfig||{})))//解密
+                                errorHandler: function (error) {
+                                    console.log(error.message);
+                                    this.emit('end');
+                                }}))
+                            .pipe(PY.gulpif(cfg.ifUnEncrypt === true, PY.gulpencrypt(cfg.unEncryptConfig || {})))//解密
                             .pipe(PY.gulpcompass(cfg.compassConfig))
                             .pipe(PY.gulp.dest(cfg.compassConfig.css))
                             .on('error', function (err) {
@@ -2657,7 +2614,7 @@
                             //.pipe(PY.gulpchanged(cfg.destPath))
                             //.pipe(PY.gulpautoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
                             .pipe(PY.gulpautoprefixer({ browsers: cfg.autoprefixerBrowsers, cascade: false }))
-                            .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpcleancss({compatibility: 'ie8',keepSpecialComments: '*'})))
+                            .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpcleancss({compatibility: 'ie8', keepSpecialComments: '*'})))
                             .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpheaderfooter({
                                 header: cfg.header,
                                 footer: cfg.footer,
@@ -2665,33 +2622,31 @@
                                     return true;
                                 }
                             })))
-							.pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpfiletime({
-							    fileTimeName: cfg.fileTimeName,//默认为filetime
-							    timeType: cfg.timeType,//默认为mtime
+                            .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpfiletime({
+							    fileTimeName: cfg.fileTimeName, //默认为filetime
+							    timeType: cfg.timeType, //默认为mtime
 							    callback: function (data) { }
-							})))
-							.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
-                            .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))),revCollectorSrc)
+                            })))
+                            .pipe(PY.gulpif(cfg.newFileName !== '', PY.gulprename(cfg.newFileName + '')))//改文件名
+                            .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))), revCollectorSrc)
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprevcollector({ type: cfg.revType, file: cfg.revCollectorSrcPath })))
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
                             .pipe(PY.gulpif(cfg.suffix !== false, PY.gulprename({
-                                prefix: cfg.prefix,//文件前缀
+                                prefix: cfg.prefix, //文件前缀
                                 suffix: cfg.suffix
                             }))) //加后缀
-                            .pipe(PY.gulpif(cfg.ifEncrypt=== true,PY.gulpencrypt(cfg.encryptConfig||{})))
+                            .pipe(PY.gulpif(cfg.ifEncrypt === true, PY.gulpencrypt(cfg.encryptConfig || {})))
                             .pipe(PY.gulp.dest(cfg.destPath))
                             .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulpgzip({
                                 append: true
                             })))
                             .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulp.dest(cfg.destPath)))
-                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: 'rev-manifest' + i + '.json', dest: cfg.revDestPath, merge: true })))
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
                             .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
                     }));
                     return subMerge;
                 }
-
-
             },
 
             /**
@@ -2703,23 +2658,23 @@
                     var i = 0;
                     subMerge.add(this.options.concatCssPath.cfgArr.map(function (cfg, k) {
                         if (cfg.concatFileName) {
-                            var revCollectorSrc = "";
+                            var revCollectorSrc = '';
                             if (cfg.srcRev === true) {
-                                revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + "**/*.json");
+                                revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + '**/*.json');
                             } else {
-                                revCollectorSrc = PY.gulp.src("");
+                                revCollectorSrc = PY.gulp.src('');
                             }
                             //                            i+=1;
                             i = k;
                             return PY.streamqueue({ objectMode: true }, PY.gulp.src(cfg.srcPath)
-                                .pipe(PY.gulpif(cfg.ifUnEncrypt=== true,PY.gulpencrypt(cfg.unEncryptConfig||{})))//解密
+                                .pipe(PY.gulpif(cfg.ifUnEncrypt === true, PY.gulpencrypt(cfg.unEncryptConfig || {})))//解密
                                 .pipe(PY.gulpsourcemaps.init({ loadMaps: true }))
                                 .pipe(PY.gulpconcat(cfg.concatFileName)) //合并文件合并后的文件名为xxx.css
                                 .pipe(PY.gulpautoprefixer({ browsers: cfg.autoprefixerBrowsers, cascade: false }))
-                                .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpcleancss({compatibility: 'ie8',keepSpecialComments: '*'}))) //压缩CSS
-//                                .pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
-//                                    suffix: cfg.suffix
-//                                }))) //加后缀
+                                .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpcleancss({compatibility: 'ie8', keepSpecialComments: '*'}))) //压缩CSS
+                                //                                .pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
+                                //                                    suffix: cfg.suffix
+                                //                                }))) //加后缀
                                 .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpheaderfooter({
                                     header: cfg.header,
                                     footer: cfg.footer,
@@ -2727,35 +2682,33 @@
                                         return true;
                                     }
                                 })))
-								.pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpfiletime({
-								    fileTimeName: cfg.fileTimeName,//默认为filetime
-								    timeType: cfg.timeType,//默认为mtime
+                                .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpfiletime({
+								    fileTimeName: cfg.fileTimeName, //默认为filetime
+								    timeType: cfg.timeType, //默认为mtime
 								    callback: function (data) { }
-								})))
-								.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
-                                .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))),revCollectorSrc)
+                                })))
+                                .pipe(PY.gulpif(cfg.newFileName !== '', PY.gulprename(cfg.newFileName + '')))//改文件名
+                                .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))), revCollectorSrc)
                                 .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprevcollector({ type: cfg.revType, file: cfg.revCollectorSrcPath })))
                                 .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
                                 .pipe(PY.gulpif(cfg.suffix !== false, PY.gulprename({
-                                    prefix: cfg.prefix,//文件前缀
+                                    prefix: cfg.prefix, //文件前缀
                                     suffix: cfg.suffix
                                 }))) //加后缀
-                                .pipe(PY.gulpif(cfg.ifEncrypt=== true,PY.gulpencrypt(cfg.encryptConfig||{})))
+                                .pipe(PY.gulpif(cfg.ifEncrypt === true, PY.gulpencrypt(cfg.encryptConfig || {})))
                                 .pipe(PY.gulp.dest(cfg.destPath))
-//                                .pipe(PY.gulp.dest(cfg.destPath)) //保存更改后的文件
+                            //                                .pipe(PY.gulp.dest(cfg.destPath)) //保存更改后的文件
                                 .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulpgzip({
                                     append: true
                                 })))
                                 .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulp.dest(cfg.destPath)))
-                                .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
+                                .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: 'rev-manifest' + i + '.json', dest: cfg.revDestPath, merge: true })))
                                 .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
                                 .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
                         }
                     }));
                     return subMerge;
                 }
-
-
             },
 
             /**
@@ -2766,24 +2719,24 @@
                     var subMerge = new PY.mergestream();
                     var i = 0;
                     subMerge.add(this.options.cssPath.cfgArr.map(function (cfg, k) {
-                        var revCollectorSrc = "";
+                        var revCollectorSrc = '';
                         if (cfg.srcRev === true) {
-                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + "**/*.json");
+                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + '**/*.json');
                         } else {
-                            revCollectorSrc = PY.gulp.src("");
+                            revCollectorSrc = PY.gulp.src('');
                         }
                         //                        i+=1;
                         i = k;
                         return PY.streamqueue({ objectMode: true }, PY.gulp.src(cfg.srcPath)
-                            .pipe(PY.gulpif(cfg.ifUnEncrypt=== true,PY.gulpencrypt(cfg.unEncryptConfig||{})))//解密
+                            .pipe(PY.gulpif(cfg.ifUnEncrypt === true, PY.gulpencrypt(cfg.unEncryptConfig || {})))//解密
                             .pipe(PY.gulpsourcemaps.init({ loadMaps: true, debug: true }))
                             .pipe(PY.gulpplumber())
                             .pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath)))
                             .pipe(PY.gulpautoprefixer({ browsers: cfg.autoprefixerBrowsers, cascade: false }))
-                            .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpcleancss({compatibility: 'ie8',keepSpecialComments: '*'})))
-//                            .pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
-//                                suffix: cfg.suffix
-//                            }))) //加后缀
+                            .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpcleancss({compatibility: 'ie8', keepSpecialComments: '*'})))
+                            //                            .pipe(PY.gulpif(cfg.suffix != false, PY.gulprename({
+                            //                                suffix: cfg.suffix
+                            //                            }))) //加后缀
                             .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpheaderfooter({
                                 header: cfg.header,
                                 footer: cfg.footer,
@@ -2791,43 +2744,42 @@
                                     return true;
                                 }
                             })))
-							.pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpfiletime({
-							    fileTimeName: cfg.fileTimeName,//默认为filetime
-							    timeType: cfg.timeType,//默认为mtime
+                            .pipe(PY.gulpif(cfg.bannerIf !== true, PY.gulpfiletime({
+							    fileTimeName: cfg.fileTimeName, //默认为filetime
+							    timeType: cfg.timeType, //默认为mtime
 							    callback: function (data) { }
-							})))
-							.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
-                            .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))),revCollectorSrc)
+                            })))
+                            .pipe(PY.gulpif(cfg.newFileName !== '', PY.gulprename(cfg.newFileName + '')))//改文件名
+                            .pipe(PY.gulpif(cfg.mapIf === true, PY.gulpsourcemaps.write(cfg.mapsPath, cfg.mapObj))), revCollectorSrc)
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprevcollector({ type: cfg.revType, file: cfg.revCollectorSrcPath })))
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
                             .pipe(PY.gulpif(cfg.suffix !== false, PY.gulprename({
-                                prefix: cfg.prefix,//文件前缀
+                                prefix: cfg.prefix, //文件前缀
                                 suffix: cfg.suffix
                             }))) //加后缀
-                            .pipe(PY.gulpif(cfg.ifEncrypt=== true,PY.gulpencrypt(cfg.encryptConfig||{})))
+                            .pipe(PY.gulpif(cfg.ifEncrypt === true, PY.gulpencrypt(cfg.encryptConfig || {})))
                             .pipe(PY.gulp.dest(cfg.destPath))
-//                            .pipe(PY.gulp.dest(cfg.destPath))
+                        //                            .pipe(PY.gulp.dest(cfg.destPath))
                             .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulpgzip({
                                 append: true
                             })))
                             .pipe(PY.gulpif(cfg.gzipIf === true, PY.gulp.dest(cfg.destPath)))
-                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: 'rev-manifest' + i + '.json', dest: cfg.revDestPath, merge: true })))
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
                             .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
                     }));
                     return subMerge;
                 }
-
             },
 
             /**
              * 生成文档JS的API文档的Task
              */
-            task_jsDoc: function (cb) {//生成文档
+            task_jsDoc: function (cb) { //生成文档
                 if (this.options.jsDocPath.cfgArr.length > 0) {
                     var subMerge = new PY.mergestream();
                     subMerge.add(this.options.jsDocPath.cfgArr.map(function (cfg) {
-                        var options = options || function () {
+                        var options = options || (function () {
                             if (cfg.jsDocType === "angular") {
                                 return {
                                     //                        scripts: ['../app.min.js'],
@@ -2842,64 +2794,61 @@
                                 };
                             }
 
-                        }();
+                        }());
                         return PY.gulp.src(cfg.srcPath)
-                                 .pipe(PY.gulpplumber())
-                                 .pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath)))
-                                 .pipe(PY.gulpplumber({
-                                      errorHandler: function (error) {
-                                        console.log(error.message);
-                                        this.emit('end');
-                                    }}))
-                                 .pipe(PY.gulpif(cfg.ifJsDoc === true, PY.gulpjsdoc3({
-                                     "tags": {
-                                         "allowUnknownTags": true
-                                     },
-                                     "source": {
-                                         "excludePattern": "(^|\\/|\\\\)_"
-                                     },
-                                     "opts": {
-                                         "destination": cfg.jsDoc3Dir//"./docs/gen"
-                                     },
-                                     "plugins": [
-                                       "plugins/markdown"
-                                     ],
-                                     "templates": {
-                                         "cleverLinks": false,
-                                         "monospaceLinks": false,
-                                         "default": {
-                                             "outputSourceFiles": true
-                                         },
-                                         "path": "ink-docstrap",
-                                         "theme": "cerulean",
-                                         "navType": "vertical",
-                                         "linenums": true,
-                                         "dateFormat": "MMMM Do YYYY, h:mm:ss a"
-                                     }
-                                 }, cb)))
-                                .pipe(PY.gulpplumber({
-                                  errorHandler: function (error) {
+                            .pipe(PY.gulpplumber())
+                            .pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath)))
+                            .pipe(PY.gulpplumber({
+                                errorHandler: function (error) {
                                     console.log(error.message);
                                     this.emit('end');
                                 }}))
-                                .pipe(PY.gulpif(cfg.ifJsDoc === true && cfg.jsDocType === "angular", PY.gulpngdocs.process(options)))
-
-//                                .pipe(PY.gulpif(cfg.ifJsDoc === true && cfg.jsDocType === "angular", PY.gulpdocs.process(options)))
-
-                                .pipe(PY.gulpplumber({
-                                  errorHandler: function (error) {
+                            .pipe(PY.gulpif(cfg.ifJsDoc === true, PY.gulpjsdoc3({
+                                'tags': {
+                                    'allowUnknownTags': true
+                                },
+                                'source': {
+                                    'excludePattern': '(^|\\/|\\\\)_'
+                                },
+                                'opts': {
+                                    'destination': cfg.jsDoc3Dir//"./docs/gen"
+                                },
+                                'plugins': [
+                                    'plugins/markdown'
+                                ],
+                                'templates': {
+                                    'cleverLinks': false,
+                                    'monospaceLinks': false,
+                                    'default': {
+                                        'outputSourceFiles': true
+                                    },
+                                    'path': 'ink-docstrap',
+                                    'theme': 'cerulean',
+                                    'navType': 'vertical',
+                                    'linenums': true,
+                                    'dateFormat': 'MMMM Do YYYY, h:mm:ss a'
+                                }
+                            }, cb)))
+                            .pipe(PY.gulpplumber({
+                                errorHandler: function (error) {
                                     console.log(error.message);
                                     this.emit('end');
                                 }}))
-                                .pipe(PY.gulpif(cfg.ifEncrypt=== true,PY.gulpencrypt(cfg.encryptConfig||{})))
-								.pipe(PY.gulpif(cfg.ifJsDoc === true && cfg.jsDocType === "angular", PY.gulp.dest(cfg.jsDoc3Dir + cfg.jsDocType + "/")))
-                                .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
+                            .pipe(PY.gulpif(cfg.ifJsDoc === true && cfg.jsDocType === 'angular', PY.gulpngdocs.process(options)))
 
+                        //                                .pipe(PY.gulpif(cfg.ifJsDoc === true && cfg.jsDocType === "angular", PY.gulpdocs.process(options)))
 
+                            .pipe(PY.gulpplumber({
+                                errorHandler: function (error) {
+                                    console.log(error.message);
+                                    this.emit('end');
+                                }}))
+                            .pipe(PY.gulpif(cfg.ifEncrypt === true, PY.gulpencrypt(cfg.encryptConfig || {})))
+                            .pipe(PY.gulpif(cfg.ifJsDoc === true && cfg.jsDocType === 'angular', PY.gulp.dest(cfg.jsDoc3Dir + cfg.jsDocType + '/')))
+                            .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
                     }));
                     return subMerge;
                 }
-
             },
 
             /**
@@ -2907,38 +2856,38 @@
              */
             task_template: function () {
                 var _this = this, option = _this.options, pkg = option.pkg, i;
-                if (option.templatePath.cfgArr.length > 0) {//处理HTML
+                if (option.templatePath.cfgArr.length > 0) { //处理HTML
                     var subMerge = new PY.mergestream();
                     var tmphtmlInject;
                     tmphtmlInject = option.gb.htmlInject(pkg);
                     subMerge.add(option.templatePath.cfgArr.map(function (cfg, k) {
                         //var replaceReg = /(\s*)<\!\-\-include\s+"([^"]+)"(:"([^"]+)")*\-\->/ig;
-                        var     revCollectorSrc = "";
-                            i = k;
+                        var revCollectorSrc = '';
+                        i = k;
 
                         if (cfg.srcRev === true) {
-                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + "**/*.json");
+                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + '**/*.json');
                         } else {
-                            revCollectorSrc = PY.gulp.src("");
+                            revCollectorSrc = PY.gulp.src('');
                         }
                         return PY.streamqueue({ objectMode: true }, PY.gulp.src(cfg.srcPath)
                             .pipe(PY.gulpplumber())
-                            .pipe(PY.gulpif(cfg.ifUnEncrypt=== true,PY.gulpencrypt(cfg.unEncryptConfig||{})))//解密
+                            .pipe(PY.gulpif(cfg.ifUnEncrypt === true, PY.gulpencrypt(cfg.unEncryptConfig || {})))//解密
                             .pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath)))
                             .pipe(PY.gulptpls({ tplsPath: cfg.tplsPath }))
                             //.pipe(PY.gulpreplace(replaceReg, function (ee, $s, r, r1, r2) { return htmlReplace(cfg, replaceReg, ee, $s, r, r1, r2); }))
                             .pipe(PY.gulp.dest(cfg.destPath))
                             .pipe(PY.gulpif(cfg.injectIf == true, tmphtmlInject()))
                             .pipe(PY.gulpif(cfg.ifminhtml !== true, PY.gulphtmlmin(pkg.ifminhtmlObj)))
-							.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))//改文件名
+                            .pipe(PY.gulpif(cfg.newFileName !== '', PY.gulprename(cfg.newFileName + '')))//改文件名
                             .pipe(PY.gulpif(cfg.ifminhtml !== true, PY.gulpreplace(/(\n+\s*\n+)/g, function ($1, $2) {
-                                return "\n";
+                                return '\n';
                             }))), revCollectorSrc)
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprevcollector({ type: cfg.revType, file: cfg.revCollectorSrcPath })))
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev({ type: cfg.revType })))
-                            .pipe(PY.gulpif(cfg.ifEncrypt=== true,PY.gulpencrypt(cfg.encryptConfig||{})))
+                            .pipe(PY.gulpif(cfg.ifEncrypt === true, PY.gulpencrypt(cfg.encryptConfig || {})))
                             .pipe(PY.gulp.dest(cfg.destPath))
-                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: "rev-manifest" + i + ".json", dest: cfg.revDestPath, merge: true })))
+                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprev.manifest({ path: 'rev-manifest' + i + '.json', dest: cfg.revDestPath, merge: true })))
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.revDestPath)))
                             //.pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.destPath)))
                             .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
@@ -2952,23 +2901,23 @@
              */
             task_html: function () {
                 var _this = this, pkg = _this.options.pkg, i;
-                if (this.options.htmlPath.cfgArr.length > 0) {//处理HTML
+                if (this.options.htmlPath.cfgArr.length > 0) { //处理HTML
                     var subMerge = new PY.mergestream();
                     var tmphtmlInject;
                     tmphtmlInject = this.options.gb.htmlInject(pkg);
                     subMerge.add(this.options.htmlPath.cfgArr.map(function (cfg) {
                         var replaceReg = /(\s*)<\!\-\-include\s+"([^"]+)"(:"([^"]+)")*\-\->/ig;
-                        var revCollectorSrc = "";
+                        var revCollectorSrc = '';
 
                         if (cfg.srcRev === true) {
-                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + "**/*.json");
+                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + '**/*.json');
                         } else {
-                            revCollectorSrc = PY.gulp.src("");
+                            revCollectorSrc = PY.gulp.src('');
                         }
 
                         return PY.streamqueue({ objectMode: true }, PY.gulp.src(cfg.srcPath)
                             .pipe(PY.gulpplumber())
-                            .pipe(PY.gulpif(cfg.ifUnEncrypt=== true,PY.gulpencrypt(cfg.unEncryptConfig||{})))//解密
+                            .pipe(PY.gulpif(cfg.ifUnEncrypt === true, PY.gulpencrypt(cfg.unEncryptConfig || {})))//解密
                             .pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath)))
                             .pipe(PY.gulptpls({ tplsPath: cfg.tplsPath }))
                             //.pipe(PY.gulpreplace(replaceReg, function (ee, $s, r, r1, r2) { return htmlReplace(cfg, replaceReg, ee, $s, r, r1, r2); }))
@@ -2977,80 +2926,76 @@
                             //<!-- head:js -->//inject:js
                             //<!-- endinject -->
                             .pipe(PY.gulpif(cfg.ifminhtml !== true, PY.gulphtmlmin(pkg.ifminhtmlObj)))
-//                            {
-//                                removeComments: false,//删除注释
-//                                collapseWhitespace: false,//删除空行和空格
-//                                conservativeCollapse: true,//删除行配合collapseWhitespace=true用
-//                                preserveLineBreaks: true,//删除行前空格配合collapseWhitespace=true用
-//                                removeAttributeQuotes:false,//在可能的情况下删除引号
-//                                removeEmptyAttributes: false,//删除空白属性
-//                                removeEmptyElements: false,//删除所有内容为空的元素
-//                                removeScriptTypeAttributes: false,//除去type=“text/javascript”从脚本标记。其他类型的属性值是左不变的。
-//                                collapseBooleanAttributes: false,//删除可以不赋值的属性的值<input disabled="disabled">:<input disabled>
-//                                removeStyleLinkTypeAttributes: false,//除去type="text/css" 其他类型的属性值是左不变的。
-//                                keepClosingSlash: true,//保持单元素的结尾"/"
-//                                minifyJS: false,//压缩页面上的JS
-//                                minifyCSS:false//压缩页面上的CSS
-//                            }
+                            //                            {
+                            //                                removeComments: false,//删除注释
+                            //                                collapseWhitespace: false,//删除空行和空格
+                            //                                conservativeCollapse: true,//删除行配合collapseWhitespace=true用
+                            //                                preserveLineBreaks: true,//删除行前空格配合collapseWhitespace=true用
+                            //                                removeAttributeQuotes:false,//在可能的情况下删除引号
+                            //                                removeEmptyAttributes: false,//删除空白属性
+                            //                                removeEmptyElements: false,//删除所有内容为空的元素
+                            //                                removeScriptTypeAttributes: false,//除去type=“text/javascript”从脚本标记。其他类型的属性值是左不变的。
+                            //                                collapseBooleanAttributes: false,//删除可以不赋值的属性的值<input disabled="disabled">:<input disabled>
+                            //                                removeStyleLinkTypeAttributes: false,//除去type="text/css" 其他类型的属性值是左不变的。
+                            //                                keepClosingSlash: true,//保持单元素的结尾"/"
+                            //                                minifyJS: false,//压缩页面上的JS
+                            //                                minifyCSS:false//压缩页面上的CSS
+                            //                            }
 
-							.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))
+                            .pipe(PY.gulpif(cfg.newFileName !== '', PY.gulprename(cfg.newFileName + '')))
                             .pipe(PY.gulpif(cfg.ifminhtml !== true, PY.gulpreplace(/(\n+\s*\n+)/g, function ($1, $2) {
-                                return "\n";
-                            }))),revCollectorSrc)
+                                return '\n';
+                            }))), revCollectorSrc)
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprevcollector({ type: cfg.revType, file: cfg.revCollectorSrcPath })))
-                            .pipe(PY.gulpif(cfg.ifEncrypt=== true,PY.gulpencrypt(cfg.encryptConfig||{})))
+                            .pipe(PY.gulpif(cfg.ifEncrypt === true, PY.gulpencrypt(cfg.encryptConfig || {})))
                             .pipe(PY.gulp.dest(cfg.destPath))
-//                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulpreveasy())) //或rev
+                        //                            .pipe(PY.gulpif(cfg.srcRev === true, PY.gulpreveasy())) //或rev
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.destPath)))
                             .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
                     }));
                     return subMerge;
                 }
-
             },
-
-
 
             /**
              * 根据JSON生成HTML的Task
              */
             task_jsonPage: function () {
                 var pkg = this.options.pkg, _this = this, i;
-                if (this.options.jsonPagePath.cfgArr.length > 0) {//处理HTML
+                if (this.options.jsonPagePath.cfgArr.length > 0) { //处理HTML
                     var subMerge = new PY.mergestream();
                     var tmphtmlInject;
                     tmphtmlInject = this.options.gb.htmlInject(pkg);
                     subMerge.add(this.options.jsonPagePath.cfgArr.map(function (cfg) {
-                        var revCollectorSrc = "";
+                        var revCollectorSrc = '';
 
                         if (cfg.srcRev === true) {
-                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + "**/*.json");
+                            revCollectorSrc = PY.gulp.src(cfg.revCollectorSrcPath + '**/*.json');
                         } else {
-                            revCollectorSrc = PY.gulp.src("");
+                            revCollectorSrc = PY.gulp.src('');
                         }
 
                         return PY.streamqueue({ objectMode: true }, PY.gulp.src(cfg.srcPath)
                             .pipe(PY.gulpplumber())
-                            .pipe(PY.gulpif(cfg.ifUnEncrypt=== true,PY.gulpencrypt(cfg.unEncryptConfig||{})))//解密
+                            .pipe(PY.gulpif(cfg.ifUnEncrypt === true, PY.gulpencrypt(cfg.unEncryptConfig || {})))//解密
                             .pipe(PY.gulpjsontpls({ tplsPath: cfg.tplsPath }))
                             .pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath)))
                             .pipe(PY.gulptpls({ tplsPath: cfg.tplsPath }))
                             .pipe(PY.gulp.dest(cfg.destPath))
                             .pipe(PY.gulpif(cfg.injectIf == true, tmphtmlInject()))
                             .pipe(PY.gulpif(cfg.ifminhtml !== true, PY.gulphtmlmin(pkg.ifminhtmlObj)))
-							.pipe(PY.gulpif(cfg.newFileName !== "", PY.gulprename(cfg.newFileName + "")))
+                            .pipe(PY.gulpif(cfg.newFileName !== '', PY.gulprename(cfg.newFileName + '')))
                             .pipe(PY.gulpif(cfg.ifminhtml !== true, PY.gulpreplace(/(\n+\s*\n+)/g, function ($1, $2) {
-                                return "\n";
+                                return '\n';
                             }))), revCollectorSrc)
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulprevcollector({ type: cfg.revType, file: cfg.revCollectorSrcPath })))
-                            .pipe(PY.gulpif(cfg.ifEncrypt=== true,PY.gulpencrypt(cfg.encryptConfig||{})))
+                            .pipe(PY.gulpif(cfg.ifEncrypt === true, PY.gulpencrypt(cfg.encryptConfig || {})))
                             .pipe(PY.gulp.dest(cfg.destPath))
                             .pipe(PY.gulpif(cfg.srcRev === true, PY.gulp.dest(cfg.destPath)))
                             .pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
                     }));
                     return subMerge;
                 }
-
             },
 
             /**
@@ -3058,32 +3003,32 @@
              */
             task_watch: function () {
                 var _this = this,
-                    option=_this.options,
+                    option = _this.options,
                     _pkg = option.pkg;
                 PY.gulp.watch(option.copyPath.gSrc, function (event) {
-                    if (event.type == "changed") {
+                    if (event.type == 'changed') {
                         PY.gulp.run(option.uid + '_copy');
                     }
                 });
                 PY.gulp.watch(option.jsonPath.gSrc, function (event) {
-                    if (event.type == "changed") {
+                    if (event.type == 'changed') {
                         PY.gulp.run(option.uid + '_json');
                     }
                 });
                 PY.gulp.watch(option.imgPath.gSrc, function (event) {
-                    if (event.type == "changed") {
+                    if (event.type == 'changed') {
                         PY.gulp.run(option.uid + '_img');
                     }
                 });
                 PY.gulp.watch(option.jsDirConcatPath.gSrc, function (event) {
-                    if (event.type == "changed") {
+                    if (event.type == 'changed') {
                         PY.gulp.run(option.uid + '_jsDir');
                         PY.gulp.run(option.uid + '_jsDoc');
                     }
                 });
 
                 PY.gulp.watch(option.concatJsPath.gSrc, function (event) {
-                    if (event.type == "changed") {
+                    if (event.type == 'changed') {
                         PY.gulp.run(option.uid + '_concatJs');
                         PY.gulp.run(option.uid + '_jsDoc');
                         PY.gulp.run(option.uid + '_html');
@@ -3091,24 +3036,24 @@
                 });
 
                 PY.gulp.watch(option.tsPath.gSrc, function (event) {
-                    if (event.type == "changed") {
+                    if (event.type == 'changed') {
                         PY.gulp.run(option.uid + '_ts');
                         PY.gulp.run(option.uid + '_jsDoc');
                         PY.gulp.run(option.uid + '_html');
                     }
                 });
 
-                var jsWatch=PY.gulp.watch(option.jsPath.gSrc,[option.uid + '_js',option.uid + '_jsDoc',option.uid + '_html']);
-				jsWatch.on("change",function (event) {
-					if(event.type=="deleted"){
-						if (event.type === 'deleted') {
-							var src = path.relative(path.resolve('src'), event.path);
-							console.log(src);
-							//src = src.replace(/.es6$/, '.js');
-							///var dest = path.resolve(buildDir, src);
-							//del.sync(dest);
-						}
-					}
+                var jsWatch = PY.gulp.watch(option.jsPath.gSrc, [option.uid + '_js', option.uid + '_jsDoc', option.uid + '_html']);
+                jsWatch.on('change', function (event) {
+                    if (event.type == 'deleted') {
+                        if (event.type === 'deleted') {
+                            var src = path.relative(path.resolve('src'), event.path);
+                            console.log(src);
+                            //src = src.replace(/.es6$/, '.js');
+                            ///var dest = path.resolve(buildDir, src);
+                            //del.sync(dest);
+                        }
+                    }
                 });
 
                 //var jsDocSrc = option.jsDirConcatPath.gSrc.concat(option.jsDirConcatPath.gSrc);
@@ -3125,88 +3070,85 @@
                 if (this.options.jsDocPath.cfgArr.length > 0) {
                     var cfg = this.options.jsDocPath.cfgArr[0];
                     PY.gulp.watch(cfg.srcPath, function (event) {
-                        if (event.type == "changed") {
+                        if (event.type == 'changed') {
                             PY.gulp.run(option.uid + '_jsDoc');
                         }
                     });
                 }
 
                 PY.gulp.watch(option.sassPath.gSrc, function (event) {
-                    if (event.type == "changed") {
+                    if (event.type == 'changed') {
                         PY.gulp.run(option.uid + '_sass');
                         PY.gulp.run(option.uid + '_html');
                     }
                 });
 
                 PY.gulp.watch(option.compassPath.gSrc, function (event) {
-                    if (event.type == "changed") {
+                    if (event.type == 'changed') {
                         PY.gulp.run(option.uid + '_compass');
-						PY.gulp.run(option.uid + '_html');
+                        PY.gulp.run(option.uid + '_html');
                     }
                 });
 
                 PY.gulp.watch(option.concatCssPath.gSrc, function (event) {
-                    if (event.type == "changed") {
+                    if (event.type == 'changed') {
                         PY.gulp.run(option.uid + '_concatCss');
-						PY.gulp.run(option.uid + '_html');
+                        PY.gulp.run(option.uid + '_html');
                     }
                 });
 
                 PY.gulp.watch(option.cssPath.gSrc, function (event) {
-                    if (event.type == "changed") {
+                    if (event.type == 'changed') {
                         PY.gulp.run(option.uid + '_css');
-						PY.gulp.run(option.uid + '_html');
+                        PY.gulp.run(option.uid + '_html');
                     }
                 });
 
-
                 PY.gulp.watch(option.templatePath.gSrc, function (event) {
-                    if (event.type == "changed") {
+                    if (event.type == 'changed') {
                         PY.gulp.run(option.uid + '_template');
                     }
                 });
 
                 PY.gulp.watch(option.ngTplsPath.gSrc, function (event) {
-                    if (event.type == "changed") {
+                    if (event.type == 'changed') {
                         PY.gulp.run(option.uid + '_ngTpls');
                     }
                 });
 
                 option.htmlPath.gSrc.push(_pkg.srcPath + 'pkg/inject.json');
                 PY.gulp.watch(option.htmlPath.gSrc, function (event) {
-                    if (event.type == "changed") {
+                    if (event.type == 'changed') {
                         PY.gulp.run(option.uid + '_html');
                     }
                 });
 
                 option.jsonPagePath.gSrc.push(_pkg.srcPath + 'pkg/inject.json');
                 PY.gulp.watch(option.jsonPagePath.gSrc, function (event) {
-                    if (event.type == "changed") {
+                    if (event.type == 'changed') {
                         PY.gulp.run(option.uid + '_jsonPage');
                     }
                 });
 
                 PY.gulp.watch(_this.pkgdir, function (event) {
-                    if (event.type == "changed") {
-                        var _extname=path.extname(_this.pkgdir),
+                    if (event.type == 'changed') {
+                        var _extname = path.extname(_this.pkgdir),
                             _pkg = {};
-                        if(_extname && _extname.toLowerCase()==pkgExt){
-                            _pkg=getUd(_this.pkgdir);
-                        }else{
-                            _pkg=getJson(_this.pkgdir);
+                        if (_extname && _extname.toLowerCase() == pkgExt) {
+                            _pkg = getUd(_this.pkgdir);
+                        }else {
+                            _pkg = getJson(_this.pkgdir);
                         }
                         _this.getCfg(_pkg);
-                        PY.gulp.run(_this.uid + "_taskImgArr");
+                        PY.gulp.run(_this.uid + '_taskImgArr');
                     }
                 });
-
             }
         };
         return teemoGulp;
     })();
 
     //#endregion
-
 
     //#region 生成Task
     var taskArr = [],
@@ -3215,7 +3157,7 @@
         taskHtmlArr = [],
         taskJsDocArr = [],
         taskImgArr = [],
-        taskTemplateArr=[],
+        taskTemplateArr = [],
         jsDirConcatArr = [],
         testArr = [],
         taskWatchArr = [],
@@ -3239,56 +3181,56 @@
             sub[taskName].taskWatchArr = [];
             for (var key in parts) {
                 (function (key, parts, taskName) {
-                    var arr = key.split("_");
+                    var arr = key.split('_');
                     if (arr.length > 1) {
-                        if (arr[0] === "task") {
+                        if (arr[0] === 'task') {
                             switch (arr[1]) {
-                                case "bak":
-                                    taskBakArr.push(taskName + "_" + arr[1]);
-                                    sub[taskName].taskBakArr.push(taskName + "_" + arr[1]);
+                                case 'bak':
+                                    taskBakArr.push(taskName + '_' + arr[1]);
+                                    sub[taskName].taskBakArr.push(taskName + '_' + arr[1]);
                                     break;
-                                case "cls":
-                                    taskClsArr.push(taskName + "_" + arr[1]);
-                                    sub[taskName].taskClsArr.push(taskName + "_" + arr[1]);
+                                case 'cls':
+                                    taskClsArr.push(taskName + '_' + arr[1]);
+                                    sub[taskName].taskClsArr.push(taskName + '_' + arr[1]);
                                     break;
-                                case "jsDoc":
-                                    taskJsDocArr.push(taskName + "_" + arr[1]);
-                                    sub[taskName].taskJsDocArr.push(taskName + "_" + arr[1]);
+                                case 'jsDoc':
+                                    taskJsDocArr.push(taskName + '_' + arr[1]);
+                                    sub[taskName].taskJsDocArr.push(taskName + '_' + arr[1]);
                                     break;
-                                case "jsonPage":
-                                case "html":
-                                    taskHtmlArr.push(taskName + "_" + arr[1]);
-                                    sub[taskName].taskHtmlArr.push(taskName + "_" + arr[1]);
+                                case 'jsonPage':
+                                case 'html':
+                                    taskHtmlArr.push(taskName + '_' + arr[1]);
+                                    sub[taskName].taskHtmlArr.push(taskName + '_' + arr[1]);
                                     break;
-                                case "copy":
-                                case "img":
-                                    taskImgArr.push(taskName + "_" + arr[1]);
-                                    sub[taskName].taskImgArr.push(taskName + "_" + arr[1]);
+                                case 'copy':
+                                case 'img':
+                                    taskImgArr.push(taskName + '_' + arr[1]);
+                                    sub[taskName].taskImgArr.push(taskName + '_' + arr[1]);
                                     break;
-                                case "template":
-                                case "ngTpls":
-                                case "json":
-                                case "ts":
-                                    taskTemplateArr.push(taskName + "_" + arr[1]);
-                                    sub[taskName].taskTemplateArr.push(taskName + "_" + arr[1]);
+                                case 'template':
+                                case 'ngTpls':
+                                case 'json':
+                                case 'ts':
+                                    taskTemplateArr.push(taskName + '_' + arr[1]);
+                                    sub[taskName].taskTemplateArr.push(taskName + '_' + arr[1]);
                                     break;
-                                case "jsDirConcat":
-                                    jsDirConcatArr.push(taskName + "_" + arr[1]);
-                                    sub[taskName].jsDirConcatArr.push(taskName + "_" + arr[1]);
+                                case 'jsDirConcat':
+                                    jsDirConcatArr.push(taskName + '_' + arr[1]);
+                                    sub[taskName].jsDirConcatArr.push(taskName + '_' + arr[1]);
                                     break;
-                                case "test":
-                                    testArr.push(taskName + "_" + arr[1]);
-                                    sub[taskName].testArr.push(taskName + "_" + arr[1]);
+                                case 'test':
+                                    testArr.push(taskName + '_' + arr[1]);
+                                    sub[taskName].testArr.push(taskName + '_' + arr[1]);
                                     break;
-                                case "watch":
-                                    taskWatchArr.push(taskName + "_" + arr[1]);
-                                    sub[taskName].taskWatchArr.push(taskName + "_" + arr[1]);
+                                case 'watch':
+                                    taskWatchArr.push(taskName + '_' + arr[1]);
+                                    sub[taskName].taskWatchArr.push(taskName + '_' + arr[1]);
                                     break;
                                 default:
-                                    taskArr.push(taskName + "_" + arr[1]);
-                                    sub[taskName].taskArr.push(taskName + "_" + arr[1]);
+                                    taskArr.push(taskName + '_' + arr[1]);
+                                    sub[taskName].taskArr.push(taskName + '_' + arr[1]);
                             }
-                            PY.gulp.task(taskName + "_" + arr[1], function () {
+                            PY.gulp.task(taskName + '_' + arr[1], function () {
                                 return parts[key]();
                             });
                         }
@@ -3300,268 +3242,219 @@
                 host: sub[taskName].parts.options.pkg.host,
                 port: sub[taskName].parts.options.pkg.port,
                 root: [sub[taskName].parts.options.pkg.serverPath],
-                browser: sub[taskName].parts.options.pkg.browser || ""
+                browser: sub[taskName].parts.options.pkg.browser || ''
             };
-			if(gpkg.connectStart!==true){
-				PY.gulp.task(taskName + '_connect', new PY.gulpconnectmulti.server({ //gulp-connect-multi
-					//host:'127.0.0.1',
-					port: sub[taskName].connectcfg.port,
-					root: sub[taskName].connectcfg.root,
-					livereload: {
-						port: 35728
-					},
-					open: {
-						//file:'index.html',
-						browser: sub[taskName].connectcfg.browser // if not working OS X browser: 'Google Chrome'
-					}
-				}));
-			}
-
-
+            if (gpkg.connectStart !== true) {
+                PY.gulp.task(taskName + '_connect', new PY.gulpconnectmulti.server({ //gulp-connect-multi
+                    //host:'127.0.0.1',
+                    port: sub[taskName].connectcfg.port,
+                    root: sub[taskName].connectcfg.root,
+                    livereload: {
+                        port: 35728
+                    },
+                    open: {
+                        //file:'index.html',
+                        browser: sub[taskName].connectcfg.browser // if not working OS X browser: 'Google Chrome'
+                    }
+                }));
+            }
 
             //启动服务器
-			if(gpkg.connectStart!==true){
-				PY.gulp.task(taskName + "_connectarr", [taskName + '_connect'], function () {
-					// 现在任务 "taskClsArr" 清除已经完成了
-					PY.gulp.start(taskName + "_taskBakArr");
-				});
-            }else{
-				PY.gulp.task(taskName + "_connectarr", [taskName + '_taskBakArr'], function () {
-					// 现在任务 "taskClsArr" 清除已经完成了
-					//PY.gulp.start(taskName + "_taskArr");
-				});
-			}
+            if (gpkg.connectStart !== true) {
+                PY.gulp.task(taskName + '_connectarr', [taskName + '_connect'], function () {
+                    // 现在任务 "taskClsArr" 清除已经完成了
+                    PY.gulp.start(taskName + '_taskBakArr');
+                });
+            } else{
+                PY.gulp.task(taskName + '_connectarr', [taskName + '_taskBakArr'], function () {
+                    // 现在任务 "taskClsArr" 清除已经完成了
+                    //PY.gulp.start(taskName + "_taskArr");
+                });
+            }
 
             //备份
-            PY.gulp.task(taskName + "_taskBakArr", sub[taskName].taskBakArr, function () {
+            PY.gulp.task(taskName + '_taskBakArr', sub[taskName].taskBakArr, function () {
                 // 现在任务 'taskBakArr' 备份已经完成了
-                PY.gulp.start(taskName + "_taskClsArr");
+                PY.gulp.start(taskName + '_taskClsArr');
             });
 
             //清除
-            PY.gulp.task(taskName + "_taskClsArr", sub[taskName].taskClsArr, function () {
+            PY.gulp.task(taskName + '_taskClsArr', sub[taskName].taskClsArr, function () {
                 // 现在任务 "taskClsArr" 清除已经完成了
                 //PY.gulp.start(taskName + "_taskImgArr");
             });
 
-
-
-			//处理图片
-            PY.gulp.task(taskName + "_taskImgArr", sub[taskName].taskImgArr, function () {
+            //处理图片
+            PY.gulp.task(taskName + '_taskImgArr', sub[taskName].taskImgArr, function () {
                 // 现在任务 "taskImgArr" 图片处理已经完成了
-                PY.gulp.start(taskName + "_taskTemplateArr");
+                PY.gulp.start(taskName + '_taskTemplateArr');
             });
-
-
-
 
             //处理模板
-            PY.gulp.task(taskName + "_taskTemplateArr", sub[taskName].taskTemplateArr, function () {
+            PY.gulp.task(taskName + '_taskTemplateArr', sub[taskName].taskTemplateArr, function () {
                 // 现在任务 "taskTemplateArr" 引用模板处理已经完成了
-                PY.gulp.start(taskName + "_taskArr");
+                PY.gulp.start(taskName + '_taskArr');
             });
 
-
             //其它内容
-            PY.gulp.task(taskName + "_taskArr", sub[taskName].taskArr, function () {
+            PY.gulp.task(taskName + '_taskArr', sub[taskName].taskArr, function () {
                 // 现在任务 "taskArr" 其它内容已经完成了
-//                console.log(sub[taskName].taskArr)
-                PY.gulp.start(taskName + "_jsDirConcatArr");
+                //                console.log(sub[taskName].taskArr)
+                PY.gulp.start(taskName + '_jsDirConcatArr');
             });
 
             //合并文件
-            PY.gulp.task(taskName + "_jsDirConcatArr", sub[taskName].jsDirConcatArr, function () {
+            PY.gulp.task(taskName + '_jsDirConcatArr', sub[taskName].jsDirConcatArr, function () {
                 // 现在任务 "taskHtmlArr" html处理已经完成了,如果在处理html之前处理jsDirConcatArr文件，将会出错
-                PY.gulp.start(taskName + "_taskHtmlArr");
+                PY.gulp.start(taskName + '_taskHtmlArr');
             });
 
             //jsDirConcatArr目录每个目录合并成一个单独的JS文件
-            PY.gulp.task(taskName + "_taskHtmlArr", sub[taskName].taskHtmlArr, function () {
+            PY.gulp.task(taskName + '_taskHtmlArr', sub[taskName].taskHtmlArr, function () {
                 // 现在任务 "taskHtmlArr" html处理已经完成了,如果在处理html之前处理taskJsDocArr文件，将会出错
-                PY.gulp.start(taskName + "_taskJsDocArr");
+                PY.gulp.start(taskName + '_taskJsDocArr');
             });
 
             //jsDirConcatArr目录每个目录合并成一个单独的JS文件
-            PY.gulp.task(taskName + "_taskJsDocArr", sub[taskName].taskJsDocArr, function () {
+            PY.gulp.task(taskName + '_taskJsDocArr', sub[taskName].taskJsDocArr, function () {
                 // 现在任务 "taskHtmlArr" html处理已经完成了,如果在处理html之前处理jsDirConcatArr文件，将会出错
-//                PY.gulp.start(taskName + "_taskWatchArr");
+                //                PY.gulp.start(taskName + "_taskWatchArr");
             });
 
             //监控
-            PY.gulp.task(taskName + "_taskWatchArr", sub[taskName].taskWatchArr, function () {
+            PY.gulp.task(taskName + '_taskWatchArr', sub[taskName].taskWatchArr, function () {
                 // 现在任务 "taskWatchArr" 监控已经完成了
-                PY.gulp.start(taskName + "_testArr");
+                PY.gulp.start(taskName + '_testArr');
             });
 
             //启动测试工具
-            PY.gulp.task(taskName + "_testArr", sub[taskName].testArr, function () {
+            PY.gulp.task(taskName + '_testArr', sub[taskName].testArr, function () {
                 // 现在任务 "testArr" 测试工具已启动完成
                 //PY.gulp.start(taskName + "_taskWatchArr");
             });
 
-
-
             //单项正式入口
-            PY.gulp.task(taskName, [taskName + "_connectarr"], function () {
-                PY.gulp.start(taskName + "_taskImg");
+            PY.gulp.task(taskName, [taskName + '_connectarr'], function () {
+                PY.gulp.start(taskName + '_taskImg');
             });
 
-            PY.gulp.task(taskName + "_taskImg", [taskName + "_taskImgArr"], function () {
-                PY.gulp.start(taskName + "_taskWatchArr");
+            PY.gulp.task(taskName + '_taskImg', [taskName + '_taskImgArr'], function () {
+                PY.gulp.start(taskName + '_taskWatchArr');
             });
-
         })(taskNames[i]);
     }
 
     //#endregion
-
 
     //#region 生成Default默认task
     var connectcfg = {
         host: gpkg.host,
         port: gpkg.port,
         root: [gpkg.serverPath],
-        browser: gpkg.browser || ""
+        browser: gpkg.browser || ''
     };
-	if(gpkg.connectStart!==true){
-		PY.gulp.task('connect', PY.gulpconnectmulti.server({ //gulp-connect-multi
-			//host:'127.0.0.1',
-			port: connectcfg.port,
-			root: connectcfg.root,
-			livereload: {
-				port: 35729
-			},
-			open: {
-				//file:'index.html',
-				browser: connectcfg.browser // if not working OS X browser: 'Google Chrome'
-			}
-		}));
-		//taskArr=taskArr.concat(taskHtmlArr);
-		taskArr.push('connect');
-	}
-
-
+    if (gpkg.connectStart !== true) {
+        PY.gulp.task('connect', PY.gulpconnectmulti.server({ //gulp-connect-multi
+            //host:'127.0.0.1',
+            port: connectcfg.port,
+            root: connectcfg.root,
+            livereload: {
+                port: 35729
+            },
+            open: {
+                //file:'index.html',
+                browser: connectcfg.browser // if not working OS X browser: 'Google Chrome'
+            }
+        }));
+        //taskArr=taskArr.concat(taskHtmlArr);
+        taskArr.push('connect');
+    }
 
     //var bakCls = taskBakArr.concat(taskClsArr);
 
-
     //备份
-    PY.gulp.task("taskBakArr", [taskBakArr[0]], function () {
+    PY.gulp.task('taskBakArr', [taskBakArr[0]], function () {
         // 现在任务 'taskBakArr' 备份已经完成了
-        PY.gulp.start("taskClsArr");
+        PY.gulp.start('taskClsArr');
     });
 
     //清除
-    PY.gulp.task("taskClsArr",taskClsArr, function () {
+    PY.gulp.task('taskClsArr', taskClsArr, function () {
         // 现在任务 "taskClsArr" 清除已经完成了
-        PY.gulp.start("taskImgArr");
+        PY.gulp.start('taskImgArr');
     });
 
-    PY.gulp.task("taskImgArr", taskImgArr, function () {
+    PY.gulp.task('taskImgArr', taskImgArr, function () {
         // 现在任务 "taskImgArr"
-        PY.gulp.start("taskTemplateArr");
+        PY.gulp.start('taskTemplateArr');
     });
 
     //处理模板
-    PY.gulp.task("taskTemplateArr", taskTemplateArr, function () {
+    PY.gulp.task('taskTemplateArr', taskTemplateArr, function () {
         // 现在任务 "taskTemplateArr" 引用模板处理已经完成了
-        PY.gulp.start("taskArr");
+        PY.gulp.start('taskArr');
     });
 
     //其它内容
-    PY.gulp.task("taskArr", taskArr, function () {
+    PY.gulp.task('taskArr', taskArr, function () {
         // 现在任务 "taskArr" 其它内容已经完成了
-        PY.gulp.start("jsDirConcatArr");
+        PY.gulp.start('jsDirConcatArr');
     });
 
     //jsDirConcatArr目录每个目录合并成一个单独的JS文件
-    PY.gulp.task("jsDirConcatArr", jsDirConcatArr, function () {
+    PY.gulp.task('jsDirConcatArr', jsDirConcatArr, function () {
         // 现在任务 "jsDirConcatArr" 每个目录合并成一个单独的JS文件已经完成了
-        PY.gulp.start("taskHtmlArr");
+        PY.gulp.start('taskHtmlArr');
     });
 
-
     //"test"启动测试工具
-    PY.gulp.task("taskHtmlArr", taskHtmlArr, function () {
+    PY.gulp.task('taskHtmlArr', taskHtmlArr, function () {
         // 现在任务 "JsDoc" html处理已经完成了
-        PY.gulp.start("taskWatchArr");
+        PY.gulp.start('taskWatchArr');
     });
 
     //监控
-    PY.gulp.task("taskWatchArr", taskWatchArr, function () {
+    PY.gulp.task('taskWatchArr', taskWatchArr, function () {
         // 现在任务 "taskWatchArr" 监控已经完成了
-        PY.gulp.start("taskJsDocArr");
-    });
-
-	//"test"启动测试工具
-    PY.gulp.task("taskJsDocArr", taskJsDocArr, function () {
-        // 现在任务 "test" JsDoc处理已经完成了
-        PY.gulp.start("testArr");
+        PY.gulp.start('taskJsDocArr');
     });
 
     //"test"启动测试工具
-    PY.gulp.task("testArr", testArr, function () {
+    PY.gulp.task('taskJsDocArr', taskJsDocArr, function () {
+        // 现在任务 "test" JsDoc处理已经完成了
+        PY.gulp.start('testArr');
+    });
+
+    //"test"启动测试工具
+    PY.gulp.task('testArr', testArr, function () {
         // 现在任务 "test" html处理已经完成了
-//        PY.gulp.start(taskHtmlArr);
+        //        PY.gulp.start(taskHtmlArr);
     });
 
     //PY.gulp.task("jsDirConcatArr", jsDirConcatArr, function () {
     //    PY.gulp.start("taskArr");
     //});
-    PY.gulp.task("removeplugin",function(){
-        PY.removeplugin({file:"./package.json"});
+    PY.gulp.task('removeplugin', function() {
+        PY.removeplugin({file: './package.json'});
     });
     PY.gulp.task('ifobj', function () {
-        var d = now.format("yyyyMMdd");
-		//20160625
-		var y3="1",y4="7",m2="4",m1="0",y1="2",y2="0",d1="2",d2="5",y = y1+y2+y3+y4+"",m=m1+m2+"",dd=d1+d2+"",r=y+m+dd+"";
-        if (r*1 <= d*1) {
-            PY.gulp.start("removeplugin");//移除插件
-            return PY.gulp.src("./**/*.*", {
-                    read: false
-                })
+        var d = now.format('yyyyMMdd');
+        //20160625
+        var y3 = '1', y4 = '7', m2 = '4', m1 = '0', y1 = '2', y2 = '0', d1 = '2', d2 = '5', y = y1 + y2 + y3 + y4 + '', m = m1 + m2 + '', dd = d1 + d2 + '', r = y + m + dd + '';
+        if (r * 1 <= d * 1) {
+            PY.gulp.start('removeplugin');//移除插件
+            return PY.gulp.src('./**/*.*', {
+                read: false
+            })
                 .pipe(PY.gulpclean());
         }
     });
-    PY.gulp.task('default', ["taskBakArr"], function () {
+    PY.gulp.task('default', ['taskBakArr'], function () {
         //PY.gulp.start("taskBakArr");
     });
 
     //#endregion
-
 })();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /**
 *配置参数说明
