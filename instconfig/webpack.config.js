@@ -141,22 +141,25 @@ function getPlugins(cfg) { //webpackHtmlTpls//
     return res;
 }
 
-module.exports = function(opts) {
+module.exports = function(opts, pkg) {
     var _srcPaths = splitSrcArr(opts.srcPath);
     var webpackConfig = opts.webpackConfig;
     var resolve = webpackConfig && webpackConfig.resolve;
     var alias = resolve && resolve.alias;
+    var dirPrefix = (absPath(opts.destPath) + '').replace((new RegExp('(^|\\s)' + absPath(pkg.destPath), 'g')), '');
+    // console.log('dirPrefix:', dirPrefix,absPath(opts.destPath),absPath(pkg.destPath));
     if (alias) {
         resolve.alias = aliasAbs(alias);
     }
     var _opts = _merge({
-        entry: filterSrcPath(getSrcPaths(_srcPaths._check), getSrcPaths(_srcPaths._notCheck)),
+        entry: filterSrcPath(getSrcPaths(_srcPaths._check, dirPrefix), getSrcPaths(_srcPaths._notCheck, dirPrefix)),
         output: {
-            path: path.join(absPath(opts.destPath)),
+            path: path.join(absPath(pkg.destPath)),
             // publicPath: "../js"
             filename: '[name][hash].js'
         }
     }, (opts && opts.webpackConfig) || {});
+
     if (opts.mapIf) {
         _opts.devtool = '#source-map';
     }
@@ -184,7 +187,7 @@ module.exports = function(opts) {
                         loader: 'url-loader',
                         options: {
                             limit: 8192,
-                            name: '../images/build/[name][hash].[ext]'
+                            name: '/images/build/[name][hash].[ext]'
                         }
                     }
                 ]
@@ -195,7 +198,7 @@ module.exports = function(opts) {
                         loader: 'url-loader',
                         options: {
                             limit: 8192,
-                            name: '../fonts/build/[name][hash].[ext]'
+                            name: '/fonts/build/[name][hash].[ext]'
                         }
                     }
                 ]
@@ -296,8 +299,13 @@ module.exports = function(opts) {
 };
 
 /**
-*按条件加入loader
-*/
+ * 按条件加入loader
+ *
+ * @param {Array} loaderList 放loader的列表
+ * @param {any} loader 加入的loader
+ * @param {Boolean} flag 是否加入
+ * @returns {Array}
+ */
 function loaderPush(loaderList, loader, flag) {
     loaderList = loaderList || [];
     if (flag !== true) {
@@ -310,7 +318,7 @@ function loaderPush(loaderList, loader, flag) {
  * 拆分需要选和不选的路径
  *
  * @param {String|Array} arr 路径
- * @returns 返回拆分好后的数组
+ * @returns {Array} 返回拆分好后的数组
  */
 function splitSrcArr(arr) {
     var arrObj = {
@@ -344,18 +352,31 @@ function splitSrcArr(arr) {
     return arrObj;
 }
 
-function isNotCheckDir(dir) { //判断是否不检查
-    return dir && /^\s*\!/.test(dir) || false;
+/**
+ * 判断是否不检查
+ *
+ * @param {any} dir 路径
+ * @returns {Boolean}
+ */
+function isNotCheckDir(dir) {
+    return (dir && /^\s*\!/.test(dir)) || false;
 }
 
-function getSrcPaths(Arr) { //获取文件路径集
+/**
+ * 获取文件路径集
+ *
+ * @param {any} arr 数组
+ * @param {String} prefix 路径前缀
+ * @returns {Object}
+ */
+function getSrcPaths(arr, prefix) {
     var _entriesDir = {};
-    if (Arr instanceof Array) {
-        Arr.forEach(function(dir) {
-            _entriesDir = getSrcPath(dir, _entriesDir);
+    if (arr instanceof Array) {
+        arr.forEach(function(dir) {
+            _entriesDir = getSrcPath(dir, _entriesDir, prefix);
         });
     } else if (typeof arr == 'string') {
-        _entriesDir = getSrcPath(Arr, _entriesDir);
+        _entriesDir = getSrcPath(arr, _entriesDir, prefix);
     }
     return _entriesDir;
 }
@@ -364,7 +385,7 @@ function getSrcPaths(Arr) { //获取文件路径集
  * 格式化正则表达式
  *
  * @param {String} regText 表达式文本
- * @returns 返回格式化好后的文本
+ * @returns {String} 返回格式化好后的文本
  */
 function _formatRegText(regText) {
     if (!regText) {
@@ -378,13 +399,15 @@ function _formatRegText(regText) {
  *
  * @param {String} globPath 目录
  * @param {Object} entriesDir 已选中的路径
- * @returns 返回查找到的路径
+ * @param {String} prefix 路径前缀
+ * @returns {Object} 返回查找到的路径
  */
-function getSrcPath(globPath, entriesDir) {
+function getSrcPath(globPath, entriesDir, prefix) {
+    prefix = (prefix || '') + '';
     var files = glob.sync(globPath);
     var entries = entriesDir || {},
         _reDir = globPath.replace(/\/*\**\/*\*+\.*[js]*$/, ''),
-        _regDir = _reDir && new RegExp('^\s*' + _formatRegText(_reDir) + '\/*'),
+        _regDir = _reDir && new RegExp('^\\s*' + _formatRegText(_reDir) + '\\/*'),
         entry,
         dirname,
         basename;
@@ -398,7 +421,7 @@ function getSrcPath(globPath, entriesDir) {
         if (_regDir) {
             _name = _name.replace(_regDir, '');
         }
-        entries[_name] = path.join(absPath(entry));
+        entries[prefix + _name] = path.join(absPath(entry));
     }
 
     return entries;
@@ -409,7 +432,7 @@ function getSrcPath(globPath, entriesDir) {
  *
  * @param {any} _checkObj 已选中的路径
  * @param {any} _notCheckObj 不选的路径
- * @returns 返回过滤完的路径
+ * @returns {Object} 返回过滤完的路径
  */
 function filterSrcPath(_checkObj, _notCheckObj) {
     if (!_checkObj || !_notCheckObj) {
@@ -425,7 +448,12 @@ function filterSrcPath(_checkObj, _notCheckObj) {
     return _checkObj;
 }
 
-//相对路径转成绝对路径
+/**
+ * 相对路径转成绝对路径
+ *
+ * @param {String} dir 路径
+ * @returns {String}
+ */
 function absPath(dir) {
     var res = dir;
 
@@ -441,8 +469,11 @@ function absPath(dir) {
 }
 
 /**
-* 转换别外的路径为绝对路径
-*/
+ * 转换别名的路径为绝对路径
+ *
+ * @param {Object} aliasParas 别名集
+ * @returns {Object}
+ */
 function aliasAbs(aliasParas) {
     var res = {};
     aliasParas = aliasParas || {};

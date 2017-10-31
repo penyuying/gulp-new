@@ -43,6 +43,7 @@
     "gulp-compass": "~2.1.0",
     "gulp-concat": "~2.6.0",
     "gulp-connect-multi": "git+https://github.com/penyuying/gulp-connect-multi.git",
+    "gulp-dev-middleware": "github:penyuying/gulp-dev-middleware",
     "gulp-encrypt": "git+https://github.com/penyuying/gulp-encrypt.git",
     "gulp-eslint": "^4.0.0",
     "gulp-fileTime": "git+https://github.com/penyuying/gulp-fileTime.git",
@@ -120,10 +121,9 @@
     "typescript": "^2.5.3",
     "url-loader": "^0.5.9",
     "webpack": "^3.0.0",
-    "webpack-merge": "^4.1.0",
-    "gulp-dev-middleware":"github:penyuying/gulp-dev-middleware"
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-merge": "^4.1.0"
   },
-
   "scripts": {
     "dev": "gulp build --c build",
     "devx": "gulp build --c build --s sync --rd ramdisk",

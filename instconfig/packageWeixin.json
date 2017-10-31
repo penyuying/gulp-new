@@ -120,6 +120,7 @@
     "typescript": "^2.5.3",
     "url-loader": "^0.5.9",
     "webpack": "^3.0.0",
+    "webpack-dev-middleware": "^1.12.0",
     "webpack-merge": "^4.1.0",
     "gulp-dev-middleware":"github:penyuying/gulp-dev-middleware"
   },

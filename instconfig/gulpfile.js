@@ -124,7 +124,7 @@
     PY.gulptslint = require('gulp-tslint');
     var express;
     var app;
-    if(getParam.ramdisk) {
+    if (getParam.ramdisk) {
         express = require('express');
         app = express();
         PY.gulpdevmiddleware = PY.gulpdevmiddleware({});
@@ -3227,7 +3227,8 @@
                     cfgArr.forEach(function (cfg) {
                         // console.log(require('./webpack.config.js')(cfg));
                         // PY.webpack(require('./webpack.config.js')(cfg)).watch(200, function(err, stats) {
-                        var _wpack = PY.webpack(require('./webpack.config.js')(cfg));
+                        var webpackConfig = require('./webpack.config.js')(cfg, _pkg);
+                        var _wpack = PY.webpack(webpackConfig);
                         if (_pkg.taskWatch) { //taskWatch为真的时候不监控文件变化
                             _wpack.run(function (err, stats) {
                                 _webpackLog(err, stats, cfg);
@@ -3236,6 +3237,11 @@
                             _wpack.watch(200, function (err, stats) {
                                 _webpackLog(err, stats, cfg);
                             });
+                            if (getParam.server.toLowerCase() == 'sync' && getParam.ramdisk) {
+                                app.use(require('webpack-dev-middleware')(_wpack, {
+                                    noInfo: true, publicPath: webpackConfig.output.publicPath
+                                }));
+                            }
                         }
                     });
                 }
