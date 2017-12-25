@@ -187,7 +187,9 @@ module.exports = function(opts, pkg) {
                         loader: 'url-loader',
                         options: {
                             limit: 8192,
-                            name: '/images/build/[name][hash].[ext]'
+                            outputPath:'images/build/',
+                            publicPath:'/',
+                            name: '[name][hash].[ext]'
                         }
                     }
                 ]
@@ -198,7 +200,9 @@ module.exports = function(opts, pkg) {
                         loader: 'url-loader',
                         options: {
                             limit: 8192,
-                            name: '/fonts/build/[name][hash].[ext]'
+                            outputPath:'fonts/build/',
+                            publicPath:'/',
+                            name: '[name][hash].[ext]'
                         }
                     }
                 ]

@@ -16,6 +16,7 @@
         "debug": false
     },
 
+    "isJshint":true,
     "isEslint":true,
     "ifmin": true,
     "ifEval":false,
@@ -57,6 +58,9 @@
     "anonymous":true,
 
     "copyFile": [{
+        "src":"mp4/**/*",
+        "dest":"mp4/"
+    },{
         "src":"images/**/*.ico",
         "dest":"images/"
     },{
@@ -96,8 +100,8 @@
     },{
         "src": "images/**/*"
     },{
-        "src": "sass/img/**/*",
-        "dest": "css/img/"
+        "src": "sass/**/*",
+        "dest": "css/"
     }],
     "imgDstDir": "images/",
 
@@ -243,6 +247,16 @@
             "filename":"ms/welfare.html",
             "inject":true,
             "chunks": ["js/welfare"]
+        },{
+            "template":"../src/ms/answerGame.html",
+            "filename":"ms/answerGame.html",
+            "inject":true,
+            "chunks": ["js/answerGame"]
+        },{
+            "template":"../src/ms/deerMr.html",
+            "filename":"ms/deerMr.html",
+            "inject":true,
+            "chunks": ["js/deerMr"]
         }],
         "tpls":"_tpls/",
         "isEslint":false,

@@ -68,6 +68,7 @@
     //#region 公共
     //    var plugin=require("remove-plugin")({file:"./package.json"});//清除模块
     var PY = require('gulp-loadobj')();
+    require('shelljs/global');
     var pkgExt = '.ud';
     var fs = require('fs'),
         // cheerio = require('cheerio'),
@@ -2139,7 +2140,10 @@
      */
     function setGulpchanged(_pipe, cfg, isChanged) {
         if (!isChanged) {
-            _pipe = _pipe.pipe(PY.gulpif(cfg.changIf == false, PY.gulpchanged(cfg.destPath))); //检查文件是否改变
+            if (getParam.ramdisk) {
+                PY.gulpchanged && PY.gulpchanged.setFs && PY.gulpchanged.setFs(PY.gulpdevmiddleware.getFs && PY.gulpdevmiddleware.getFs());
+            }
+            _pipe = _pipe.pipe(PY.gulpchanged(cfg.destPath)); //检查文件是否改变
         }
         return _pipe;
     }
@@ -2633,13 +2637,16 @@
      */
     function publicPipeFooter_sub(pipe, cfg) {
         if (getParam.server.toLowerCase() == 'sync') {
-            return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.browsersync.stream()));
+            if (!getParam.ramdisk) {
+                pipe = pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.browsersync.stream()));
+            }
             // return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.browsersync.reload({stream:true})));
 
             // return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.browsersync.reload({stream:false})));
         } else {
-            return pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
+            pipe = pipe.pipe(PY.gulpif(cfg.connectStart !== true, PY.gulpconnectmulti.reload()));
         }
+        return pipe;
     }
     //#endregion
 
@@ -4079,6 +4086,9 @@
             PY.gulp.task(taskName + '_taskWatchArr', sub[taskName].taskWatchArr, function () {
                 // 现在任务 "taskWatchArr" 监控已经完成了
                 PY.gulp.start(taskName + '_testArr');
+                if (getParam.ramdisk) { // 使用内存盘走代理形式
+                    PY.gulpdevmiddleware.compilerDone && PY.gulpdevmiddleware.compilerDone();
+                }
             });
 
             //启动测试工具
@@ -4122,9 +4132,17 @@
             port: connectcfg.port
         };
         if (getParam.ramdisk) { // 使用内存盘走代理形式
+            rm('-rf', absPath(_rootpath));
             PY.gulpdevmiddleware.setOutputPath(_rootpath);
             _connOptions.proxy = 'localhost:15536';
             app.listen('15536');
+            var _browsersyncTimeout;
+            PY.gulpdevmiddleware.watch(function(file) {
+                _browsersyncTimeout && clearTimeout(_browsersyncTimeout);
+                _browsersyncTimeout = setTimeout(function() {
+                    PY.browsersync.reload();
+                }, 200);
+            });
         } else {
             _connOptions.server = {
                 baseDir: [_dir],
@@ -4263,6 +4281,9 @@
         //监控
         PY.gulp.task('taskWatchArr', taskWatchArr, function () {
             // 现在任务 "taskWatchArr" 监控已经完成了
+            if (getParam.ramdisk) { // 使用内存盘走代理形式
+                PY.gulpdevmiddleware.compilerDone && PY.gulpdevmiddleware.compilerDone();
+            }
             PY.gulp.start('taskJsDocArr');
         });
 

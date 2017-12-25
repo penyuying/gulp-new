@@ -3,7 +3,7 @@
   "userName": "penyu",
   "version": "1.0.0",
   "devDependencies": {
-
+    "core-js": "^2.5.1"
   },
   "scripts": {
     "dev": "gulp --gulpfile gulp/gulpfile.js build --c build",

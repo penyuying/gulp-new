@@ -10,7 +10,7 @@
         "useBuiltIns": true,
         "debug": false
     },
-	"ifmin": true,
+	"ifmin": false,
 	"mapIf": false,
 	"bannerIf": false,
 	"connectStart": true,
