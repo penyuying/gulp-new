@@ -63,12 +63,12 @@
  *
  */
 //#endregion
-
+// import '@babel/register';
 (function () {
     //#region 公共
     //    var plugin=require("remove-plugin")({file:"./package.json"});//清除模块
     var PY = require('gulp-loadobj')();
-    require('shelljs/global');
+
     var pkgExt = '.ud';
     var fs = require('fs'),
         // cheerio = require('cheerio'),
@@ -86,6 +86,10 @@
             ramdisk: process.env.NODE_ENV || ''// 把文件放内存盘
         }
     };
+
+    // var babelConfig = JSON.parse(fs.readFileSync('./.babelrc'));
+    // require('@babel/core')({});
+    require('shelljs/global');
 
     var getParam = PY.minimist(process.argv.slice(2), taskOptions);
 
@@ -3219,12 +3223,19 @@
              * webpack处理
              */
             task_webpack: function () {
+                var webpack = require('webpack');
                 var _this = this,
                     option = _this.options,
                     pathOptions = _this.options.webpackPath,
-                    cfgArr = pathOptions && pathOptions.cfgArr;
-                _pkg = option.pkg;
+                    cfgArr = pathOptions && pathOptions.cfgArr,
+                    _pkg = option.pkg,
+                    _vueConfig = _pkg && _pkg.vueConfig;// 打包vue的配置
 
+                if (_this.isSebpackStart) {
+                    return;
+                } else {
+                    _this.isSebpackStart = true;
+                }
                 // console.log(cfgArr);
                 // console.log(_merge(require('./webpack.config.js'),{
                 //          publicPath: '/dist/fff/'
@@ -3234,8 +3245,11 @@
                     cfgArr.forEach(function (cfg) {
                         // console.log(require('./webpack.config.js')(cfg));
                         // PY.webpack(require('./webpack.config.js')(cfg)).watch(200, function(err, stats) {
-                        var webpackConfig = require('./webpack.config.js')(cfg, _pkg);
-                        var _wpack = PY.webpack(webpackConfig);
+                        var webpackConfig = require('./webpack.config.js');
+                        if (webpackConfig instanceof Function) {
+                            webpackConfig = webpackConfig(cfg, _pkg);
+                        }
+                        var _wpack = webpack(webpackConfig);
                         if (_pkg.taskWatch) { //taskWatch为真的时候不监控文件变化
                             _wpack.run(function (err, stats) {
                                 _webpackLog(err, stats, cfg);
@@ -3252,6 +3266,39 @@
                         }
                     });
                 }
+
+                (function() { //启动vue
+                    if (_vueConfig && _vueConfig.configFile) {
+                        var _vueConfigFile = absPath(_vueConfig.configFile);
+                        if (fs.existsSync(_vueConfigFile)) {
+                            var vueConfig = require(_vueConfigFile);
+                            if (vueConfig instanceof Function) {
+                                vueConfig = vueConfig();
+                            }
+                            var _vueWpack = webpack(vueConfig);
+                            if (_pkg.taskWatch) { //taskWatch为真的时候不监控文件变化
+                                _vueWpack.run(function (err, stats) {
+                                    _webpackLog(err, stats, {
+                                        connectStart: _pkg.connectStart,
+                                        srcPath: absPath(_vueConfig.srcPath)
+                                    });
+                                });
+                            } else {
+                                _vueWpack.watch(200, function (err, stats) {
+                                    _webpackLog(err, stats, {
+                                        connectStart: _pkg.connectStart,
+                                        srcPath: absPath(_vueConfig.srcPath)
+                                    });
+                                });
+                                if (getParam.server.toLowerCase() == 'sync' && getParam.ramdisk) {
+                                    app.use(require('webpack-dev-middleware')(_vueWpack, {
+                                        noInfo: true, publicPath: vueConfig.output.publicPath
+                                    }));
+                                }
+                            }
+                        }
+                    }
+                })();
 
                 /**
                  * 打印日志

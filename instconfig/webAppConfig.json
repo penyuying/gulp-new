@@ -190,6 +190,7 @@
   "webpackHtmlTpls":"",
   "webpackDstDir":"js/",
   "webpackConfig":"",
+  "vueConfig":"",
   "sassFile": "",
   "compassFile": "",
   "NODE_ENV":"development",

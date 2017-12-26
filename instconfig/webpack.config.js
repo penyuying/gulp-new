@@ -120,7 +120,7 @@ function getPlugins(cfg) { //webpackHtmlTpls//
 
     // res.push(new webpack.NoErrorsPlugin());弃用，使用NoEmitOnErrorsPlugin代替
     res.push(new webpack.NoEmitOnErrorsPlugin());
-    clearFileList = fileList.map(function(item) {
+    var clearFileList = fileList.map(function(item) {
         var config = cfg.webpackConfig;
         var output = config && config.output;
         var filename = (output.filename || '') + '';
@@ -187,8 +187,8 @@ module.exports = function(opts, pkg) {
                         loader: 'url-loader',
                         options: {
                             limit: 8192,
-                            outputPath:'images/build/',
-                            publicPath:'/',
+                            outputPath: 'images/build/',
+                            publicPath: '/',
                             name: '[name][hash].[ext]'
                         }
                     }
@@ -200,8 +200,8 @@ module.exports = function(opts, pkg) {
                         loader: 'url-loader',
                         options: {
                             limit: 8192,
-                            outputPath:'fonts/build/',
-                            publicPath:'/',
+                            outputPath: 'fonts/build/',
+                            publicPath: '/',
                             name: '[name][hash].[ext]'
                         }
                     }

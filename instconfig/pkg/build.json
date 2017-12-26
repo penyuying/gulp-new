@@ -43,7 +43,7 @@
     "isTest":false,
     "testConfig":{
         "srcPath":[
-            "../test/**/*.js",
+            "{#webappDir#}test/**/*.js",
             "*.js"
         ],
         "testConfigFile":"{#destTest#}sf/test/config/karma.conf.js",
@@ -108,7 +108,7 @@
     "dirConcatJs": "",
 
     "concatJs":[{
-        "src":"../lib/js/zepto/src/{zepto,data,event,touch}",
+        "src":"{#webappDir#}lib/js/zepto/src/{zepto,data,event,touch}",
         "fileName":"zepto.js",
         "dest": "js/lib/"
     }],
@@ -145,15 +145,15 @@
             },
             "resolve": {
                 "alias": {
-                    "src":"../src",
-                    "lib":"../lib",
-                    "wjs":"../src/wjs",
-                    "../images":"../src/wimages",
-                    "images":"../src/wimages",
-                    "sass":"../src/sass",
+                    "src":"{#webappDir#}src",
+                    "lib":"{#webappDir#}lib",
+                    "wjs":"{#webappDir#}src/wjs",
+                    "../images":"{#webappDir#}src/wimages",
+                    "images":"{#webappDir#}src/wimages",
+                    "sass":"{#webappDir#}src/sass",
                     "core-js":"./node_modules/core-js",
-                    "mui": "../src/js/mui.js",
-                    "oldwjs":"../src/oldwjs"
+                    "mui": "{#webappDir#}src/js/mui.js",
+                    "oldwjs":"{#webappDir#}src/oldwjs"
                 }
             }
         },
@@ -168,92 +168,92 @@
             },
             "resolve": {
                 "alias": {
-                    "src":"../src",
-                    "lib":"../lib",
-                    "wjs":"../src/wjs",
-                    "../images":"../src/wimages",
-                    "images":"../src/wimages",
-                    "sass":"../src/sass",
+                    "src":"{#webappDir#}src",
+                    "lib":"{#webappDir#}lib",
+                    "wjs":"{#webappDir#}src/wjs",
+                    "../images":"{#webappDir#}src/wimages",
+                    "images":"{#webappDir#}src/wimages",
+                    "sass":"{#webappDir#}src/sass",
                     "core-js":"./node_modules/core-js",
-                    "mui": "../src/js/mui.js"
+                    "mui": "{#webappDir#}src/js/mui.js"
                 }
             }
         },
         "webpackHtmlTpls":[{
-            "template":"../src/tpls/video-detail.html",
+            "template":"{#webappDir#}src/tpls/video-detail.html",
             "filename":"pages/video-detail.html",
             "inject":true,
             "hash":true,
             "chunks": ["js/video-detail"]
         },{
-            "template":"../src/tpls/article-detail.html",
+            "template":"{#webappDir#}src/tpls/article-detail.html",
             "filename":"pages/article-detail.html",
             "inject":true,
             "hash":true,
             "chunks": ["js/article-detail"]
         },{
-            "template":"../src/tpls/settle-account.html",
+            "template":"{#webappDir#}src/tpls/settle-account.html",
             "filename":"pages/settle-account.html",
             "inject":true,
             "hash":true,
             "chunks": ["js/settle-account"]
         },{
-            "template":"../src/tpls/groupshoping.html",
+            "template":"{#webappDir#}src/tpls/groupshoping.html",
             "filename":"pages/groupshoping.html",
             "inject":true,
             "hash":true,
             "chunks": ["js/groupshoping"]
         },{
-            "template":"../src/ms/subject.html",
+            "template":"{#webappDir#}src/ms/subject.html",
             "filename":"ms/subject.html",
             "inject":false
         },{
-            "template":"../src/ms/sales.html",
+            "template":"{#webappDir#}src/ms/sales.html",
             "filename":"ms/sales.html",
             "inject":true,
             "chunks": ["js/sales"]
         },{
-            "template":"../src/ms/salesnew.html",
+            "template":"{#webappDir#}src/ms/salesnew.html",
             "filename":"ms/salesnew.html",
             "inject":true,
             "chunks": ["js/sales"]
         },{
-            "template":"../src/ms/schoolopens.html",
+            "template":"{#webappDir#}src/ms/schoolopens.html",
             "filename":"ms/schoolopens.html",
             "inject":true,
             "chunks": ["js/schoolopens"]
         },{
-            "template":"../src/ms/schoolnursery.html",
+            "template":"{#webappDir#}src/ms/schoolnursery.html",
             "filename":"ms/schoolnursery.html",
             "inject":true,
             "chunks": ["js/schoolnursery"]
         },{
-            "template":"../src/ms/printer.html",
+            "template":"{#webappDir#}src/ms/printer.html",
             "filename":"ms/printer.html",
             "inject":true,
             "chunks": ["js/printerPro"]
         },{
-            "template":"../src/ms/dinosaur.html",
+            "template":"{#webappDir#}src/ms/dinosaur.html",
             "filename":"ms/dinosaur.html",
             "inject":true,
             "chunks": ["js/dinosaur"]
         },{
-            "template":"../src/ms/montessori.html",
+            "template":"{#webappDir#}src/ms/montessori.html",
             "filename":"ms/montessori.html",
             "inject":true,
             "chunks": ["js/montessori"]
         },{
-            "template":"../src/ms/welfare.html",
+            "template":"{#webappDir#}src/ms/welfare.html",
             "filename":"ms/welfare.html",
             "inject":true,
             "chunks": ["js/welfare"]
         },{
-            "template":"../src/ms/answerGame.html",
+            "template":"{#webappDir#}src/ms/answerGame.html",
             "filename":"ms/answerGame.html",
             "inject":true,
             "chunks": ["js/answerGame"]
         },{
-            "template":"../src/ms/deerMr.html",
+            "template":"{#webappDir#}src/ms/deerMr.html",
             "filename":"ms/deerMr.html",
             "inject":true,
             "chunks": ["js/deerMr"]
@@ -265,6 +265,8 @@
     "webpackHtmlTpls":"",
     "webpackDstDir":"js/",
     "webpackConfig":"",
+
+    "vueConfig":"",
 
     "ngTplsFile":"",
     "ngTplsConf":{},
@@ -285,7 +287,7 @@
     "concatDstCssFileName":"concatCss.css",
 
     "cssFile":[{
-        "src":"../lib/js/video-js/video-js",
+        "src":"{#webappDir#}lib/js/video-js/video-js",
         "dest":"js/lib/video/"
     }],
     "cssDstDir": "css/",
