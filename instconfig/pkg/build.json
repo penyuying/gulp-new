@@ -108,7 +108,7 @@
     "dirConcatJs": "",
 
     "concatJs":[{
-        "src":"{#webappDir#}lib/js/zepto/src/{zepto,data,event,touch}",
+        "src":"../lib/js/zepto/src/{zepto,data,event,touch}",
         "fileName":"zepto.js",
         "dest": "js/lib/"
     }],
@@ -266,7 +266,10 @@
     "webpackDstDir":"js/",
     "webpackConfig":"",
 
-    "vueConfig":"",
+    "vueConfig":{
+        "configFile":"{#webappDir#}build/webpack.gulpDev.conf.js",
+        "srcPath":"{#webappDir#}/vuesrc/**/*"
+    },
 
     "ngTplsFile":"",
     "ngTplsConf":{},
@@ -287,7 +290,7 @@
     "concatDstCssFileName":"concatCss.css",
 
     "cssFile":[{
-        "src":"{#webappDir#}lib/js/video-js/video-js",
+        "src":"../lib/js/video-js/video-js",
         "dest":"js/lib/video/"
     }],
     "cssDstDir": "css/",

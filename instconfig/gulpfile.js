@@ -1834,6 +1834,7 @@
                 var pngobj = this.setObj('imgFile', 'imgDstDir', 'imgFile', '.{png,PNG' + _ext + '}', false, '', '', 'png');
                 var jpgobj = this.setObj('imgFile', 'imgDstDir', 'imgFile', '.{jpg,JPG' + _ext + '}', false, '', '', 'jpg');
                 var gifobj = this.setObj('imgFile', 'imgDstDir', 'imgFile', '.{gif,GIF' + _ext + '}', false, '', '', 'gif');
+                var svgobj = this.setObj('imgFile', 'imgDstDir', 'imgFile', '.{svg,SVG' + _ext + '}', false, '', '', 'svg');
                 var retGSrc = [];
                 if (pngobj.gSrc && pngobj.gSrc.length > 0) {
                     retGSrc = retGSrc.concat(pngobj.gSrc);
@@ -1843,6 +1844,9 @@
                 }
                 if (gifobj.gSrc && gifobj.gSrc.length > 0) {
                     retGSrc = retGSrc.concat(gifobj.gSrc);
+                }
+                if (svgobj.gSrc && svgobj.gSrc.length > 0) {
+                    retGSrc = retGSrc.concat(svgobj.gSrc);
                 }
                 //var obj = this.setObj("imgFile", "imgDstDir", ".{jpg,png,gif,JPG,PNG,GIF}");
                 return {
@@ -1858,6 +1862,10 @@
                     {
                         imgtype: 'gif',
                         cfgArr: gifobj.cfgArr
+                    },
+                    {
+                        imgtype: 'svg',
+                        cfgArr: svgobj.cfgArr
                     }
                     ]
                 };
@@ -2462,6 +2470,7 @@
             }
         })))
             .pipe(PY.gulpif(cfg.ifbabel === true, PY.gulpbabel({
+                'babelrc': false,
                 'presets': [_env, PY.babelpresetstage0] //PY.babelpresetes2015
             })))
             .pipe(PY.gulpif(cfg.ifmin !== true, PY.gulpuglify())); //压缩JS
@@ -2595,7 +2604,7 @@
 
         pipe = encrypt(pipe.pipe(PY.gulpif(editName === true, PY.gulprename(renameOption))) //加后缀
             , cfg)
-            .pipe(PY.gulpimportcsstowxss());
+            .pipe(PY.gulpcsstowxss());
 
         pipe = setDestFn(pipe, cfg.destPath, true);
         // .pipe(PY.gulpdevmiddleware.dest(cfg.destPath, {}))
@@ -3271,6 +3280,7 @@
                     if (_vueConfig && _vueConfig.configFile) {
                         var _vueConfigFile = absPath(_vueConfig.configFile);
                         if (fs.existsSync(_vueConfigFile)) {
+                            console.log(_vueConfigFile);
                             var vueConfig = require(_vueConfigFile);
                             if (vueConfig instanceof Function) {
                                 vueConfig = vueConfig();
@@ -3374,48 +3384,79 @@
                     for (var j = 0; j < arrObj.length; j++) {
                         if (arrObj[j].cfgArr && arrObj[j].cfgArr.length > 0) {
                             runstart = true;
-                            switch (arrObj[j].imgtype) {
-                                case 'png':
-                                    subMerge.add(arrObj[j].cfgArr.map(function (cfg, k) {
-                                        return splitPipe(function () {
-                                            return PY.gulp.src(cfg.srcPath)
-                                                .pipe(PY.gulpchanged(cfg.destPath))
-                                                .pipe(PY.gulpif(cfg.ifminimg === true, PY.imageminpngquant({
-                                                    quality: '60-' + cfg.imgquality
-                                                })()));
-                                        }, function (pipe) {
-                                            return publicPipeFooter(pipe, cfg, k, 'rev-manifest-png' + k + '.json');
-                                        });
-                                    }));
-                                    break;
-                                case 'jpg':
-                                    subMerge.add(arrObj[j].cfgArr.map(function (cfg, k) {
-                                        return splitPipe(function () {
-                                            return PY.gulp.src(cfg.srcPath)
-                                                .pipe(PY.gulpchanged(cfg.destPath))
-                                                .pipe(PY.gulpif(cfg.ifminimg === true, PY.imageminmozjpeg({
-                                                    quality: cfg.imgquality * 1
-                                                })()));
-                                        }, function (pipe) {
-                                            return publicPipeFooter(pipe, cfg, k, 'rev-manifest-jpg' + k + '.json');
-                                        });
-                                    }));
-                                    break;
-                                case 'gif':
-                                    subMerge.add(arrObj[j].cfgArr.map(function (cfg, k) {
-                                        return splitPipe(function () {
-                                            return PY.gulp.src(cfg.srcPath)
-                                                .pipe(PY.gulpchanged(cfg.destPath))
-                                                .pipe(PY.gulpif(cfg.ifminimg === true, PY.imagemingifsicle({
-                                                    interlaced: false
-                                                })()));
-                                        }, function (pipe) {
-                                            return publicPipeFooter(pipe, cfg, k, 'rev-manifest-gif' + k + '.json');
-                                        });
-                                    }));
-                                    break;
-                                default:
-                            }
+
+                            subMerge.add(arrObj[j].cfgArr.map(function (cfg, k) {
+                                return splitPipe(function () {
+                                    var _pipe = PY.gulp.src(cfg.srcPath)
+                                        .pipe(PY.gulpchanged(cfg.destPath))
+                                        .pipe(PY.gulpif(cfg.ifminimg === true, PY.imageminpngquant({
+                                            quality: '60-' + cfg.imgquality
+                                        })()));
+                                    switch (arrObj[j].imgtype) {
+                                        case 'png':
+                                            _pipe = _pipe.pipe(PY.gulpif(cfg.ifminimg === true, PY.imageminpngquant({
+                                                quality: '60-' + cfg.imgquality
+                                            })()));
+                                            break;
+                                        case 'jpg':
+                                            _pipe = _pipe.pipe(PY.gulpif(cfg.ifminimg === true, PY.imageminmozjpeg({
+                                                quality: cfg.imgquality * 1
+                                            })()));
+                                            break;
+                                        case 'gif':
+                                            _pipe = _pipe.pipe(PY.gulpif(cfg.ifminimg === true, PY.imagemingifsicle({
+                                                interlaced: false
+                                            })()));
+                                            break;
+                                        default:
+                                    }
+                                    return _pipe;
+                                }, function (pipe) {
+                                    return publicPipeFooter(pipe, cfg, k, 'rev-manifest-' + arrObj[j].imgtype + k + '.json');
+                                });
+                            }));
+                            // switch (arrObj[j].imgtype) {
+                            //     case 'png':
+                            //         subMerge.add(arrObj[j].cfgArr.map(function (cfg, k) {
+                            //             return splitPipe(function () {
+                            //                 return PY.gulp.src(cfg.srcPath)
+                            //                     .pipe(PY.gulpchanged(cfg.destPath))
+                            //                     .pipe(PY.gulpif(cfg.ifminimg === true, PY.imageminpngquant({
+                            //                         quality: '60-' + cfg.imgquality
+                            //                     })()));
+                            //             }, function (pipe) {
+                            //                 return publicPipeFooter(pipe, cfg, k, 'rev-manifest-' + arrObj[j].imgtype + k + '.json');
+                            //             });
+                            //         }));
+                            //         break;
+                            //     case 'jpg':
+                            //         subMerge.add(arrObj[j].cfgArr.map(function (cfg, k) {
+                            //             return splitPipe(function () {
+                            //                 return PY.gulp.src(cfg.srcPath)
+                            //                     .pipe(PY.gulpchanged(cfg.destPath))
+                            //                     .pipe(PY.gulpif(cfg.ifminimg === true, PY.imageminmozjpeg({
+                            //                         quality: cfg.imgquality * 1
+                            //                     })()));
+                            //             }, function (pipe) {
+                            //                 return publicPipeFooter(pipe, cfg, k, 'rev-manifest-jpg' + k + '.json');
+                            //             });
+                            //         }));
+                            //         break;
+                            //     case 'gif':
+                            //         subMerge.add(arrObj[j].cfgArr.map(function (cfg, k) {
+                            //             return splitPipe(function () {
+                            //                 return PY.gulp.src(cfg.srcPath)
+                            //                     .pipe(PY.gulpchanged(cfg.destPath))
+                            //                     .pipe(PY.gulpif(cfg.ifminimg === true, PY.imagemingifsicle({
+                            //                         interlaced: false
+                            //                     })()));
+                            //             }, function (pipe) {
+                            //                 return publicPipeFooter(pipe, cfg, k, 'rev-manifest-gif' + k + '.json');
+                            //             });
+                            //         }));
+                            //         break;
+                            //     default:
+                            // }
                         }
                     }
                     if (runstart) {

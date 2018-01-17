@@ -5,8 +5,11 @@
   "fileTime":"mtime",
   "fileTimeName":"userfiletime",
   "bowersrc":"",
-  "items": [
+  "itemsbak": [
     "instconfig"
+  ],
+  "items": [
+    "instconfigVue"
   ],
   "testConfig":"",
   "webappDir":"",

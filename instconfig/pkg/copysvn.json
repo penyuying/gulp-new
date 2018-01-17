@@ -49,8 +49,59 @@
         "dest":"src/",
         "debar":["**/.vscode","**/.sass-cache"]
     },{
+        "src":"devDoc/**/*.*",
+        "dest":"devDoc/",
+        "debar":["**/.vscode","**/.sass-cache"]
+    },{
+        "src":"build/**/*.*",
+        "dest":"build/",
+        "debar":["**/.vscode","**/.sass-cache"]
+    },{
+        "src":"config/**/*.*",
+        "dest":"config/",
+        "debar":["**/.vscode","**/.sass-cache"]
+    },{
+        "src":"vuesrc/**/*.*",
+        "dest":"vuesrc/",
+        "debar":["**/.vscode","**/.sass-cache"]
+    },{
+        "src":"static/**/*.*",
+        "dest":"static/",
+        "debar":["**/.vscode","**/.sass-cache"]
+    },{
+        "src":"test/**/*.*",
+        "dest":"test/",
+        "debar":["**/.vscode","**/.sass-cache"]
+    },{
         "src":"src/.eslintrc.js",
         "dest":"src/"
+    },{
+        "src":"./.babelrc",
+        "dest":"./"
+    },{
+        "src":"./.editorconfig",
+        "dest":"./"
+    },{
+        "src":"./.eslintignore",
+        "dest":"./"
+    },{
+        "src":"./.eslintrc.js",
+        "dest":"./"
+    },{
+        "src":"./.gitignore",
+        "dest":"./"
+    },{
+        "src":"./.postcssrc.js",
+        "dest":"./"
+    },{
+        "src":"./jsconfig.json",
+        "dest":"./"
+    },{
+        "src":"./tsconfig.json",
+        "dest":"./"
+    },{
+        "src":"./tslint.json",
+        "dest":"./"
     }],
     "copyDstDir": "",
 

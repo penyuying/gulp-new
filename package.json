@@ -78,7 +78,9 @@
     "through2": "~2.0.0",
     "typescript": "^2.0.10"
   },
-  "scripts": {},
+  "scripts": {
+      "gulp":"gulp"
+  },
   "dependencies": {
     "karma": "~0.13.22"
   },

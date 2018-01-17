@@ -27,5 +27,9 @@
         "http_path":"./",
         "import_path":""
     },
-    "NODE_ENV":"production"
+    "NODE_ENV":"production",
+    "vueConfig":{
+        "configFile":"{#webappDir#}build/webpack.prod.conf.js",
+        "srcPath":"{#webappDir#}/vuesrc/**/*"
+    }
 }

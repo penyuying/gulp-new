@@ -54,7 +54,7 @@
 			<li class="dropdown">
 				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="global.html#_formatRegText">_formatRegText</a></li><li><a href="global.html#absPath">absPath</a></li><li><a href="global.html#addObj">addObj</a></li><li><a href="global.html#againPkg">againPkg</a></li><li><a href="global.html#aliasAbs">aliasAbs</a></li><li><a href="global.html#filterSrcPath">filterSrcPath</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#getFolders">getFolders</a></li><li><a href="global.html#getJson">getJson</a></li><li><a href="global.html#getPlugins">getPlugins</a></li><li><a href="global.html#getSrcPath">getSrcPath</a></li><li><a href="global.html#getSrcPaths">getSrcPaths</a></li><li><a href="global.html#getUd">getUd</a></li><li><a href="global.html#getUdJs">getUdJs</a></li><li><a href="global.html#isNotCheckDir">isNotCheckDir</a></li><li><a href="global.html#loaderPush">loaderPush</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#replaceItem">replaceItem</a></li><li><a href="global.html#returnObj">returnObj</a></li><li><a href="global.html#splitSrcArr">splitSrcArr</a></li><li><a href="global.html#unique">unique</a></li>
+					<li><a href="global.html#_formatRegText">_formatRegText</a></li><li><a href="global.html#absPath">absPath</a></li><li><a href="global.html#addObj">addObj</a></li><li><a href="global.html#againPkg">againPkg</a></li><li><a href="global.html#aliasAbs">aliasAbs</a></li><li><a href="global.html#banner">banner</a></li><li><a href="global.html#filterSrcPath">filterSrcPath</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#getFolders">getFolders</a></li><li><a href="global.html#getJson">getJson</a></li><li><a href="global.html#getPlugins">getPlugins</a></li><li><a href="global.html#getSrcPath">getSrcPath</a></li><li><a href="global.html#getSrcPaths">getSrcPaths</a></li><li><a href="global.html#getUd">getUd</a></li><li><a href="global.html#getUdJs">getUdJs</a></li><li><a href="global.html#isNotCheckDir">isNotCheckDir</a></li><li><a href="global.html#loaderPush">loaderPush</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#replaceItem">replaceItem</a></li><li><a href="global.html#returnObj">returnObj</a></li><li><a href="global.html#setpart">setpart</a></li><li><a href="global.html#splitSrcArr">splitSrcArr</a></li><li><a href="global.html#unique">unique</a></li>
 				</ul>
 			</li>
 			
@@ -2713,7 +2713,7 @@
                 </td>
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>加密文件时的配置</p></td>
         </tr>
 
     
@@ -2830,6 +2830,44 @@
 
         <tr>
             
+                <td class="name"><code>basename</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>修改文件名，不含扩展名和目录</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>prefix</code></td>
             
 
@@ -2900,6 +2938,44 @@
             
 
             <td class="description last"><p>是否给文件加后缀（有内空时为加，没有内容时为不加）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>extname</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>是否修改扩文件展名</p></td>
         </tr>
 
     
@@ -3014,6 +3090,44 @@
             
 
             <td class="description last"><p>是否压缩html（true为否，false为是）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ifminhtmlObj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last"><p>压缩文件配置参数</p></td>
         </tr>
 
     
@@ -3538,7 +3652,1874 @@
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>map文件生成时的参数</p>
+                <h6>Properties</h6>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>includeContent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>map文件是否引入映射内容</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sourceRoot</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>map文件映射内容到source目录</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Namespace: taskCFG</h1>
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="module-gulp.html">gulp</a><a href="module-pkg.html">~pkg</a>~</span>
+        
+        taskCFG
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>gulp的task参数配置</p>
+<pre class="prettyprint source"><code> 1、所有默认参数自定义在webAppConfig.json文件，具体默认值以webAppConfig.json文件内的值为准；
+
+ 2、对应项目单独设置参数以webAppConfig.json里subJsonPath指定的路径，items项对应的名称的JSON文件为准。</code></pre></div>
+        
+
+        
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>项目名称</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>concatFileName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>合并文件后文件的名称</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>tplsPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>模板文件目录路径</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>destPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>处理完后的文件存储目录</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>jsDocLink</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>api文档链接</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>jsDocType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    jsdoc
+                
+                </td>
+            
+
+            <td class="description last"><p>api文档类型（jsdoc、angular）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>jsDoc3Dir</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>JSDoc文档存放的路径</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>jsDoc3Temp</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>临时文件存放的路径</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ifJsDoc</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>JSDoc是否生成文档</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>revDestPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>存放rev生成的JSON文件路径</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>revCollectorSrcPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>存放rev生成的主目录路径</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>revType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>rev生成和替换静态文件名的类型（&quot;part&quot;为参数形式,其它为文件名形式）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>mapIf</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否生成map文件（true为是，false为否）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>mapsPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>map文件存放路径</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>compassConfig</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>compass配置参数</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ifminimg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否压缩图片（true为是，false为否）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ifEval</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>js是否eval加密文件</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>evalConfig</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last"><p>js eval加密文件配置参数</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ifEncrypt</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否加密文件</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>encryptConfig</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last"><p>加密文件时的配置</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>imgquality</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    100
+                
+                </td>
+            
+
+            <td class="description last"><p>图片质量，最小不能小于60(ifminimg=true时才有效)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ngTplsConf</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last"><p>设置生成ng模板配置参数(obj.conf || pkg.ngTplsConf)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>newFileName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>处理完后的文件的新名称</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>basename</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>修改文件名，不含扩展名和目录</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>prefix</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>是否给文件加前缀（有内空时为加，没有内容时为不加）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>suffix</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>是否给文件加后缀（有内空时为加，没有内容时为不加）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>extname</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>是否修改扩文件展名</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ifmin</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否压缩JS、CSS（true为否，false为是）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>autoprefixerBrowsers</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5"]
+                
+                </td>
+            
+
+            <td class="description last"><p>加前缀要兼容的浏览器版本例：[&quot;&gt; 0.1%&quot;, &quot;android &gt;= 2.6&quot;, &quot;chrome &gt;= 4&quot;, &quot;edge &gt;= 11&quot;, &quot;firefox &gt;= 3.5&quot;, &quot;ie &gt;= 6&quot;, &quot;ie_mob &gt;= 6&quot;, &quot;ios_saf &gt;= 6&quot;, &quot;opera &gt;= 5&quot;,&quot;safari &gt;= 6&quot;]</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ifminhtml</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否压缩html（true为否，false为是）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ifminhtmlObj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last"><p>压缩文件配置参数</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>injectIf</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否注入文件到html（true为是，false为否）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>bannerIf</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否加banner（true为否，false为是）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>gzipIf</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否把文件压缩成gzip格式（true为是，false为否）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>header</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>内容开头注释banner信息</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>footer</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>内容结尾注释footer信息</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>srcRev</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否给引用文件加后缀如：xxx.x?=xxxx（true为是，false为否）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>changIf</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否改变时才更新文件（true为否，false为是）//obj.changIf||pkg.changIf,</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>jsAnonymous</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>合并js文件时是否用匿名函数包起来（true为是，false为否）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>jsHeader</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>JS内容前面加的代码(jsAnonymous=true时有效)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>jsFooter</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>JS内容后面加的代码(jsAnonymous=true时有效)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>srcPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>需要处理的文件</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>connectStart</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否启动服务器（true为否，false为是）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fileTime</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "mtime"
+                
+                </td>
+            
+
+            <td class="description last"><p>文件时间类型</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fileTimeName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "filetime"
+                
+                </td>
+            
+
+            <td class="description last"><p>文件时间使用的别名</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>mapObj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
 
 
 
@@ -8200,7 +10181,7 @@
                 </td>
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>加密文件时的配置</p></td>
         </tr>
 
     
@@ -8317,6 +10298,44 @@
 
         <tr>
             
+                <td class="name"><code>basename</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>修改文件名，不含扩展名和目录</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>prefix</code></td>
             
 
@@ -8387,6 +10406,44 @@
             
 
             <td class="description last"><p>是否给文件加后缀（有内空时为加，没有内容时为不加）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>extname</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>是否修改扩文件展名</p></td>
         </tr>
 
     
@@ -8501,6 +10558,44 @@
             
 
             <td class="description last"><p>是否压缩html（true为否，false为是）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ifminhtmlObj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last"><p>压缩文件配置参数</p></td>
         </tr>
 
     
@@ -9025,7 +11120,7 @@
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">Object</span>
 
 
 
@@ -11820,7 +13915,7 @@
                 </td>
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>加密文件时的配置</p></td>
         </tr>
 
     
@@ -11937,6 +14032,44 @@
 
         <tr>
             
+                <td class="name"><code>basename</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>修改文件名，不含扩展名和目录</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>prefix</code></td>
             
 
@@ -12007,6 +14140,44 @@
             
 
             <td class="description last"><p>是否给文件加后缀（有内空时为加，没有内容时为不加）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>extname</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>是否修改扩文件展名</p></td>
         </tr>
 
     
@@ -12121,6 +14292,44 @@
             
 
             <td class="description last"><p>是否压缩html（true为否，false为是）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ifminhtmlObj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last"><p>压缩文件配置参数</p></td>
         </tr>
 
     
@@ -12645,7 +14854,1874 @@
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>map文件生成时的参数</p>
+                <h6>Properties</h6>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>includeContent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>map文件是否引入映射内容</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sourceRoot</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>map文件映射内容到source目录</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Namespace: taskCFG</h1>
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="module-gulp.html">gulp</a><a href="module-pkg.html">~pkg</a>~</span>
+        
+        taskCFG
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>gulp的task参数配置</p>
+<pre class="prettyprint source"><code> 1、所有默认参数自定义在webAppConfig.json文件，具体默认值以webAppConfig.json文件内的值为准；
+
+ 2、对应项目单独设置参数以webAppConfig.json里subJsonPath指定的路径，items项对应的名称的JSON文件为准。</code></pre></div>
+        
+
+        
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>项目名称</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>concatFileName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>合并文件后文件的名称</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>tplsPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>模板文件目录路径</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>destPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>处理完后的文件存储目录</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>jsDocLink</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>api文档链接</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>jsDocType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    jsdoc
+                
+                </td>
+            
+
+            <td class="description last"><p>api文档类型（jsdoc、angular）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>jsDoc3Dir</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>JSDoc文档存放的路径</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>jsDoc3Temp</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>临时文件存放的路径</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ifJsDoc</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>JSDoc是否生成文档</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>revDestPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>存放rev生成的JSON文件路径</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>revCollectorSrcPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>存放rev生成的主目录路径</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>revType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>rev生成和替换静态文件名的类型（&quot;part&quot;为参数形式,其它为文件名形式）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>mapIf</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否生成map文件（true为是，false为否）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>mapsPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>map文件存放路径</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>compassConfig</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>compass配置参数</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ifminimg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否压缩图片（true为是，false为否）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ifEval</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>js是否eval加密文件</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>evalConfig</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last"><p>js eval加密文件配置参数</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ifEncrypt</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否加密文件</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>encryptConfig</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last"><p>加密文件时的配置</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>imgquality</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    100
+                
+                </td>
+            
+
+            <td class="description last"><p>图片质量，最小不能小于60(ifminimg=true时才有效)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ngTplsConf</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last"><p>设置生成ng模板配置参数(obj.conf || pkg.ngTplsConf)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>newFileName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>处理完后的文件的新名称</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>basename</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>修改文件名，不含扩展名和目录</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>prefix</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>是否给文件加前缀（有内空时为加，没有内容时为不加）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>suffix</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>是否给文件加后缀（有内空时为加，没有内容时为不加）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>extname</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>是否修改扩文件展名</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ifmin</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否压缩JS、CSS（true为否，false为是）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>autoprefixerBrowsers</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ["> 0.1%", "android >= 2.6", "chrome >= 4", "edge >= 11", "firefox >= 3.5"]
+                
+                </td>
+            
+
+            <td class="description last"><p>加前缀要兼容的浏览器版本例：[&quot;&gt; 0.1%&quot;, &quot;android &gt;= 2.6&quot;, &quot;chrome &gt;= 4&quot;, &quot;edge &gt;= 11&quot;, &quot;firefox &gt;= 3.5&quot;, &quot;ie &gt;= 6&quot;, &quot;ie_mob &gt;= 6&quot;, &quot;ios_saf &gt;= 6&quot;, &quot;opera &gt;= 5&quot;,&quot;safari &gt;= 6&quot;]</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ifminhtml</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否压缩html（true为否，false为是）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ifminhtmlObj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last"><p>压缩文件配置参数</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>injectIf</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否注入文件到html（true为是，false为否）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>bannerIf</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否加banner（true为否，false为是）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>gzipIf</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否把文件压缩成gzip格式（true为是，false为否）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>header</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>内容开头注释banner信息</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>footer</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>内容结尾注释footer信息</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>srcRev</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否给引用文件加后缀如：xxx.x?=xxxx（true为是，false为否）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>changIf</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否改变时才更新文件（true为否，false为是）//obj.changIf||pkg.changIf,</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>jsAnonymous</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>合并js文件时是否用匿名函数包起来（true为是，false为否）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>jsHeader</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>JS内容前面加的代码(jsAnonymous=true时有效)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>jsFooter</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>JS内容后面加的代码(jsAnonymous=true时有效)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>srcPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>需要处理的文件</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>connectStart</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>是否启动服务器（true为否，false为是）</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fileTime</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "mtime"
+                
+                </td>
+            
+
+            <td class="description last"><p>文件时间类型</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fileTimeName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "filetime"
+                
+                </td>
+            
+
+            <td class="description last"><p>文件时间使用的别名</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>mapObj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
 
 
 
@@ -12850,7 +16926,7 @@
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.4</a>
 	
-		on December 4th 2017, 3:35:31 pm
+		on January 12th 2018, 12:47:25 am
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

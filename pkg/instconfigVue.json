@@ -1,0 +1,197 @@
+{
+    "rem": "/*处理过后的json的文件和目录存放的目录*/",
+    "name": "instconfig",
+    "userName": "penyu",
+    "version": "1.0.0",
+    "ifmin": true,
+    "ifEval":false,
+    "ifminhtml": false,
+    "gzipIf": false,
+    "changIf": false,
+    "srcRev": false,
+    "suffix": "",
+    "srcPath": "../",
+    "installSrc":"gulpInst/instconfig/",
+    "publicPath": "{#srcPath#}publicTool/public/",
+
+    "subroot_weixin":"E:/demo/weixin/",
+
+    "subroot":"E:/tnzz/webappDev/",
+    "subroot_svn":"E:/tnzz/devwebappSvn/",
+    "htmlSubroot_svn":"E:/tnzz/htmlv3.0.0/",
+    "subDevelop":"{#subroot#}src/",
+    "htmlDevelop":"{#subroot#}html/",
+    "subPublic":"{#subDevelop#}public/",
+    "githubsrc":"github/",
+    "pExtName":"uud",
+    "destRoot": "",
+    "destPath": "",
+    "tempPath": "",
+    "mapsPath": "maps",
+    "mapIf": false,
+    "bakPath": "",
+
+    "gulpRoot_weixin":"{#subroot_weixin#}gulp/",
+
+    "gulpRoot":"{#subroot#}",
+    "gulpRoot_svn":"{#subroot_svn#}",
+    "htmlGulpRoot_svn":"{#htmlSubroot_svn#}",
+    "serverPath": "",
+
+    "jsDoc3Temp":"./temp/jsDoc/instconfig/",
+    "jsDoc3Dir":"./Doc/{#name#}/",
+    "ifJsDoc":true,
+
+    "browser": "",
+    "copyFile": [{
+        "src":"{#githubsrc#}fonteditor/save/KidMadeTo/KidMadeTo.*",
+        "dest":"{#subDevelop#}/sass/fonts/KidMadeTo/"
+    },{
+        "src":"{#githubsrc#}fonteditor/save/KidMadeTo3.0/KidMadeTo.*",
+        "dest":"{#subDevelop#}/sass/fonts/KidMadeTo3.0/"
+    },{
+        "src":"{#githubsrc#}fonteditor/save/KidMadeTo3.0/KidMadeTo.*",
+        "dest":"{#htmlDevelop#}/sass/fonts/KidMadeTo3.0/"
+    }],
+    "copyDstDir": "",
+    "jsonFile": [{
+        "ifmin":true,
+        "src":["{#installSrc#}package+vue"],
+        "dest":"{#subroot#}",
+        "newFileName":"package.json"
+    },{
+        "ifmin":true,
+        "src":["{#installSrc#}webAppConfig"],
+        "dest":"{#gulpRoot#}"
+    },{
+        "ifmin":true,
+        "src":"{#installSrc#}pkg/*",
+        "dest":"{#subroot#}pkg/"
+    },{
+        "ifmin":true,
+        "src":["{#installSrc#}webAppConfig1"],
+        "dest":"{#gulpRoot_svn#}",
+        "newFileName":"webAppConfig.json"
+    },{
+        "ifmin":true,
+        "src":["{#installSrc#}pkg/*","!{#installSrc#}pkg/copysvn.*"],
+        "dest":"{#subroot_svn#}pkg/"
+    },{
+        "ifmin":true,
+        "src":["{#installSrc#}package+vue"],
+        "dest":"{#subroot_svn#}",
+        "newFileName":"package.json"
+    },{
+        "ifmin":true,
+        "src":["{#installSrc#}webAppConfig1"],
+        "dest":"{#htmlGulpRoot_svn#}",
+        "newFileName":"webAppConfig.json"
+    },{
+        "ifmin":true,
+        "src":["{#installSrc#}pkg/*","!{#installSrc#}pkg/copysvn.*"],
+        "dest":"{#htmlSubroot_svn#}pkg/"
+    },{
+        "ifmin":true,
+        "src":["{#installSrc#}package1"],
+        "dest":"{#htmlSubroot_svn#}",
+        "newFileName":"package.json"
+    },{
+        "ifmin":true,
+        "src":["{#installSrc#}packageWeixin"],
+        "dest":"{#gulpRoot_weixin#}",
+        "newFileName":"package.json"
+    },{
+        "ifmin":true,
+        "src":["{#installSrc#}packageWeixin1"],
+        "dest":"{#subroot_weixin#}",
+        "newFileName":"package.json"
+    },{
+        "ifmin":true,
+        "src":["{#installSrc#}webAppConfigWeixin"],
+        "newFileName":"webAppConfig.json",
+        "dest":"{#gulpRoot_weixin#}"
+    },{
+        "ifmin":true,
+        "src":"{#installSrc#}pkg/weixin*",
+        "dest":"{#subroot_weixin#}pkg/"
+    }],
+    "evalConfig":{},
+    "jsonDstDir": "",
+    "imgFile": "",
+    "imgDstDir": "{#gulpRoot#}",
+    "dirConcatJs": "",
+    "concatJs": "",
+    "concatDstJsFileName": "",
+    "jsFile": [{
+        "ifEval":true,
+        "ifmin":false,
+        "src":"{#installSrc#}gulpfile",
+        "newFileName":"gulpfile.babel.js"
+    },{
+        "ifEval":true,
+        "ifmin":false,
+        "src":"{#installSrc#}webpack.config"
+    },{
+        "ifEval":true,
+        "ifmin":false,
+        "src":"{#installSrc#}pcss"
+    },{
+        "ifEval":true,
+        "ifmin":false,
+        "src":"{#installSrc#}gulpfile",
+        "newFileName":"gulpfile.babel.js",
+        "dest":"{#gulpRoot_svn#}"
+    },{
+        "ifEval":true,
+        "ifmin":false,
+        "src":"{#installSrc#}webpack.config",
+        "dest":"{#gulpRoot_svn#}"
+    },{
+        "ifEval":true,
+        "ifmin":false,
+        "src":"{#installSrc#}pcss",
+        "dest":"{#gulpRoot_svn#}"
+    },{
+        "ifEval":true,
+        "ifmin":false,
+        "src":"{#installSrc#}gulpfile",
+        "dest":"{#htmlGulpRoot_svn#}"
+    },{
+        "ifEval":true,
+        "ifmin":false,
+        "src":"{#installSrc#}webpack.config",
+        "dest":"{#htmlGulpRoot_svn#}"
+    },{
+        "ifEval":true,
+        "ifmin":false,
+        "src":"{#installSrc#}pcss",
+        "dest":"{#htmlGulpRoot_svn#}"
+    },{
+        "ifEval":true,
+        "ifmin":false,
+        "src":"{#installSrc#}gulpfile",
+        "dest":"{#gulpRoot_weixin#}"
+    },{
+        "ifEval":true,
+        "ifmin":false,
+        "src":"{#installSrc#}webpack.config",
+        "dest":"{#gulpRoot_weixin#}"
+    },{
+        "ifEval":true,
+        "ifmin":false,
+        "src":"{#installSrc#}pcssWeixin",
+        "dest":"{#gulpRoot_weixin#}",
+        "newFileName":"pcss.js"
+    }],
+    "jsDstDir": "{#gulpRoot#}",
+    "sassFile": "",
+    "concatCss": "",
+    "concatDstCssFileName": "",
+    "cssFile": "",
+    "cssDstDir": "",
+    "htmlFile": "",
+    "tplsHtmlFile": "",
+    "htmlDstDir": "",
+    "injectPath": "",
+    "injectName": "inject"
+}

@@ -2,10 +2,10 @@
   "rem": "/*处理过后的json的文件和目录存放的目录*/",
 
 
-  "bowersrc":"../../../bower/app/",
-  "githubsrc":"../../../github/",
-  "webappDir":"../",
-  "webappDstDir":"../",
+  "bowersrc":"./../../bower/app/",
+  "githubsrc":"./../../github/",
+  "webappDir":"./",
+  "webappDstDir":"./",
   "bakDest": "d:/webapp/bak/",
   "tempPath": "{#webappDir#}temp/",
 

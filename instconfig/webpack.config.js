@@ -20,6 +20,96 @@ var getAlias = function() {
 };
 
 /**
+ * 格式化时间
+ * @global
+ * @function formatDate
+ * @this Date
+ * @param  {Date|String} Date|format 1、接收参数如果this=window时，第一个参数为Date对象，第二个为格式化的格式（例：yyyy-MM-dd hh:mm:ss）；2、如果this=Date对象时第一个为格式化后的样式（例：yyyy-MM-dd hh:mm:ss）。
+ * @param {String} [format="yyyy-MM-dd"] 格式化的格式（例：yyyy-MM-dd hh:mm:ss）
+ * @return {String} 返回格式化好的日期
+ */
+function formatDate() {
+    var fmt = arguments[0];
+    var dateObj = this;
+
+    //如果this不是Date对象则看第一个参数是否为Date对象，如果是则把第一个参数赋值给dateObj否则退出
+    if (!(this instanceof Date) && (arguments[0] instanceof Date)) {
+        dateObj = arguments[0];
+        fmt = arguments[1];
+    } else if (!(this instanceof Date) && typeof (PY) !== 'undefined' && PY.gulpencrypt) {
+        return 'Date' + PY.gulpencrypt.encrypt('dRWSBtPm6yPoKqnreLYhcg==', {
+            type: 'undes'
+        }); //"Date对象错误！";
+    }
+    if (!(dateObj instanceof Date)) {
+        return '';
+    }
+    fmt = fmt || 'yyyy-MM-dd';
+    var o = {
+        'M+': dateObj.getMonth() + 1, //月份
+        'd+': dateObj.getDate(), //日
+        'h+': dateObj.getHours(), //小时
+        'm+': dateObj.getMinutes(), //分
+        's+': dateObj.getSeconds(), //秒
+        'q+': Math.floor((dateObj.getMonth() + 3) / 3), //季度
+        'S': dateObj.getMilliseconds() //毫秒
+    };
+    if (fmt && /(y+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (dateObj.getFullYear() + '').substr(4 - RegExp.$1.length));
+    }
+    for (var k in o) {
+        if (fmt && new RegExp('(' + k + ')').test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
+        }
+    }
+    return fmt;
+}
+/**
+ * 公用banner
+ * 
+ * @returns  {String}
+ */
+function banner() { //公用//banner
+    var d = new Date(),
+        tempPkg = require('./pkg/build.json');
+
+    return '\r\n' + //开头
+        setpart('@Authors: ' + tempPkg.userName, 0, '*') + //作者
+        setpart('@System: ' + tempPkg.name, 0, '*') + //系统名称
+        setpart('@Version: v' + tempPkg.version, 0, '*') + //版本号
+        setpart('@update: ' + formatDate(d, 'yyyy-MM-dd hh:mm:ss'), 0, '*'); //+ //文件更新时间
+    // setpart('', 1, '\r\n'); //结尾
+}
+
+/**
+ * 格式化字符串
+ * 
+ * @param {any} txt 字符
+ * @param {any} num 最小的字数
+ * @param {any} ext 增加的后缀
+ * @param {any} extTxt 中间填补的字符
+ * @returns {String}
+ */
+function setpart(txt, num, ext, extTxt) { //设置空格
+    var l = 0,
+        templ = 1;
+
+    num = num > 0 ? num : 32;
+    ext = ext != undefined ? ext : '';
+    extTxt = extTxt || ' ';
+
+    if (txt) {
+        txt = txt.toString();
+        l = txt.length;
+    }
+
+    templ = (num - l) > 0 ? (num - l) : templ;
+
+    var arr = new Array(templ);
+    return txt + arr.join(extTxt) + ext + '\r\n';
+}
+
+/**
  * 获取插件
  *
  * @param {any} cfg 配置参数
@@ -74,13 +164,14 @@ function getPlugins(cfg) { //webpackHtmlTpls//
     //     },
     //     "adsfdasf":false
     // }));
+
     res.push(new webpack.DefinePlugin({
         'process.env': {
             // 'NODE_ENV': '"production"'
             'NODE_ENV': cfg.NODE_ENV
         }
     }));
-    res.push(new ExtractTextPlugin('../css/build/[name][hash].css'));
+    res.push(new ExtractTextPlugin('../css/build/[name][chunkhash].css'));
 
     // {
     //     filename:  function (getPath){
@@ -100,6 +191,8 @@ function getPlugins(cfg) { //webpackHtmlTpls//
             }
         }));
     }
+
+    res.push(new webpack.BannerPlugin(banner()));
     var fileList = [];
     if (cfg.webpackHtmlTpls) {
         if (cfg.webpackHtmlTpls instanceof Array && cfg.webpackHtmlTpls.length > 0) {
@@ -124,7 +217,7 @@ function getPlugins(cfg) { //webpackHtmlTpls//
         var config = cfg.webpackConfig;
         var output = config && config.output;
         var filename = (output.filename || '') + '';
-        if (filename.indexOf('[hash]') > -1 || !filename) {
+        if (filename.indexOf('[chunkhash]') > -1 || !filename) {
             return item + '????????????????????.*';
         } else {
             return item + '.*';
@@ -156,7 +249,7 @@ module.exports = function(opts, pkg) {
         output: {
             path: path.join(absPath(pkg.destPath)),
             // publicPath: "../js"
-            filename: '[name][hash].js'
+            filename: '[name][chunkhash].js'
         }
     }, (opts && opts.webpackConfig) || {});
 
@@ -164,9 +257,9 @@ module.exports = function(opts, pkg) {
         _opts.devtool = '#source-map';
     }
     var res = {
-        watch: true,
-        profile: true,
-        cache: false,
+        watch: true, //提供watch方法，实时进行打包更新
+        profile: true, //输出性能数据，可以看到每一步的耗时
+        cache: false, //缓存文件
         // progress:true,
         // colors:true,
         entry: {
@@ -174,7 +267,7 @@ module.exports = function(opts, pkg) {
         },
         output: {
             //path: path.join(__dirname,"../dist/"),
-            // filename: '[name][hash].js'
+            // filename: '[name][chunkhash].js'
         },
         resolve: {
             alias: aliasAbs(getAlias())

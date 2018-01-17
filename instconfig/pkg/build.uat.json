@@ -5,6 +5,7 @@
 	"bannerIf": false,
 	"connectStart": true,
     "taskWatch":true,
+    "changIf":true,
     "compassConfig": {
         "project": "{#srcPath#}",
         "css":"{#compassTemp#}/css/",
@@ -17,5 +18,9 @@
         "http_path":"./",
         "import_path":""
     },
-    "NODE_ENV":"production"
+    "NODE_ENV":"production",
+    "vueConfig":{
+        "configFile":"{#webappDir#}build/webpack.prod.conf.js",
+        "srcPath":"{#webappDir#}/vuesrc/**/*"
+    }
 }
