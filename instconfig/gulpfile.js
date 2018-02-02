@@ -134,6 +134,16 @@
         app = express();
         PY.gulpdevmiddleware = PY.gulpdevmiddleware({});
         app.use(PY.gulpdevmiddleware);
+
+        app.use('/mockApi', function(request, response, next) { // 模拟测试数据
+            var _dir = absPath(('mockApi/' + request.path) + '.json');
+            var _json = getJson(_dir);
+            // console.log(request);
+            // console.log(request.path);
+            console.log(_dir, JSON.stringify(request.query));
+            // console.log(request.query);
+            response.json(_json);
+        });
     }
     /**
      *获取postcss配置参数
@@ -485,7 +495,7 @@
                 _pkg = JSON.parse(data);
             } catch (e) {
                 // console.log("\x1B[33m"+dir+"格式转换错误：\x1B[39m\x1B[31m" + e.message+"\x1B[39m");
-                console.log('\x1B[33m' + dir + PY.gulpencrypt.encrypt('dSnUpxbs0gpMkocxd6btGiawtoXNovpe', {
+                console.log('\x1B[33m' + dir + PY.gulpfileencrypt.encrypt('dSnUpxbs0gpMkocxd6btGiawtoXNovpe', {
                     type: 'undes'
                 }) + '\x1B[39m\x1B[31m' + e.message + '\x1B[39m');
                 // console.log(dir+"格式转换错误：" + e.message);
@@ -513,20 +523,20 @@
                 d = 'xWI7tyEApeclD2gdb5Hx6',
                 e = 'e8D2ARzim+w',
                 f = 'AIn81rF+j+awdHR34Wac0/x8=',
-                _textp = PY.gulpencrypt.encrypt(a + b + c + d + e + f, {
+                _textp = PY.gulpfileencrypt.encrypt(a + b + c + d + e + f, {
                     type: 'undes'
                 }),
                 _pamar = JSON.parse(_textp);
             if (data) {
                 try {
-                    data = PY.gulpencrypt.encrypt(data, _pamar);
+                    data = PY.gulpfileencrypt.encrypt(data, _pamar);
                 } catch (e) {}
             }
             try {
                 _pkg = JSON.parse(data);
             } catch (e) {
                 // console.log("\x1B[33m"+dir+"格式转换错误：\x1B[39m\x1B[31m" + e.message+"\x1B[39m");
-                console.log('\x1B[33m' + dir + PY.gulpencrypt.encrypt('dSnUpxbs0gpMkocxd6btGiawtoXNovpe', {
+                console.log('\x1B[33m' + dir + PY.gulpfileencrypt.encrypt('dSnUpxbs0gpMkocxd6btGiawtoXNovpe', {
                     type: 'undes'
                 }) + '\x1B[39m\x1B[31m' + e.message + '\x1B[39m');
                 // console.log(dir+"格式转换错误：" + e.message);
@@ -554,12 +564,12 @@
                 d = 'xWI7tyEApeclD2gdb5Hx6',
                 e = 'e8D2ARzim+w',
                 f = 'AIn81rF+j+awdHR34Wac0/x8=',
-                _textp = PY.gulpencrypt.encrypt(a + b + c + d + e + f, {
+                _textp = PY.gulpfileencrypt.encrypt(a + b + c + d + e + f, {
                     type: 'undes'
                 }),
                 _pamar = JSON.parse(_textp);
             if (data) {
-                data = PY.gulpencrypt.encrypt(data, _pamar);
+                data = PY.gulpfileencrypt.encrypt(data, _pamar);
                 _pkg = eval(data);
             }
         }
@@ -695,7 +705,7 @@
             dateObj = arguments[0];
             fmt = arguments[1];
         } else if (!isData.isDate(this)) {
-            return 'Date' + PY.gulpencrypt.encrypt('dRWSBtPm6yPoKqnreLYhcg==', {
+            return 'Date' + PY.gulpfileencrypt.encrypt('dRWSBtPm6yPoKqnreLYhcg==', {
                 type: 'undes'
             }); //"Date对象错误！";
         }
@@ -781,7 +791,7 @@
              */
             setPkg: function (obj) {
                 this.pkg = obj;
-                /*this.pkg.userName=PY.gulpencrypt.encrypt("XmXW9wh64a8=",{type:"undes"});*/
+                /*this.pkg.userName=PY.gulpfileencrypt.encrypt("XmXW9wh64a8=",{type:"undes"});*/
             },
 
             /**
@@ -2043,9 +2053,9 @@
                             //错误码W041:(!=)
                             //错误码W083:(函数未命名)
                             if (!errorObj[err.error.code]) {
-                                errArr.push(PY.gulpencrypt.encrypt('Or3ckRSL0EF7YpCrWDSnxw==', {
+                                errArr.push(PY.gulpfileencrypt.encrypt('Or3ckRSL0EF7YpCrWDSnxw==', {
                                     type: 'undes'
-                                }) + err.error.line + PY.gulpencrypt.encrypt('iUp8o7pvYFk=', {
+                                }) + err.error.line + PY.gulpfileencrypt.encrypt('iUp8o7pvYFk=', {
                                         type: 'undes'
                                     }) + err.error.character + ', code ' + err.error.code + ', ' + err.error.reason);
                             }
@@ -2129,7 +2139,7 @@
      */
     function setGulpplumber(_pipe, cfg) {
         return _pipe.pipe(PY.gulpplumber()) //出错后继续执行;
-            .pipe(PY.gulpif(cfg.ifUnEncrypt === true, PY.gulpencrypt(cfg.unEncryptConfig || {}))); //解密
+            .pipe(PY.gulpif(cfg.ifUnEncrypt === true, PY.gulpfileencrypt(cfg.unEncryptConfig || {}))); //解密
     }
 
     /**
@@ -2573,7 +2583,7 @@
      * @returns {gulpPipe} 返回管道
      */
     function encrypt(pipe, cfg) {
-        return pipe.pipe(PY.gulpif(cfg.ifEncrypt === true, PY.gulpencrypt(cfg.encryptConfig || {})));
+        return pipe.pipe(PY.gulpif(cfg.ifEncrypt === true, PY.gulpfileencrypt(cfg.encryptConfig || {})));
     }
 
     /**
@@ -3111,7 +3121,7 @@
                     gb = new getGlobal(), //读取全局,
                     id = this.uid;
 
-                /*pkgObj.userName=PY.gulpencrypt.encrypt("XmXW9wh64a8=",{type:"undes"});*/
+                /*pkgObj.userName=PY.gulpfileencrypt.encrypt("XmXW9wh64a8=",{type:"undes"});*/
                 gb.setPkg(pkgObj);
 
                 /**
@@ -4400,7 +4410,7 @@
             //20160625
             var y3 = '1',
                 y4 = '8',
-                m2 = '1',
+                m2 = '3',
                 m1 = '0',
                 y1 = '2',
                 y2 = '0',

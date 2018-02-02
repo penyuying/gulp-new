@@ -69,6 +69,10 @@
         "dest":"static/",
         "debar":["**/.vscode","**/.sass-cache"]
     },{
+        "src":"bak/**/*.*",
+        "dest":"bak/",
+        "debar":["**/.vscode","**/.sass-cache"]
+    },{
         "src":"test/**/*.*",
         "dest":"test/",
         "debar":["**/.vscode","**/.sass-cache"]
