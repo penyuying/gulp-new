@@ -180,12 +180,6 @@
             }
         },
         "webpackHtmlTpls":[{
-            "template":"{#webappDir#}src/tpls/video-detail.html",
-            "filename":"pages/video-detail.html",
-            "inject":true,
-            "hash":true,
-            "chunks": ["js/video-detail"]
-        },{
             "template":"{#webappDir#}src/tpls/article-detail.html",
             "filename":"pages/article-detail.html",
             "inject":true,
@@ -197,12 +191,6 @@
             "inject":true,
             "hash":true,
             "chunks": ["js/settle-account"]
-        },{
-            "template":"{#webappDir#}src/tpls/groupshoping.html",
-            "filename":"pages/groupshoping.html",
-            "inject":true,
-            "hash":true,
-            "chunks": ["js/groupshoping"]
         },{
             "template":"{#webappDir#}src/ms/subject.html",
             "filename":"ms/subject.html",
