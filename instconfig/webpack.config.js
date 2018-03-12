@@ -6,6 +6,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 // var TplsWebpackPlugin = require('tpls-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var HappyPack = require('happypack');
 //var projectRoot = path.resolve(__dirname, '../')
 
 // check env & config/index.js to decide whether to enable CSS source maps for the
@@ -116,7 +117,21 @@ function setpart(txt, num, ext, extTxt) { //设置空格
  * @returns {Array}
  */
 function getPlugins(cfg) { //webpackHtmlTpls//
-    var res = [];
+    var res = [
+        // new HappyPack({
+        //     id: 'img',
+        //     threads: 2,
+        //     loaders: [{
+        //         path: 'url-loader',
+        //         options: {
+        //             limit: 8192,
+        //             outputPath: 'images/build/',
+        //             publicPath: '/',
+        //             name: '[name][hash].[ext]'
+        //         }
+        //     }]
+        // })
+    ];
 
     // res.push(new webpack.SourceMapDevToolPlugin({
     //   // Match assets like for loaders. This is
@@ -277,6 +292,7 @@ module.exports = function(opts, pkg) {
                 test: /\.(png|jpg|gif)$/,
                 use: [
                     {
+                        // loader: 'happypack/loader?id=img'
                         loader: 'url-loader',
                         options: {
                             limit: 8192,

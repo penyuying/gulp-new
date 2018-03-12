@@ -1,7 +1,7 @@
 {
     "name": "build",
-    "userName": "",
-    "version": "v2.3.0",
+    "userName": "penyu",
+    "version": "2.3.0",
 
 
     "ifbabel":false,
@@ -218,21 +218,6 @@
             "inject":true,
             "chunks": ["js/sales"]
         },{
-            "template":"{#webappDir#}src/ms/schoolopens.html",
-            "filename":"ms/schoolopens.html",
-            "inject":true,
-            "chunks": ["js/schoolopens"]
-        },{
-            "template":"{#webappDir#}src/ms/schoolnursery.html",
-            "filename":"ms/schoolnursery.html",
-            "inject":true,
-            "chunks": ["js/schoolnursery"]
-        },{
-            "template":"{#webappDir#}src/ms/printer.html",
-            "filename":"ms/printer.html",
-            "inject":true,
-            "chunks": ["js/printerPro"]
-        },{
             "template":"{#webappDir#}src/ms/dinosaur.html",
             "filename":"ms/dinosaur.html",
             "inject":true,
@@ -242,21 +227,6 @@
             "filename":"ms/montessori.html",
             "inject":true,
             "chunks": ["js/montessori"]
-        },{
-            "template":"{#webappDir#}src/ms/welfare.html",
-            "filename":"ms/welfare.html",
-            "inject":true,
-            "chunks": ["js/welfare"]
-        },{
-            "template":"{#webappDir#}src/ms/answerGame.html",
-            "filename":"ms/answerGame.html",
-            "inject":true,
-            "chunks": ["js/answerGame"]
-        },{
-            "template":"{#webappDir#}src/ms/deerMr.html",
-            "filename":"ms/deerMr.html",
-            "inject":true,
-            "chunks": ["js/deerMr"]
         }],
         "tpls":"_tpls/",
         "isEslint":false,

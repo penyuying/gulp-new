@@ -33,6 +33,7 @@
       "build.uat",
       "build.testsit",
       "build.testuat",
+      "build.old",
       "copysvn",
       "html",
       "htmlsvn"

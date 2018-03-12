@@ -20,6 +20,7 @@
     "subroot_svn":"E:/tnzz/devwebappSvn/",
     "htmlSubroot_svn":"E:/tnzz/htmlv3.0.0/",
     "subDevelop":"{#subroot#}src/",
+    "vueDevelop":"{#subroot#}vuesrc/",
     "htmlDevelop":"{#subroot#}html/",
     "subPublic":"{#subDevelop#}public/",
     "githubsrc":"github/",
@@ -49,6 +50,12 @@
     },{
         "src":"{#githubsrc#}fonteditor/save/KidMadeTo3.0/KidMadeTo.*",
         "dest":"{#subDevelop#}/sass/fonts/KidMadeTo3.0/"
+    },{
+        "src":"{#githubsrc#}fonteditor/save/KidMadeTo3.0/KidMadeTo.*",
+        "dest":"{#vueDevelop#}/sass/fonts/KidMadeTo3.0/"
+    },{
+        "src":"{#githubsrc#}fonteditor/save/KidMadeTo3.0/KidMadeToFont.*",
+        "dest":"{#vueDevelop#}/sass/fonts/KidMadeTo3.0/"
     },{
         "src":"{#githubsrc#}fonteditor/save/KidMadeTo3.0/KidMadeTo.*",
         "dest":"{#htmlDevelop#}/sass/fonts/KidMadeTo3.0/"
