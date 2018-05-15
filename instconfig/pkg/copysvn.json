@@ -83,6 +83,9 @@
         "src":"./.babelrc",
         "dest":"./"
     },{
+        "src":"./.browserslistrc",
+        "dest":"./"
+    },{
         "src":"./.editorconfig",
         "dest":"./"
     },{

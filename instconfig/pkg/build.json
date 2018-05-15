@@ -180,16 +180,20 @@
             }
         },
         "webpackHtmlTpls":[{
-            "template":"{#webappDir#}src/tpls/settle-account.html",
-            "filename":"pages/settle-account.html",
+            "template":"{#webappDir#}src/ms/takeMoney.html",
+            "filename":"ms/takeMoney.html",
             "inject":true,
-            "hash":true,
-            "chunks": ["js/settle-account"]
+            "chunks": ["js/takeMoney"]
         },{
             "template":"{#webappDir#}src/ms/agreement.html",
             "filename":"ms/agreement.html",
-            "inject":true,
+            "inject":false,
             "chunks": ["js/agreement"]
+        },{
+            "template":"{#webappDir#}src/ms/huangshan.html",
+            "filename":"ms/huangshan.html",
+            "inject":false,
+            "chunks": ["js/huangshan"]
         },{
             "template":"{#webappDir#}src/ms/subject.html",
             "filename":"ms/subject.html",
